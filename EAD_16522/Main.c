@@ -22,6 +22,7 @@ int main() {
 
 	printf("Insira a autonomia em KM: ");
 	scanf("%f", &meioTransporte.autonomia); 
+	*/
 
 	*/
 
