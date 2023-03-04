@@ -3,35 +3,38 @@
 #include "transporte.h" 
 
 int main() {
-	Transporte* meioTransporte = NULL; 
-	//Transporte meioTransporte = { 0, ' ', 0.0, 0.0, NULL }; 
+	Transporte* meioTransporte_1 = NULL; 
+	Transporte meioTransporte = { 0, ' ', 0.0, 0.0}; 
 
-	meioTransporte = lerFicheiroTransporte(meioTransporte); 
+	//Ler o ficheiro Txt
+	meioTransporte_1 = lerFicheiroTransporte(meioTransporte_1);
 	
-	/*
-
-	//Pedir Informações para inserir meio de transporte 	
+	//Pedir informação ao Gestor para adicionar um meio de transporte (Código, tipo, nivel bateria, automonomia estimada)  		
 	printf("Insira o codigo do meio de mobilidade: ");
-	scanf("%d", &meioTransporte.codigo);
+	scanf("%d", &meioTransporte.codigo); 
 
-	printf("Insira o tipo de meio de mobilidade (T ou B): ");
-	scanf(" %c", &meioTransporte.tipo); 
+	//Verificar se existe o ID selecionado pelo o Gestor
+	if (ExisteTransporte(meioTransporte_1, meioTransporte.codigo)) {
+		
+	}
+	else {
+		printf("Insira o tipo de meio de mobilidade (T ou B): ");
+		scanf(" %c", &meioTransporte.tipo);
 
-	printf("Insira a carga atual da bateria: ");
-	scanf("%f", &meioTransporte.bateria); 
+		printf("Insira a carga atual da bateria: ");
+		scanf("%f", &meioTransporte.bateria); 
 
-	printf("Insira a autonomia em KM: ");
-	scanf("%f", &meioTransporte.autonomia); 
-	*/
+		//Caso o gestor coloque a bateria supeior a 100 o programa assume por defeito 100%
+		if (meioTransporte.bateria > 100) {
+			meioTransporte.bateria = 100; 
+		}
+		printf("Insira a autonomia em KM: ");
+		scanf("%f", &meioTransporte.autonomia);
 
-	*/
+		printf("Insira a localização: ");
+		scanf("%s", &meioTransporte.geocodigo);
 
-
-	listarTransporte(meioTransporte);
-	//saveficheiroTransporte(&meioTransporte); 
-
-	
-
+		saveficheiroTransporte(&meioTransporte);
+	}
 	return 0;
-
 } 

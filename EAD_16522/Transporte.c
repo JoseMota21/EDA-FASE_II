@@ -2,11 +2,37 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "Transporte.h"  
+#include <stdbool.h>
+#include "Transporte.h" 
+
+//Verificar se existe o meio de transporte pelo o ID 
+int ExisteTransporte(Transporte* inicio, int id) {
+
+	while (inicio != NULL) {
+
+		if (inicio->codigo == id) {
+			int resposta;
+			printf ("ID ja existente, por favor inserir outro ID (1 Sair) (0 Inserir ID) \n");
+			scanf ("%d", &resposta); 
+
+			if (resposta == 1) {
+				return true; 
+			}
+			else if (resposta == 0) {
+				printf("Insira o codigo do meio de mobilidade: "); 
+				scanf("%d",&id);
+ 
+			}
+		}
+		inicio = inicio->seguinte;
+		
+	}
+	return false; 
+} 
 
 
 //Inserir um novo registo na lista ligada transporte 
-Transporte* InserirTransporte(Transporte* inicio, int id, char tipo[], float bateria, float autonomia) {
+Transporte* InserirTransporte(Transporte* inicio, int id, char tipo[], float bateria, float autonomia, char geocodigo[]) {
 
 	if (!ExisteTransporte(inicio, id)) {
 		Transporte* novo = malloc(sizeof(struct registo)); 
@@ -16,6 +42,7 @@ Transporte* InserirTransporte(Transporte* inicio, int id, char tipo[], float bat
 				strcpy(novo->tipo, tipo); 
 				novo->bateria = bateria;
 				novo->autonomia = autonomia; 
+				strcpy(novo->geocodigo, geocodigo);
 				novo->seguinte = inicio; 
 
 				return (novo); 
@@ -23,32 +50,24 @@ Transporte* InserirTransporte(Transporte* inicio, int id, char tipo[], float bat
 	} else return (inicio);
 }
 
-//Verificar se existe o meio de transporte pelo o ID 
-int ExisteTransporte(Transporte* inicio, int id) {
-	while (inicio != NULL) {
-		
-		if (inicio->codigo == id) {
-			return (1);
-		
-			inicio = inicio->seguinte; 
-		}
-	}
-	return(0); 
-}
-
 //Remover um meio de transporte pelo o ID 
-Transporte* RemoverTransporte(Transporte* inicio, int id) {
+Transporte* RemoverTransporte(Transporte* inicio, int id) { 
 
-	Transporte* antigo = inicio, * atual = inicio, * aux;
+	Transporte* aux = NULL; 
 
-	if (atual == NULL) {
-		return (NULL);
-	}
-	else if (atual->codigo == id){
-		aux = atual->seguinte;
-		free(atual);
+	while (inicio!=NULL){ 
+		if (inicio->codigo == id) {
+			aux = inicio->seguinte; 
 
-		return(aux);
+			free(inicio); 
+			return (aux); 
+		}
+		else
+		{
+			inicio = RemoverTransporte(inicio->seguinte, id);
+			return (inicio); 
+		}
+
 	}
 }
 
@@ -56,7 +75,7 @@ Transporte* RemoverTransporte(Transporte* inicio, int id) {
 Transporte* listarTransporte (Transporte* inicio) {
 	while (inicio != NULL) {
 	
-		printf("%d; %c; %.2f; %.2f \n", inicio->codigo, inicio->tipo, inicio->bateria, inicio->autonomia); 
+		printf("%d; %c; %.2f; %.2f; %s\n", inicio->codigo, inicio->tipo, inicio->bateria, inicio->autonomia, inicio->geocodigo); 
 
 		inicio = inicio->seguinte; 
 	}
@@ -74,16 +93,20 @@ Transporte* saveficheiroTransporte(Transporte* inicio) {
 		return;
 	}
 
-	//Escrever no txt
-	fprintf(ficheiroTransporte, "%d; %c; %.2f; %.2f \n", inicio->codigo, inicio->tipo, inicio->bateria, inicio->autonomia);
-	inicio = inicio->seguinte;
+	Transporte* atual = inicio; 
 
+	while (atual !=NULL){ 
+
+		fprintf(ficheiroTransporte, "%d; %c; %.2f; %.2f; %s \n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo);
+
+		atual = atual->seguinte; 
+	}
 	//Fechar o txt
 	fclose(ficheiroTransporte);
 
 }
 
-//Ler ficheiro TXT a informação das trotinetes 
+//Ler ficheiro txt a informação das trotinetes e colocar na estrutura 
 Transporte* lerFicheiroTransporte(Transporte* inicio) {
 	FILE* ficheiroTransporte = fopen("Transporte.txt", "r");
 
@@ -98,7 +121,7 @@ Transporte* lerFicheiroTransporte(Transporte* inicio) {
 
 		Transporte* novoTransporte = (Transporte*)malloc(sizeof(Transporte)); 
 
-		sscanf (linha, "%d; %c; %.2f; %.2f", &novoTransporte->codigo, &novoTransporte->tipo, &novoTransporte->bateria, &novoTransporte->autonomia); 
+		sscanf (linha, "%d; %c; %f; %f; %s", &novoTransporte->codigo, &novoTransporte->tipo, &novoTransporte->bateria, &novoTransporte->autonomia, &novoTransporte->geocodigo); 
 		novoTransporte->seguinte = NULL; 
 
 		if (inicio == NULL) {
