@@ -10,14 +10,14 @@ int main() {
 	//Ler o ficheiro Txt
 	meioTransporte_1 = lerFicheiroTransporte(meioTransporte_1); 
 
+	
+
 	//Pedir informação ao Gestor para adicionar um meio de transporte (Código, tipo, nivel bateria, automonomia estimada)  		
 	printf("Insira o codigo do meio de mobilidade: ");
 	scanf("%d", &novoTransporte.codigo);
 
-	
 	//Verificar se existe o ID selecionado pelo o Gestor
 	if (ExisteTransporte(meioTransporte_1, novoTransporte.codigo)) {
-
 	}
 	else {
 		printf("Insira o tipo de meio de mobilidade (T ou B): ");
@@ -28,22 +28,27 @@ int main() {
 
 		//Caso o gestor coloque a bateria supeior a 100 o programa assume por defeito 100%
 		if (novoTransporte.bateria > 100) {
-			novoTransporte.bateria = 100;
+			novoTransporte.bateria = 100;	
 		}
 		printf("Insira a autonomia em KM: ");
 		scanf("%f", &novoTransporte.autonomia);
 
-		printf("Insira a localização: ");
+		if (novoTransporte.bateria = 100) {
+			novoTransporte.autonomia = 80; 
+		}
+
+		printf("Insira a localizacao: ");
 		scanf("%s", &novoTransporte.geocodigo);
 
-
-		meioTransporte_1 = InserirTransporte (meioTransporte_1, novoTransporte.codigo, novoTransporte.tipo, novoTransporte.bateria, novoTransporte.autonomia, novoTransporte.geocodigo);
-		//listarTransporte(meioTransporte_1);
-		meioTransporte_1 = saveficheiroTransporte(meioTransporte_1);
+		//Inserir meio de transporte na lista ligada/estrutrua 
+		meioTransporte_1 = InserirTransporte(meioTransporte_1, novoTransporte.codigo, novoTransporte.tipo, novoTransporte.bateria, novoTransporte.autonomia, novoTransporte.geocodigo);
+		
+		//Guardar os dados inseridos pelo o utilizador em ficheiro txt
+		saveficheiroTransporte(&novoTransporte);
 
 	} 
-	
-	
+	//Apresentar dados na consola não está a funcionar 
+	//listarTransporte(meioTransporte_1);
 
 	return 0;
 }

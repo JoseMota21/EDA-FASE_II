@@ -1,5 +1,5 @@
 #include <stdio.h>
-#define MAX_TIPO 50 
+
 
 //Estrutura para o registo do meio de mobilidade eletrica 
 typedef struct registo {

@@ -17,10 +17,12 @@ int ExisteTransporte(Transporte* inicio, int id) {
 			printf("ID ja existente, por favor inserir outro ID (1 Sair) (0 Inserir ID) \n");
 			scanf("%d",&resposta);
 
+			//Se resposta for 1 o programa para 
 			if (resposta == 1) {
 				return true;
 			}
 			else if (resposta == 0) {
+			
 				printf("Insira o codigo do meio de mobilidade: ");
 				scanf("%d",&id);
 
@@ -36,6 +38,10 @@ int ExisteTransporte(Transporte* inicio, int id) {
 //Inserir um novo registo na lista ligada transporte 
 Transporte* InserirTransporte(Transporte* inicio, int id, char tipo[10], float bateria, float autonomia, char geocodigo[20]) {
 
+	//A verificar o que foi inserido no teclado 
+	printf("Inserindo novo registro: id=%d, tipo=%s, bateria=%.2f, autonomia=%.2f, geocodigo=%s\n", id, tipo, bateria, autonomia, geocodigo);
+
+
 	if (!ExisteTransporte(inicio, id)) {
 		Transporte* novo = malloc(sizeof(struct registo));
 
@@ -47,10 +53,18 @@ Transporte* InserirTransporte(Transporte* inicio, int id, char tipo[10], float b
 			strcpy(novo->geocodigo, geocodigo);
 			novo->seguinte = inicio;
 
+			//A ter a certeza o que foi inserido 
+			printf("Registo Inserido com exito!\n"); 
+			printf("Novo registro: id=%d, tipo=%s, bateria=%.2f, autonomia=%.2f, geocodigo=%s\n", novo->codigo, novo->tipo, novo->bateria, novo->autonomia, novo->geocodigo);
+
 			return (novo);
 		}
 	}
-	else return (inicio);
+	else {
+		printf("Erro ao colocar na memoria"); 
+	}
+
+		return (inicio);
 }
 
 
@@ -77,10 +91,10 @@ Transporte* RemoverTransporte(Transporte* inicio, int id) {
 
 //Apresentar na consola o conteudo da lista ligada 
 Transporte* listarTransporte(Transporte* inicio) {
-	
+
 	while (inicio != NULL) {
 
-		printf("%d; %s; %.2f; %.2f; %s\n", inicio->codigo, inicio->tipo[10], inicio->bateria, inicio->autonomia, inicio->geocodigo[20]);
+		printf("%d; %s; %.2f; %.2f; %s\n", inicio->codigo, inicio->tipo, inicio->bateria, inicio->autonomia, inicio->geocodigo);
 
 		inicio = inicio->seguinte;
 	}
@@ -115,7 +129,7 @@ Transporte* saveficheiroTransporte(Transporte* inicio) {
 Transporte* lerFicheiroTransporte(Transporte* inicio) {
 	FILE* ficheiroTransporte = fopen("Transporte.txt", "r");
 
-	char linha[100];
+	char linha[1000];
 
 	if (ficheiroTransporte == NULL) {
 		printf("Erro ao abrir o ficheiro Transporte\n");
@@ -126,7 +140,13 @@ Transporte* lerFicheiroTransporte(Transporte* inicio) {
 
 		Transporte* novoTransporte = (Transporte*)malloc(sizeof(Transporte));
 
-		sscanf(linha, "%d; %s; %f; %f; %s", &novoTransporte->codigo, &novoTransporte->tipo, &novoTransporte->bateria, &novoTransporte->autonomia, &novoTransporte->geocodigo);
+		sscanf(linha, "%d;%[^;];%f;%f;%s", &novoTransporte->codigo, novoTransporte->tipo, &novoTransporte->bateria, &novoTransporte->autonomia, novoTransporte->geocodigo);
+
+		//Verificar o que está a ser lido 
+		//sscanf(linha, "%d; %s; %.2f; %.2f; %s", &novoTransporte->codigo, novoTransporte->tipo, &novoTransporte->bateria, &novoTransporte->autonomia, novoTransporte->geocodigo);
+		
+		//Verificar o que está a ser lido 
+		printf("Codigo: %d, Tipo: %s, Bateria: %.2f, Autonomia: %.2f, Geocódigo: %s\n", novoTransporte->codigo, novoTransporte->tipo, novoTransporte->bateria, novoTransporte->autonomia, novoTransporte->geocodigo);
 		novoTransporte->seguinte = NULL;
 
 		if (inicio == NULL) {
