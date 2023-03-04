@@ -5,8 +5,6 @@
 #include <stdbool.h>
 #include "Transporte.h" 
 
-
-
 //Verificar se existe o meio de transporte pelo o ID 
 int ExisteTransporte(Transporte* inicio, int id) {
 
@@ -17,18 +15,20 @@ int ExisteTransporte(Transporte* inicio, int id) {
 			printf("ID ja existente, por favor inserir outro ID (1 Sair) (0 Inserir ID) \n");
 			scanf("%d",&resposta);
 
-			//Se resposta for 1 o programa para 
+			
+
+			//Se resposta for 1 o programa stop 
 			if (resposta == 1) {
 				return true;
 			}
 			else if (resposta == 0) {
 			
 				printf("Insira o codigo do meio de mobilidade: ");
-				scanf("%d",&id);
-
-			
+				scanf("%d",&id); 
+				printf("%d 5 \n", id);
 			}
 		}
+		
 		inicio = inicio->seguinte;
 
 	}
@@ -39,7 +39,7 @@ int ExisteTransporte(Transporte* inicio, int id) {
 Transporte* InserirTransporte(Transporte* inicio, int id, char tipo[10], float bateria, float autonomia, char geocodigo[20]) {
 
 	//A verificar o que foi inserido no teclado 
-	printf("Inserindo novo registro: id=%d, tipo=%s, bateria=%.2f, autonomia=%.2f, geocodigo=%s\n", id, tipo, bateria, autonomia, geocodigo);
+	//printf("Inserindo novo registro: id=%d, tipo=%s, bateria=%.2f, autonomia=%.2f, geocodigo=%s\n", id, tipo, bateria, autonomia, geocodigo);
 
 
 	if (!ExisteTransporte(inicio, id)) {
@@ -55,18 +55,17 @@ Transporte* InserirTransporte(Transporte* inicio, int id, char tipo[10], float b
 
 			//A ter a certeza o que foi inserido 
 			printf("Registo Inserido com exito!\n"); 
-			printf("Novo registro: id=%d, tipo=%s, bateria=%.2f, autonomia=%.2f, geocodigo=%s\n", novo->codigo, novo->tipo, novo->bateria, novo->autonomia, novo->geocodigo);
+			//printf("Novo registro: id=%d, tipo=%s, bateria=%.2f, autonomia=%.2f, geocodigo=%s\n", novo->codigo, novo->tipo, novo->bateria, novo->autonomia, novo->geocodigo);
 
 			return (novo);
 		}
 	}
 	else {
-		printf("Erro ao colocar na memoria"); 
+		printf("Erro ao colocar na memoria\n"); 
 	}
 
 		return (inicio);
 }
-
 
 //Remover um meio de transporte pelo o ID 
 Transporte* RemoverTransporte(Transporte* inicio, int id) {
@@ -146,7 +145,7 @@ Transporte* lerFicheiroTransporte(Transporte* inicio) {
 		//sscanf(linha, "%d; %s; %.2f; %.2f; %s", &novoTransporte->codigo, novoTransporte->tipo, &novoTransporte->bateria, &novoTransporte->autonomia, novoTransporte->geocodigo);
 		
 		//Verificar o que está a ser lido 
-		printf("Codigo: %d, Tipo: %s, Bateria: %.2f, Autonomia: %.2f, Geocódigo: %s\n", novoTransporte->codigo, novoTransporte->tipo, novoTransporte->bateria, novoTransporte->autonomia, novoTransporte->geocodigo);
+		//printf("Codigo: %d, Tipo: %s, Bateria: %.2f, Autonomia: %.2f, Geocódigo: %s\n", novoTransporte->codigo, novoTransporte->tipo, novoTransporte->bateria, novoTransporte->autonomia, novoTransporte->geocodigo);
 		novoTransporte->seguinte = NULL;
 
 		if (inicio == NULL) {
