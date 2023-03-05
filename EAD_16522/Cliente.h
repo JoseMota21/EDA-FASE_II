@@ -4,7 +4,7 @@
 
 //Estrutura para o registo do cliente
 typedef struct registoCliente {
-	int ID_cliente; // ID do cliente 
+	//int ID_cliente; // ID do cliente 
 	char nome_cliente[MAX_NOME_CLIENTE]; // Nome do cliente
 	int NIF; // Numero de identificação fiscal do cliente
 	float saldo; //saldo do cliente
@@ -18,7 +18,7 @@ typedef struct registoCliente {
 int ExisteCliente(Cliente* inicio, int nif); 
 
 //Inserir um novo cliente 
-Cliente* InserirCliente(Cliente* inicio, int ID, char nome[], int nif, float saldo, char morada[]); 
+Cliente* InserirCliente(Cliente* inicio, char nome[80], int nif, float saldo, char morada[80]); 
 
 // Listar cliente na consola 
 Cliente* listarCliente(Cliente* inicio); 

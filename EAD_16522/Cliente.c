@@ -5,15 +5,14 @@
 #include <stdbool.h>
 #include "Cliente.h" 
 
-#define MAX_LINHA 100 
+#define MAX_LINHA 1000
 
 //Inserir novo cliente na estrutura 
-Cliente* InserirCliente(Cliente* inicio, int id, char nome[], int nif, float saldo, char morada[]) {
+Cliente* InserirCliente(Cliente* inicio, char nome[80], int nif, float saldo, char morada[80]) {
 
 	Cliente* novo = malloc(sizeof(struct registoCliente)); 
 	
-	if (novo != NULL) {
-		novo->ID_cliente = id; 
+	if (novo != NULL) { 
 		strcpy(novo->nome_cliente, nome); 
 		novo->NIF = nif; 
 		novo->saldo = saldo; 
@@ -48,8 +47,7 @@ int ExisteCliente (Cliente* inicio, int nif){
 //Guardar cliente em ficheiro txt 
 Cliente* saveficheiroCliente(Cliente* inicio){
 
-	int ultimo_id = 0; 
-	char linha[MAX_LINHA]; 
+	Cliente* atual = inicio;
 
 	//Abrir ficheiro txt 
 	FILE* ficheiroCliente = fopen("Cliente.txt", "a+"); 
@@ -60,37 +58,8 @@ Cliente* saveficheiroCliente(Cliente* inicio){
 		return; 
 	}
 
-	//Verificar qual o ultimo ID 
-	while (fgets(linha, MAX_LINHA, ficheiroCliente)){
-		int ID = 0; 
-		sscanf(linha, "ID: %d", &ID); 
-		
-		//Se o ID for maior que o ultimo ID
-		if (ID > ultimo_id) {
-			ultimo_id = ID; 
-		}
-	}
-
-	//fechar o ficheiro txt 
-	fclose(ficheiroCliente); 
-
-	//Incrementar o ID
-	int ID_Atual = ultimo_id + 1; 
-
-	//Abrir o ficheiro 
-	ficheiroCliente = fopen ("Cliente.txt", "a+");
-
-	//Se erro ao abrir mensagem para o utilizador
-	if (ficheiroCliente == NULL) {
-		printf("Erro ao abrir o ficheiro Cliente \n");
-
-		return;
-	}
-
-	Cliente* atual = inicio; 
-
 	//Escrever os dados no ficheiro txt 
-	fprintf(ficheiroCliente, "%d; %s; %d; %.2f; %s \n", atual->ID_cliente, atual->nome_cliente, atual->NIF, atual->saldo, atual->morada); 
+	fprintf(ficheiroCliente, "%s; %d; %.2f; %s \n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada); 
 
 	//fechar o ficheiro txt 
 	fclose(ficheiroCliente); 
@@ -103,46 +72,44 @@ Cliente* lerFicheiroCliente(Cliente* inicio) {
 	FILE* ficheiroCliente = fopen("Cliente.txt", "r");
 
 	//Declaração de varial ha com capacidade maxima de 100 
-	char linha[MAX_LINHA]; 
+	char linha[MAX_LINHA];
 
 	//Se erro ao abrir mensagem para o utilizador
 	if (ficheiroCliente == NULL) {
 		printf("Erro ao abrir o ficheiro Cliente \n");
 
-		return;
+		return inicio;
 	}
 
 	//Enquanto que não chega ao fim da ultima linha 
-	while (fgets(linha, sizeof (linha), ficheiroCliente) != NULL) {
+	while (fgets(linha, sizeof(linha), ficheiroCliente) != NULL) {
 
-		Cliente* novoCliente = (Cliente*)malloc(sizeof(Cliente)); 
+		Cliente* novoCliente = (Cliente*)malloc(sizeof(Cliente));
 
 		//A ler o ficheiro 
-		//"%d;%[^;];%d;%f;%s", ) // se não estiver a ler corretamente 
-		sscanf(linha, "%d; %s; %d; %.2f; %s", &novoCliente->ID_cliente, &novoCliente->nome_cliente, &novoCliente->NIF, &novoCliente->saldo, &novoCliente->morada); 
+		sscanf(linha, "%[^;]; %d; %f; %[^\n]", novoCliente->nome_cliente, &novoCliente->NIF, &novoCliente->saldo, novoCliente->morada);
 
+		novoCliente->seguinte = NULL; 
 		//Quando chegar ao fim 
 		if (inicio == NULL) {
-			inicio = novoCliente; 
+			inicio = novoCliente;
 
 		}
 		else {
-			Cliente* atual = inicio; 
+			Cliente* atual = inicio;
 
-			while (atual->seguinte != NULL){ 
-				atual = atual->seguinte; 
+			while (atual->seguinte != NULL) {
+				atual = atual->seguinte;
 
 			}
-			atual->seguinte = novoCliente; 
+			atual->seguinte = novoCliente;
 		}
 	}
-
 	//Fechar o ficheiro 
-	fclose(ficheiroCliente); 
+	fclose(ficheiroCliente);
 
-	return inicio; 
-	
-} 
+	return inicio;
+}
 
 // Listar cliente na consola 
 Cliente* listarCliente(Cliente* inicio) {
@@ -151,7 +118,7 @@ Cliente* listarCliente(Cliente* inicio) {
 	while (inicio != NULL) { 
 
 		//A escrever na consola
-		printf("%d; %s; %d; %.2f; %s \n", inicio->ID_cliente, inicio->nome_cliente, inicio->NIF, inicio->saldo, inicio->morada); 
+		printf("%s; %d; %.2f; %s \n",inicio->nome_cliente, inicio->NIF, inicio->saldo, inicio->morada); 
 		inicio = inicio->seguinte;
 	}
 } 
