@@ -31,3 +31,5 @@ Transporte* saveficheiroTransporte(Transporte* inicio);
 //Ler ficheiro txt Tranporte 
 Transporte* lerFicheiroTransporte(Transporte* inicio);
 
+//ORDENAR TESTE 
+void ordenarPorAutonomia(Transporte* inicio); 

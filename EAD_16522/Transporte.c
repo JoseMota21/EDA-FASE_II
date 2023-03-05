@@ -49,6 +49,8 @@ Transporte* InserirTransporte(Transporte* inicio, int id, char tipo[10], float b
 		strcpy(novo->geocodigo, geocodigo);
 		novo->seguinte = inicio;
 
+		//Limpar consola 
+		system("cls");
 		//A ter a certeza o que foi inserido 
 		printf("Registo Inserido com exito!\n");
 		//printf("Novo registro: id=%d, tipo=%s, bateria=%.2f, autonomia=%.2f, geocodigo=%s\n", novo->codigo, novo->tipo, novo->bateria, novo->autonomia, novo->geocodigo);
@@ -160,4 +162,10 @@ Transporte* lerFicheiroTransporte(Transporte* inicio) {
 	fclose(ficheiroTransporte);
 	return inicio;
 
+} 
+
+//Calcular a autonomia total 
+float calcularAutonomia(Transporte* transporte) {
+	return transporte->autonomia * (transporte->bateria / 100); 
 }
+
