@@ -35,6 +35,7 @@ int ExisteTransporte(Transporte* inicio, int id) {
 	return false;
 }
 //Inserir um novo registo na lista ligada transporte 
+
 Transporte* InserirTransporte(Transporte* inicio, int id, char tipo[10], float bateria, float autonomia, char geocodigo[20]) {
 
 	//A verificar o que foi inserido no teclado 
@@ -68,22 +69,35 @@ Transporte* InserirTransporte(Transporte* inicio, int id, char tipo[10], float b
 //Remover um meio de transporte pelo o ID 
 Transporte* RemoverTransporte(Transporte* inicio, int id) {
 
-	Transporte* aux = NULL;
-
-	while (inicio != NULL) {
-		if (inicio->codigo == id) {
-			aux = inicio->seguinte;
-
-			free(inicio);
-			return (aux);
-		}
-		else
-		{
-			inicio = RemoverTransporte(inicio->seguinte, id);
-			return (inicio);
-		}
-
+	//Se lista estiver vazia informa o utilizador da aplciação 
+	if (inicio == NULL) {
+		printf("LISTA VAZIA\n");
+		return;
 	}
+	Transporte* atual = inicio;
+	Transporte* anterior = NULL;
+
+	//Procurar na estrutura o ID pedido 
+	while (atual != NULL && atual->codigo != id) {
+		anterior = atual;
+		atual = atual->seguinte;
+	}
+
+	//Quando a pesquisar chegar ao fim da lista e não for encontrado o id avisa o utilizador
+	if (atual == NULL) {
+		printf("O MEIO DE TRANSPORTE COM O CODIGO %d NAO FOI ENCONTRADA NA LISTA\n", id);
+		return;
+	}
+	//Remove o id da lista
+	if (anterior == NULL) { //Se for o primeiro
+		inicio = atual->seguinte;
+	}
+	else {
+		anterior->seguinte = atual->seguinte;
+	}
+	free(atual); //Libertar a memoria que estava alocada 
+
+	printf("MEIO DE TRANSPORTE COM O ID %d REMOVIDO COM SUCESSO\n", id);
 }
 
 //Apresentar na consola o conteudo da lista ligada 
@@ -164,8 +178,80 @@ Transporte* lerFicheiroTransporte(Transporte* inicio) {
 
 } 
 
-//Calcular a autonomia total 
-float calcularAutonomia(Transporte* transporte) {
-	return transporte->autonomia * (transporte->bateria / 100); 
+//Mostrar a trotinete com maior bateria (Possivelmente vou adptar isto para ordenar) 
+int EncontrarIdTransporteComMaiorBateria(Transporte* inicio) {
+	if (inicio == NULL) {
+		return -1; // Lista vazia
+	}
+
+	Transporte* atual = inicio;
+	Transporte* maior = inicio;
+
+	while (atual != NULL) {
+		if (atual->bateria > maior->bateria) {
+			maior = atual; // Atualiza o ponteiro para o elemento com maior carga de bateria
+		}
+		atual = atual->seguinte;
+	}
+	printf("MEIO DE TRANSPORTE COM MAIOR AUTONOMIA\n");
+	printf("%d; %.2f\n", maior->codigo, maior->bateria);
+	return maior->codigo; // Retorna o ID do meio de transporte com maior bateria
 }
 
+//Trocar a ordem dos transportes 
+void TrocarTransportes(Transporte* t1, Transporte* t2) {
+	int codigo_temp = t1->codigo;
+	char tipo_temp[20];
+	strcpy(tipo_temp, t1->tipo);
+	float bateria_temp = t1->bateria;
+	float autonomia_temp = t1->autonomia;
+	char geocodigo_temp[7];
+	strcpy(geocodigo_temp, t1->geocodigo);
+
+	t1->codigo = t2->codigo;
+	strcpy(t1->tipo, t2->tipo);
+	t1->bateria = t2->bateria;
+	t1->autonomia = t2->autonomia;
+	strcpy(t1->geocodigo, t2->geocodigo);
+
+	t2->codigo = codigo_temp;
+	strcpy(t2->tipo, tipo_temp);
+	t2->bateria = bateria_temp;
+	t2->autonomia = autonomia_temp;
+	strcpy(t2->geocodigo, geocodigo_temp);
+}
+
+//Ordenar Autonomia ordem decrescente
+void OrdenarTransportesPorAutonomiaDecrescente(Transporte* inicio) {
+	int trocado;
+	Transporte* atual, * anterior = NULL;
+
+	//Lista estiver vazia informa o utilizador
+	if (inicio == NULL) {
+		printf("Lista vazia!\n");
+		return;
+	}
+
+	do {
+		trocado = 0;
+		atual = inicio;
+
+		while (atual->seguinte != anterior) {
+			if (atual->autonomia < atual->seguinte->autonomia) {
+				TrocarTransportes(atual, atual->seguinte);
+				trocado = 1;
+			}
+			atual = atual->seguinte;
+		}
+		anterior = atual;
+	} while (trocado);
+
+	
+	printf("TRANSPORTE ORDENADO POR AUTONOMIA\n");
+
+	//Enquanto que não chega ao fim da lista escreve na consola
+	while (inicio != NULL) {
+		printf("%d; %s;%.2f;%.2f;%s\n", inicio->codigo, inicio->tipo, inicio->bateria, inicio->autonomia, inicio->geocodigo);
+		inicio = inicio->seguinte;
+	}
+}

@@ -122,3 +122,38 @@ Cliente* listarCliente(Cliente* inicio) {
 		inicio = inicio->seguinte;
 	}
 } 
+
+//Remover cliente 
+//Remover um cliente pelo o NIF 
+Cliente* RemoverCliente(Cliente* inicio, int nif) {
+
+	//Se lista estiver vazia informa o utilizador da aplciação 
+	if (inicio == NULL) {
+		printf("LISTA VAZIA\n");
+		return;
+	}
+	Cliente* atual = inicio;
+	Cliente* anterior = NULL;
+
+	//Procurar na estrutura o ID pedido 
+	while (atual != NULL && atual->NIF != nif) {
+		anterior = atual;
+		atual = atual->seguinte;
+	}
+
+	//Quando a pesquisar chegar ao fim da lista e não for encontrado o id avisa o utilizador
+	if (atual == NULL) {
+		printf("O CLIENTE COM O NIF %d NAO FOI ENCONTRADA NA LISTA\n", nif);
+		return;
+	}
+	//Remove o id da lista
+	if (anterior == NULL) { //Se for o primeiro
+		inicio = atual->seguinte;
+	}
+	else {
+		anterior->seguinte = atual->seguinte;
+	}
+	free(atual); //Libertar a memoria que estava alocada 
+
+	printf("CLIENTE COM O NIF %d REMOVIDO COM SUCESSO\n", nif);
+}

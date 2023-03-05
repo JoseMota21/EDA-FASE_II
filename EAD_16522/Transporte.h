@@ -20,7 +20,7 @@ int ExisteTransporte(Transporte* Inicio, int ID);
 Transporte* InserirTransporte(Transporte* Inicio, int ID, char Tipo[], float Bateria, float Autonmia, char Geocodigo[]);
 
 //Remover um meio de transporte atraves do ID
-Transporte* RemoverTransporte(Transporte* Inicio, int ID);
+Transporte* RemoverTransporte(Transporte* inicio, int id);
 
 //Listar Transporte na Consola 
 Transporte* listarTransporte(Transporte* Inicio);
@@ -31,5 +31,9 @@ Transporte* saveficheiroTransporte(Transporte* inicio);
 //Ler ficheiro txt Tranporte 
 Transporte* lerFicheiroTransporte(Transporte* inicio);
 
-//ORDENAR TESTE 
-void ordenarPorAutonomia(Transporte* inicio); 
+//Encontrar na estrutura o meio de transporte com maior bateria
+int EncontrarIdTransporteComMaiorBateria(Transporte* inicio); 
+
+//Ordenar o meio de transporte de forma decrescente a autonomia 
+void OrdenarTransportesPorAutonomiaDecrescente(Transporte* inicio); 
+

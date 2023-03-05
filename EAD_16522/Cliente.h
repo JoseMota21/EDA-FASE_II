@@ -28,3 +28,6 @@ Cliente* saveficheiroCliente(Cliente* inicio);
 
 //Ler ficheiro txt 
 Cliente* lerFicheiroCliente(Cliente* inicio); 
+
+//Remover cliente
+Cliente* RemoverCliente(Cliente* inicio, int nif); 
