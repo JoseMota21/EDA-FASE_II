@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Cliente.c" />
     <ClCompile Include="Main.c" />
     <ClCompile Include="Transporte.c" />
   </ItemGroup>

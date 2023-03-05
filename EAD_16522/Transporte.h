@@ -1,6 +1,5 @@
 #include <stdio.h>
 
-
 //Estrutura para o registo do meio de mobilidade eletrica 
 typedef struct registo {
 	int codigo; // ID do meio de mobilidade  

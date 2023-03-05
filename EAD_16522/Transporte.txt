@@ -1,1 +1,8 @@
-0; bike; 34.00; 23.00; porto 
+0; rui; 99.00; 23.00; barcelos 
+9; bike; 23.00; 98.00; porto 
+7; rico; 45.00; 34.00; proto 
+200; bike; 98.00; 65.00; isbpa 
+200; bike; 100.00; 80.00; poro 
+28; bike; 34.00; 98.00; povoa 
+28; bike; 12.00; 13.00; po 
+7; bike; 66.00; 65.00; fde 

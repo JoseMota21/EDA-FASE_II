@@ -11,61 +11,57 @@ int ExisteTransporte(Transporte* inicio, int id) {
 	while (inicio != NULL) {
 
 		if (inicio->codigo == id) {
-			int resposta=0;
+			int resposta = 0;
+			printf("%d", id);
 			printf("ID ja existente, por favor inserir outro ID (1 Sair) (0 Inserir ID) \n");
-			scanf("%d",&resposta);
+			scanf("%d", &resposta);
 
-			
+			printf("%d", resposta);
 
 			//Se resposta for 1 o programa stop 
 			if (resposta == 1) {
 				return true;
 			}
 			else if (resposta == 0) {
-			
+
 				printf("Insira o codigo do meio de mobilidade: ");
-				scanf("%d",&id); 
-				printf("%d 5 \n", id);
+				scanf("%d", &id);
 			}
 		}
-		
+
 		inicio = inicio->seguinte;
 
 	}
-	return false;;
+	return false;
 }
-
 //Inserir um novo registo na lista ligada transporte 
 Transporte* InserirTransporte(Transporte* inicio, int id, char tipo[10], float bateria, float autonomia, char geocodigo[20]) {
 
 	//A verificar o que foi inserido no teclado 
-	//printf("Inserindo novo registro: id=%d, tipo=%s, bateria=%.2f, autonomia=%.2f, geocodigo=%s\n", id, tipo, bateria, autonomia, geocodigo);
+	//printf("Inserindo novo registro: id=%d, tipo=%s, bateria=%.2f, autonomia=%.2f, geocodigo=%s\n", id, tipo, bateria, autonomia, geocodigo)	
+	Transporte* novo = malloc(sizeof(struct registo));
 
+	if (novo != NULL) {
+		novo->codigo = id;
+		strcpy(novo->tipo, tipo);
+		novo->bateria = bateria;
+		novo->autonomia = autonomia;
+		strcpy(novo->geocodigo, geocodigo);
+		novo->seguinte = inicio;
 
-	if (!ExisteTransporte(inicio, id)) {
-		Transporte* novo = malloc(sizeof(struct registo));
+		//A ter a certeza o que foi inserido 
+		printf("Registo Inserido com exito!\n");
+		//printf("Novo registro: id=%d, tipo=%s, bateria=%.2f, autonomia=%.2f, geocodigo=%s\n", novo->codigo, novo->tipo, novo->bateria, novo->autonomia, novo->geocodigo);
 
-		if (novo != NULL) {
-			novo->codigo = id;
-			strcpy(novo->tipo, tipo);
-			novo->bateria = bateria;
-			novo->autonomia = autonomia;
-			strcpy(novo->geocodigo, geocodigo);
-			novo->seguinte = inicio;
-
-			//A ter a certeza o que foi inserido 
-			printf("Registo Inserido com exito!\n"); 
-			//printf("Novo registro: id=%d, tipo=%s, bateria=%.2f, autonomia=%.2f, geocodigo=%s\n", novo->codigo, novo->tipo, novo->bateria, novo->autonomia, novo->geocodigo);
-
-			return (novo);
-		}
+		return (novo);
 	}
 	else {
-		printf("Erro ao colocar na memoria\n"); 
+		printf("Erro ao colocar na memoria\n");
 	}
 
-		return (inicio);
-}
+	return (inicio);
+
+} 
 
 //Remover um meio de transporte pelo o ID 
 Transporte* RemoverTransporte(Transporte* inicio, int id) {
