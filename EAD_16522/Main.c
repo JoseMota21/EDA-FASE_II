@@ -5,11 +5,15 @@
 #include <stdlib.h>
 
 int main() {
-	Transporte* meioTransporte_1 = NULL;
+	Transporte* meioTransporte_1 = NULL; // Lista ligada vazia  
 	Transporte novoTransporte = { 0, ' ', 0.0, 0.0 };
 
+	//Transporte* meioTransporte_2 = NULL; 
+
 	Cliente novoCliente = { 0, ' ', 0, 0.0, ' ' };
-	Cliente* cliente_1 = NULL;
+	Cliente* cliente_1 = NULL; // Lista ligada vazia 
+
+	int aux_memoria = 0; 
 
 	//Variáveis alocadas ao swicth case 
 	int selecao;
@@ -55,10 +59,12 @@ int main() {
 			scanf("%d", &novoTransporte.codigo);
 
 			//Verificar se existe o ID selecionado pelo o Gestor
-			if (ExisteTransporte(meioTransporte_1, novoTransporte.codigo)) {
-
+			if (ExisteTransporte(meioTransporte_1, novoTransporte.codigo)==1) {
+				printf("ALTO"); 
 			}
 			else {
+				//novoTransporte.codigo=aux_memoria; 
+				printf("%d teste \n", novoTransporte.codigo);
 				//Inserir o meio de transporte
 				printf("Insira o tipo de meio de mobilidade (Trotinete ou Bicicleta): ");
 				scanf(" %s", &novoTransporte.tipo);
@@ -180,12 +186,11 @@ int main() {
 		case 4: 
 			//Pedir ao utilizador para inserir o ID que pretende eliminar
 			printf("INSIRA O ID QUE PRETENDE ELIMINAR: \n"); 
-			scanf("%d",&novoTransporte.codigo); 
+			scanf("%d",&novoTransporte.codigo);
+						
+			RemoverTransporte(meioTransporte_1,novoTransporte.codigo); //Função de remover o meio de transporte  
 
-	
-			RemoverTransporte(meioTransporte_1, novoTransporte.codigo); //Função de remover o meio de transporte 
-
-			listarTransporte(&meioTransporte_1);
+			listarTransporte(meioTransporte_1); 
 			break; 
 
 		}

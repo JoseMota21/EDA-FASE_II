@@ -12,61 +12,59 @@ int ExisteTransporte(Transporte* inicio, int id) {
 
 		if (inicio->codigo == id) {
 			int resposta = 0;
-			printf("%d", id);
-			printf("ID ja existente, por favor inserir outro ID (1 Sair) (0 Inserir ID) \n");
+			
+			printf("ID %d ja existente, por favor inserir outro ID (1 Sair) (0 Inserir ID) \n", id);
 			scanf("%d", &resposta);
-
-			printf("%d", resposta);
 
 			//Se resposta for 1 o programa stop 
 			if (resposta == 1) {
 				return true;
 			}
 			else if (resposta == 0) {
+				Transporte* novoTransporte = malloc(sizeof(Transporte));
 
-				printf("Insira o codigo do meio de mobilidade: ");
-				scanf("%d", &id);
+				printf("Insira o codigo do meio de mobilidade dentro: ");
+				scanf("%d",&id);
+				novoTransporte->seguinte = NULL; 
+				//return ExisteTransporte(inicio, novoTransporte->codigo); 
 			}
 		}
-
 		inicio = inicio->seguinte;
 
 	}
 	return false;
 }
 //Inserir um novo registo na lista ligada transporte 
-
 Transporte* InserirTransporte(Transporte* inicio, int id, char tipo[10], float bateria, float autonomia, char geocodigo[20]) {
 
-	//A verificar o que foi inserido no teclado 
-	//printf("Inserindo novo registro: id=%d, tipo=%s, bateria=%.2f, autonomia=%.2f, geocodigo=%s\n", id, tipo, bateria, autonomia, geocodigo)	
-	Transporte* novo = malloc(sizeof(struct registo));
+	//if (!ExisteTransporte(inicio, id)) {
+		Transporte* novo = malloc(sizeof(struct registo));
+		if (novo != NULL) {
+			novo->codigo = id;
+			strcpy(novo->tipo, tipo);
+			novo->bateria = bateria;
+			novo->autonomia = autonomia;
+			strcpy(novo->geocodigo, geocodigo);
+			novo->seguinte = inicio;
 
-	if (novo != NULL) {
-		novo->codigo = id;
-		strcpy(novo->tipo, tipo);
-		novo->bateria = bateria;
-		novo->autonomia = autonomia;
-		strcpy(novo->geocodigo, geocodigo);
-		novo->seguinte = inicio;
+			//Limpar consola 
+			system("cls");
+			//A ter a certeza o que foi inserido 
+			printf("Registo Inserido com exito!\n");
+			//printf("Novo registro: id=%d, tipo=%s, bateria=%.2f, autonomia=%.2f, geocodigo=%s\n", novo->codigo, novo->tipo, novo->bateria, novo->autonomia, novo->geocodigo);
 
-		//Limpar consola 
-		system("cls");
-		//A ter a certeza o que foi inserido 
-		printf("Registo Inserido com exito!\n");
-		//printf("Novo registro: id=%d, tipo=%s, bateria=%.2f, autonomia=%.2f, geocodigo=%s\n", novo->codigo, novo->tipo, novo->bateria, novo->autonomia, novo->geocodigo);
+			return (novo);
+		}
+		else {
+			printf("Erro ao colocar na memoria\n");
+		}
 
-		return (novo);
-	}
-	else {
-		printf("Erro ao colocar na memoria\n");
-	}
-
-	return (inicio);
+		return (inicio);
+	//} 
 
 } 
 
-//Remover um meio de transporte pelo o ID 
+//Remover um meio de transporte pelo o ID
 Transporte* RemoverTransporte(Transporte* inicio, int id) {
 
 	//Se lista estiver vazia informa o utilizador da aplciação 
@@ -90,19 +88,19 @@ Transporte* RemoverTransporte(Transporte* inicio, int id) {
 	}
 	//Remove o id da lista
 	if (anterior == NULL) { //Se for o primeiro
-		inicio = atual->seguinte;
+		inicio = atual->seguinte; 
+	
 	}
 	else {
 		anterior->seguinte = atual->seguinte;
 	}
 	free(atual); //Libertar a memoria que estava alocada 
 
-	printf("MEIO DE TRANSPORTE COM O ID %d REMOVIDO COM SUCESSO\n", id); 
+	printf("MEIO DE TRANSPORTE COM O ID %d REMOVIDO COM SUCESSO\n", id);
 
-	return inicio; 
+	return inicio;
 }
 
-//Apresentar na consola o conteudo da lista ligada 
 Transporte* listarTransporte(Transporte* inicio) {
 
 	while (inicio != NULL) {
