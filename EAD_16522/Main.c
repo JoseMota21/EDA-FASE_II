@@ -183,9 +183,9 @@ int main() {
 			scanf("%d",&novoTransporte.codigo); 
 
 	
-			RemoverTransporte(meioTransporte_1, novoTransporte.codigo); //Função de remover o meio de transporte	
+			RemoverTransporte(meioTransporte_1, novoTransporte.codigo); //Função de remover o meio de transporte 
 
-			//listarTransporte(meioTransporte_1);
+			listarTransporte(&meioTransporte_1);
 			break; 
 
 		}

@@ -83,10 +83,10 @@ Transporte* RemoverTransporte(Transporte* inicio, int id) {
 		atual = atual->seguinte;
 	}
 
-	//Quando a pesquisar chegar ao fim da lista e não for encontrado o id avisa o utilizador
+	//Quando a pesquisa chegar ao fim da lista e não for encontrado o id avisa o utilizador
 	if (atual == NULL) {
 		printf("O MEIO DE TRANSPORTE COM O CODIGO %d NAO FOI ENCONTRADA NA LISTA\n", id);
-		return;
+		return NULL;
 	}
 	//Remove o id da lista
 	if (anterior == NULL) { //Se for o primeiro
@@ -97,7 +97,9 @@ Transporte* RemoverTransporte(Transporte* inicio, int id) {
 	}
 	free(atual); //Libertar a memoria que estava alocada 
 
-	printf("MEIO DE TRANSPORTE COM O ID %d REMOVIDO COM SUCESSO\n", id);
+	printf("MEIO DE TRANSPORTE COM O ID %d REMOVIDO COM SUCESSO\n", id); 
+
+	return inicio; 
 }
 
 //Apresentar na consola o conteudo da lista ligada 
@@ -138,27 +140,24 @@ Transporte* saveficheiroTransporte(Transporte* inicio) {
 
 //Ler ficheiro txt a informação das trotinetes e colocar na estrutura 
 Transporte* lerFicheiroTransporte(Transporte* inicio) {
+	//Abrir ficheiro txt 
 	FILE* ficheiroTransporte = fopen("Transporte.txt", "r");
 
 	char linha[1000];
-
+	//Se algum problema ao abrir o ficheiro returna uma mensagem de Erro ao abrir o ficheiro
 	if (ficheiroTransporte == NULL) {
 		printf("Erro ao abrir o ficheiro Transporte\n");
 		return inicio; //return inicio 
 	}
-
+	//Enquanto que não chega ao fim do ficheiro 
 	while (fgets(linha, sizeof(linha), ficheiroTransporte) != NULL) {
 
 		Transporte* novoTransporte = (Transporte*)malloc(sizeof(Transporte));
 
+		//Ler linha a linha do ficheiro e coloca na estrutura 
 		sscanf(linha, "%d;%[^;];%f;%f;%s", &novoTransporte->codigo, novoTransporte->tipo, &novoTransporte->bateria, &novoTransporte->autonomia, novoTransporte->geocodigo);
 
-		//Verificar o que está a ser lido 
-		//sscanf(linha, "%d; %s; %.2f; %.2f; %s", &novoTransporte->codigo, novoTransporte->tipo, &novoTransporte->bateria, &novoTransporte->autonomia, novoTransporte->geocodigo);
-		
-		//Verificar o que está a ser lido 
-		//printf("Codigo: %d, Tipo: %s, Bateria: %.2f, Autonomia: %.2f, Geocódigo: %s\n", novoTransporte->codigo, novoTransporte->tipo, novoTransporte->bateria, novoTransporte->autonomia, novoTransporte->geocodigo);
-		novoTransporte->seguinte = NULL;
+			novoTransporte->seguinte = NULL;
 
 		if (inicio == NULL) {
 			inicio = novoTransporte;
@@ -172,13 +171,13 @@ Transporte* lerFicheiroTransporte(Transporte* inicio) {
 			atual->seguinte = novoTransporte;
 		}
 	}
-
+	//Fechar ficheiro txt 
 	fclose(ficheiroTransporte);
 	return inicio;
 
 } 
 
-//Mostrar a trotinete com maior bateria (Possivelmente vou adptar isto para ordenar) 
+//Mostrar o meio de mobilidade com maior bateria 
 int EncontrarIdTransporteComMaiorBateria(Transporte* inicio) {
 	if (inicio == NULL) {
 		return -1; // Lista vazia
@@ -223,7 +222,7 @@ void TrocarTransportes(Transporte* t1, Transporte* t2) {
 
 //Ordenar Autonomia ordem decrescente
 void OrdenarTransportesPorAutonomiaDecrescente(Transporte* inicio) {
-	int trocado;
+	int troca;
 	Transporte* atual, * anterior = NULL;
 
 	//Lista estiver vazia informa o utilizador
@@ -233,24 +232,27 @@ void OrdenarTransportesPorAutonomiaDecrescente(Transporte* inicio) {
 	}
 
 	do {
-		trocado = 0;
+		troca = 0;
 		atual = inicio;
-
+		//Enquanto que o atual for diferente que o anterior 
 		while (atual->seguinte != anterior) {
+			//Se autonimoa atual for menor que a autonomia seguinte da lista 
 			if (atual->autonomia < atual->seguinte->autonomia) {
+				//A autonomia atual é seguinte 
 				TrocarTransportes(atual, atual->seguinte);
-				trocado = 1;
+				troca = 1;
 			}
 			atual = atual->seguinte;
 		}
 		anterior = atual;
-	} while (trocado);
+	} while (troca); //Condição de paragem do ciclo 
 
-	
+	//Mensagem de informação ao utilizador
 	printf("TRANSPORTE ORDENADO POR AUTONOMIA\n");
 
 	//Enquanto que não chega ao fim da lista escreve na consola
 	while (inicio != NULL) {
+		//Escrever na consola 
 		printf("%d; %s;%.2f;%.2f;%s\n", inicio->codigo, inicio->tipo, inicio->bateria, inicio->autonomia, inicio->geocodigo);
 		inicio = inicio->seguinte;
 	}
