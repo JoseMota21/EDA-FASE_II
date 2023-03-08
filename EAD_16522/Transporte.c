@@ -18,7 +18,6 @@ int ExisteTransporte(Transporte* inicio, int id) {
 }
 
 Transporte* adicionarTransporte(Transporte* meioTransporte_1) {
-
 	Transporte novoTransporte = { 0, ' ', 0.0, 0.0 }; 
 
 	meioTransporte_1 = lerFicheiroTransporte(meioTransporte_1); 
