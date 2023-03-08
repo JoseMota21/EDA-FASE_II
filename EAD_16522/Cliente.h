@@ -30,6 +30,8 @@ Cliente* saveficheiroCliente(Cliente* inicio);
 Cliente* lerFicheiroCliente(Cliente* inicio); 
 
 //Remover cliente
-Cliente* RemoverCliente(Cliente* inicio, int nif); 
+//Cliente* RemoverCliente(Cliente* inicio, int nif); 
+
+Cliente* RemoverCliente(Cliente* inicio); 
 
 Cliente* inputCliente(Cliente* cliente_1); 

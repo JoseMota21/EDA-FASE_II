@@ -167,7 +167,12 @@ Cliente* listarCliente(Cliente* inicio) {
 } 
 
 //Remover cliente, remover um cliente pelo o NIF 
-Cliente* RemoverCliente(Cliente* inicio, int nif) {
+Cliente* RemoverCliente(Cliente* inicio) {
+
+	int nif; 
+
+	printf("Inserir o nif do cliente a eliminar:\n"); 
+	scanf("%d", &nif); 
 
 	//Se lista estiver vazia informa o utilizador da aplciação 
 	if (inicio == NULL) {

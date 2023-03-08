@@ -51,7 +51,10 @@ int main() {
 			inputCliente(cliente_1); 
 			break;
 		case 3: 
-			RemoverTransporte(meioTransporte_1); 
+			//RemoverTransporte(meioTransporte_1);  
+
+			RemoverCliente(cliente_1); 
+
 		}
 	}
 
