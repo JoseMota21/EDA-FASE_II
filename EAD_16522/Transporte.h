@@ -20,7 +20,9 @@ int ExisteTransporte(Transporte* Inicio, int ID);
 Transporte* InserirTransporte(Transporte* Inicio, int ID, char Tipo[], float Bateria, float Autonmia, char Geocodigo[]);
 
 //Remover um meio de transporte atraves do ID
-Transporte* RemoverTransporte(Transporte* inicio, int id);
+//Transporte* RemoverTransporte(Transporte* inicio, int id);
+
+Transporte* RemoverTransporte(Transporte* inicio); 
 
 //Listar Transporte na Consola 
 Transporte* listarTransporte(Transporte* Inicio);

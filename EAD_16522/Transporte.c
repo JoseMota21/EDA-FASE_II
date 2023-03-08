@@ -18,6 +18,7 @@ int ExisteTransporte(Transporte* inicio, int id) {
 	return 0;
 }
 
+//Escrever novo transporte através do teclado
 Transporte* adicionarTransporte(Transporte* meioTransporte_1) {
 	Transporte novoTransporte = { 0, ' ', 0.0, 0.0, 0.0}; 
 
@@ -85,7 +86,13 @@ Transporte* InserirTransporte(Transporte* inicio, int id, char tipo[10], float b
 }
 
 //Remover um meio de transporte pelo o ID
-Transporte* RemoverTransporte(Transporte* inicio, int id) {
+Transporte* RemoverTransporte(Transporte* inicio) { 
+
+	Transporte RemoverTransporte = { 0, ' ', 0.0, 0.0, 0.0 };
+
+	int codigo;
+	printf("Insira o codigo do meio de mobilidade:\n");
+	scanf("%d", &codigo); 
 
 	//Se lista estiver vazia informa o utilizador da aplciação 
 	if (inicio == NULL) {
@@ -96,14 +103,14 @@ Transporte* RemoverTransporte(Transporte* inicio, int id) {
 	Transporte* anterior = NULL;
 
 	//Procurar na estrutura o ID pedido 
-	while (atual != NULL && atual->codigo != id) {
+	while (atual != NULL && atual->codigo != codigo) {
 		anterior = atual;
 		atual = atual->seguinte;
 	}
 
 	//Quando a pesquisa chegar ao fim da lista e não for encontrado o id avisa o utilizador
 	if (atual == NULL) {
-		printf("O MEIO DE TRANSPORTE COM O CODIGO %d NAO FOI ENCONTRADA NA LISTA\n", id);
+		printf("O MEIO DE TRANSPORTE COM O CODIGO %d NAO FOI ENCONTRADA NA LISTA\n", codigo);
 		return NULL;
 	}
 	//Remove o id da lista
@@ -116,7 +123,7 @@ Transporte* RemoverTransporte(Transporte* inicio, int id) {
 	}
 	free(atual); //Libertar a memoria que estava alocada 
 
-	printf("MEIO DE TRANSPORTE COM O ID %d REMOVIDO COM SUCESSO\n", id);
+	printf("MEIO DE TRANSPORTE COM O ID %d REMOVIDO COM SUCESSO\n", codigo);
 
 	return inicio;
 }

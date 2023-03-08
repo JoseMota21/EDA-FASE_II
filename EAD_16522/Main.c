@@ -12,7 +12,7 @@ int main() {
 	//Variáveis alocadas ao swicth case 
 	int selecao;
 	int gestor;
-
+	
 	//Ler o ficheiro Txt
 	meioTransporte_1 = lerFicheiroTransporte(meioTransporte_1); // Ficheiro txt dos meios de transporte
 	cliente_1 = lerFicheiroCliente(cliente_1); // Ficheiro txt do cliente
@@ -34,8 +34,7 @@ int main() {
 
 		printf("1 - INSERIR TRANSPORTE \n");
 		printf("2 - INSERIR CLIENTE \n");
-		printf("3 - CONSULTAR DADOS \n");
-		printf("4 - REMOVER TRANSPORTE\n");
+		printf("3 - REMOVER DADOS \n");
 
 		scanf("%d", &gestor);
 
@@ -51,6 +50,8 @@ int main() {
 		case 2: 
 			inputCliente(cliente_1); 
 			break;
+		case 3: 
+			RemoverTransporte(meioTransporte_1); 
 		}
 	}
 
