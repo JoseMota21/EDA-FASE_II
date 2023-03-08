@@ -1,2 +1,1 @@
-0; BIKE; 100.00; 80.00; PORTO 
-1; TROTINETE; 39.00; 45.00; FAFE 
+4; bike; 34.00; 24.00; porto 

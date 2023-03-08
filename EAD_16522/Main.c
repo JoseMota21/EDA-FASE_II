@@ -53,7 +53,7 @@ int main() {
 		//Selecionar as operações do gestor
 		switch (gestor) {
 		case 1:
-			//adicionarTransporte(meioTransporte_1);
+			adicionarTransporte(meioTransporte_1);
 
 			
 			break;

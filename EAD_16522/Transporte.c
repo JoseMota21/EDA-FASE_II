@@ -19,36 +19,38 @@ int ExisteTransporte(Transporte* inicio, int id) {
 
 Transporte* adicionarTransporte(Transporte* meioTransporte_1) {
 
-	Transporte* novoTransporte = malloc(sizeof(Transporte));
+	Transporte novoTransporte = { 0, ' ', 0.0, 0.0 }; 
+
+	meioTransporte_1 = lerFicheiroTransporte(meioTransporte_1); 
 
 	//Pedir informação ao Gestor para adicionar um meio de transporte código
 	printf("Insira o codigo do meio de mobilidade: ");
-	scanf("%d", &novoTransporte->codigo);
+	scanf("%d", &novoTransporte.codigo);
 
 	//Verificar se existe o ID selecionado pelo o Gestor
-	while (ExisteTransporte(meioTransporte_1, novoTransporte->codigo)) {
+	while (ExisteTransporte(meioTransporte_1, novoTransporte.codigo)) {
 		printf("ID ja existente, por favor inserir outro ID \n");
-		scanf("%d", &novoTransporte->codigo);
+		scanf("%d", &novoTransporte.codigo);
 	}
 	//Inserir o meio de transporte
 	printf("Insira o tipo de meio de mobilidade (Trotinete ou Bicicleta): ");
-	scanf("%s", novoTransporte->tipo);
+	scanf("%s", novoTransporte.tipo);
 
 	//Inserir a carga atual da bateria do meio de transporte
 	printf("Insira a carga atual da bateria: ");
-	scanf("%f", &novoTransporte->bateria);
+	scanf("%f", &novoTransporte.bateria);
 
 	printf("Insira a autonomia: ");
-	scanf("%f", &novoTransporte->autonomia);
+	scanf("%f", &novoTransporte.autonomia);
 
 	printf("Insira a localizacao: ");
-	scanf("%s", novoTransporte->geocodigo); 
+	scanf("%s", novoTransporte.geocodigo); 
 
 	//Adicionar o novo meio de transporte ao início da lista
-	novoTransporte->seguinte = meioTransporte_1;
-	meioTransporte_1 = novoTransporte;
+	novoTransporte.seguinte = meioTransporte_1;
+	meioTransporte_1 = &novoTransporte;
 
-	meioTransporte_1 = InserirTransporte(meioTransporte_1, novoTransporte->codigo, novoTransporte->tipo, novoTransporte->bateria, novoTransporte->autonomia, novoTransporte->geocodigo); 
+	meioTransporte_1 = InserirTransporte(meioTransporte_1, novoTransporte.codigo, novoTransporte.tipo, novoTransporte.bateria, novoTransporte.autonomia, novoTransporte.geocodigo); 
 	saveficheiroTransporte(&novoTransporte); 
 	
 	return meioTransporte_1; 
