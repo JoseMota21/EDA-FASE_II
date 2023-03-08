@@ -13,11 +13,12 @@ int main() {
 	int selecao;
 	int gestor;
 	int eliminar; 
+	int consultar; 
 	
 	//Ler o ficheiro Txt
 	meioTransporte_1 = lerFicheiroTransporte(meioTransporte_1); // Ficheiro txt dos meios de transporte
 	cliente_1 = lerFicheiroCliente(cliente_1); // Ficheiro txt do cliente
-
+	
 	printf("EAD 16522\n");
 
 	printf("1 - GESTOR\n");
@@ -36,6 +37,7 @@ int main() {
 		printf("1 - INSERIR TRANSPORTE \n");
 		printf("2 - INSERIR CLIENTE \n");
 		printf("3 - REMOVER DADOS \n");
+		printf("4 - CONSULTAR DADOS \n");
 
 		scanf("%d", &gestor);
 
@@ -45,14 +47,15 @@ int main() {
 		//Selecionar as operações do gestor
 		switch (gestor) {
 		case 1:
+			//Adicionar meios de transporte através da escrita no teclado
 			adicionarTransporte(meioTransporte_1); 
 		break;
 
 		case 2: 
+			//Adicionar cliente através da escrita no teclado 
 			inputCliente(cliente_1); 
 			break;
 		case 3: 
-
 			printf("1 - REMOVER TRANSPORTE\n"); 
 			printf("2 - REMOVER CLIENTE\n");
 
@@ -61,22 +64,41 @@ int main() {
 			switch (eliminar) {
 
 			case 1: 
+				//Remover transporte
 				RemoverTransporte(meioTransporte_1); 
 				break; 
 
 			case 2: 
+				//Remover cliente
 				RemoverCliente(cliente_1); 
+				break; 
+	
 			default:
-
 				printf("OPCAO INVALIDA"); 
 				break;
 			}
+			break;
+		case 4: 
+			printf("1 - CONSULTAR TRANSPORTE\n");
+			printf("2 - CONSULTAR CLIENTE\n");
+			scanf("%d", &consultar);
+			switch (consultar) {
+			case 1: 
+				//Ordenar Transporte por autonomia (decrescente)
+				OrdenarTransportesPorAutonomiaDecrescente(meioTransporte_1);
+				//EncontrarIdTransporteComMaiorBateria(meioTransporte_1);  
+				break; 
 
-
+			default:
+				printf("opcao invalida"); 
+				break;
+			}
+			break; 
+			break; 
 		}
+	case 2: 
+		loginCliente(cliente_1); 
 	}
-
-
 
 	return;
 }

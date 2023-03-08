@@ -73,7 +73,7 @@ Transporte* InserirTransporte(Transporte* inicio, int id, char tipo[10], float b
 			novo->seguinte = inicio;
 
 			//Limpar consola 
-			system("cls");
+			//system("cls");
 			//A ter a certeza o que foi inserido 
 			printf("Registo Inserido com exito!\n");
 			return (novo);
@@ -126,6 +126,8 @@ Transporte* RemoverTransporte(Transporte* inicio) {
 	}
 	else {
 		anterior->seguinte = atual->seguinte;
+		listarTransporte(inicio);
+		saveficheiroTransporte(inicio); 
 	}
 	free(atual); //Libertar a memoria que estava alocada 
 
@@ -149,7 +151,7 @@ Transporte* listarTransporte(Transporte* inicio) {
 Transporte* saveficheiroTransporte(Transporte* inicio) {
 
 	//Abrir o ficheiro
-	FILE* ficheiroTransporte = fopen("Transporte.txt", "w");
+	FILE* ficheiroTransporte = fopen("Transporte.txt","w");
 
 	//Se ficheiro Null informação ao utilziador 
 	if (ficheiroTransporte == NULL) {
@@ -224,7 +226,7 @@ int EncontrarIdTransporteComMaiorBateria(Transporte* inicio) {
 		}
 		atual = atual->seguinte;
 	}
-	printf("MEIO DE TRANSPORTE COM MAIOR AUTONOMIA\n");
+	printf("MEIO DE TRANSPORTE COM MAIOR BATERIA\n");
 	printf("%d; %.2f\n", maior->codigo, maior->bateria);
 	return maior->codigo; // Retorna o ID do meio de transporte com maior bateria
 }
@@ -233,6 +235,7 @@ int EncontrarIdTransporteComMaiorBateria(Transporte* inicio) {
 void TrocarTransportes(Transporte* t1, Transporte* t2) {
 	int codigo_temp = t1->codigo;
 	char tipo_temp[20];
+
 	strcpy(tipo_temp, t1->tipo);
 	float bateria_temp = t1->bateria;
 	float autonomia_temp = t1->autonomia;

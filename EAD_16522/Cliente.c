@@ -8,8 +8,7 @@
 #define MAX_LINHA 1000
 
 //Inserir um novo registo na lista ligada transporte 
-Cliente* InserirCliente(Cliente* inicio, char nome[80], int nif, float saldo, char morada[80]) {
-
+Cliente* InserirCliente(Cliente* inicio, char nome[80], int nif, float saldo, char morada[80], char password[20]) {
 	if (!ExisteCliente(inicio, nif)) {
 		Cliente* novo = malloc(sizeof(struct registoCliente));
 		if (novo != NULL) {
@@ -17,8 +16,8 @@ Cliente* InserirCliente(Cliente* inicio, char nome[80], int nif, float saldo, ch
 			novo->NIF = nif;
 			novo->saldo = saldo;
 			strcpy(novo->morada, morada);
+			strcpy(novo->password, password);
 			novo->seguinte = inicio;
-
 			//Limpar consola 
 			system("cls");
 			//A ter a certeza o que foi inserido 
@@ -28,53 +27,54 @@ Cliente* InserirCliente(Cliente* inicio, char nome[80], int nif, float saldo, ch
 		else {
 			printf("Erro ao colocar na memoria\n");
 		}
-
 		return (inicio);
 	}
 }
 
 Cliente* inputCliente(Cliente* cliente_1) {
-	Cliente novoCliente = { 0, ' ', 0, 0.0, ' '};
+	Cliente novoCliente = { 0, ' ', 0, 0.0, ' ' };
 
 	getchar();
-
 	//Pedir informação ao Gestor para adicionar um meio de transporte código
 	printf("Insira o nome do cliente:\n");
 	fgets(novoCliente.nome_cliente, MAX_NOME_CLIENTE, stdin);
-	novoCliente.nome_cliente[strcspn(novoCliente.nome_cliente, "\n")] = '\0'; 
-		
+	novoCliente.nome_cliente[strcspn(novoCliente.nome_cliente, "\n")] = '\0';
+
 	printf("Inserir o Numero de Contribuiunte:");
 	scanf("%d", &novoCliente.NIF);
-
-
 	//Verificar se existe o ID selecionado pelo o Gestor
 	while (ExisteCliente(cliente_1, novoCliente.NIF)) {
 		printf("Inserir o Numero de Contribuiunte: ");
 		scanf("%d", &novoCliente.NIF);
-	} 
+	}
 
-		printf("Inserir o saldo do cliente: ");
-		scanf("%f", &novoCliente.saldo);
-		getchar();
+	printf("Inserir o saldo do cliente: ");
+	scanf("%f", &novoCliente.saldo);
 
-		printf("Inserir a morada do cliente: ");
-		fgets(novoCliente.morada, MAX_MORADA_CLIENTE, stdin);
-		novoCliente.morada[strcspn(novoCliente.morada, "\n")] = '\0';
+	getchar();
+	printf("Inserir a morada do cliente: ");
+	fgets(novoCliente.morada, MAX_MORADA_CLIENTE, stdin);
+	novoCliente.morada[strcspn(novoCliente.morada, "\n")] = '\0';
 
-		//Adicionar o novo meio de transporte ao início da lista
-		novoCliente.seguinte = cliente_1;
-		cliente_1 = &novoCliente;
+	printf("Inserir a password: ");
+	fgets(novoCliente.password, MAX_PASSWORD, stdin);
+	novoCliente.password[strcspn(novoCliente.password, "\n")] = '\0';
+	
+	//Adicionar o novo meio de transporte ao início da lista
+	novoCliente.seguinte = cliente_1;
+	cliente_1 = &novoCliente;
+	//Inserir os dados na lista ligada
+	InserirCliente(cliente_1, novoCliente.nome_cliente, novoCliente.NIF, novoCliente.saldo, novoCliente.morada, novoCliente.password);
+	//Guardar os dados da lista ligada no ficheiro txt 
 
-		//Inserir os dados na lista ligada
-		InserirCliente(cliente_1, novoCliente.nome_cliente, novoCliente.NIF, novoCliente.saldo, novoCliente.morada);
-		//Guardar os dados da lista ligada no ficheiro txt 
-		saveficheiroCliente(cliente_1);
+	//listarCliente(cliente_1);
 
-		return cliente_1;
+	saveficheiroCliente(cliente_1);// está a guardar de forma errada 
 
+	return cliente_1;
 }
 
-//Verificar se existe o meio de transporte pelo o ID 
+///Verificar se existe o meio de transporte pelo o ID 
 int ExisteCliente(Cliente* inicio, int nif) {
 	//Enquanto que não chegar ao fim da lista analisa 
 	while (inicio != NULL) {
@@ -91,7 +91,7 @@ int ExisteCliente(Cliente* inicio, int nif) {
 Cliente* saveficheiroCliente(Cliente* inicio){
 
 	Cliente* atual = inicio;
-
+	
 	//Abrir ficheiro txt 
 	FILE* ficheiroCliente = fopen("Cliente.txt", "w"); 
 
@@ -102,7 +102,7 @@ Cliente* saveficheiroCliente(Cliente* inicio){
 	}
 
 	//Escrever os dados no ficheiro txt 
-	fprintf(ficheiroCliente, "%s; %d; %.2f; %s \n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada); 
+	fprintf(ficheiroCliente, "%s; %d; %.2f; %s; %s \n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->password); 
 
 	//fechar o ficheiro txt 
 	fclose(ficheiroCliente); 
@@ -129,8 +129,8 @@ Cliente* lerFicheiroCliente(Cliente* inicio) {
 
 		Cliente* novoCliente = (Cliente*)malloc(sizeof(Cliente));
 
-		//A ler o ficheiro 
-		sscanf(linha, "%[^;]; %d; %f; %[^\n]", novoCliente->nome_cliente, &novoCliente->NIF, &novoCliente->saldo, novoCliente->morada);
+		//A ler o ficheiro (possivel problema) 
+		sscanf(linha, "%[^;]; %d; %f; %[^;]; %[^\n]", novoCliente->nome_cliente, &novoCliente->NIF, &novoCliente->saldo, novoCliente->morada, novoCliente->password);
 
 		novoCliente->seguinte = NULL; 
 		//Quando chegar ao fim 
@@ -161,7 +161,7 @@ Cliente* listarCliente(Cliente* inicio) {
 	while (inicio != NULL) { 
 
 		//A escrever na consola
-		printf("%s; %d; %.2f; %s \n",inicio->nome_cliente, inicio->NIF, inicio->saldo, inicio->morada); 
+		printf("%s; %d; %.2f; %s; %s \n",inicio->nome_cliente, inicio->NIF, inicio->saldo, inicio->morada, inicio->password); 
 		inicio = inicio->seguinte;
 	}
 } 
@@ -200,17 +200,52 @@ Cliente* RemoverCliente(Cliente* inicio) {
 		inicio = atual->seguinte;
 
 		system("cls"); 
-
 		listarCliente(inicio); 
-
 		saveficheiroCliente(inicio); 
 	}
 	else {
 		anterior->seguinte = atual->seguinte;
+
+		listarCliente(inicio);
+		saveficheiroCliente(inicio); 
 	}
 	free(atual); //Libertar a memoria que estava alocada 
 
 	printf("CLIENTE COM O NIF %d REMOVIDO COM SUCESSO\n", nif);
 
 	return inicio; 
+}
+
+//Login para cliente 
+Cliente* loginCliente(Cliente* login) {
+	
+	int nif; 
+	char password[MAX_PASSWORD]; 
+
+	printf("Insira o NIF:"); 
+	scanf("%d", &nif); 
+
+	getchar(); 
+	printf("Insira a password: ");
+	fgets(password, MAX_PASSWORD, stdin);
+	password[strcspn(password, "\n")] = '\0';
+
+	Cliente* atual = login; 
+
+	while (atual != NULL) { 
+
+		//Se o NIF agurdado na estrutura = ao nif inserido pelo user e password da estrutura = à password inserida 
+		if (atual->NIF == nif && strcmp(atual->password, password)) {
+			printf("Bem-vindo, %s!\n,", atual->nome_cliente);
+			return atual;
+		} 
+
+		atual = atual->seguinte; 
+
+		
+	}
+	printf("NIF ou password incorretos!\n");
+	
+	return NULL;
+
 }
