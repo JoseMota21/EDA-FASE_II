@@ -93,7 +93,7 @@ Cliente* saveficheiroCliente(Cliente* inicio){
 	Cliente* atual = inicio;
 
 	//Abrir ficheiro txt 
-	FILE* ficheiroCliente = fopen("Cliente.txt", "a+"); 
+	FILE* ficheiroCliente = fopen("Cliente.txt", "w"); 
 
 	if (ficheiroCliente == NULL) {
 		printf("Erro ao abrir o ficheiro Cliente \n"); 
@@ -169,6 +169,8 @@ Cliente* listarCliente(Cliente* inicio) {
 //Remover cliente, remover um cliente pelo o NIF 
 Cliente* RemoverCliente(Cliente* inicio) {
 
+	Cliente novoCliente = { 0, ' ', 0, 0.0, ' ' }; 
+
 	int nif; 
 
 	printf("Inserir o nif do cliente a eliminar:\n"); 
@@ -177,7 +179,7 @@ Cliente* RemoverCliente(Cliente* inicio) {
 	//Se lista estiver vazia informa o utilizador da aplciação 
 	if (inicio == NULL) {
 		printf("LISTA VAZIA\n");
-		return;
+		return NULL;
 	}
 	Cliente* atual = inicio;
 	Cliente* anterior = NULL;
@@ -196,6 +198,12 @@ Cliente* RemoverCliente(Cliente* inicio) {
 	//Remove o id da lista
 	if (anterior == NULL) { //Se for o primeiro
 		inicio = atual->seguinte;
+
+		system("cls"); 
+
+		listarCliente(inicio); 
+
+		saveficheiroCliente(inicio); 
 	}
 	else {
 		anterior->seguinte = atual->seguinte;
@@ -203,4 +211,6 @@ Cliente* RemoverCliente(Cliente* inicio) {
 	free(atual); //Libertar a memoria que estava alocada 
 
 	printf("CLIENTE COM O NIF %d REMOVIDO COM SUCESSO\n", nif);
+
+	return inicio; 
 }

@@ -119,8 +119,9 @@ Transporte* RemoverTransporte(Transporte* inicio) {
 		inicio = atual->seguinte; 
 
 		system("cls");
-		listarTransporte(inicio);
+		listarTransporte(inicio); //Possivelmente vou ocultar 
 
+		//Guardar os novos dados no ficheiro txt 
 		saveficheiroTransporte(inicio); 
 	}
 	else {
@@ -133,7 +134,6 @@ Transporte* RemoverTransporte(Transporte* inicio) {
 
 	return inicio;
 }
-
 
 Transporte* listarTransporte(Transporte* inicio) {
 

@@ -12,6 +12,7 @@ int main() {
 	//Variáveis alocadas ao swicth case 
 	int selecao;
 	int gestor;
+	int eliminar; 
 	
 	//Ler o ficheiro Txt
 	meioTransporte_1 = lerFicheiroTransporte(meioTransporte_1); // Ficheiro txt dos meios de transporte
@@ -51,8 +52,26 @@ int main() {
 			inputCliente(cliente_1); 
 			break;
 		case 3: 
-			RemoverTransporte(meioTransporte_1); 
-			//listarTransporte(meioTransporte_1); 
+
+			printf("1 - REMOVER TRANSPORTE\n"); 
+			printf("2 - REMOVER CLIENTE\n");
+
+			scanf("%d", &eliminar); 
+			
+			switch (eliminar) {
+
+			case 1: 
+				RemoverTransporte(meioTransporte_1); 
+				break; 
+
+			case 2: 
+				RemoverCliente(cliente_1); 
+			default:
+
+				printf("OPCAO INVALIDA"); 
+				break;
+			}
+
 
 		}
 	}
