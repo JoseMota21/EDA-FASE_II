@@ -1,9 +1,2 @@
-1; TROTINETE; 98.00; 24.00; PORTO 
-8; BIKE; 9.00; 1.00; BRAGA 
-2; BIKE; 87.00; 983.00; PORTO 
-3; bike; 45.00; 34.00; proto 
-1; bike; 34.00; 2.00; pro 
-1; 23; 34.00; 0.00; pot 
-2; uy; 12.00; 23.00; ue 
-10; NADA; 24.00; 12.00; PROTO 
-0; BIKE; 23.00; 132.00; RJG 
+0; BIKE; 100.00; 80.00; PORTO 
+1; TROTINETE; 39.00; 45.00; FAFE 
