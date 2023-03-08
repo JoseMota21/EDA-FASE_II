@@ -31,3 +31,5 @@ Cliente* lerFicheiroCliente(Cliente* inicio);
 
 //Remover cliente
 Cliente* RemoverCliente(Cliente* inicio, int nif); 
+
+Cliente* inputCliente(Cliente* cliente_1); 

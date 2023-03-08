@@ -5,13 +5,10 @@
 #include <stdlib.h>
 
 int main() {
+	//Inicializar as listas 
 	Transporte* meioTransporte_1 = NULL; // Lista ligada vazia  
-
-	Cliente novoCliente = { 0, ' ', 0, 0.0, ' ' };
 	Cliente* cliente_1 = NULL; // Lista ligada vazia 
-
-	//int aux_memoria = 0; 
-
+	
 	//Variáveis alocadas ao swicth case 
 	int selecao;
 	int gestor;
@@ -49,12 +46,11 @@ int main() {
 		switch (gestor) {
 		case 1:
 			adicionarTransporte(meioTransporte_1); 
+		break;
 
-			//listarTransporte(meioTransporte_1); 
-
-			
+		case 2: 
+			inputCliente(cliente_1); 
 			break;
-
 		}
 	}
 

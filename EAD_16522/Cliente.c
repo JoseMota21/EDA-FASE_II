@@ -7,40 +7,83 @@
 
 #define MAX_LINHA 1000
 
-//Inserir novo cliente na estrutura 
+//Inserir um novo registo na lista ligada transporte 
 Cliente* InserirCliente(Cliente* inicio, char nome[80], int nif, float saldo, char morada[80]) {
 
-	Cliente* novo = malloc(sizeof(struct registoCliente)); 
-	
-	if (novo != NULL) { 
-		strcpy(novo->nome_cliente, nome); 
-		novo->NIF = nif; 
-		novo->saldo = saldo; 
-		strcpy(novo->morada, morada); 
-		novo->seguinte = inicio; 
+	if (!ExisteCliente(inicio, nif)) {
+		Cliente* novo = malloc(sizeof(struct registoCliente));
+		if (novo != NULL) {
+			strcpy(novo->nome_cliente, nome);
+			novo->NIF = nif;
+			novo->saldo = saldo;
+			strcpy(novo->morada, morada);
+			novo->seguinte = inicio;
 
-		inicio = novo; 
-	}
-	return (novo);
-}
-
-//Verificar se o cliente existe pelo o NIF 
-int ExisteCliente (Cliente* inicio, int nif){
-
-	Cliente* atual = inicio; 
-
-	while (atual != NULL) 
-	{
-		//Se cliente existir na lista returna 1; 
-		if (atual->NIF == nif) {
-			printf("Cliente já existe na lista\n"); 
-
-				return 1; 
+			//Limpar consola 
+			system("cls");
+			//A ter a certeza o que foi inserido 
+			printf("Registo Inserido com exito!\n");
+			return (novo);
+		}
+		else {
+			printf("Erro ao colocar na memoria\n");
 		}
 
-		atual = atual->seguinte; 
+		return (inicio);
 	}
+}
 
+Cliente* inputCliente(Cliente* cliente_1) {
+	Cliente novoCliente = { 0, ' ', 0, 0.0, ' '};
+
+	getchar();
+
+	//Pedir informação ao Gestor para adicionar um meio de transporte código
+	printf("Insira o nome do cliente:\n");
+	fgets(novoCliente.nome_cliente, MAX_NOME_CLIENTE, stdin);
+	novoCliente.nome_cliente[strcspn(novoCliente.nome_cliente, "\n")] = '\0'; 
+		
+	printf("Inserir o Numero de Contribuiunte:");
+	scanf("%d", &novoCliente.NIF);
+
+
+	//Verificar se existe o ID selecionado pelo o Gestor
+	while (ExisteCliente(cliente_1, novoCliente.NIF)) {
+		printf("Inserir o Numero de Contribuiunte: ");
+		scanf("%d", &novoCliente.NIF);
+	} 
+
+		printf("Inserir o saldo do cliente: ");
+		scanf("%f", &novoCliente.saldo);
+		getchar();
+
+		printf("Inserir a morada do cliente: ");
+		fgets(novoCliente.morada, MAX_MORADA_CLIENTE, stdin);
+		novoCliente.morada[strcspn(novoCliente.morada, "\n")] = '\0';
+
+		//Adicionar o novo meio de transporte ao início da lista
+		novoCliente.seguinte = cliente_1;
+		cliente_1 = &novoCliente;
+
+		//Inserir os dados na lista ligada
+		InserirCliente(cliente_1, novoCliente.nome_cliente, novoCliente.NIF, novoCliente.saldo, novoCliente.morada);
+		//Guardar os dados da lista ligada no ficheiro txt 
+		saveficheiroCliente(cliente_1);
+
+		return cliente_1;
+
+}
+
+//Verificar se existe o meio de transporte pelo o ID 
+int ExisteCliente(Cliente* inicio, int nif) {
+	//Enquanto que não chegar ao fim da lista analisa 
+	while (inicio != NULL) {
+		//Se o existir na lista o codigo com o id introduzido pelo o utilizador
+		if (inicio->NIF == nif) {
+			return 1;
+		}
+		inicio = inicio->seguinte;
+	}
 	return 0;
 }
 
@@ -123,8 +166,7 @@ Cliente* listarCliente(Cliente* inicio) {
 	}
 } 
 
-//Remover cliente 
-//Remover um cliente pelo o NIF 
+//Remover cliente, remover um cliente pelo o NIF 
 Cliente* RemoverCliente(Cliente* inicio, int nif) {
 
 	//Se lista estiver vazia informa o utilizador da aplciação 

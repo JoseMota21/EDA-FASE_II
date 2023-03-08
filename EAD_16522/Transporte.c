@@ -7,7 +7,9 @@
 
 //Verificar se existe o meio de transporte pelo o ID 
 int ExisteTransporte(Transporte* inicio, int id) { 
+	//Enquanto que não chegar ao fim da lista analisa 
 	while (inicio != NULL) {
+		//Se o existir na lista o codigo com o id introduzido pelo o utilizador
 		if (inicio->codigo == id) {
 			return 1;
 		}
@@ -53,7 +55,6 @@ Transporte* adicionarTransporte(Transporte* meioTransporte_1) {
 	saveficheiroTransporte(meioTransporte_1); 
 	
 	return meioTransporte_1; 
-
 }
 
 //Inserir um novo registo na lista ligada transporte 
