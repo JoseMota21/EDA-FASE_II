@@ -6,9 +6,6 @@
 
 int main() {
 	Transporte* meioTransporte_1 = NULL; // Lista ligada vazia  
-	Transporte novoTransporte = { 0, ' ', 0.0, 0.0 };
-
-	//Transporte* meioTransporte_2 = NULL; 
 
 	Cliente novoCliente = { 0, ' ', 0, 0.0, ' ' };
 	Cliente* cliente_1 = NULL; // Lista ligada vazia 
@@ -18,8 +15,6 @@ int main() {
 	//Variáveis alocadas ao swicth case 
 	int selecao;
 	int gestor;
-	int consultaDados;
-	int TransporteOpcao;
 
 	//Ler o ficheiro Txt
 	meioTransporte_1 = lerFicheiroTransporte(meioTransporte_1); // Ficheiro txt dos meios de transporte
@@ -53,7 +48,9 @@ int main() {
 		//Selecionar as operações do gestor
 		switch (gestor) {
 		case 1:
-			adicionarTransporte(meioTransporte_1);
+			adicionarTransporte(meioTransporte_1); 
+
+			//listarTransporte(meioTransporte_1); 
 
 			
 			break;

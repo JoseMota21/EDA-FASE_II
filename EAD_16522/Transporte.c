@@ -5,7 +5,6 @@
 #include <stdbool.h>
 #include "Transporte.h" 
 
-
 //Verificar se existe o meio de transporte pelo o ID 
 int ExisteTransporte(Transporte* inicio, int id) { 
 	while (inicio != NULL) {
@@ -18,9 +17,7 @@ int ExisteTransporte(Transporte* inicio, int id) {
 }
 
 Transporte* adicionarTransporte(Transporte* meioTransporte_1) {
-	Transporte novoTransporte = { 0, ' ', 0.0, 0.0 }; 
-
-	meioTransporte_1 = lerFicheiroTransporte(meioTransporte_1); 
+	Transporte novoTransporte = { 0, ' ', 0.0, 0.0, 0.0}; 
 
 	//Pedir informação ao Gestor para adicionar um meio de transporte código
 	printf("Insira o codigo do meio de mobilidade: ");
@@ -49,8 +46,11 @@ Transporte* adicionarTransporte(Transporte* meioTransporte_1) {
 	novoTransporte.seguinte = meioTransporte_1;
 	meioTransporte_1 = &novoTransporte;
 
-	meioTransporte_1 = InserirTransporte(meioTransporte_1, novoTransporte.codigo, novoTransporte.tipo, novoTransporte.bateria, novoTransporte.autonomia, novoTransporte.geocodigo); 
-	saveficheiroTransporte(&novoTransporte); 
+	//Inserir os dados na lista ligada
+	InserirTransporte(meioTransporte_1, novoTransporte.codigo, novoTransporte.tipo, novoTransporte.bateria, novoTransporte.autonomia, novoTransporte.geocodigo); 
+
+	//Guardar os dados da lista ligada no ficheiro txt 
+	saveficheiroTransporte(meioTransporte_1); 
 	
 	return meioTransporte_1; 
 
@@ -58,7 +58,6 @@ Transporte* adicionarTransporte(Transporte* meioTransporte_1) {
 
 //Inserir um novo registo na lista ligada transporte 
 Transporte* InserirTransporte(Transporte* inicio, int id, char tipo[10], float bateria, float autonomia, char geocodigo[20]) {
-
 
 	if (!ExisteTransporte(inicio, id)) {
 		Transporte* novo = malloc(sizeof(struct registo));
@@ -74,8 +73,6 @@ Transporte* InserirTransporte(Transporte* inicio, int id, char tipo[10], float b
 			system("cls");
 			//A ter a certeza o que foi inserido 
 			printf("Registo Inserido com exito!\n");
-			printf("Novo registro: id=%d, tipo=%s, bateria=%.2f, autonomia=%.2f, geocodigo=%s\n", novo->codigo, novo->tipo, novo->bateria, novo->autonomia, novo->geocodigo);
-
 			return (novo);
 		}
 		else {
@@ -137,7 +134,7 @@ Transporte* listarTransporte(Transporte* inicio) {
 Transporte* saveficheiroTransporte(Transporte* inicio) {
 
 	//Abrir o ficheiro
-	FILE* ficheiroTransporte = fopen("Transporte.txt", "a+");
+	FILE* ficheiroTransporte = fopen("Transporte.txt", "w");
 
 	//Se ficheiro Null informação ao utilziador 
 	if (ficheiroTransporte == NULL) {
