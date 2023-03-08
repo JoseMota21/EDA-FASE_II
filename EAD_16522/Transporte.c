@@ -20,6 +20,7 @@ int ExisteTransporte(Transporte* inicio, int id) {
 
 //Escrever novo transporte através do teclado
 Transporte* adicionarTransporte(Transporte* meioTransporte_1) {
+
 	Transporte novoTransporte = { 0, ' ', 0.0, 0.0, 0.0}; 
 
 	//Pedir informação ao Gestor para adicionar um meio de transporte código
@@ -97,7 +98,7 @@ Transporte* RemoverTransporte(Transporte* inicio) {
 	//Se lista estiver vazia informa o utilizador da aplciação 
 	if (inicio == NULL) {
 		printf("LISTA VAZIA\n");
-		return;
+		return NULL; //Parar de imediato se a listar tiver vazia
 	}
 	Transporte* atual = inicio;
 	Transporte* anterior = NULL;
@@ -116,17 +117,23 @@ Transporte* RemoverTransporte(Transporte* inicio) {
 	//Remove o id da lista
 	if (anterior == NULL) { //Se for o primeiro
 		inicio = atual->seguinte; 
-	
+
+		system("cls");
+		listarTransporte(inicio);
+
+		saveficheiroTransporte(inicio); 
 	}
 	else {
 		anterior->seguinte = atual->seguinte;
 	}
 	free(atual); //Libertar a memoria que estava alocada 
 
+
 	printf("MEIO DE TRANSPORTE COM O ID %d REMOVIDO COM SUCESSO\n", codigo);
 
 	return inicio;
 }
+
 
 Transporte* listarTransporte(Transporte* inicio) {
 

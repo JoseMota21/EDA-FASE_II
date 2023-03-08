@@ -1,3 +1,4 @@
-89; mota; 3.00; 3.00; fafe 
-45;  bike; 34.00; 23.00; poto 
-4;   bikr; 43.00; 45.00; porto 
+34;   BIKE; 34.00; 32.00; PORTO 
+89;    mota; 3.00; 3.00; fafe 
+45;     bike; 34.00; 23.00; poto 
+4;      bikr; 43.00; 45.00; porto 
