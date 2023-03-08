@@ -232,20 +232,16 @@ Cliente* loginCliente(Cliente* login) {
 
 	Cliente* atual = login; 
 
-	while (atual != NULL) { 
+		while (atual != NULL) {
+			if (atual->NIF == nif && strcmp(atual->password, password) == 0) {
+				printf("Bem-vindo, %s!\n", atual->nome_cliente);
+				return atual;
+			}
 
-		//Se o NIF agurdado na estrutura = ao nif inserido pelo user e password da estrutura = à password inserida 
-		if (atual->NIF == nif && strcmp(atual->password, password)) {
-			printf("Bem-vindo, %s!\n,", atual->nome_cliente);
-			return atual;
-		} 
+			atual = atual->seguinte;
 
-		atual = atual->seguinte; 
+		}
+		printf("NIF ou password incorretos!\n");
 
-		
+		return NULL;
 	}
-	printf("NIF ou password incorretos!\n");
-	
-	return NULL;
-
-}
