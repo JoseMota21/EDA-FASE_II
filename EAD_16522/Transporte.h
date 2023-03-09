@@ -37,7 +37,8 @@ int EncontrarIdTransporteComMaiorBateria(Transporte* inicio);
 //Ordenar o meio de transporte de forma decrescente a autonomia 
 void OrdenarTransportesPorAutonomiaDecrescente(Transporte* inicio);  
 
-Transporte* adicionarTransporte(Transporte* meioTransporte_1); 
+//Adicionar transporte pelo o teclado 
+Transporte* inputTransporte(Transporte* meioTransporte_1); 
 
 
 

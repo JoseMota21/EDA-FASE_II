@@ -247,10 +247,7 @@ Cliente* loginCliente(Cliente* login) {
 		return NULL;
 }
 
-//Dados de cliente
+//Dados de cliente (cliente consulta os seus dados) 
 Cliente* clientedados(Cliente* cliente) {
-
-	printf("NOME: %s", cliente->nome_cliente);
-
-
+	printf("%s; %d; %.2f; %s; %s" , cliente->nome_cliente, cliente->NIF, cliente->saldo, cliente->morada, cliente->password);
 } 

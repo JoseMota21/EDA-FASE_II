@@ -49,7 +49,7 @@ int main() {
 		switch (gestor) {
 		case 1:
 			//Adicionar meios de transporte através da escrita no teclado
-			adicionarTransporte(meioTransporte_1); 
+			inputTransporte(meioTransporte_1); 
 		break;
 
 		case 2: 

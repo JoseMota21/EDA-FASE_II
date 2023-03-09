@@ -19,7 +19,7 @@ int ExisteTransporte(Transporte* inicio, int id) {
 }
 
 //Escrever novo transporte através do teclado
-Transporte* adicionarTransporte(Transporte* meioTransporte_1) {
+Transporte* inputTransporte(Transporte* meioTransporte_1) {
 
 	Transporte novoTransporte = { 0, ' ', 0.0, 0.0, 0.0}; 
 
