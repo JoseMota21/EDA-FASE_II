@@ -67,8 +67,7 @@ Cliente* inputCliente(Cliente* cliente_1) {
 	InserirCliente(cliente_1, novoCliente.nome_cliente, novoCliente.NIF, novoCliente.saldo, novoCliente.morada, novoCliente.password);
 	//Guardar os dados da lista ligada no ficheiro txt 
 
-	//listarCliente(cliente_1);
-
+	
 	saveficheiroCliente(cliente_1);// está a guardar de forma errada 
 
 	return cliente_1;
@@ -217,8 +216,9 @@ Cliente* RemoverCliente(Cliente* inicio) {
 }
 
 //Login para cliente 
-Cliente* loginCliente(Cliente* login) {
+Cliente* loginCliente(Cliente* login){
 	
+	//Variáveis 
 	int nif; 
 	char password[MAX_PASSWORD]; 
 
@@ -231,8 +231,11 @@ Cliente* loginCliente(Cliente* login) {
 	password[strcspn(password, "\n")] = '\0';
 
 	Cliente* atual = login; 
-
+		
+		//Percorre a estrutura até chegar ao final
 		while (atual != NULL) {
+			//se password inseria for igual à passeword da estrutura
+			//e se a password inserida for igual à password da estrutura 
 			if (atual->NIF == nif && strcmp(atual->password, password) == 0) {
 				system("cls"); 
 				printf("Bem-vindo, %s!\n", atual->nome_cliente);
@@ -251,3 +254,75 @@ Cliente* loginCliente(Cliente* login) {
 Cliente* clientedados(Cliente* cliente) {
 	printf("%s; %d; %.2f; %s; %s" , cliente->nome_cliente, cliente->NIF, cliente->saldo, cliente->morada, cliente->password);
 } 
+//Alterar dados de uma estrutura 
+Cliente* AlterarDados(Cliente* inicio){
+
+	//Variaveis
+	int campo; 
+	char nome[MAX_NOME_CLIENTE]; 
+	char morada[MAX_MORADA_CLIENTE]; 
+	char password[MAX_PASSWORD]; 
+
+	Cliente* atual = inicio; 
+
+	//Se o cliente estiver logado informação a apresentar
+	if (loginCliente) {
+
+		system("cls");
+		// Mostrar os dados atuais do cliente
+		printf("DADOS:\n");
+		printf("%s; %d; %.2f; %s; %s\n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->password);
+
+		//Opção de escolha para o cliente
+		printf("INSERIR O CAMPO QUE PRETENDE ALTERAR\n"); 
+		printf("1 - NOME\n"); 
+		printf("2 - NIF\n");
+		printf("3 - MORADA\n");
+		printf("4 - PASSWORD\n");
+		scanf("%d", &campo);
+
+		//Escolha do utilizador o campo que pretende alterar
+		switch (campo){
+		case 1: 
+			getchar();
+			//Alterar o nome
+			printf("INSIRA O NOVO NOME\n"); 
+			fgets(nome, MAX_NOME_CLIENTE, stdin);
+			nome[strcspn(nome, "\n")] = '\0';
+			//Atribuir o novo nome à estrutura
+			strcpy(atual->nome_cliente, nome); 
+			break; 
+			
+		case 2: 		
+			//Alterar o número de contribuinte
+			printf("INSIRA O NIF\n");
+			scanf("%d", &atual->NIF); 
+			break; 
+
+		case 3: 
+			getchar();
+			//Alterar a sua morada
+			printf("INSIRA MORADA\n");
+			fgets(morada, MAX_MORADA_CLIENTE, stdin);
+			morada[strcspn(morada, "\n")] = '\0';
+			//Atribuir a nova morada à estrutura
+			strcpy(atual->morada, morada);
+			break; 
+		
+		case 4: 
+			getchar();
+			//Alterar a sua password
+			printf("INSIRA PASSWORD\n");
+			fgets(password,MAX_PASSWORD, stdin);
+			password[strcspn(password, "\n")] = '\0';
+			//Atribuir a nova password à estrutura
+			strcpy(atual->password, password);
+			break; 
+		default:
+			printf("OPCAO INVALIDA\n");
+			break;
+		}
+		//Mostrar ao utilizador os novos dados
+	printf("%s; %d; %.2f; %s; %s", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->password);
+	}
+}

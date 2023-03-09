@@ -42,3 +42,6 @@ Cliente* loginCliente(Cliente* login);
 
 //dados para o cliente consultar
 Cliente* clientedados(Cliente* cliente); 
+
+//Alterar determinados dados da estrutura cliente
+Cliente* AlterarDados(Cliente* inicio); 

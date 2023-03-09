@@ -17,8 +17,10 @@ int main() {
 	int MenuCliente; 
 	
 	//Ler o ficheiro Txt
-	meioTransporte_1 = lerFicheiroTransporte(meioTransporte_1); // Ficheiro txt dos meios de transporte
-	cliente_1 = lerFicheiroCliente(cliente_1); // Ficheiro txt do cliente
+	//Ficheiro Transportes
+	meioTransporte_1 = lerFicheiroTransporte(meioTransporte_1);
+	// Ficheiro txt do cliente
+	cliente_1 = lerFicheiroCliente(cliente_1); 
 	
 	printf("EAD 16522\n");
 
@@ -87,7 +89,6 @@ int main() {
 			case 1: 
 				//Ordenar Transporte por autonomia (decrescente)
 				OrdenarTransportesPorAutonomiaDecrescente(meioTransporte_1);
-				//EncontrarIdTransporteComMaiorBateria(meioTransporte_1);  
 				break; 
 
 			default:
@@ -99,9 +100,8 @@ int main() {
 		}
 		break;
 	case 2: 
-		//Login com o user cliente
-
-		cliente_1 = loginCliente(cliente_1);  // armazena o ponteiro retornado pela função loginCliente 
+		//Login com o user cliente (Acesso com o login e passwrod) 
+		cliente_1 = loginCliente(cliente_1); 
 
 		if (cliente_1 != NULL) {
 			printf("MENU CLIENTE\n");
@@ -113,8 +113,12 @@ int main() {
 			switch (MenuCliente) {
 
 			case 1:
+				//Cliente a consultar dados
 				clientedados(cliente_1);
 				break;
+			case 2: 
+				//Alterar dados de cliente 
+				AlterarDados(cliente_1); 
 
 			default:
 				break;
