@@ -138,7 +138,8 @@ Transporte* RemoverTransporte(Transporte* inicio) {
 }
 
 Transporte* listarTransporte(Transporte* inicio) {
-
+	
+	//Percorre a estrutura até fechar ao fim da lista
 	while (inicio != NULL) {
 
 		printf("%d; %s; %.2f; %.2f; %s\n", inicio->codigo, inicio->tipo, inicio->bateria, inicio->autonomia, inicio->geocodigo);
@@ -161,8 +162,10 @@ Transporte* saveficheiroTransporte(Transporte* inicio) {
 
 	Transporte* atual = inicio;
 
+	//Equanto que não chega ao fim da estrutura 
 	while (atual != NULL) {
-
+		
+		//Escrever no ficheiro txt
 		fprintf(ficheiroTransporte, "%d; %s; %.2f; %.2f; %s \n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo);
 
 		atual = atual->seguinte;
@@ -192,7 +195,7 @@ Transporte* lerFicheiroTransporte(Transporte* inicio) {
 		sscanf(linha, "%d;%[^;];%f;%f;%s", &novoTransporte->codigo, novoTransporte->tipo, &novoTransporte->bateria, &novoTransporte->autonomia, novoTransporte->geocodigo);
 
 			novoTransporte->seguinte = NULL;
-
+	
 		if (inicio == NULL) {
 			inicio = novoTransporte;
 		}

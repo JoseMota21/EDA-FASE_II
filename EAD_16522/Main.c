@@ -16,6 +16,7 @@ int main() {
 	int consultar; 
 	int MenuCliente; 
 	
+	
 	//Ler o ficheiro Txt
 	//Ficheiro Transportes
 	meioTransporte_1 = lerFicheiroTransporte(meioTransporte_1);
@@ -51,7 +52,7 @@ int main() {
 		switch (gestor) {
 		case 1:
 			//Adicionar meios de transporte através da escrita no teclado
-			inputTransporte(meioTransporte_1); 
+			inputTransporte(meioTransporte_1);
 		break;
 
 		case 2: 
@@ -118,13 +119,14 @@ int main() {
 				break;
 			case 2: 
 				//Alterar dados de cliente 
-				AlterarDados(cliente_1); 
+				AlterarDados(cliente_1);
+				break;
 
 			default:
+				printf("OPCAO INVALIDA\n");
 				break;
 			}
 		}
-		//system("cls");
 
 
 	}
