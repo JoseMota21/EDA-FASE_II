@@ -10,10 +10,11 @@ int main() {
 	Cliente* cliente_1 = NULL; // Lista ligada vazia 
 	
 	//Variáveis alocadas ao swicth case 
-	int selecao;
+	int user;
 	int gestor;
 	int eliminar; 
 	int consultar; 
+	int MenuCliente; 
 	
 	//Ler o ficheiro Txt
 	meioTransporte_1 = lerFicheiroTransporte(meioTransporte_1); // Ficheiro txt dos meios de transporte
@@ -23,13 +24,13 @@ int main() {
 
 	printf("1 - GESTOR\n");
 	printf("2 - CLIENTE\n");
-	scanf("%d", &selecao);
+	scanf("%d", &user);
 
 	//Limpar consola 
 	system("cls");
 
 	//Selecionar se é gestor ou cliente
-	switch (selecao) {
+	switch (user) {
 		//Se gestor 
 	case 1:
 		printf("BEM VINDO GESTOR\n");
@@ -96,8 +97,32 @@ int main() {
 			break; 
 			break; 
 		}
+		break;
 	case 2: 
-		loginCliente(cliente_1); 
+		//Login com o user cliente
+
+		cliente_1 = loginCliente(cliente_1);  // armazena o ponteiro retornado pela função loginCliente 
+
+		if (cliente_1 != NULL) {
+			printf("MENU CLIENTE\n");
+
+			printf("1 - CONSULTAR DADOS\n");
+			printf("2 - ALTERAR DADOS\n");
+			scanf("%d", &MenuCliente);
+
+			switch (MenuCliente) {
+
+			case 1:
+				clientedados(cliente_1);
+				break;
+
+			default:
+				break;
+			}
+		}
+		//system("cls");
+
+
 	}
 
 	return;

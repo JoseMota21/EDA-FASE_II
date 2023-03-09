@@ -234,6 +234,7 @@ Cliente* loginCliente(Cliente* login) {
 
 		while (atual != NULL) {
 			if (atual->NIF == nif && strcmp(atual->password, password) == 0) {
+				system("cls"); 
 				printf("Bem-vindo, %s!\n", atual->nome_cliente);
 				return atual;
 			}
@@ -244,4 +245,12 @@ Cliente* loginCliente(Cliente* login) {
 		printf("NIF ou password incorretos!\n");
 
 		return NULL;
-	}
+}
+
+//Dados de cliente
+Cliente* clientedados(Cliente* cliente) {
+
+	printf("NOME: %s", cliente->nome_cliente);
+
+
+} 

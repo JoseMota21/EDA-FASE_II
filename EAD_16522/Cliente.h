@@ -37,4 +37,8 @@ Cliente* RemoverCliente(Cliente* inicio);
 //Inserir dados através do teclado do computador 
 Cliente* inputCliente(Cliente* cliente_1); 
 
-Cliente* loginCliente(Cliente* login); 
+//Login de cliente
+Cliente* loginCliente(Cliente* login);  
+
+//dados para o cliente consultar
+Cliente* clientedados(Cliente* cliente); 
