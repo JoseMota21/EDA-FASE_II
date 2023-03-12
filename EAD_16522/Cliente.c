@@ -66,9 +66,8 @@ Cliente* inputCliente(Cliente* cliente_1) {
 	cliente_1 = &novoCliente;
 	//Inserir os dados na lista ligada
 	InserirCliente(cliente_1, novoCliente.nome_cliente, novoCliente.NIF, novoCliente.saldo, novoCliente.morada, novoCliente.password);
-	//Guardar os dados da lista ligada no ficheiro txt 
 
-	
+	//Guardar os dados da lista ligada no ficheiro txt 
 	saveficheiroCliente(cliente_1);// está a guardar de forma errada 
 
 	return cliente_1;
@@ -103,7 +102,7 @@ Cliente* saveficheiroCliente(Cliente* inicio){
 
 	while (atual != NULL) {
 		//Escrever os dados no ficheiro txt 
-		fprintf(ficheiroCliente, "%s; %d; %.2f; %s; %s \n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->password);
+		fprintf(ficheiroCliente, "%s;%d;%.2f;%s;%s\n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->password);
 
 		atual = atual->seguinte;
 	}
@@ -235,7 +234,7 @@ Cliente* loginCliente(Cliente* login){
 	getchar(); 
 	printf("Insira a password: ");
 	fgets(password, MAX_PASSWORD, stdin);
-	password[strcspn(password, "\n")] = '\0';
+	password[strcspn(password,"\n")] = '\0';
 
 	Cliente* atual = login; 
 		
