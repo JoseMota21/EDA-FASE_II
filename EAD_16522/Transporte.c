@@ -7,6 +7,7 @@
 
 //Verificar se existe o meio de transporte pelo o ID 
 int ExisteTransporte(Transporte* inicio, int id) { 
+	
 	//Enquanto que não chegar ao fim da lista analisa 
 	while (inicio != NULL) {
 		//Se o existir na lista o codigo com o id introduzido pelo o utilizador
@@ -20,9 +21,9 @@ int ExisteTransporte(Transporte* inicio, int id) {
 
 //Escrever novo transporte através do teclado
 Transporte* inputTransporte(Transporte* meioTransporte_1) {
-
-	Transporte novoTransporte = { 0, ' ', 0.0, 0.0, 0.0}; 
-
+	
+		Transporte novoTransporte = { 0, ' ', 0.0, 0.0, 0.0}; 
+	
 	//Pedir informação ao Gestor para adicionar um meio de transporte código
 	printf("Insira o codigo do meio de mobilidade: ");
 	scanf("%d", &novoTransporte.codigo);
@@ -119,8 +120,7 @@ Transporte* RemoverTransporte(Transporte* inicio) {
 		inicio = atual->seguinte; 
 
 		system("cls");
-		listarTransporte(inicio); //Possivelmente vou ocultar 
-
+		
 		//Guardar os novos dados no ficheiro txt 
 		saveficheiroTransporte(inicio); 
 	}
@@ -157,7 +157,7 @@ Transporte* saveficheiroTransporte(Transporte* inicio) {
 	//Se ficheiro Null informação ao utilziador 
 	if (ficheiroTransporte == NULL) {
 		printf("Erro ao abrir o ficheiro Transporte\n");
-		return;
+		return inicio;
 	}
 
 	Transporte* atual = inicio;
@@ -172,7 +172,7 @@ Transporte* saveficheiroTransporte(Transporte* inicio) {
 	}
 	//Fechar o txt
 	fclose(ficheiroTransporte);
-
+	return inicio; 
 }
 
 //Ler ficheiro txt a informação das trotinetes e colocar na estrutura 

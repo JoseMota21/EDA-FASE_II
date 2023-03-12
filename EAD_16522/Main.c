@@ -16,12 +16,6 @@ int main() {
 	int gestor;
 	int cliente;
 
-	//Ler o ficheiro Txt
-	//Ficheiro Transportes
-	meioTransporte_1 = lerFicheiroTransporte(meioTransporte_1);
-	// Ficheiro txt do cliente
-	cliente_1 = lerFicheiroCliente(cliente_1);
-
 	do {
 		system("cls");
 		printf("M E N U\n");
@@ -31,10 +25,13 @@ int main() {
 
 		scanf("%d", &opcao);
 
+		system("cls");
+
 		switch (opcao) {
 
 		case 1:
 			do {
+
 				printf("1 - INSERIR TRANSPORTE NOVO\n");
 				printf("2 - INSERIR CLIENTE NOVO\n");
 				printf("3 - REMOVER TRANSPORTE\n");
@@ -44,11 +41,18 @@ int main() {
 				printf("7 - CONSULTAR LISTA DE CLIENTES\n");
 				printf("8 - SAIR\n");
 				scanf("%d", &gestor);
-				system("cls");
+				
+				system("cls"); 
+
+				//Ler ficheiro txt meio de transporte
+				meioTransporte_1 = lerFicheiroTransporte(meioTransporte_1);
+
+				//Ler ficheiro txt cliente
+				cliente_1 = lerFicheiroCliente(cliente_1);
 
 				switch (gestor) {
 				case 1:
-
+					
 					inputTransporte(meioTransporte_1);
 					break;
 				case 2:
@@ -64,7 +68,7 @@ int main() {
 					RemoverCliente(cliente_1);
 					break;
 				case 5:
-
+					
 					OrdenarTransportesPorAutonomiaDecrescente(meioTransporte_1);
 					break;
 				case 6:
