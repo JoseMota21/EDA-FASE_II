@@ -41,8 +41,16 @@ Transporte* inputTransporte(Transporte* meioTransporte_1) {
 	printf("Insira a carga atual da bateria: ");
 	scanf("%f", &novoTransporte->bateria);
 
-	printf("Insira a autonomia: ");
-	scanf("%f", &novoTransporte->autonomia);
+	float calcularAutonomia;
+
+	//Capacidade máxima da bateria 100%
+	if (novoTransporte->bateria >= 100) {
+		novoTransporte->bateria = 100; 
+
+	}
+	//Calcular a autonia em função
+	calcularAutonomia = novoTransporte->bateria * 80;
+	novoTransporte->autonomia = calcularAutonomia / 100;
 
 	printf("Insira a localizacao: ");
 	scanf("%s", novoTransporte->geocodigo);
@@ -308,6 +316,8 @@ Transporte* AlterarDadosTransporte(Transporte* inicio) {
 	float autonomia; 
 	char geocodigo [20]; 
 
+	float calculoAutonomia; 
+
 	system("cls");
 
 	//Mostrar os dados atuais de todos os transportes da lista
@@ -344,15 +354,14 @@ Transporte* AlterarDadosTransporte(Transporte* inicio) {
 	printf("1 - ID\n");
 	printf("2 - TIPO\n");
 	printf("3 - BATERIA\n");
-	printf("4 - AUTONOMIA\n");
-	printf("5 - GEOCODIGO\n");
+	printf("4 - GEOCODIGO\n");
 	scanf("%d", &campo);
 
 	switch (campo) {
 	case 1:
 		//Alterar o ID do meio
 		printf("INSIRA O NOVO ID\n");
-		scanf("%d", &ID);
+		scanf("%d", &atual->codigo);
 		break;
 	case 2:
 		getchar();
@@ -365,29 +374,29 @@ Transporte* AlterarDadosTransporte(Transporte* inicio) {
 		break;
 	case 3:
 		//Alterar o nivel de bateria
-		printf("INSERIA O NIVEL DE BATERIA F\n");
-		scanf("%.2f", &atual->bateria);
+		printf("INSERIA O NIVEL DE BATERIA\n");
+		scanf("%f", &atual->bateria);
+
+		//Calcular a autonomia
+		calculoAutonomia = atual->bateria * 80;
+		atual->autonomia = calculoAutonomia / 100;
 		break;
 	case 4:
-		//Alterar a autonomia
-		printf("INSERIA a autonomia F\n");
-		scanf("%.2f", &atual->autonomia);
-		break;
-	case 5:
 		getchar();
 		printf("INSIRA A LOCALIZACAO\n");
 		fgets(geocodigo, 20, stdin);
 		geocodigo[strcspn(geocodigo, "\n")] = '\0';
+
 		//Atribuir o novo nome à estrutura
 		strcpy(atual->geocodigo, geocodigo);
 		break;
-		{
+	{
 	default:
 		break;
 		}	
 	}
 	system("cls"); 
-	printf(" %d; %s; %.2f; %.2f; %s\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo); 
+	printf("%d;%s;%.2f;%.2f;%s\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo); 
 
 	saveAlterarDadosTransportes(inicio); 
 }

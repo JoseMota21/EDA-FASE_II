@@ -43,6 +43,7 @@ Transporte* inputTransporte(Transporte* meioTransporte_1);
 //Alterar dados da lista ligada transporte
 Transporte* AlterarDadosTransporte(Transporte* inicio);
 
+//Guardar as alterações realizadas em ficheiro temporario que posteriormente irá substituir o original
 void saveAlterarDadosTransportes(Transporte* inicio); 
 
 
