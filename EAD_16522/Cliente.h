@@ -45,7 +45,7 @@ Cliente* loginCliente(Cliente* login);
 Cliente* clientedados(Cliente* cliente); 
 
 //Alterar determinados dados da estrutura cliente
-Cliente* AlterarDados(Cliente* inicio); 
+Cliente* AlterarDadosCliente(Cliente* inicio); 
 
 //Guardar dados alterador (ficheiro temporario criado)
 void saveAlterarDados(Cliente* inicio); 

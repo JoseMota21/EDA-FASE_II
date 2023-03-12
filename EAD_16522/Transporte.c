@@ -47,15 +47,12 @@ Transporte* inputTransporte(Transporte* meioTransporte_1) {
 	printf("Insira a localizacao: ");
 	scanf("%s", novoTransporte->geocodigo);
 
-	printf("Disponivel: ");
-	scanf("%d", &novoTransporte->disponivel);
-
 	//Adicionar o novo meio de transporte ao início da lista
 	novoTransporte->seguinte = meioTransporte_1;
 	meioTransporte_1 = novoTransporte;
 
 	//Inserir os dados na lista ligada
-	InserirTransporte(meioTransporte_1, novoTransporte->codigo, novoTransporte->tipo, novoTransporte->bateria, novoTransporte->autonomia, novoTransporte->geocodigo, novoTransporte->disponivel);
+	InserirTransporte(meioTransporte_1, novoTransporte->codigo, novoTransporte->tipo, novoTransporte->bateria, novoTransporte->autonomia, novoTransporte->geocodigo);
 
 	//Guardar os dados da lista ligada no ficheiro txt 
 	saveficheiroTransporte (meioTransporte_1);
@@ -64,7 +61,7 @@ Transporte* inputTransporte(Transporte* meioTransporte_1) {
 }
 
 //Inserir um novo registo na lista ligada transporte 
-Transporte* InserirTransporte(Transporte* inicio, int id, char tipo[10], float bateria, float autonomia, char geocodigo[20], int disponivel) {
+Transporte* InserirTransporte(Transporte* inicio, int id, char tipo[10], float bateria, float autonomia, char geocodigo[20]) {
 
 	if (!ExisteTransporte(inicio, id)) {
 		Transporte* novo = malloc(sizeof(Transporte));
@@ -74,7 +71,7 @@ Transporte* InserirTransporte(Transporte* inicio, int id, char tipo[10], float b
 			novo->bateria = bateria;
 			novo->autonomia = autonomia;
 			strcpy(novo->geocodigo, geocodigo);
-			novo->disponivel = disponivel;
+		
 			novo->seguinte = inicio;
 		
 			//A ter a certeza o que foi inserido 
@@ -142,7 +139,7 @@ Transporte* listarTransporte(Transporte* inicio) {
 	//Percorre a estrutura até fechar ao fim da lista
 	while (inicio != NULL) {
 
-		printf("%d; %s; %.2f; %.2f; %s; %d\n", inicio->codigo, inicio->tipo, inicio->bateria, inicio->autonomia, inicio->geocodigo, inicio->disponivel);
+		printf("%d; %s; %.2f; %.2f; %s; %d\n", inicio->codigo, inicio->tipo, inicio->bateria, inicio->autonomia, inicio->geocodigo);
 
 		inicio = inicio->seguinte;
 	}
@@ -167,7 +164,7 @@ Transporte* saveficheiroTransporte(Transporte* inicio) {
 	while (atual != NULL) {
 	
 		//Escrever no ficheiro txt
-		fprintf(ficheiroTransporte, "%d; %s; %.2f; %.2f; %s; %d\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo, atual->disponivel);
+		fprintf(ficheiroTransporte, "%d;%s;%.2f;%.2f;%s\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo);
 
 		atual = atual->seguinte;
 	}
@@ -193,7 +190,7 @@ Transporte* lerFicheiroTransporte(Transporte* inicio) {
 		Transporte* novoTransporte = (Transporte*)malloc(sizeof(Transporte));
 
 		//Ler linha a linha do ficheiro e coloca na estrutura 
-		sscanf(linha, "%d;%[^;];%f;%f;%s;%d", &novoTransporte->codigo, novoTransporte->tipo, &novoTransporte->bateria, &novoTransporte->autonomia, novoTransporte->geocodigo, novoTransporte->disponivel);
+		sscanf(linha,"%d;%[^;];%f;%f;%s", &novoTransporte->codigo, novoTransporte->tipo, &novoTransporte->bateria, &novoTransporte->autonomia, novoTransporte->geocodigo);
 
 			novoTransporte->seguinte = NULL;
 	
@@ -245,21 +242,21 @@ void TrocarTransportes(Transporte* t1, Transporte* t2) {
 	float autonomia_temp = t1->autonomia;
 	char geocodigo_temp[7];
 	strcpy(geocodigo_temp, t1->geocodigo);
-	int disponivel_temp = t1->disponivel;
+	
 	
 	t1->codigo = t2->codigo;
 	strcpy(t1->tipo, t2->tipo);
 	t1->bateria = t2->bateria;
 	t1->autonomia = t2->autonomia;
 	strcpy(t1->geocodigo, t2->geocodigo);
-	t2->disponivel = t2->disponivel;
+	
 
 	t2->codigo = codigo_temp;
 	strcpy(t2->tipo, tipo_temp);
 	t2->bateria = bateria_temp;
 	t2->autonomia = autonomia_temp;
 	strcpy(t2->geocodigo, geocodigo_temp);
-	t2->disponivel = disponivel_temp;
+	
 }
 
 //Ordenar Autonomia ordem decrescente
@@ -295,7 +292,135 @@ void OrdenarTransportesPorAutonomiaDecrescente(Transporte* inicio) {
 	//Enquanto que não chega ao fim da lista escreve na consola
 	while (inicio != NULL) {
 		//Escrever na consola 
-		printf("%d; %s;%.2f;%.2f;%s;%d\n", inicio->codigo, inicio->tipo, inicio->bateria, inicio->autonomia, inicio->geocodigo, inicio->disponivel);
+		printf("%d;%s;%.2f;%.2f;%s;%d\n", inicio->codigo, inicio->tipo, inicio->bateria, inicio->autonomia, inicio->geocodigo);
 		inicio = inicio->seguinte;
 	}
+}
+
+//Alterar dados 
+Transporte* AlterarDadosTransporte(Transporte* inicio) {
+
+	//Variaveis
+	int ID;
+	int campo; 
+	char tipo [10]; 
+	float bateria; 
+	float autonomia; 
+	char geocodigo [20]; 
+
+	system("cls");
+
+	//Mostrar os dados atuais de todos os transportes da lista
+	printf("INFORMACOES DOS TRANSPORTES:\n");
+	Transporte* atual = inicio;
+	while (atual != NULL) {
+		printf("%d; %s; %.2f; %.2f; %s\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo);
+		atual = atual->seguinte;
+	}
+
+	//Pedir ao utilizador o ID do transporte que quer alterar
+	printf("INSIRA O ID DO TRANSPORTE QUE PRETENDE ALTERAR\n");
+	scanf("%d", &ID);
+
+	//Procurar o transporte com o ID indicado pelo utilizador
+	atual = inicio;
+	while (atual != NULL && atual->codigo != ID) {
+		atual = atual->seguinte;
+	}
+
+	//Se ID não encontrada informa o utilizador
+	if (atual == NULL) {
+		printf("TRANSPORTE COM O ID %d NAO ENCONTRADO\n", ID);
+		return inicio;
+	}
+
+	// Mostrar os dados atuais do transporte
+	printf("INFORMACOES DO TRANSPORTE SELECIONADO:\n");
+	printf("%d; %s; %.2f; %.2f; %s\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo);
+
+
+	//Opção de escolha para o cliente
+	printf("INSERIR O CAMPO QUE PRETENDE ALTERAR\n");
+	printf("1 - ID\n");
+	printf("2 - TIPO\n");
+	printf("3 - BATERIA\n");
+	printf("4 - AUTONOMIA\n");
+	printf("5 - GEOCODIGO\n");
+	scanf("%d", &campo);
+
+	switch (campo) {
+	case 1:
+		//Alterar o ID do meio
+		printf("INSIRA O NOVO ID\n");
+		scanf("%d", &ID);
+		break;
+	case 2:
+		getchar();
+		//Alterar o tipo de meio 
+		printf("INSIRA O NOVO TIPO\n");
+		fgets(tipo, 20, stdin);
+		tipo[strcspn(tipo, "\n")] = '\0';
+		//Atribuir o novo nome à estrutura
+		strcpy(atual->tipo, tipo);
+		break;
+	case 3:
+		//Alterar o nivel de bateria
+		printf("INSERIA O NIVEL DE BATERIA F\n");
+		scanf("%.2f", &atual->bateria);
+		break;
+	case 4:
+		//Alterar a autonomia
+		printf("INSERIA a autonomia F\n");
+		scanf("%.2f", &atual->autonomia);
+		break;
+	case 5:
+		getchar();
+		printf("INSIRA A LOCALIZACAO\n");
+		fgets(geocodigo, 20, stdin);
+		geocodigo[strcspn(geocodigo, "\n")] = '\0';
+		//Atribuir o novo nome à estrutura
+		strcpy(atual->geocodigo, geocodigo);
+		break;
+		{
+	default:
+		break;
+		}	
+	}
+	system("cls"); 
+	printf(" %d; %s; %.2f; %.2f; %s\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo); 
+
+	saveAlterarDadosTransportes(inicio); 
+}
+
+//Guardar dados em ficheiro temporario (Tranportes)
+void saveAlterarDadosTransportes(Transporte* inicio) {
+	
+	//Abrir ficheiro temporario 
+	FILE* ficheirotemporario = fopen("tempt.txt", "w"); 
+
+	if (ficheirotemporario == NULL) {
+
+		printf("ERRO AO ABRIR FICHEIRO");
+		return;
+	}
+
+	Transporte* atual = inicio; 
+
+	//Enquanto não chega ao fim da lista
+	while (atual != NULL) {
+		//Escrever no ficheiro temporario
+		fprintf(ficheirotemporario, "%d;%s;%.2f;%.2f;%s\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo);
+		atual = atual->seguinte;
+	}
+	fclose(ficheirotemporario); 
+
+	//Remover ficheiro original
+	if (remove("Transporte.txt") != 0) {
+		return;
+	}
+	//Renomear fiheiro temporario
+	if (rename("tempt.txt", "Transporte.txt") != 0) {
+		return;
+	}
+
 }

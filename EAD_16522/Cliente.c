@@ -263,7 +263,7 @@ Cliente* clientedados(Cliente* cliente) {
 } 
 
 //Alterar dados de uma estrutura 
-Cliente* AlterarDados(Cliente* inicio) {
+Cliente* AlterarDadosCliente(Cliente* inicio) {
 
 	//Variaveis
 	int campo;
@@ -367,11 +367,3 @@ void saveAlterarDados(Cliente* inicio) {
 	}
 }
 
-//Alugar meio de transporte
-void alugarMeio(Cliente* cliente, Transporte* transporte) {
-	
-	//Lista de meio disponiveis para alugar
-
-
-
-}

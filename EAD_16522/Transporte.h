@@ -9,8 +9,6 @@ typedef struct registo {
 	float bateria;
 	float autonomia; //Autonomia em KM  
 	char geocodigo[20];	//localização 
-	int disponivel;
-
 	struct registo* seguinte; // endereço de memória para uma struct registo
 
 }Transporte;
@@ -19,7 +17,7 @@ typedef struct registo {
 int ExisteTransporte(Transporte* Inicio, int ID);
 
 //Inserir um novo registo para Transporte 
-Transporte* InserirTransporte(Transporte* Inicio, int ID, char Tipo[], float Bateria, float Autonmia, char Geocodigo[], int disponivel);
+Transporte* InserirTransporte(Transporte* Inicio, int ID, char Tipo[], float Bateria, float Autonmia, char Geocodigo[]);
 
 //Remover um meio de transporte atraves do ID
 Transporte* RemoverTransporte(Transporte* inicio); 
@@ -41,6 +39,11 @@ void OrdenarTransportesPorAutonomiaDecrescente(Transporte* inicio);
 
 //Adicionar transporte pelo o teclado 
 Transporte* inputTransporte(Transporte* meioTransporte_1); 
+
+//Alterar dados da lista ligada transporte
+Transporte* AlterarDadosTransporte(Transporte* inicio);
+
+void saveAlterarDadosTransportes(Transporte* inicio); 
 
 
 

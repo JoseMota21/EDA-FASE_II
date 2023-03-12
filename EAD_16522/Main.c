@@ -46,7 +46,8 @@ int main() {
 				printf("5 - ORDENAR TRANSPORTE AUTONOMIA\n");
 				printf("6 - CONSULTAR LISTA DE TRANSPORTE\n");
 				printf("7 - CONSULTAR LISTA DE CLIENTES\n");
-				printf("8 - SAIR\n");
+				printf("8 - ALTERAR DADOS DE MEIOS DE TRANSPORTES\n");
+				printf("9 - SAIR\n");
 				scanf("%d", &gestor);
 				
 				system("cls"); 
@@ -85,6 +86,7 @@ int main() {
 					system("cls");
 					break;
 				case 8: 
+					AlterarDadosTransporte(meioTransporte_1);
 					break; 
 
 				default:
@@ -92,7 +94,7 @@ int main() {
 					break;
 				}
 
-			} while (gestor != 8);
+			} while (gestor != 9);
 			break;
 		
 		case 2: 
@@ -111,7 +113,7 @@ int main() {
 					clientedados(logado); 
 					break;
 				case 2: 
-					AlterarDados(logado); 
+					AlterarDadosCliente(logado); 
 					break; 
 				case 3: 
 					break; 
