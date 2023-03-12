@@ -5,20 +5,16 @@
 #include <stdlib.h>
 
 
-typedef int bool;
-#define true 1 
-#define false 0
-
 int main() {
 	//Inicializar as listas 
 	Transporte* meioTransporte_1 = NULL; // Lista ligada transportes vazia  
 	Cliente* cliente_1 = NULL; // Lista ligada clientes vazia 
 
+	//Qual o cliente que está logado no sistema 
+	Cliente* logado = NULL;
 	int opcao;
 	int gestor;
 	int cliente;
-
-	bool logado = true;
 
 	//Ler o ficheiro Txt
 	//Ficheiro Transportes
@@ -91,6 +87,7 @@ int main() {
 			break;
 		
 		case 2: 
+			
 			logado = loginCliente(cliente_1); 
 			do {
 				printf("1 - CONSULTAR DADOS MEUS DADOS\n");
@@ -100,21 +97,19 @@ int main() {
 
 				switch (cliente){ 
 				case 1: 
-					clientedados(cliente_1); 
+					clientedados(logado); 
 					break;
 				case 2: 
-					AlterarDados(cliente_1); 
+					AlterarDados(logado); 
 					break; 
 				case 3: 
 					break; 
 				default:
+					printf("OPCAO INVALIDA\n");
 					break;
 				}
-
-			} while (cliente != 3);
-			
-		}
-		
+			} while (cliente != 3);			
+		}		
 	} while (opcao != 0); 
 		
 	return;

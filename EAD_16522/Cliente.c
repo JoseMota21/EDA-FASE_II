@@ -252,7 +252,8 @@ Cliente* loginCliente(Cliente* login){
 
 //Dados de cliente (cliente consulta os seus dados) 
 Cliente* clientedados(Cliente* cliente) {
-	printf("%s; %d; %.2f; %s; %s" , cliente->nome_cliente, cliente->NIF, cliente->saldo, cliente->morada, cliente->password);
+	
+	printf("%s; %d; %.2f; %s; %s\n" , cliente->nome_cliente, cliente->NIF, cliente->saldo, cliente->morada, cliente->password);
 } 
 
 //Alterar dados de uma estrutura 
