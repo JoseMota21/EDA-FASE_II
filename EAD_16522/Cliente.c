@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include "Cliente.h" 
+#include "Transporte.h"
 
 #define MAX_LINHA 1000
 
@@ -336,9 +337,10 @@ Cliente* AlterarDados(Cliente* inicio) {
 //Guardar as alterações efetuadas
 void saveAlterarDados(Cliente* inicio) {
 
+	//Abrir ficheiro temporario
 	FILE* ficheirotemporario = fopen("temp.txt", "w");
 
-
+	//
 	if (ficheirotemporario == NULL) {
 
 		printf("ERRO AO ABRIR FICHEIRO");
@@ -346,19 +348,30 @@ void saveAlterarDados(Cliente* inicio) {
 	}
 	Cliente* atual = inicio;
 
+	//Enquanto não chega ao fim da lista
 	while (atual != NULL) {
-
+		//Escrever no ficheiro temporario
 		fprintf(ficheirotemporario, "%s; %d; %.2f; %s; %s\n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->password);
 		atual = atual->seguinte;
 	}
-
+	
 	fclose(ficheirotemporario);
 	
+	//Remover ficheiro original
 	if (remove("Cliente.txt") != 0) {
 		return;
 	}
-
+	//Renomear fiheiro temporario
 	if (rename("temp.txt", "Cliente.txt" )!= 0) {
 		return;
 	}
+}
+
+//Alugar meio de transporte
+void alugarMeio(Cliente* cliente, Transporte* transporte) {
+	
+	//Lista de meio disponiveis para alugar
+
+
+
 }

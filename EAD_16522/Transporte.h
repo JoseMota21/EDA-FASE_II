@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 
 
 //Estrutura para o registo do meio de mobilidade eletrica 
@@ -8,6 +9,7 @@ typedef struct registo {
 	float bateria;
 	float autonomia; //Autonomia em KM  
 	char geocodigo[20];	//localização 
+	int disponivel;
 
 	struct registo* seguinte; // endereço de memória para uma struct registo
 
@@ -17,7 +19,7 @@ typedef struct registo {
 int ExisteTransporte(Transporte* Inicio, int ID);
 
 //Inserir um novo registo para Transporte 
-Transporte* InserirTransporte(Transporte* Inicio, int ID, char Tipo[], float Bateria, float Autonmia, char Geocodigo[]);
+Transporte* InserirTransporte(Transporte* Inicio, int ID, char Tipo[], float Bateria, float Autonmia, char Geocodigo[], int disponivel);
 
 //Remover um meio de transporte atraves do ID
 Transporte* RemoverTransporte(Transporte* inicio); 

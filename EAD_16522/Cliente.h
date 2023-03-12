@@ -12,7 +12,7 @@ typedef struct registoCliente {
 	float saldo; //saldo do cliente
 	char morada[MAX_MORADA_CLIENTE]; //morada do cliente
 	char password[MAX_PASSWORD]; 
-
+	
 	struct registoCliente* seguinte; // endereço de memória para uma struct registo Cliente
 
 }Cliente; 

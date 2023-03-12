@@ -47,20 +47,24 @@ Transporte* inputTransporte(Transporte* meioTransporte_1) {
 	printf("Insira a localizacao: ");
 	scanf("%s", novoTransporte->geocodigo);
 
+	printf("Disponivel: ");
+	scanf("%d", &novoTransporte->disponivel);
+
 	//Adicionar o novo meio de transporte ao início da lista
 	novoTransporte->seguinte = meioTransporte_1;
 	meioTransporte_1 = novoTransporte;
 
 	//Inserir os dados na lista ligada
-	InserirTransporte(meioTransporte_1, novoTransporte->codigo, novoTransporte->tipo, novoTransporte->bateria, novoTransporte->autonomia, novoTransporte->geocodigo);
+	InserirTransporte(meioTransporte_1, novoTransporte->codigo, novoTransporte->tipo, novoTransporte->bateria, novoTransporte->autonomia, novoTransporte->geocodigo, novoTransporte->disponivel);
 
 	//Guardar os dados da lista ligada no ficheiro txt 
 	saveficheiroTransporte (meioTransporte_1);
 
 	return meioTransporte_1;
 }
+
 //Inserir um novo registo na lista ligada transporte 
-Transporte* InserirTransporte(Transporte* inicio, int id, char tipo[10], float bateria, float autonomia, char geocodigo[20]) {
+Transporte* InserirTransporte(Transporte* inicio, int id, char tipo[10], float bateria, float autonomia, char geocodigo[20], int disponivel) {
 
 	if (!ExisteTransporte(inicio, id)) {
 		Transporte* novo = malloc(sizeof(Transporte));
@@ -70,10 +74,9 @@ Transporte* InserirTransporte(Transporte* inicio, int id, char tipo[10], float b
 			novo->bateria = bateria;
 			novo->autonomia = autonomia;
 			strcpy(novo->geocodigo, geocodigo);
+			novo->disponivel = disponivel;
 			novo->seguinte = inicio;
-
-			//Limpar consola 
-			//system("cls");
+		
 			//A ter a certeza o que foi inserido 
 			printf("Registo Inserido com exito!\n");
 			return (novo);
@@ -139,7 +142,7 @@ Transporte* listarTransporte(Transporte* inicio) {
 	//Percorre a estrutura até fechar ao fim da lista
 	while (inicio != NULL) {
 
-		printf("%d; %s; %.2f; %.2f; %s\n", inicio->codigo, inicio->tipo, inicio->bateria, inicio->autonomia, inicio->geocodigo);
+		printf("%d; %s; %.2f; %.2f; %s; %d\n", inicio->codigo, inicio->tipo, inicio->bateria, inicio->autonomia, inicio->geocodigo, inicio->disponivel);
 
 		inicio = inicio->seguinte;
 	}
@@ -164,7 +167,7 @@ Transporte* saveficheiroTransporte(Transporte* inicio) {
 	while (atual != NULL) {
 	
 		//Escrever no ficheiro txt
-		fprintf(ficheiroTransporte, "%d; %s; %.2f; %.2f; %s\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo);
+		fprintf(ficheiroTransporte, "%d; %s; %.2f; %.2f; %s; %d\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo, atual->disponivel);
 
 		atual = atual->seguinte;
 	}
@@ -190,7 +193,7 @@ Transporte* lerFicheiroTransporte(Transporte* inicio) {
 		Transporte* novoTransporte = (Transporte*)malloc(sizeof(Transporte));
 
 		//Ler linha a linha do ficheiro e coloca na estrutura 
-		sscanf(linha, "%d;%[^;];%f;%f;%s", &novoTransporte->codigo, novoTransporte->tipo, &novoTransporte->bateria, &novoTransporte->autonomia, novoTransporte->geocodigo);
+		sscanf(linha, "%d;%[^;];%f;%f;%s;%d", &novoTransporte->codigo, novoTransporte->tipo, &novoTransporte->bateria, &novoTransporte->autonomia, novoTransporte->geocodigo, novoTransporte->disponivel);
 
 			novoTransporte->seguinte = NULL;
 	
@@ -242,18 +245,21 @@ void TrocarTransportes(Transporte* t1, Transporte* t2) {
 	float autonomia_temp = t1->autonomia;
 	char geocodigo_temp[7];
 	strcpy(geocodigo_temp, t1->geocodigo);
-
+	int disponivel_temp = t1->disponivel;
+	
 	t1->codigo = t2->codigo;
 	strcpy(t1->tipo, t2->tipo);
 	t1->bateria = t2->bateria;
 	t1->autonomia = t2->autonomia;
 	strcpy(t1->geocodigo, t2->geocodigo);
+	t2->disponivel = t2->disponivel;
 
 	t2->codigo = codigo_temp;
 	strcpy(t2->tipo, tipo_temp);
 	t2->bateria = bateria_temp;
 	t2->autonomia = autonomia_temp;
 	strcpy(t2->geocodigo, geocodigo_temp);
+	t2->disponivel = disponivel_temp;
 }
 
 //Ordenar Autonomia ordem decrescente
@@ -289,7 +295,7 @@ void OrdenarTransportesPorAutonomiaDecrescente(Transporte* inicio) {
 	//Enquanto que não chega ao fim da lista escreve na consola
 	while (inicio != NULL) {
 		//Escrever na consola 
-		printf("%d; %s;%.2f;%.2f;%s\n", inicio->codigo, inicio->tipo, inicio->bateria, inicio->autonomia, inicio->geocodigo);
+		printf("%d; %s;%.2f;%.2f;%s;%d\n", inicio->codigo, inicio->tipo, inicio->bateria, inicio->autonomia, inicio->geocodigo, inicio->disponivel);
 		inicio = inicio->seguinte;
 	}
 }
