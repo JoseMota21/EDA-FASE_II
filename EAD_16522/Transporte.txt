@@ -1,3 +1,4 @@
-45;  MOTA; 23.00; 4.00; FAFE 
-45;  MOTA; 23.00; 4.00; FAFE 
-1;   BIKE; 23.00; 13.00; PORTO 
+65;       BIKE; 34.00; 12.00; PRO 
+5;         BIKE; 23.00; 12.00; PORTO 
+2;          MOT; 23.00; 12.00; PORTA 
+3;            B; 23.00; 1.00; PORTO 

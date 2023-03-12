@@ -1,2 +1,2 @@
-Ricardo; 123035732; 34.00; rua; jose_"@_4
-Jose; 253112451; 34.00; rua; jose_"3
+FILIPE; 253112451; 43.00; RUA DA VENDA; ZE1 
+JOSE; 123456789; 12.00; RUA DA VENDA; ze  

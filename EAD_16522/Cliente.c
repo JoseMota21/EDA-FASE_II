@@ -89,22 +89,28 @@ int ExisteCliente(Cliente* inicio, int nif) {
 //Guardar cliente em ficheiro txt 
 Cliente* saveficheiroCliente(Cliente* inicio){
 
-	Cliente* atual = inicio;
-	
 	//Abrir ficheiro txt 
 	FILE* ficheiroCliente = fopen("Cliente.txt", "w"); 
 
 	if (ficheiroCliente == NULL) {
 		printf("Erro ao abrir o ficheiro Cliente \n"); 
 
-		return; 
+		return inicio; 
 	}
 
-	//Escrever os dados no ficheiro txt 
-	fprintf(ficheiroCliente, "%s; %d; %.2f; %s; %s \n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->password); 
+	Cliente* atual = inicio;
+
+	while (atual != NULL) {
+		//Escrever os dados no ficheiro txt 
+		fprintf(ficheiroCliente, "%s; %d; %.2f; %s; %s \n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->password);
+
+		atual = atual->seguinte;
+	}
 
 	//fechar o ficheiro txt 
 	fclose(ficheiroCliente); 
+
+	return inicio; 
 }
 
 //Ler ficheiro txt e colocar os dados na estrutura do cliente 

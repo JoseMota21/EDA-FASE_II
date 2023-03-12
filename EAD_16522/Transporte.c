@@ -21,45 +21,44 @@ int ExisteTransporte(Transporte* inicio, int id) {
 
 //Escrever novo transporte através do teclado
 Transporte* inputTransporte(Transporte* meioTransporte_1) {
-	
-		Transporte novoTransporte = { 0, ' ', 0.0, 0.0, 0.0}; 
+
+	Transporte* novoTransporte = (Transporte*)malloc(sizeof(Transporte));
 	
 	//Pedir informação ao Gestor para adicionar um meio de transporte código
 	printf("Insira o codigo do meio de mobilidade: ");
-	scanf("%d", &novoTransporte.codigo);
+	scanf("%d", &novoTransporte->codigo);
 
 	//Verificar se existe o ID selecionado pelo o Gestor
-	while (ExisteTransporte(meioTransporte_1, novoTransporte.codigo)) {
+	while (ExisteTransporte(meioTransporte_1, novoTransporte->codigo)) {
 		printf("ID ja existente, por favor inserir outro ID \n");
-		scanf("%d", &novoTransporte.codigo);
+		scanf("%d", &novoTransporte->codigo);
 	}
 	//Inserir o meio de transporte
 	printf("Insira o tipo de meio de mobilidade (Trotinete ou Bicicleta): ");
-	scanf("%s", novoTransporte.tipo);
+	scanf("%s", novoTransporte->tipo);
 
 	//Inserir a carga atual da bateria do meio de transporte
 	printf("Insira a carga atual da bateria: ");
-	scanf("%f", &novoTransporte.bateria);
+	scanf("%f", &novoTransporte->bateria);
 
 	printf("Insira a autonomia: ");
-	scanf("%f", &novoTransporte.autonomia);
+	scanf("%f", &novoTransporte->autonomia);
 
 	printf("Insira a localizacao: ");
-	scanf("%s", novoTransporte.geocodigo); 
+	scanf("%s", novoTransporte->geocodigo);
 
 	//Adicionar o novo meio de transporte ao início da lista
-	novoTransporte.seguinte = meioTransporte_1;
-	meioTransporte_1 = &novoTransporte;
+	novoTransporte->seguinte = meioTransporte_1;
+	meioTransporte_1 = novoTransporte;
 
 	//Inserir os dados na lista ligada
-	InserirTransporte(meioTransporte_1, novoTransporte.codigo, novoTransporte.tipo, novoTransporte.bateria, novoTransporte.autonomia, novoTransporte.geocodigo); 
+	InserirTransporte(meioTransporte_1, novoTransporte->codigo, novoTransporte->tipo, novoTransporte->bateria, novoTransporte->autonomia, novoTransporte->geocodigo);
 
 	//Guardar os dados da lista ligada no ficheiro txt 
-	saveficheiroTransporte(meioTransporte_1); 
-	
-	return meioTransporte_1; 
-}
+	saveficheiroTransporte(meioTransporte_1);
 
+	return meioTransporte_1;
+}
 //Inserir um novo registo na lista ligada transporte 
 Transporte* InserirTransporte(Transporte* inicio, int id, char tipo[10], float bateria, float autonomia, char geocodigo[20]) {
 
@@ -126,7 +125,6 @@ Transporte* RemoverTransporte(Transporte* inicio) {
 	}
 	else {
 		anterior->seguinte = atual->seguinte;
-		listarTransporte(inicio);
 		saveficheiroTransporte(inicio); 
 	}
 	free(atual); //Libertar a memoria que estava alocada 
@@ -146,6 +144,7 @@ Transporte* listarTransporte(Transporte* inicio) {
 
 		inicio = inicio->seguinte;
 	}
+	return 0; 
 }
 
 //Guardar em ficheiro TXT a informação das trotinetes 
@@ -164,7 +163,7 @@ Transporte* saveficheiroTransporte(Transporte* inicio) {
 
 	//Equanto que não chega ao fim da estrutura 
 	while (atual != NULL) {
-		
+	
 		//Escrever no ficheiro txt
 		fprintf(ficheiroTransporte, "%d; %s; %.2f; %.2f; %s \n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo);
 
