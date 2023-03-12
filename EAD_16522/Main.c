@@ -12,6 +12,7 @@ int main() {
 
 	//Qual o cliente que está logado no sistema 
 	Cliente* logado = NULL;
+
 	int opcao;
 	int gestor;
 	int cliente;
@@ -92,9 +93,8 @@ int main() {
 			} while (gestor != 8);
 			break;
 		
-		case 2: 
-			
-			logado = loginCliente(cliente_1); 
+		case 2: 			
+				logado = loginCliente(cliente_1); 
 			do {
 				printf("1 - CONSULTAR DADOS MEUS DADOS\n");
 				printf("2 - ALTERAR MEUS DADOS\n");
