@@ -55,7 +55,7 @@ Transporte* inputTransporte(Transporte* meioTransporte_1) {
 	InserirTransporte(meioTransporte_1, novoTransporte->codigo, novoTransporte->tipo, novoTransporte->bateria, novoTransporte->autonomia, novoTransporte->geocodigo);
 
 	//Guardar os dados da lista ligada no ficheiro txt 
-	saveficheiroTransporte(meioTransporte_1);
+	saveficheiroTransporte (meioTransporte_1);
 
 	return meioTransporte_1;
 }
@@ -63,7 +63,7 @@ Transporte* inputTransporte(Transporte* meioTransporte_1) {
 Transporte* InserirTransporte(Transporte* inicio, int id, char tipo[10], float bateria, float autonomia, char geocodigo[20]) {
 
 	if (!ExisteTransporte(inicio, id)) {
-		Transporte* novo = malloc(sizeof(struct registo));
+		Transporte* novo = malloc(sizeof(Transporte));
 		if (novo != NULL) {
 			novo->codigo = id;
 			strcpy(novo->tipo, tipo);
@@ -81,9 +81,8 @@ Transporte* InserirTransporte(Transporte* inicio, int id, char tipo[10], float b
 		else {
 			printf("Erro ao colocar na memoria\n");
 		}
-
-		return (inicio);
 	}
+	return (inicio);
 }
 
 //Remover um meio de transporte pelo o ID
@@ -165,7 +164,7 @@ Transporte* saveficheiroTransporte(Transporte* inicio) {
 	while (atual != NULL) {
 	
 		//Escrever no ficheiro txt
-		fprintf(ficheiroTransporte, "%d; %s; %.2f; %.2f; %s \n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo);
+		fprintf(ficheiroTransporte, "%d; %s; %.2f; %.2f; %s\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo);
 
 		atual = atual->seguinte;
 	}

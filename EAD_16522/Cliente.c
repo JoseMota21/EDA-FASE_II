@@ -244,16 +244,15 @@ Cliente* loginCliente(Cliente* login){
 			//e se a password inserida for igual à password da estrutura 
 			if (atual->NIF == nif && strcmp(atual->password, password) == 0) {
 				system("cls"); 
-				printf("Bem-vindo, %s!\n", atual->nome_cliente);
-				return atual;
+				printf("Bem-vindo, %s!\n", atual->nome_cliente); 
+
+				return atual; 
 			}
-
 			atual = atual->seguinte;
-
 		}
 		printf("NIF ou password incorretos!\n");
 
-		return NULL;
+return NULL;
 }
 
 //Dados de cliente (cliente consulta os seus dados) 
@@ -263,74 +262,103 @@ Cliente* clientedados(Cliente* cliente) {
 } 
 
 //Alterar dados de uma estrutura 
-Cliente* AlterarDados(Cliente* inicio){
+Cliente* AlterarDados(Cliente* inicio) {
 
 	//Variaveis
-	int campo; 
-	char nome[MAX_NOME_CLIENTE]; 
-	char morada[MAX_MORADA_CLIENTE]; 
-	char password[MAX_PASSWORD]; 
+	int campo;
+	char nome[MAX_NOME_CLIENTE];
+	char morada[MAX_MORADA_CLIENTE];
+	char password[MAX_PASSWORD];
 
-	Cliente* atual = inicio; 
+	Cliente* atual = inicio;
 
-	//Se o cliente estiver logado informação a apresentar
-	if (loginCliente) {
 
-		system("cls");
-		// Mostrar os dados atuais do cliente
-		printf("DADOS:\n");
-		printf("%s; %d; %.2f; %s; %s\n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->password);
+	system("cls");
+	// Mostrar os dados atuais do cliente
+	printf("DADOS:\n");
+	printf("%s; %d; %.2f; %s; %s\n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->password);
 
-		//Opção de escolha para o cliente
-		printf("INSERIR O CAMPO QUE PRETENDE ALTERAR\n"); 
-		printf("1 - NOME\n"); 
-		printf("2 - NIF\n");
-		printf("3 - MORADA\n");
-		printf("4 - PASSWORD\n");
-		scanf("%d", &campo);
+	//Opção de escolha para o cliente
+	printf("INSERIR O CAMPO QUE PRETENDE ALTERAR\n");
+	printf("1 - NOME\n");
+	printf("2 - NIF\n");
+	printf("3 - MORADA\n");
+	printf("4 - PASSWORD\n");
+	scanf("%d", &campo);
 
-		//Escolha do utilizador o campo que pretende alterar
-		switch (campo){
-		case 1: 
-			getchar();
-			//Alterar o nome
-			printf("INSIRA O NOVO NOME\n"); 
-			fgets(nome, MAX_NOME_CLIENTE, stdin);
-			nome[strcspn(nome, "\n")] = '\0';
-			//Atribuir o novo nome à estrutura
-			strcpy(atual->nome_cliente, nome); 
-			break; 
-			
-		case 2: 		
-			//Alterar o número de contribuinte
-			printf("INSIRA O NIF\n");
-			scanf("%d", &atual->NIF); 
-			break; 
+	//Escolha do utilizador o campo que pretende alterar
+	switch (campo) {
+	case 1:
+		getchar();
+		//Alterar o nome
+		printf("INSIRA O NOVO NOME\n");
+		fgets(nome, MAX_NOME_CLIENTE, stdin);
+		nome[strcspn(nome, "\n")] = '\0';
+		//Atribuir o novo nome à estrutura
+		strcpy(atual->nome_cliente, nome);
+		break;
 
-		case 3: 
-			getchar();
-			//Alterar a sua morada
-			printf("INSIRA MORADA\n");
-			fgets(morada, MAX_MORADA_CLIENTE, stdin);
-			morada[strcspn(morada, "\n")] = '\0';
-			//Atribuir a nova morada à estrutura
-			strcpy(atual->morada, morada);
-			break; 
-		
-		case 4: 
-			getchar();
-			//Alterar a sua password
-			printf("INSIRA PASSWORD\n");
-			fgets(password,MAX_PASSWORD, stdin);
-			password[strcspn(password, "\n")] = '\0';
-			//Atribuir a nova password à estrutura
-			strcpy(atual->password, password);
-			break; 
-		default:
-			printf("OPCAO INVALIDA\n");
-			break;
-		}
-		//Mostrar ao utilizador os novos dados
+	case 2:
+		//Alterar o número de contribuinte
+		printf("INSIRA O NIF\n");
+		scanf("%d", &atual->NIF);
+		break;
+
+	case 3:
+		getchar();
+		//Alterar a sua morada
+		printf("INSIRA MORADA\n");
+		fgets(morada, MAX_MORADA_CLIENTE, stdin);
+		morada[strcspn(morada, "\n")] = '\0';
+		//Atribuir a nova morada à estrutura
+		strcpy(atual->morada, morada);
+		break;
+
+	case 4:
+		getchar();
+		//Alterar a sua password
+		printf("INSIRA PASSWORD\n");
+		fgets(password, MAX_PASSWORD, stdin);
+		password[strcspn(password, "\n")] = '\0';
+		//Atribuir a nova password à estrutura
+		strcpy(atual->password, password);
+		break;
+	default:
+		printf("OPCAO INVALIDA\n");
+		break;
+	}
+	//Mostrar ao utilizador os novos dados
 	printf("%s; %d; %.2f; %s; %s", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->password);
+
+	saveAlterarDados(inicio);
+} 
+
+//Guardar as alterações efetuadas
+void saveAlterarDados(Cliente* inicio) {
+
+	FILE* ficheirotemporario = fopen("temp.txt", "w");
+
+
+	if (ficheirotemporario == NULL) {
+
+		printf("ERRO AO ABRIR FICHEIRO");
+		return;
+	}
+	Cliente* atual = inicio;
+
+	while (atual != NULL) {
+
+		fprintf(ficheirotemporario, "%s; %d; %.2f; %s; %s\n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->password);
+		atual = atual->seguinte;
+	}
+
+	fclose(ficheirotemporario);
+	
+	if (remove("Cliente.txt") != 0) {
+		return;
+	}
+
+	if (rename("temp.txt", "Cliente.txt" )!= 0) {
+		return;
 	}
 }

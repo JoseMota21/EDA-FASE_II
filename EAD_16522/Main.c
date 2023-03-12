@@ -81,6 +81,8 @@ int main() {
 				case 7:
 
 					listarCliente(cliente_1);
+					system("pause"); // Pausa no sistema, pressionar alguma tecla para proseguir
+					system("cls");
 					break;
 				case 8: 
 					break; 
@@ -93,8 +95,10 @@ int main() {
 			} while (gestor != 8);
 			break;
 		
-		case 2: 			
-				logado = loginCliente(cliente_1); 
+		case 2: 
+			//Valor da estrutura logada 
+			logado = loginCliente(cliente_1); 
+				
 			do {
 				printf("1 - CONSULTAR DADOS MEUS DADOS\n");
 				printf("2 - ALTERAR MEUS DADOS\n");
@@ -103,6 +107,7 @@ int main() {
 
 				switch (cliente){ 
 				case 1: 
+
 					clientedados(logado); 
 					break;
 				case 2: 

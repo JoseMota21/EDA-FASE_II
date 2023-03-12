@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 #define MAX_NOME_CLIENTE 80 
 #define MAX_MORADA_CLIENTE 80
 #define MAX_PASSWORD 20
@@ -45,3 +46,6 @@ Cliente* clientedados(Cliente* cliente);
 
 //Alterar determinados dados da estrutura cliente
 Cliente* AlterarDados(Cliente* inicio); 
+
+//Guardar dados alterador (ficheiro temporario criado)
+void saveAlterarDados(Cliente* inicio); 
