@@ -1,7 +1,8 @@
 #define _CRT_SECURE_NO_DEPRECATE
 #include <stdio.h>
-#include "transporte.h" 
+#include "Transporte.h" 
 #include "Cliente.h" 
+#include "Aluguer.h"
 #include <stdlib.h>
 #include<stdbool.h>
 
@@ -38,7 +39,6 @@ int main() {
 
 		case 1:
 			do {
-
 				printf("1 - INSERIR TRANSPORTE NOVO\n");
 				printf("2 - INSERIR CLIENTE NOVO\n");
 				printf("3 - REMOVER TRANSPORTE\n");
@@ -47,7 +47,8 @@ int main() {
 				printf("6 - CONSULTAR LISTA DE TRANSPORTE\n");
 				printf("7 - CONSULTAR LISTA DE CLIENTES\n");
 				printf("8 - ALTERAR DADOS DE MEIOS DE TRANSPORTES\n");
-				printf("9 - SAIR\n");
+				printf("9 - CONSULTAR TRANSPORTES DISPONIVEIS\n"); 
+				printf("10 - SAIR\n");
 				scanf("%d", &gestor);
 
 				system("cls");
@@ -88,15 +89,21 @@ int main() {
 					system("cls");
 					break;
 				case 8:
+
 					AlterarDadosTransporte(meioTransporte_1);
 					break;
+				case 9:
 
+					transportesDisponiveis(meioTransporte_1); 
+					system("pause"); // Pausa no sistema, pressionar alguma tecla para proseguir
+					system("cls");
+					break; 
 				default:
 					printf("OPCAO INVALIDA\n");
 					break;
 				}
 
-			} while (gestor != 9);
+			} while (gestor != 10);
 			break;
 
 		case 2:
@@ -110,7 +117,8 @@ int main() {
 				do {
 					printf("1 - CONSULTAR DADOS MEUS DADOS\n");
 					printf("2 - ALTERAR MEUS DADOS\n");
-					printf("3 - SAIR\n");
+					printf("3 - ALUGAR TRANSPORTE\n");
+					printf("4 - SAIR\n");
 					scanf("%d", &cliente);
 
 					switch (cliente) {
@@ -121,12 +129,13 @@ int main() {
 						AlterarDadosCliente(logado);
 						break;
 					case 3:
+						alugarTranporte(cliente_1, meioTransporte_1); 
 						break;
 					default:
 						printf("OPCAO INVALIDA\n");
 						break;
 					}
-				} while (cliente != 3);
+				} while (cliente != 4);
 			}
 		}
 	}

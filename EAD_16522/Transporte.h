@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+#ifndef TRANSPORTE_H
+#define TRANSPORTE_H
 
 //Estrutura para o registo do meio de mobilidade eletrica 
 typedef struct registo {
@@ -9,6 +11,7 @@ typedef struct registo {
 	float bateria;
 	float autonomia; //Autonomia em KM  
 	char geocodigo[20];	//localização 
+	int disponivel; 
 	struct registo* seguinte; // endereço de memória para uma struct registo
 
 }Transporte;
@@ -43,5 +46,7 @@ Transporte* AlterarDadosTransporte(Transporte* inicio);
 //Guardar as alterações realizadas em ficheiro temporario que posteriormente irá substituir o original
 void saveAlterarDadosTransportes(Transporte* inicio); 
 
+//Mostrar meios de transportes disponiveis 
+Transporte* transportesDisponiveis(Transporte* meioTransporte_1); 
 
-
+#endif /* TRANSPORTE_H */ 

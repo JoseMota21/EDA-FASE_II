@@ -1,5 +1,10 @@
 #include <stdio.h>
 #include <stdbool.h>
+
+#ifndef CLIENTE_H
+#define CLIENTE_H
+
+
 #define MAX_NOME_CLIENTE 80 
 #define MAX_MORADA_CLIENTE 80
 #define MAX_PASSWORD 20
@@ -17,6 +22,7 @@ typedef struct registoCliente {
 
 }Cliente; 
 
+//Estrutura boleana
 typedef struct {
 	bool autenticado;
 	Cliente* cliente;
@@ -51,3 +57,5 @@ Cliente* AlterarDadosCliente(Cliente* inicio);
 
 //Guardar dados alterador (ficheiro temporario criado)
 void saveAlterarDados(Cliente* inicio); 
+
+#endif /* CLIENTE_H */ 

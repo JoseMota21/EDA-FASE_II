@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include "Transporte.h" 
 
+
 //Verificar se existe o meio de transporte pelo o ID 
 int ExisteTransporte(Transporte* inicio, int id) { 
 	
@@ -55,6 +56,8 @@ Transporte* inputTransporte(Transporte* meioTransporte_1) {
 	printf("Insira a localizacao: ");
 	scanf("%s", novoTransporte->geocodigo);
 
+	novoTransporte->disponivel = 0; 
+
 	//Adicionar o novo meio de transporte ao início da lista
 	novoTransporte->seguinte = meioTransporte_1;
 	meioTransporte_1 = novoTransporte;
@@ -68,7 +71,7 @@ Transporte* inputTransporte(Transporte* meioTransporte_1) {
 //Remover um meio de transporte pelo o ID
 Transporte* RemoverTransporte(Transporte* inicio) { 
 
-	Transporte RemoverTransporte = { 0, ' ', 0.0, 0.0, 0.0 };
+	Transporte RemoverTransporte = { 0, ' ', 0.0, 0.0, 0.0,0};
 
 	int codigo;
 	printf("Insira o codigo do meio de mobilidade:\n");
@@ -119,7 +122,7 @@ Transporte* listarTransporte(Transporte* inicio) {
 	//Percorre a estrutura até fechar ao fim da lista
 	while (inicio != NULL) {
 
-		printf("%d; %s; %.2f; %.2f; %s; %d\n", inicio->codigo, inicio->tipo, inicio->bateria, inicio->autonomia, inicio->geocodigo);
+		printf("%d; %s; %.2f; %.2f; %s; %d\n", inicio->codigo, inicio->tipo, inicio->bateria, inicio->autonomia, inicio->geocodigo, inicio->disponivel);
 
 		inicio = inicio->seguinte;
 	}
@@ -144,7 +147,7 @@ Transporte* saveficheiroTransporte(Transporte* inicio) {
 	while (atual != NULL) {
 	
 		//Escrever no ficheiro txt
-		fprintf(ficheiroTransporte, "%d;%s;%.2f;%.2f;%s\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo);
+		fprintf(ficheiroTransporte, "%d;%s;%.2f;%.2f;%s;%d\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo,atual->disponivel);
 
 		atual = atual->seguinte;
 	}
@@ -170,7 +173,7 @@ Transporte* lerFicheiroTransporte(Transporte* inicio) {
 		Transporte* novoTransporte = (Transporte*)malloc(sizeof(Transporte));
 
 		//Ler linha a linha do ficheiro e coloca na estrutura 
-		sscanf(linha,"%d;%[^;];%f;%f;%s", &novoTransporte->codigo, novoTransporte->tipo, &novoTransporte->bateria, &novoTransporte->autonomia, novoTransporte->geocodigo);
+		sscanf(linha,"%d;%[^;];%f;%f;%[^;];%d", &novoTransporte->codigo, novoTransporte->tipo, &novoTransporte->bateria, &novoTransporte->autonomia, novoTransporte->geocodigo, &novoTransporte->disponivel);
 
 			novoTransporte->seguinte = NULL;
 	
@@ -222,6 +225,7 @@ void TrocarTransportes(Transporte* t1, Transporte* t2) {
 	float autonomia_temp = t1->autonomia;
 	char geocodigo_temp[7];
 	strcpy(geocodigo_temp, t1->geocodigo);
+	int disponivel_temp = t1->disponivel;
 	
 	
 	t1->codigo = t2->codigo;
@@ -229,6 +233,7 @@ void TrocarTransportes(Transporte* t1, Transporte* t2) {
 	t1->bateria = t2->bateria;
 	t1->autonomia = t2->autonomia;
 	strcpy(t1->geocodigo, t2->geocodigo);
+	t1->disponivel = t2->disponivel; 
 	
 
 	t2->codigo = codigo_temp;
@@ -236,6 +241,7 @@ void TrocarTransportes(Transporte* t1, Transporte* t2) {
 	t2->bateria = bateria_temp;
 	t2->autonomia = autonomia_temp;
 	strcpy(t2->geocodigo, geocodigo_temp);
+	t2->disponivel = disponivel_temp; 
 	
 }
 
@@ -271,7 +277,7 @@ void OrdenarTransportesPorAutonomiaDecrescente(Transporte* inicio) {
 	//Enquanto que não chega ao fim da lista escreve na consola
 	while (inicio != NULL) {
 		//Escrever na consola 
-		printf("%d;%s;%.2f;%.2f;%s\n", inicio->codigo, inicio->tipo, inicio->bateria, inicio->autonomia, inicio->geocodigo);
+		printf("%d;%s;%.2f;%.2f;%s;%d\n", inicio->codigo, inicio->tipo, inicio->bateria, inicio->autonomia, inicio->geocodigo, inicio->disponivel);
 		inicio = inicio->seguinte;
 	}
 }
@@ -286,7 +292,6 @@ Transporte* AlterarDadosTransporte(Transporte* inicio) {
 	float bateria; 
 	float autonomia; 
 	char geocodigo [20]; 
-
 	float calculoAutonomia; 
 
 	system("cls");
@@ -295,7 +300,7 @@ Transporte* AlterarDadosTransporte(Transporte* inicio) {
 	printf("INFORMACOES DOS TRANSPORTES:\n");
 	Transporte* atual = inicio;
 	while (atual != NULL) {
-		printf("%d; %s; %.2f; %.2f; %s\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo);
+		printf("%d; %s; %.2f; %.2f; %s;%d\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo, atual->disponivel);
 		atual = atual->seguinte;
 	}
 
@@ -317,7 +322,7 @@ Transporte* AlterarDadosTransporte(Transporte* inicio) {
 
 	// Mostrar os dados atuais do transporte
 	printf("INFORMACOES DO TRANSPORTE SELECIONADO:\n");
-	printf("%d; %s; %.2f; %.2f; %s\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo);
+	printf("%d; %s; %.2f; %.2f; %s; %d\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo, atual->disponivel);
 
 
 	//Opção de escolha para o cliente
@@ -366,7 +371,7 @@ Transporte* AlterarDadosTransporte(Transporte* inicio) {
 		}	
 	}
 	system("cls"); 
-	printf("%d;%s;%.2f;%.2f;%s\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo); 
+	printf("%d;%s;%.2f;%.2f;%s;%d\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo, atual->disponivel); 
 
 	saveAlterarDadosTransportes(inicio); 
 }
@@ -388,7 +393,7 @@ void saveAlterarDadosTransportes(Transporte* inicio) {
 	//Enquanto não chega ao fim da lista
 	while (atual != NULL) {
 		//Escrever no ficheiro temporario
-		fprintf(ficheirotemporario, "%d;%s;%.2f;%.2f;%s\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo);
+		fprintf(ficheirotemporario, "%d;%s;%.2f;%.2f;%s;%d\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo, atual->disponivel);
 		atual = atual->seguinte;
 	}
 	fclose(ficheirotemporario); 
@@ -403,3 +408,20 @@ void saveAlterarDadosTransportes(Transporte* inicio) {
 	}
 
 }
+
+//Mostrar meios de transportes disponiveis 
+Transporte* transportesDisponiveis(Transporte* meioTransporte_1) { 
+
+	Transporte* atual = meioTransporte_1; 
+
+	while (atual!= NULL){
+		//Se tiver a 1 veiculo disponivel 
+		if (atual->disponivel == 1) {
+			printf("%d; %s; %.2f; %.2f; %s; %d\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo, atual->disponivel); 
+		}
+		atual = atual->seguinte; 
+
+	}
+	return 0; 
+} 
+
