@@ -48,7 +48,8 @@ int main() {
 				printf("7 - CONSULTAR LISTA DE CLIENTES\n");
 				printf("8 - ALTERAR DADOS DE MEIOS DE TRANSPORTES\n");
 				printf("9 - CONSULTAR TRANSPORTES DISPONIVEIS\n"); 
-				printf("10 - SAIR\n");
+				printf("10 - CONSULTAR HISTORICO DE ALUGUER\n");
+				printf("11 - SAIR\n");
 				scanf("%d", &gestor);
 
 				system("cls");
@@ -98,12 +99,18 @@ int main() {
 					system("pause"); // Pausa no sistema, pressionar alguma tecla para proseguir
 					system("cls");
 					break; 
+				case 10: 
+
+					consultarHistorico(); 
+					system("pause"); // Pausa no sistema, pressionar alguma tecla para proseguir
+					system("cls");
+					break; 
 				default:
 					printf("OPCAO INVALIDA\n");
 					break;
 				}
 
-			} while (gestor != 10);
+			} while (gestor != 11);
 			break;
 
 		case 2:

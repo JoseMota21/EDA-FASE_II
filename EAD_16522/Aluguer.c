@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+
+
 //Alugar Veiculo
 void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1) {
 
@@ -56,4 +58,27 @@ void historico(Cliente* cliente_1, Transporte* meioTransporte_1) {
 }
 
 //Consultar historico 
+void* consultarHistorico() {
+
+	//Abrir o ficheiro com os dados de historico
+	FILE* ficheiroHistorico = fopen("Historico.txt", "r");
+
+	if (historico == NULL) {
+		printf("Erro ao abrir o arquivo de histórico\n");
+		return;
+	}
+
+	char linha[100]; 
+
+	while (fgets(linha, sizeof(linha), ficheiroHistorico)) {
+		char nome_cliente[50], tipo[20];
+		int nif, codigo;
+		sscanf(linha,"%[^,],%d,%d,%[^,\n]", nome_cliente, &nif, &codigo, tipo);
+
+		printf("%s; %d; %d; %s\n", nome_cliente, nif, codigo, tipo);
+	}
+
+	fclose(ficheiroHistorico);
+}
+	
 
