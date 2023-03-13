@@ -13,15 +13,15 @@ int main() {
 	//Qual o cliente que está logado no sistema 
 	Cliente* logado = NULL;
 
-	int opcao;
-	int gestor;
-	int cliente;
-
 	//Ler ficheiro txt meio de transporte
 	meioTransporte_1 = lerFicheiroTransporte(meioTransporte_1);
 
 	//Ler ficheiro txt cliente
 	cliente_1 = lerFicheiroCliente(cliente_1);
+
+	int opcao;
+	int gestor;
+	int cliente;
 
 	do {
 		system("cls");
@@ -55,7 +55,7 @@ int main() {
 				switch (gestor) {
 				case 1:
 					
-					inputTransporte(meioTransporte_1);
+					meioTransporte_1 = inputTransporte(meioTransporte_1);
 					break;
 				case 2:
 
@@ -72,6 +72,8 @@ int main() {
 				case 5:
 					
 					OrdenarTransportesPorAutonomiaDecrescente(meioTransporte_1);
+					system("pause"); // Pausa no sistema, pressionar alguma tecla para proseguir
+					system("cls");
 					break;
 				case 6:
 
@@ -98,7 +100,7 @@ int main() {
 			break;
 		
 		case 2: 
-			//Valor da estrutura logada 
+			//Valor da estrutura logada (Dados do cliente logado)
 			logado = loginCliente(cliente_1); 
 				
 			do {
