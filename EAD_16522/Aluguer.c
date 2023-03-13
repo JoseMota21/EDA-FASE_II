@@ -31,8 +31,29 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1) {
 		// Transporte encontrado e disponível
 		printf("Transporte escolhido:\n");
 		printf("%d; %s; %.2f; %.2f; %s\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo);
-
 		atual->disponivel = 0;
-
+		
+		system("pause"); 
 	}
+	
+	//Atualizar o ficheito txt 
+	saveAlterarDadosTransportes(meioTransporte_1); 
+	historico(cliente_1, atual);
 }
+
+//Historico de aluguer 
+void historico(Cliente* cliente_1, Transporte* meioTransporte_1) {
+
+	//a para não alterar o historio, irá escrever sempre no fim
+	FILE* historico = fopen("Historico.txt", "a"); 
+	if (historico == NULL) {
+		printf("Erro ao abrir o arquivo de histórico\n");
+		return;
+	}
+	fprintf(historico,"%s,%d,%d,%s\n", cliente_1->nome_cliente, cliente_1->NIF, meioTransporte_1->codigo, meioTransporte_1->tipo);
+
+	fclose(historico);
+}
+
+//Consultar historico 
+

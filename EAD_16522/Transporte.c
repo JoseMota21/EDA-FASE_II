@@ -56,7 +56,7 @@ Transporte* inputTransporte(Transporte* meioTransporte_1) {
 	printf("Insira a localizacao: ");
 	scanf("%s", novoTransporte->geocodigo);
 
-	novoTransporte->disponivel = 0; 
+	novoTransporte->disponivel = 1; 
 
 	//Adicionar o novo meio de transporte ao início da lista
 	novoTransporte->seguinte = meioTransporte_1;

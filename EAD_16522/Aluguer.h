@@ -4,3 +4,5 @@
 //Funcão para alugar transporte
 void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1); 
 
+void historico(Cliente* cliente_1, Transporte* meioTransporte_1); 
+
