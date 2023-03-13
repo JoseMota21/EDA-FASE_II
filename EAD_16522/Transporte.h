@@ -16,9 +16,6 @@ typedef struct registo {
 //Verificar a existencia do ID na lista ligada Inicio
 int ExisteTransporte(Transporte* Inicio, int ID);
 
-//Inserir um novo registo para Transporte 
-Transporte* InserirTransporte(Transporte* Inicio, int ID, char Tipo[], float Bateria, float Autonmia, char Geocodigo[]);
-
 //Remover um meio de transporte atraves do ID
 Transporte* RemoverTransporte(Transporte* inicio); 
 

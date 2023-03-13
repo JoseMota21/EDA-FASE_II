@@ -20,9 +20,6 @@ typedef struct registoCliente {
 //Função existe cliente 
 int ExisteCliente(Cliente* inicio, int nif); 
 
-//Inserir um novo cliente 
-Cliente* InserirCliente(Cliente* inicio, char nome[80], int nif, float saldo, char morada[80], char password[20]);
-
 // Listar cliente na consola 
 Cliente* listarCliente(Cliente* inicio); 
 

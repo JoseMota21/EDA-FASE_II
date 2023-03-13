@@ -8,67 +8,43 @@
 
 #define MAX_LINHA 1000
 
-//Inserir um novo registo na lista ligada transporte 
-Cliente* InserirCliente(Cliente* inicio, char nome[80], int nif, float saldo, char morada[80], char password[20]) {
-	if (!ExisteCliente(inicio, nif)) {
-		Cliente* novo = malloc(sizeof(struct registoCliente));
-		if (novo != NULL) {
-			strcpy(novo->nome_cliente, nome);
-			novo->NIF = nif;
-			novo->saldo = saldo;
-			strcpy(novo->morada, morada);
-			strcpy(novo->password, password);
-			novo->seguinte = inicio;
-			//Limpar consola 
-			system("cls");
-			//A ter a certeza o que foi inserido 
-			printf("Registo Inserido com exito!\n");
-			return (novo);
-		}
-		else {
-			printf("Erro ao colocar na memoria\n");
-		}
-		return (inicio);
-	}
-}
-
+//Inserir Cliente na lista ligada
 Cliente* inputCliente(Cliente* cliente_1) {
-	Cliente novoCliente = { 0, ' ', 0, 0.0, ' ' };
+	
+	Cliente* novoCliente = (Cliente*)malloc(sizeof(Cliente)); 
 
 	getchar();
 	//Pedir informação ao Gestor para adicionar um meio de transporte código
 	printf("Insira o nome do cliente:\n");
-	fgets(novoCliente.nome_cliente, MAX_NOME_CLIENTE, stdin);
-	novoCliente.nome_cliente[strcspn(novoCliente.nome_cliente, "\n")] = '\0';
+	fgets(novoCliente->nome_cliente, MAX_NOME_CLIENTE, stdin);
+	novoCliente->nome_cliente[strcspn(novoCliente->nome_cliente, "\n")] = '\0';
 
 	printf("Inserir o Numero de Contribuiunte:");
-	scanf("%d", &novoCliente.NIF);
+	scanf("%d", &novoCliente->NIF);
 	//Verificar se existe o ID selecionado pelo o Gestor
-	while (ExisteCliente(cliente_1, novoCliente.NIF)) {
+	while (ExisteCliente(cliente_1, novoCliente->NIF)) {
 		printf("Inserir o Numero de Contribuiunte: ");
-		scanf("%d", &novoCliente.NIF);
+		scanf("%d", &novoCliente->NIF);
 	}
 
 	printf("Inserir o saldo do cliente: ");
-	scanf("%f", &novoCliente.saldo);
+	scanf("%f", &novoCliente->saldo);
 
 	getchar();
 	printf("Inserir a morada do cliente: ");
-	fgets(novoCliente.morada, MAX_MORADA_CLIENTE, stdin);
-	novoCliente.morada[strcspn(novoCliente.morada, "\n")] = '\0';
+	fgets(novoCliente->morada, MAX_MORADA_CLIENTE, stdin);
+	novoCliente->morada[strcspn(novoCliente->morada, "\n")] = '\0';
 
 	printf("Inserir a password: ");
-	fgets(novoCliente.password, MAX_PASSWORD, stdin);
-	novoCliente.password[strcspn(novoCliente.password, "\n")] = '\0';
+	fgets(novoCliente->password, MAX_PASSWORD, stdin);
+	novoCliente->password[strcspn(novoCliente->password, "\n")] = '\0';
 	
 	//Adicionar o novo meio de transporte ao início da lista
-	novoCliente.seguinte = cliente_1;
-	cliente_1 = &novoCliente;
-	//Inserir os dados na lista ligada
-	InserirCliente(cliente_1, novoCliente.nome_cliente, novoCliente.NIF, novoCliente.saldo, novoCliente.morada, novoCliente.password);
+	novoCliente->seguinte = cliente_1;
+	cliente_1 = novoCliente;
 
 	//Guardar os dados da lista ligada no ficheiro txt 
-	saveficheiroCliente(cliente_1);// está a guardar de forma errada 
+	saveficheiroCliente(novoCliente);
 
 	return cliente_1;
 }

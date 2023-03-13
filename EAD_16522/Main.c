@@ -59,7 +59,7 @@ int main() {
 					break;
 				case 2:
 
-					inputCliente(cliente_1);
+					cliente_1 = inputCliente(cliente_1);
 					break;
 				case 3:
 
