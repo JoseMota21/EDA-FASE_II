@@ -357,7 +357,6 @@ Transporte* AlterarDadosTransporte(Transporte* inicio) {
 		printf("INSIRA A LOCALIZACAO\n");
 		fgets(geocodigo, 20, stdin);
 		geocodigo[strcspn(geocodigo, "\n")] = '\0';
-
 		//Atribuir o novo nome à estrutura
 		strcpy(atual->geocodigo, geocodigo);
 		break;

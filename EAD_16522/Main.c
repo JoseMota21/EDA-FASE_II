@@ -3,7 +3,7 @@
 #include "transporte.h" 
 #include "Cliente.h" 
 #include <stdlib.h>
-
+#include<stdbool.h>
 
 int main() {
 	//Inicializar as listas 
@@ -49,12 +49,12 @@ int main() {
 				printf("8 - ALTERAR DADOS DE MEIOS DE TRANSPORTES\n");
 				printf("9 - SAIR\n");
 				scanf("%d", &gestor);
-				
-				system("cls"); 
+
+				system("cls");
 
 				switch (gestor) {
 				case 1:
-					
+
 					meioTransporte_1 = inputTransporte(meioTransporte_1);
 					break;
 				case 2:
@@ -70,7 +70,7 @@ int main() {
 					RemoverCliente(cliente_1);
 					break;
 				case 5:
-					
+
 					OrdenarTransportesPorAutonomiaDecrescente(meioTransporte_1);
 					system("pause"); // Pausa no sistema, pressionar alguma tecla para proseguir
 					system("cls");
@@ -87,9 +87,9 @@ int main() {
 					system("pause"); // Pausa no sistema, pressionar alguma tecla para proseguir
 					system("cls");
 					break;
-				case 8: 
+				case 8:
 					AlterarDadosTransporte(meioTransporte_1);
-					break; 
+					break;
 
 				default:
 					printf("OPCAO INVALIDA\n");
@@ -98,37 +98,40 @@ int main() {
 
 			} while (gestor != 9);
 			break;
-		
-		case 2: 
-			//Valor da estrutura logada (Dados do cliente logado)
-			logado = loginCliente(cliente_1); 
-				
-			do {
-				printf("1 - CONSULTAR DADOS MEUS DADOS\n");
-				printf("2 - ALTERAR MEUS DADOS\n");
-				printf("3 - SAIR\n");
-				scanf("%d", &cliente);
 
-				switch (cliente){ 
-				case 1: 
+		case 2:
+		{
+			LoginResult resultadologin = loginCliente(cliente_1);
 
-					clientedados(logado); 
-					break;
-				case 2: 
-					AlterarDadosCliente(logado); 
-					break; 
-				case 3: 
-					break; 
-				default:
-					printf("OPCAO INVALIDA\n");
-					break;
-				}
-			} while (cliente != 3);			
-		}		
+			if (resultadologin.autenticado) {
 
+				Cliente* logado = resultadologin.cliente;
+
+				do {
+					printf("1 - CONSULTAR DADOS MEUS DADOS\n");
+					printf("2 - ALTERAR MEUS DADOS\n");
+					printf("3 - SAIR\n");
+					scanf("%d", &cliente);
+
+					switch (cliente) {
+					case 1:
+						clientedados(logado);
+						break;
+					case 2:
+						AlterarDadosCliente(logado);
+						break;
+					case 3:
+						break;
+					default:
+						printf("OPCAO INVALIDA\n");
+						break;
+					}
+				} while (cliente != 3);
+			}
+		}
+	}
 		
 	} while (opcao != 0); 
-
 		
 	return;
 }

@@ -17,6 +17,11 @@ typedef struct registoCliente {
 
 }Cliente; 
 
+typedef struct {
+	bool autenticado;
+	Cliente* cliente;
+} LoginResult;
+
 //Função existe cliente 
 int ExisteCliente(Cliente* inicio, int nif); 
 
@@ -36,7 +41,7 @@ Cliente* RemoverCliente(Cliente* inicio);
 Cliente* inputCliente(Cliente* cliente_1); 
 
 //Login de cliente
-Cliente* loginCliente(Cliente* login);  
+LoginResult loginCliente(Cliente* login); 
 
 //dados para o cliente consultar
 Cliente* clientedados(Cliente* cliente); 

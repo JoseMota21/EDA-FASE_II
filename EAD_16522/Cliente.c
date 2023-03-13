@@ -198,7 +198,9 @@ Cliente* RemoverCliente(Cliente* inicio) {
 }
 
 //Login para cliente 
-Cliente* loginCliente(Cliente* login){
+LoginResult loginCliente(Cliente* login){
+
+	LoginResult resultado = { false, NULL }; 
 	
 	//Variáveis 
 	int nif; 
@@ -219,16 +221,20 @@ Cliente* loginCliente(Cliente* login){
 			//se password inseria for igual à passeword da estrutura
 			//e se a password inserida for igual à password da estrutura 
 			if (atual->NIF == nif && strcmp(atual->password, password) == 0) {
-				system("cls"); 
+				resultado.autenticado = true; 
+				resultado.cliente = atual;
+				//system("cls"); 
 				printf("Bem-vindo, %s!\n", atual->nome_cliente); 
-
-				return atual; 
+				break;
 			}
 			atual = atual->seguinte;
 		}
-		printf("NIF ou password incorretos!\n");
+		if (!resultado.autenticado) {
+			printf("NIF ou password incorretos!\n");
 
-return NULL;
+			system("pause");
+		}
+	return resultado;
 }
 
 //Dados de cliente (cliente consulta os seus dados) 
@@ -252,7 +258,8 @@ Cliente* AlterarDadosCliente(Cliente* inicio) {
 	system("cls");
 	// Mostrar os dados atuais do cliente
 	printf("DADOS:\n");
-	printf("%s; %d; %.2f; %s; %s\n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->password);
+	printf("%s; %d; %.2f; %s; %s\n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->password); 
+
 
 	//Opção de escolha para o cliente
 	printf("INSERIR O CAMPO QUE PRETENDE ALTERAR\n");
@@ -304,7 +311,7 @@ Cliente* AlterarDadosCliente(Cliente* inicio) {
 		break;
 	}
 	//Mostrar ao utilizador os novos dados
-	printf("%s; %d; %.2f; %s; %s", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->password);
+	printf("%s; %d; %.2f; %s; %s\n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->password);
 
 	saveAlterarDados(inicio);
 } 
@@ -341,4 +348,3 @@ void saveAlterarDados(Cliente* inicio) {
 		return;
 	}
 }
-
