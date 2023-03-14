@@ -13,7 +13,7 @@ Cliente* inputCliente(Cliente* cliente_1) {
 	Cliente* novoCliente = (Cliente*)malloc(sizeof(Cliente)); 
 
 	getchar();
-	//Pedir informação ao Gestor para adicionar um meio de transporte código
+	//Pedir informação ao Gestor para adicionar um novo cliente
 	printf("Insira o nome do cliente:\n");
 	fgets(novoCliente->nome_cliente, MAX_NOME_CLIENTE, stdin);
 	novoCliente->nome_cliente[strcspn(novoCliente->nome_cliente, "\n")] = '\0';
@@ -26,8 +26,7 @@ Cliente* inputCliente(Cliente* cliente_1) {
 		scanf("%d", &novoCliente->NIF);
 	}
 
-	printf("Inserir o saldo do cliente: ");
-	scanf("%f", &novoCliente->saldo);
+	novoCliente->saldo = 0.0; 
 
 	getchar();
 	printf("Inserir a morada do cliente: ");

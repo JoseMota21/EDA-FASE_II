@@ -3,6 +3,7 @@
 #include "Transporte.h" 
 #include "Cliente.h" 
 #include "Aluguer.h"
+#include "Gestor.h"
 #include <stdlib.h>
 #include<stdbool.h>
 
@@ -10,6 +11,7 @@ int main() {
 	//Inicializar as listas 
 	Transporte* meioTransporte_1 = NULL; // Lista ligada transportes vazia  
 	Cliente* cliente_1 = NULL; // Lista ligada clientes vazia 
+	Gestor* gestor_1 = NULL; // Lista ligada clientes vazia 
 
 	//Qual o cliente que está logado no sistema 
 	Cliente* logado = NULL;
@@ -19,6 +21,9 @@ int main() {
 
 	//Ler ficheiro txt cliente
 	cliente_1 = lerFicheiroCliente(cliente_1);
+
+	//Ler ficheiro txt gestor 
+	gestor_1 = lerficheiroGestor(gestor_1); 
 
 	int opcao;
 	int gestor;
@@ -49,14 +54,15 @@ int main() {
 				printf("8 - ALTERAR DADOS DE MEIOS DE TRANSPORTES\n");
 				printf("9 - CONSULTAR TRANSPORTES DISPONIVEIS\n"); 
 				printf("10 - CONSULTAR HISTORICO DE ALUGUER\n");
-				printf("11 - SAIR\n");
+				printf("11 - INSERIR GESTOR\n");
+				printf("12 - SAIR\n");
 				scanf("%d", &gestor);
 
 				system("cls");
 
 				switch (gestor) {
 				case 1:
-
+					
 					meioTransporte_1 = inputTransporte(meioTransporte_1);
 					break;
 				case 2:
@@ -105,12 +111,17 @@ int main() {
 					system("pause"); // Pausa no sistema, pressionar alguma tecla para proseguir
 					system("cls");
 					break; 
+				case 11: 
+
+					gestor_1 = inserirGestor(gestor_1); 
+					break; 
+
 				default:
 					printf("OPCAO INVALIDA\n");
 					break;
 				}
 
-			} while (gestor != 11);
+			} while (gestor != 12);
 			break;
 
 		case 2:

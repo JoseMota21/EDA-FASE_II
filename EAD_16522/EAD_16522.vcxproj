@@ -129,11 +129,13 @@
   <ItemGroup>
     <ClCompile Include="Aluguer.c" />
     <ClCompile Include="Cliente.c" />
+    <ClCompile Include="Gestor.c" />
     <ClCompile Include="Main.c" />
     <ClCompile Include="Transporte.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Aluguer.h" />
+    <ClInclude Include="Gestor,h.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="Transporte.h" />
   </ItemGroup>
