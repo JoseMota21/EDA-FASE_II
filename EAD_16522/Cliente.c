@@ -350,6 +350,17 @@ void saveAlterarDados(Cliente* inicio) {
 	}
 }
 
+//Carregar Saldo cliente 
+Cliente* carregarSaldo(Cliente* cliente_1) {
 
+	float saldoinserido; 
+	printf("INSIERA O SALDO\n"); 
+	scanf("%f", &saldoinserido); 
 
+	//Atulizar o salfo do cliente
+	cliente_1->saldo += saldoinserido; 
 
+	printf("O SEU SALDO E DE %.2f\n", cliente_1->saldo); 
+
+	saveAlterarDados(cliente_1);
+}

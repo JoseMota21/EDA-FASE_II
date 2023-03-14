@@ -10,5 +10,6 @@ void historico(Cliente* cliente_1, Transporte* meioTransporte_1);
 //Consultar historico na consola
 void* consultarHistorico(); 
 
+//Entregar o veiculo alugado
 void desalugarVeiculo(Cliente* cliente_1, Transporte* meioTransporte_1); 
 

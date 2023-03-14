@@ -4,7 +4,6 @@
 #ifndef CLIENTE_H
 #define CLIENTE_H
 
-
 #define MAX_NOME_CLIENTE 80 
 #define MAX_MORADA_CLIENTE 80
 #define MAX_PASSWORD 20
@@ -58,5 +57,8 @@ Cliente* AlterarDadosCliente(Cliente* inicio);
 
 //Guardar dados alterador (ficheiro temporario criado)
 void saveAlterarDados(Cliente* inicio); 
+
+//Carregar saldo ao cliente
+Cliente* carregarSaldo(Cliente* cliente_1); 
 
 #endif /* CLIENTE_H */ 
