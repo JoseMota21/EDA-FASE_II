@@ -136,7 +136,7 @@ int main() {
 						AlterarDadosCliente(logado);
 						break;
 					case 3:
-						alugarTranporte(cliente_1, meioTransporte_1); 
+						alugarTranporte(logado, meioTransporte_1); 
 						break;
 					default:
 						printf("OPCAO INVALIDA\n");

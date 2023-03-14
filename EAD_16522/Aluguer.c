@@ -3,8 +3,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-
-
 //Alugar Veiculo
 void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1) {
 
@@ -13,8 +11,10 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1) {
 
 	// Pedir ao cliente o ID do transporte a alugar
 	int ID;
-	printf("Insira o ID do transporte a alugar:\n");
-	scanf("%d", &ID);
+	printf("INSIRA O ID DO TRANSPORTE DESEJADO:\n");
+	scanf("%d", &ID); 
+
+	printf("DISTANCIA A PERCORRER\n"); 
 
 	// Procurar o transporte na lista // DISPONIVEL != 0
 	Transporte* atual = meioTransporte_1;
@@ -23,24 +23,26 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1) {
 	}
 	if (atual == NULL) {
 		// Transporte não encontrado
-		printf("Erro: Transporte com o ID %d não encontrado\n", ID);
+		printf("TRANSPORTE COM O ID %d NAO ENCONTRADO\n", ID);
 	}
 	else if (atual->disponivel == 0) {
 		//Transporte indisponível
-		printf("Erro: transporte com o ID %d já se encontra alugado\n", ID);
+		printf("TRANSPORTE INDISPONIVEL\n", ID);
 	}
 	else {
 		// Transporte encontrado e disponível
-		printf("Transporte escolhido:\n");
+		printf("TRANSPORTE ESCOLHIDO\n");
 		printf("%d; %s; %.2f; %.2f; %s\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo);
 		atual->disponivel = 0;
+
+		historico(cliente_1, atual); 
 		
 		system("pause"); 
 	}
 	
 	//Atualizar o ficheito txt 
 	saveAlterarDadosTransportes(meioTransporte_1); 
-	historico(cliente_1, atual);
+
 }
 
 //Historico de aluguer 
