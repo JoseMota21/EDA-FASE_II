@@ -35,14 +35,45 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1) {
 		printf("%d; %s; %.2f; %.2f; %s\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo);
 		atual->disponivel = 0;
 
+		//Escrever o ID do veiculo alugado na estrutura cliente no campo IDVEIVULOALUGADO
+		cliente_1->IDveiculoAlugado = atual->codigo;
+
+		//Guardar o historico
 		historico(cliente_1, atual); 
-		
+			
 		system("pause"); 
 	}
-	
+
+	//Atualizar o ficheiro txt 
+	saveAlterarDados(cliente_1); 	
 	//Atualizar o ficheito txt 
 	saveAlterarDadosTransportes(meioTransporte_1); 
 
+}
+//Desalugar veiculo 
+void desalugarVeiculo(Cliente* cliente_1, Transporte* meioTransporte_1) {
+	
+	Transporte* atual = meioTransporte_1; 
+
+	while (atual!= NULL && atual->codigo != cliente_1->IDveiculoAlugado){ 
+		atual = atual->seguinte; 
+	}
+
+	if (atual == NULL) {
+		printf("TRANSPORTE NÃO ENCONTRADO\n"); 
+	}
+	else {
+		//Transporte está disponivel
+		atual->disponivel=1; 
+
+		//Limpar o campo IDVEICULOALUGADO
+		cliente_1->IDveiculoAlugado = -1; 
+
+		printf("VEICULO ENTREGUE\n"); 
+	}
+
+	saveAlterarDados(cliente_1); 
+	saveAlterarDadosTransportes(meioTransporte_1); 
 }
 
 //Historico de aluguer 
@@ -55,6 +86,7 @@ void historico(Cliente* cliente_1, Transporte* meioTransporte_1) {
 		return;
 	}
 	fprintf(historico,"%s,%d,%d,%s\n", cliente_1->nome_cliente, cliente_1->NIF, meioTransporte_1->codigo, meioTransporte_1->tipo);
+
 
 	fclose(historico);
 }

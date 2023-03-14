@@ -36,7 +36,9 @@ Cliente* inputCliente(Cliente* cliente_1) {
 
 	printf("Inserir a password: ");
 	fgets(novoCliente->password, MAX_PASSWORD, stdin);
-	novoCliente->password[strcspn(novoCliente->password, "\n")] = '\0';
+	novoCliente->password[strcspn(novoCliente->password, "\n")] = '\0'; 
+
+	novoCliente->IDveiculoAlugado = -1; 
 	
 	//Adicionar o novo meio de transporte ao início da lista
 	novoCliente->seguinte = cliente_1;
@@ -77,7 +79,7 @@ Cliente* saveficheiroCliente(Cliente* inicio){
 
 	while (atual != NULL) {
 		//Escrever os dados no ficheiro txt 
-		fprintf(ficheiroCliente, "%s;%d;%.2f;%s;%s\n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->password);
+		fprintf(ficheiroCliente, "%s;%d;%.2f;%s;%d;%s\n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada,atual->IDveiculoAlugado, atual->password);
 
 		atual = atual->seguinte;
 	}
@@ -110,7 +112,7 @@ Cliente* lerFicheiroCliente(Cliente* inicio) {
 		Cliente* novoCliente = (Cliente*)malloc(sizeof(Cliente));
 
 		//A ler o ficheiro (possivel problema) 
-		sscanf(linha, "%[^;]; %d; %f; %[^;]; %[^\n]", novoCliente->nome_cliente, &novoCliente->NIF, &novoCliente->saldo, novoCliente->morada, novoCliente->password);
+		sscanf(linha, "%[^;]; %d; %f; %[^;]; %d; %[^\n]", novoCliente->nome_cliente, &novoCliente->NIF, &novoCliente->saldo, novoCliente->morada, &novoCliente->IDveiculoAlugado, novoCliente->password);
 
 		novoCliente->seguinte = NULL; 
 		//Quando chegar ao fim 
@@ -141,7 +143,7 @@ Cliente* listarCliente(Cliente* inicio) {
 	while (inicio != NULL) { 
 
 		//A escrever na consola
-		printf("%s; %d; %.2f; %s; %s \n",inicio->nome_cliente, inicio->NIF, inicio->saldo, inicio->morada, inicio->password); 
+		printf("%s; %d; %.2f; %s; %d; %s \n",inicio->nome_cliente, inicio->NIF, inicio->saldo, inicio->morada, inicio->IDveiculoAlugado, inicio->password); 
 		inicio = inicio->seguinte;
 	}
 } 
@@ -149,7 +151,7 @@ Cliente* listarCliente(Cliente* inicio) {
 //Remover cliente, remover um cliente pelo o NIF 
 Cliente* RemoverCliente(Cliente* inicio) {
 
-	Cliente novoCliente = { 0, ' ', 0, 0.0, ' ' }; 
+	Cliente novoCliente = { 0, ' ', 0, 0.0, 0, ' ' }; 
 
 	int nif; 
 
@@ -239,7 +241,7 @@ LoginResult loginCliente(Cliente* login){
 //Dados de cliente (cliente consulta os seus dados) 
 Cliente* clientedados(Cliente* cliente) {
 	
-	printf("%s; %d; %.2f; %s; %s\n" , cliente->nome_cliente, cliente->NIF, cliente->saldo, cliente->morada, cliente->password);
+	printf("%s; %d; %.2f; %s; %d, %s\n" , cliente->nome_cliente, cliente->NIF, cliente->saldo, cliente->morada, cliente->IDveiculoAlugado, cliente->password);
 } 
 
 //Alterar dados de uma estrutura 
@@ -310,7 +312,7 @@ Cliente* AlterarDadosCliente(Cliente* inicio) {
 		break;
 	}
 	//Mostrar ao utilizador os novos dados
-	printf("%s; %d; %.2f; %s; %s\n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->password);
+	printf("%s; %d; %.2f; %s; %d, %s\n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->IDveiculoAlugado, atual->password);
 
 	saveAlterarDados(inicio);
 } 
@@ -332,7 +334,7 @@ void saveAlterarDados(Cliente* inicio) {
 	//Enquanto não chega ao fim da lista
 	while (atual != NULL) {
 		//Escrever no ficheiro temporario
-		fprintf(ficheirotemporario, "%s; %d; %.2f; %s; %s\n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->password);
+		fprintf(ficheirotemporario, "%s; %d; %.2f; %s; %d; %s\n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->IDveiculoAlugado, atual->password);
 		atual = atual->seguinte;
 	}
 	

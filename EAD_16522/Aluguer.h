@@ -10,3 +10,5 @@ void historico(Cliente* cliente_1, Transporte* meioTransporte_1);
 //Consultar historico na consola
 void* consultarHistorico(); 
 
+void desalugarVeiculo(Cliente* cliente_1, Transporte* meioTransporte_1); 
+

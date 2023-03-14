@@ -125,7 +125,8 @@ int main() {
 					printf("1 - CONSULTAR DADOS MEUS DADOS\n");
 					printf("2 - ALTERAR MEUS DADOS\n");
 					printf("3 - ALUGAR TRANSPORTE\n");
-					printf("4 - SAIR\n");
+					printf("4 - DESALUGAR TRANSPORTE\n");
+					printf("5 - SAIR\n");
 					scanf("%d", &cliente);
 
 					switch (cliente) {
@@ -138,11 +139,13 @@ int main() {
 					case 3:
 						alugarTranporte(logado, meioTransporte_1); 
 						break;
+					case 4: 
+						desalugarVeiculo(logado, meioTransporte_1); 
 					default:
 						printf("OPCAO INVALIDA\n");
 						break;
 					}
-				} while (cliente != 4);
+				} while (cliente != 5);
 			}
 		}
 	}
