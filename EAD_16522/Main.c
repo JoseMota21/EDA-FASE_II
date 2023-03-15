@@ -151,11 +151,11 @@ int main() {
 						break;
 					case 3:
 
-						alugarTranporte(logado, meioTransporte_1); 
+						alugarTranporte(cliente_1, meioTransporte_1, logado->NIF); 
 						break;
 					case 4: 
 
-						desalugarVeiculo(logado, meioTransporte_1);
+						desalugarVeiculo(cliente_1, meioTransporte_1, logado->NIF);
 						break; 
 					case 5: 
 

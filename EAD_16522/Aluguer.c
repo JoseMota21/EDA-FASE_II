@@ -4,15 +4,23 @@
 #include <stdbool.h>
 
 //Alugar Veiculo
-void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1) {
+void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1, int nif) {
 
 	float distancia = 0.0; 
 	float preco = 0.0; 
 
-	//Se o cliente já tiver veiculo alugago impossivel alugar transporte
-	if (cliente_1->IDveiculoAlugado != -1) {
 
-		printf("POSSUI VEICULO ALUGADO, IMPOSSIVEL ALUGAR OUTRO. POR FAVOR, ENTREGUE O VEICULO %d PARA SER POSSIVEL ALUGAR OUTRO\n", cliente_1->IDveiculoAlugado); 
+	// Encontrar o cliente com o NIF indicado
+	Cliente* atualC = cliente_1;
+	while (atualC != NULL && atualC->NIF != nif) {
+		atualC = atualC->seguinte;
+	}
+
+
+	//Se o cliente já tiver veiculo alugago impossivel alugar transporte
+	if (atualC->IDveiculoAlugado != -1) {
+
+		printf("POSSUI VEICULO ALUGADO, IMPOSSIVEL ALUGAR OUTRO. POR FAVOR, ENTREGUE O VEICULO %d PARA SER POSSIVEL ALUGAR OUTRO\n", atualC->IDveiculoAlugado); 
 		return; 
 	}
 
@@ -23,7 +31,7 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1) {
 	preco = distancia * 0.4; 
 	
 	//Caso o saldo do cliente sejá insuficiente avisa o utilizador
-	if (cliente_1->saldo < preco) {
+	if (atualC->saldo < preco) {
 		printf("SALDO INSUFICIENTE\n");
 		return;
 	}
@@ -64,15 +72,14 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1) {
 		atual->disponivel = 0;
 
 		//Escrever o ID do veiculo alugado na estrutura cliente no campo IDVEIVULOALUGADO
-		cliente_1->IDveiculoAlugado = atual->codigo;
+		atualC->IDveiculoAlugado = atual->codigo;
 		
 		//Subtrair o saldo do cliente ao preço da viagem
-		cliente_1->saldo -= preco; 
-
+		atualC->saldo -= preco; 
 		atual->autonomia -= distancia; 
 
 		//Guardar o historico
-		historico(cliente_1, atual);
+		historico(atualC, atual);
 
 		system("pause");
 	}
@@ -84,10 +91,16 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1) {
 }
 
 //Desalugar veiculo 
-void desalugarVeiculo(Cliente* cliente_1, Transporte* meioTransporte_1) {
+void desalugarVeiculo(Cliente* cliente_1, Transporte* meioTransporte_1, int nif) {
+
+	// Encontrar o cliente com o NIF indicado
+	Cliente* atualC = cliente_1;
+	while (atualC != NULL && atualC->NIF != nif) {
+		atualC = atualC->seguinte;
+	}
 
 	//Se não tiver veiculo alugado impossivel desalugar
-	if (cliente_1->IDveiculoAlugado == -1) {
+	if (atualC->IDveiculoAlugado == -1) {
 
 		printf("SEM VEICULO ALUGADO\n"); 
 		return; 
@@ -96,7 +109,7 @@ void desalugarVeiculo(Cliente* cliente_1, Transporte* meioTransporte_1) {
 	Transporte* atual = meioTransporte_1; 
 
 	//Percorrer a lista 
-	while (atual!= NULL && atual->codigo != cliente_1->IDveiculoAlugado){ 
+	while (atual!= NULL && atual->codigo != atualC->IDveiculoAlugado){ 
 		atual = atual->seguinte; 
 	}
 
@@ -108,7 +121,7 @@ void desalugarVeiculo(Cliente* cliente_1, Transporte* meioTransporte_1) {
 		atual->disponivel=1; 
 
 		//Limpar o campo IDVEICULOALUGADO
-		cliente_1->IDveiculoAlugado = -1; 
+		atualC->IDveiculoAlugado = -1; 
 
 		printf("VEICULO ENTREGUE\n"); 
 	}
