@@ -31,4 +31,4 @@ Gestor* saveficheiroGestor(Gestor* inicio);
 Gestor* lerficheiroGestor(Gestor* inicio); 
 
 //Login de Gestor
-loginGestor gestor(Gestor* Login); 
+loginGestor gestorlogin(Gestor* Login); 

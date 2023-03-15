@@ -7,7 +7,8 @@
 
 //Inserir um novo gestor à lista 
 Gestor* inserirGestor(Gestor* gestor_1) {
-
+	
+	//Aloca memória para nova instancia da estrutura
 	Gestor* novoGestor = (Gestor*)malloc(sizeof(Gestor));
 	
 	getchar(); 
@@ -16,7 +17,6 @@ Gestor* inserirGestor(Gestor* gestor_1) {
 	fgets(novoGestor->nome, 100, stdin); 
 	novoGestor->nome[strcspn(novoGestor->nome, "\n")] = '\0';
 	
-
 	//Pedir informação ao gestor para colocar seu email 
 	printf("INSERIR EMAIL:\n");
 	fgets(novoGestor->email, 100, stdin);
@@ -111,32 +111,33 @@ Gestor* lerficheiroGestor(Gestor* inicio) {
 } 
 
 //Login para Gestor 
-loginGestor gestor(Gestor* Login) {
+loginGestor gestorlogin(Gestor* Login) {
 
 	loginGestor resultado = { false, NULL }; 
-
+	
+	char email[100];
 	char password[100]; 
-	char email[100]; 
-
+	
+	getchar();
 	//Pedir ao gestor para inserir o email
-	printf("INSIRA EMAIL:\n ");
+	printf("INSIRA EMAIL:\n");
 	fgets(email, 100, stdin);
 	email[strcspn(email, "\n")] = '\0';
 
 	//Pedir ao utilizador para inserir password
-	getchar();
-	printf("INSIRA PASSWORD:\n ");
+	printf("INSIRA PASSWORD:\n");
 	fgets(password, 100, stdin);
 	password[strcspn(password, "\n")] = '\0'; 
 
 	Gestor* atual = Login; 
 
+
 	// Percorre a estrutura até chegar ao final
-		while (atual != NULL) {
+	while (atual != NULL) {
 			//se password inseria for igual à password da estrutura
 			//e se a password inserida for igual à password da estrutura 
 
-			if (strcmp(atual->email,email) && strcmp(atual->password, password) == 0) {
+			if (strcmp(atual->email, email) == 0 && strcmp(atual->password, password) == 0) {
 				resultado.autenticado = true;
 				resultado.gestor = atual;
 
@@ -144,7 +145,8 @@ loginGestor gestor(Gestor* Login) {
 				break;
 			}
 			atual = atual->seguinte;
-		}
+	}
+
 	if (!resultado.autenticado) {
 		printf("NIF ou password incorretos!\n");
 
