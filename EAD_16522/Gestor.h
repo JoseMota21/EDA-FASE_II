@@ -32,3 +32,7 @@ Gestor* lerficheiroGestor(Gestor* inicio);
 
 //Login de Gestor
 loginGestor gestorlogin(Gestor* Login); 
+
+//Verificar se já existe o gestor por email 
+Gestor* existeGestor(Gestor* gestor_1, const char* email);
+

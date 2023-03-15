@@ -7,34 +7,55 @@
 
 //Inserir um novo gestor à lista 
 Gestor* inserirGestor(Gestor* gestor_1) {
-	
+
 	//Aloca memória para nova instancia da estrutura
 	Gestor* novoGestor = (Gestor*)malloc(sizeof(Gestor));
-	
-	getchar(); 
+
+	getchar();
 	//Pedir informação ao Gestor para adicionar um novo gestor
 	printf("INSIRA O NOME DO NOVO GESTOR:\n");
-	fgets(novoGestor->nome, 100, stdin); 
+	fgets(novoGestor->nome, 100, stdin);
 	novoGestor->nome[strcspn(novoGestor->nome, "\n")] = '\0';
-	
+
 	//Pedir informação ao gestor para colocar seu email 
 	printf("INSERIR EMAIL:\n");
 	fgets(novoGestor->email, 100, stdin);
-	novoGestor->email[strcspn(novoGestor->email, "\n")] = '\0'; 
+	novoGestor->email[strcspn(novoGestor->email, "\n")] = '\0';
 
 	//Pedir informação ao gesotr para colocar a sua password
 	printf("INSERIR PASSWORD:\n");
 	fgets(novoGestor->password, 100, stdin);
 	novoGestor->password[strcspn(novoGestor->password, "\n")] = '\0';
 
+	//Verificar se já existe o gestor criado
+	while (existeGestor(gestor_1, novoGestor->email)) {
+		fgets(novoGestor->email, 100, stdin);
+		novoGestor->email[strcspn(novoGestor->email, "\n")] = '\0';
+	}
+
 	//Adicionar gestor ao inicio da lista
-	novoGestor->seguinte = gestor_1; 
-	gestor_1 = novoGestor; 
+	novoGestor->seguinte = gestor_1;
+	gestor_1 = novoGestor;
 
 	//Guardar dados em ficheiro txt
-	saveficheiroGestor(novoGestor); 
+	saveficheiroGestor(novoGestor);
 
-	return gestor_1; 
+	return novoGestor; // retorna o novo ponteiro para o início da lista
+}
+
+Gestor* existeGestor(Gestor* gestor_1, const char* email) {
+
+	Gestor* atual = gestor_1;
+
+	//Percorrer a lista de gestor a verificar se existe o gestor 
+	while (atual != NULL) {
+		if (strcmp(atual->email, email) == 0) {
+
+			return atual;
+		}
+		atual = atual->seguinte; // avança para o próximo nó da lista
+	}
+	return NULL;
 }
 
 //Guardar em ficheiro txt 

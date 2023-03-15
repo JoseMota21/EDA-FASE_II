@@ -183,5 +183,3 @@ void* consultarHistorico() {
 
 	fclose(ficheiroHistorico);
 }
-	
-

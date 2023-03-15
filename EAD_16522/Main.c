@@ -25,6 +25,8 @@ int main() {
 	//Ler ficheiro txt gestor 
 	gestor_1 = lerficheiroGestor(gestor_1); 
 
+
+	//Variáveis de switch case
 	int opcao;
 	int gestor;
 	int cliente;
@@ -43,9 +45,11 @@ int main() {
 		switch (opcao) {
 
 		case 1:
-		{
+		{	
+			//Gestor efetua o login
 			loginGestor logingestor = gestorlogin(gestor_1);
 
+			//Se gestor estiver autenticado
 			if (logingestor.autenticado) {
 				Gestor* logado = logingestor.gestor;
 
@@ -134,8 +138,10 @@ int main() {
 
 		case 2:
 		{
+			//Cliente efetua o login
 			LoginResult resultadologin = loginCliente(cliente_1);
 
+			//Se cliente autenticado
 			if (resultadologin.autenticado) {
 
 				Cliente* logado = resultadologin.cliente;
