@@ -1,1 +1,2 @@
+HUGO;hugo@gmail.com;hugo_34
 Filipe;josesousamota@gmail.com;jose_123"#

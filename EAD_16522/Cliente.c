@@ -20,6 +20,7 @@ Cliente* inputCliente(Cliente* cliente_1) {
 
 	printf("Inserir o Numero de Contribuiunte:");
 	scanf("%d", &novoCliente->NIF);
+
 	//Verificar se existe o ID selecionado pelo o Gestor
 	while (ExisteCliente(cliente_1, novoCliente->NIF)) {
 		printf("Inserir o Numero de Contribuiunte: ");
@@ -39,7 +40,7 @@ Cliente* inputCliente(Cliente* cliente_1) {
 
 	novoCliente->IDveiculoAlugado = -1; 
 	
-	//Adicionar o novo meio de transporte ao início da lista
+	//Adicionar o novo cliente da lista
 	novoCliente->seguinte = cliente_1;
 	cliente_1 = novoCliente;
 
@@ -244,7 +245,7 @@ Cliente* clientedados(Cliente* cliente) {
 } 
 
 //Alterar dados de uma estrutura 
-Cliente* AlterarDadosCliente(Cliente* inicio) {
+Cliente* AlterarDadosCliente(Cliente* inicio, int nif) {
 
 	//Variaveis
 	int campo;
@@ -252,14 +253,17 @@ Cliente* AlterarDadosCliente(Cliente* inicio) {
 	char morada[MAX_MORADA_CLIENTE];
 	char password[MAX_PASSWORD];
 
+	 
+	// Encontrar o cliente com o NIF indicado
 	Cliente* atual = inicio;
-
+	while (atual != NULL && atual->NIF != nif) {
+		atual = atual->seguinte;
+	}
 
 	system("cls");
 	// Mostrar os dados atuais do cliente
 	printf("DADOS:\n");
 	printf("%s; %d; %.2f; %s; %s\n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->password); 
-
 
 	//Opção de escolha para o cliente
 	printf("INSERIR O CAMPO QUE PRETENDE ALTERAR\n");

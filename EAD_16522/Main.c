@@ -143,12 +143,12 @@ int main() {
 
 					switch (cliente) {
 					case 1:
-
-						clientedados(logado);
+						
+						clientedados(logado);	
 						break;
 					case 2:
 
-						AlterarDadosCliente(logado);
+						AlterarDadosCliente(cliente_1, logado->NIF);
 						break;
 					case 3:
 
