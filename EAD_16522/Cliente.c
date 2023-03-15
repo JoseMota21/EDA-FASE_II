@@ -354,16 +354,26 @@ void saveAlterarDados(Cliente* inicio) {
 }
 
 //Carregar Saldo cliente 
-Cliente* carregarSaldo(Cliente* cliente_1) {
+Cliente* carregarSaldo(Cliente* cliente, int nif) {
+
+
+	// Encontrar o cliente com o NIF indicado
+	Cliente* atual = cliente;
+	while (atual != NULL && atual->NIF != nif) {
+		atual = atual->seguinte;
+	}
 
 	float saldoinserido; 
-	printf("INSIERA O SALDO\n"); 
+
+	printf("INSIRA O SALDO\n"); 
 	scanf("%f", &saldoinserido); 
 
 	//Atulizar o salfo do cliente
-	cliente_1->saldo += saldoinserido; 
+	atual->saldo += saldoinserido; 
 
-	printf("O SEU SALDO E DE %.2f\n", cliente_1->saldo); 
+	printf("O SEU SALDO E DE %.2f\n", atual->saldo); 
 
-	saveAlterarDados(cliente_1);
+	saveAlterarDados(cliente);
+
+	return cliente; 
 }

@@ -143,7 +143,6 @@ int main() {
 
 					switch (cliente) {
 					case 1:
-						
 						clientedados(logado);	
 						break;
 					case 2:
@@ -158,10 +157,9 @@ int main() {
 
 						desalugarVeiculo(logado, meioTransporte_1);
 						break; 
-
 					case 5: 
 
-						carregarSaldo(logado); 
+						carregarSaldo(cliente_1, logado->NIF); 
 						break; 
 					default:
 						printf("OPCAO INVALIDA\n");

@@ -1,2 +1,3 @@
+FERNANDO;fernando@hotmail.pt;fernando_12
 HUGO;hugo@gmail.com;hugo_34
 Filipe;josesousamota@gmail.com;jose_123"#
