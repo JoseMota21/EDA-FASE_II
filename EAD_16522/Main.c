@@ -30,11 +30,13 @@ int main() {
 	int opcao;
 	int gestor;
 	int cliente;
+	int gestorech; 
 
 	do {
 		system("cls");
 
-		printf("+********************************************** M E N U **********************************************+\n");
+		printf("+********************************************************* M E N U ********************************************+\n");
+		printf("\n");
 		printf("\t1 - GESTOR\n");
 		printf("\t2 - CLIENTE\n");
 		printf("\t0 - SAIR\n");
@@ -43,103 +45,122 @@ int main() {
 
 		system("cls");
 
-		switch (opcao) {
+	switch (opcao) {
 
 		case 1:
 		{	
-			//Gestor efetua o login
-			loginGestor logingestor = gestorlogin(gestor_1);
+			printf("++++++++++++++++++++++++++++++++++++++++++++++++++++++++ G E S T O R +++++++++++++++++++++++++++++++++++++++++++++++\n"); 
+			printf("\n");
+			printf("\t1 - CRIAR GESTOR\n");
+			printf("\t2 - LOGIN\n");
+			printf("\t0 - SAIR\n");
+			scanf("%d", &gestorech);
 
-			//Se gestor estiver autenticado
-			if (logingestor.autenticado) {
-				Gestor* logado = logingestor.gestor;
-
-				do {
-
-					printf("SELECIONE AS OPERACOES PRETENDIDAS\n"); 
-					printf("\n"); 
-					printf("--------------------------------------------------\n");
-					printf("1 - INSERIR TRANSPORTE NOVO\n");
-					printf("2 - INSERIR CLIENTE NOVO\n");
-					printf("3 - REMOVER TRANSPORTE\n");
-					printf("4 - REMOVER CLIENTE\n");
-					printf("5 - ORDENAR TRANSPORTE AUTONOMIA\n");
-					printf("6 - CONSULTAR LISTA DE TRANSPORTE\n");
-					printf("7 - CONSULTAR LISTA DE CLIENTES\n");
-					printf("8 - ALTERAR DADOS DE MEIOS DE TRANSPORTES\n");
-					printf("9 - CONSULTAR TRANSPORTES DISPONIVEIS\n");
-					printf("10 - CONSULTAR HISTORICO DE ALUGUER\n");
-					printf("11 - INSERIR GESTOR\n");
-					printf("--------------------------------------------------\n");
-					printf("\n");
-					printf("12 - SAIR\n");
-					scanf("%d", &gestor);
-
-					system("cls");
-
-					switch (gestor) {
-					case 1:
-
-						meioTransporte_1 = inputTransporte(meioTransporte_1);
-						break;
-					case 2:
-
-						cliente_1 = inputCliente(cliente_1);
-						break;
-					case 3:
-
-						RemoverTransporte(meioTransporte_1);
-						break;
-					case 4:
-
-						RemoverCliente(cliente_1);
-						break;
-					case 5:
-
-						OrdenarTransportesPorAutonomiaDecrescente(meioTransporte_1);
-						system("pause"); // Pausa no sistema, pressionar alguma tecla para proseguir
-						system("cls");
-						break;
-					case 6:
-
-						listarTransporte(meioTransporte_1);
-						system("pause"); // Pausa no sistema, pressionar alguma tecla para proseguir
-						system("cls");
-						break;
-					case 7:
-
-						listarCliente(cliente_1);
-						system("pause"); // Pausa no sistema, pressionar alguma tecla para proseguir
-						system("cls");
-						break;
-					case 8:
-
-						AlterarDadosTransporte(meioTransporte_1);
-						break;
-					case 9:
-
-						transportesDisponiveis(meioTransporte_1);
-						system("pause"); // Pausa no sistema, pressionar alguma tecla para proseguir
-						system("cls");
-						break;
-					case 10:
-
-						consultarHistorico();
-						system("pause"); // Pausa no sistema, pressionar alguma tecla para proseguir
-						system("cls");
-						break;
-					case 11:
-
-						gestor_1 = inserirGestor(gestor_1);
-						break;
-
-					default:
-						printf("OPCAO INVALIDA\n");
-						break;
-					}
-
-				} while (gestor != 12);
+			switch (gestorech) {
+			case 1:
+				system("cls");
+				printf("CRIAR NOVO RESGISTO\n");
+				gestor_1 = inserirGestor(gestor_1);
 				break;
+
+			case 2:
+			{
+				system("cls");
+				//Gestor efetua o login
+				loginGestor logingestor = gestorlogin(gestor_1);
+
+				//Se gestor estiver autenticado
+				if (logingestor.autenticado) {
+					Gestor* logado = logingestor.gestor;
+
+					do {
+
+						printf("SELECIONE AS OPERACOES PRETENDIDAS\n");
+						printf("\n");
+						printf("--------------------------------------------------\n");
+						printf("1 - INSERIR TRANSPORTE NOVO\n");
+						printf("2 - INSERIR CLIENTE NOVO\n");
+						printf("3 - REMOVER TRANSPORTE\n");
+						printf("4 - REMOVER CLIENTE\n");
+						printf("5 - ORDENAR TRANSPORTE AUTONOMIA\n");
+						printf("6 - CONSULTAR LISTA DE TRANSPORTE\n");
+						printf("7 - CONSULTAR LISTA DE CLIENTES\n");
+						printf("8 - ALTERAR DADOS DE MEIOS DE TRANSPORTES\n");
+						printf("9 - CONSULTAR TRANSPORTES DISPONIVEIS\n");
+						printf("10 - CONSULTAR HISTORICO DE ALUGUER\n");
+						printf("11 - INSERIR GESTOR\n");
+						printf("--------------------------------------------------\n");
+						printf("\n");
+						printf("12 - SAIR\n");
+						scanf("%d", &gestor);
+
+						system("cls");
+
+						switch (gestor) {
+						case 1:
+
+							meioTransporte_1 = inputTransporte(meioTransporte_1);
+							break;
+						case 2:
+
+							cliente_1 = inputCliente(cliente_1);
+							break;
+						case 3:
+
+							RemoverTransporte(meioTransporte_1);
+							break;
+						case 4:
+
+							RemoverCliente(cliente_1);
+							break;
+						case 5:
+
+							OrdenarTransportesPorAutonomiaDecrescente(meioTransporte_1);
+							system("pause"); // Pausa no sistema, pressionar alguma tecla para proseguir
+							system("cls");
+							break;
+						case 6:
+
+							listarTransporte(meioTransporte_1);
+							system("pause"); // Pausa no sistema, pressionar alguma tecla para proseguir
+							system("cls");
+							break;
+						case 7:
+
+							listarCliente(cliente_1);
+							system("pause"); // Pausa no sistema, pressionar alguma tecla para proseguir
+							system("cls");
+							break;
+						case 8:
+
+							AlterarDadosTransporte(meioTransporte_1);
+							break;
+						case 9:
+
+							transportesDisponiveis(meioTransporte_1);
+							system("pause"); // Pausa no sistema, pressionar alguma tecla para proseguir
+							system("cls");
+							break;
+						case 10:
+
+							consultarHistorico();
+							system("pause"); // Pausa no sistema, pressionar alguma tecla para proseguir
+							system("cls");
+							break;
+						case 11:
+
+							gestor_1 = inserirGestor(gestor_1);
+							break;
+
+						default:
+							printf("OPCAO INVALIDA\n");
+							break;
+						}
+						break;
+
+					} while (gestor != 12);
+				}	break;
+			}
 			}
 		}break;
 

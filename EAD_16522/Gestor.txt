@@ -1,3 +1,7 @@
+admin;admin;admin
+KIKA;kika@gmail.pt;kika_34
+JOAO;joao@gmail.pt;joao_!2
+LUCAS;lucas@gmail.pt;lucas_1
 FERNANDO;fernando@hotmail.pt;fernando_12
 HUGO;hugo@gmail.com;hugo_34
 Filipe;josesousamota@gmail.com;jose_123"#
