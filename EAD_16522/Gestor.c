@@ -141,6 +141,7 @@ loginGestor gestorlogin(Gestor* Login) {
 	
 	getchar();
 	//Pedir ao gestor para inserir o email
+	printf("+*********************************************** OLA GESTOR **********************************************+\n");
 	printf("INSIRA EMAIL:\n");
 	fgets(email, 100, stdin);
 	email[strcspn(email, "\n")] = '\0';
@@ -162,14 +163,16 @@ loginGestor gestorlogin(Gestor* Login) {
 				resultado.autenticado = true;
 				resultado.gestor = atual;
 
-				printf("Bem-vindo, %s!\n", atual->nome);
+				system("cls");
+				printf("***************************************************** BEM-VINDO, %s!**********************************************\n", atual->nome);
+				printf("\n");
 				break;
 			}
 			atual = atual->seguinte;
 	}
 
 	if (!resultado.autenticado) {
-		printf("NIF ou password incorretos!\n");
+		printf("EMAIL OU PASSWORD ERRADO!\n");
 
 		system("pause");
 	}

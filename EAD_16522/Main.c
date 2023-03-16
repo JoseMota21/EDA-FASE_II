@@ -33,10 +33,11 @@ int main() {
 
 	do {
 		system("cls");
-		printf("M E N U\n");
-		printf("1 - GESTOR\n");
-		printf("2 - CLIENTE\n");
-		printf("0 - SAIR\n");
+
+		printf("+********************************************** M E N U **********************************************+\n");
+		printf("\t1 - GESTOR\n");
+		printf("\t2 - CLIENTE\n");
+		printf("\t0 - SAIR\n");
 
 		scanf("%d", &opcao);
 
@@ -54,6 +55,10 @@ int main() {
 				Gestor* logado = logingestor.gestor;
 
 				do {
+
+					printf("SELECIONE AS OPERACOES PRETENDIDAS\n"); 
+					printf("\n"); 
+					printf("--------------------------------------------------\n");
 					printf("1 - INSERIR TRANSPORTE NOVO\n");
 					printf("2 - INSERIR CLIENTE NOVO\n");
 					printf("3 - REMOVER TRANSPORTE\n");
@@ -65,6 +70,8 @@ int main() {
 					printf("9 - CONSULTAR TRANSPORTES DISPONIVEIS\n");
 					printf("10 - CONSULTAR HISTORICO DE ALUGUER\n");
 					printf("11 - INSERIR GESTOR\n");
+					printf("--------------------------------------------------\n");
+					printf("\n");
 					printf("12 - SAIR\n");
 					scanf("%d", &gestor);
 
