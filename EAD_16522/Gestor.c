@@ -11,6 +11,8 @@ Gestor* inserirGestor(Gestor* gestor_1) {
 	//Aloca memória para nova instancia da estrutura
 	Gestor* novoGestor = (Gestor*)malloc(sizeof(Gestor));
 
+	printf("**************************************INSERIR NOVO GESTOR*****************************\n");
+
 	getchar();
 	//Pedir informação ao Gestor para adicionar um novo gestor
 	printf("INSIRA O NOME DO NOVO GESTOR:\n");
@@ -41,6 +43,7 @@ Gestor* inserirGestor(Gestor* gestor_1) {
 	saveficheiroGestor(novoGestor);
 
 	return novoGestor; // retorna o novo ponteiro para o início da lista
+
 }
 
 Gestor* existeGestor(Gestor* gestor_1, const char* email) {

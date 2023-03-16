@@ -9,7 +9,7 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1, int nif) 
 	float distancia = 0.0;
 	float preco = 0.0;
 
-
+	system("cls"); 
 
 	// Encontrar o cliente com o NIF indicado
 	Cliente* atualC = cliente_1;
@@ -27,6 +27,8 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1, int nif) 
 	printf("DISTANCIA A PERCORRER\n");
 	scanf("%f", &distancia);
 
+	printf("\n");
+
 	//Calcular o preço necessario para completar a viagem
 	preco = distancia * 0.4;
 
@@ -37,10 +39,11 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1, int nif) 
 	}
 
 	//Informar o utilizador do preco final da viagem para completar o trajeto indicado
-	printf("O PRECO DA VIAGEM E DE: %.2f R€\n", preco);
+	printf("O PRECO DA VIAGEM E DE: %.2f \n", preco);
+
+	printf("\n");
 
 	//Lista de transportes disponiveis para alugar veiculo
-	printf("LISTA DE TRANSPORTES DISPONIVEIS PARA ALUGAR\n");
 	transportesDisponiveis(meioTransporte_1);
 
 	// Pedir ao cliente o ID do transporte a alugar
@@ -61,23 +64,40 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1, int nif) 
 	if (atual == NULL) {
 		// Transporte não encontrado
 		printf("TRANSPORTE COM O ID %d NAO ENCONTRADO\n", ID);
+
+		system("pause"); 
+		system("cls");
 	}
 	else if (atual->disponivel == 0) {
 		//Transporte indisponível
-		printf("TRANSPORTE INDISPONIVEL\n", ID);
+		printf("TRANSPORTE %d INDISPONIVEL\n", ID);
+		system("pause");
+		system("cls");
 	}
 	else if (atual->autonomia < distancia) {
 
 		printf("AUTONOMIA INSUFICENTE PARA TERMINAR A VIAGEM\n");
+		system("pause");
+		system("cls");
+
 	}//Calcular se tem bateria suficiente (embora não faça sentido uma vez que a autonomia está calculada em propoção com a bateria)
 	else if (atual->bateria < bateria) {
 
 		printf("BATERIA INSUFICENTE PARA TERMINAR A VIAGEM\n");
+		system("pause");
+		system("cls");
 	}
 	else {
+		system("cls"); 
+		printf("\n");
 		// Transporte encontrado e disponível
-		printf("TRANSPORTE ESCOLHIDO\n");
-		printf("%d; %s; %.2f; %.2f; %s\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo);
+		printf("*************************************TRANSPORTE ESCOLHIDO***********************\n");
+		printf("\n");
+		printf("| %-5s | %-10s | %-8s | %-10s | %-30s |\n", "ID", "TIPO", "BATERIA", "AUTONOMIA", "LOCALIZACAO");
+		printf("|-------|------------|----------|------------|--------------------------------|\n");
+		printf("| %-5d | %-10s | %-8.2f | %-10.2f | %-30s |\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo);
+
+		//printf("%d; %s; %.2f; %.2f; %s\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo);
 		atual->disponivel = 0;
 
 		//Escrever o ID do veiculo alugado na estrutura cliente no campo IDVEIVULOALUGADO
@@ -96,6 +116,7 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1, int nif) 
 		historico(atualC, atual);
 
 		system("pause");
+		system("cls");
 	}
 
 	//Atualizar o ficheiro txt 
@@ -143,6 +164,9 @@ void desalugarVeiculo(Cliente* cliente_1, Transporte* meioTransporte_1, int nif)
 
 	saveAlterarDados(cliente_1); 
 	saveAlterarDadosTransportes(meioTransporte_1); 
+
+	system("pause");
+	system("cls");
 }
 
 //Historico de aluguer 

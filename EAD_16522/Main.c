@@ -37,9 +37,9 @@ int main() {
 
 		printf("+********************************************************* M E N U ********************************************+\n");
 		printf("\n");
-		printf("\t1 - GESTOR\n");
-		printf("\t2 - CLIENTE\n");
-		printf("\t0 - SAIR\n");
+		printf("1 - GESTOR\n");
+		printf("2 - CLIENTE\n");
+		printf("0 - SAIR\n");
 
 		scanf("%d", &opcao);
 
@@ -51,9 +51,9 @@ int main() {
 		{	
 			printf("++++++++++++++++++++++++++++++++++++++++++++++++++++++++ G E S T O R +++++++++++++++++++++++++++++++++++++++++++++++\n"); 
 			printf("\n");
-			printf("\t1 - CRIAR GESTOR\n");
-			printf("\t2 - LOGIN\n");
-			printf("\t0 - SAIR\n");
+			printf("1 - CRIAR GESTOR\n");
+			printf("2 - LOGIN\n");
+			printf("0 - SAIR\n");
 			scanf("%d", &gestorech);
 
 			switch (gestorech) {
@@ -156,11 +156,9 @@ int main() {
 							printf("OPCAO INVALIDA\n");
 							break;
 						}
-						break;
-
 					} while (gestor != 12);
 				}	break;
-			}
+			}while (gestorech != 0);
 			}
 		}break;
 
@@ -175,11 +173,16 @@ int main() {
 				Cliente* logado = resultadologin.cliente;
 
 				do {
+
+					printf("SELECIONE AS OPERACOES PRETENDIDAS\n");
+					printf("\n");
+					printf("--------------------------------------------------\n");
 					printf("1 - CONSULTAR DADOS MEUS DADOS\n");
 					printf("2 - ALTERAR MEUS DADOS\n");
 					printf("3 - ALUGAR TRANSPORTE\n");
 					printf("4 - DESALUGAR TRANSPORTE\n");
 					printf("5 - CARREGAR SALDO\n");
+					printf("--------------------------------------------------\n");
 					printf("6 - SAIR\n");
 					scanf("%d", &cliente);
 

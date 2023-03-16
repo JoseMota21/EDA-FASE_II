@@ -78,7 +78,17 @@ Transporte* RemoverTransporte(Transporte* inicio) {
 
 	Transporte RemoverTransporte = { 0, ' ', 0.0, 0.0, 0.0,0};
 
-	printf("\t++++++++ REMOVER MEIO DE MOBILIDADE ++++++++++\n");
+	Transporte* aux = inicio; 
+
+	printf("\t++++++++ REMOVER MEIO DE MOBILIDADE ++++++++++\n"); 
+	//Cabeçalho da tabela
+	printf("| %-5s | %-10s | %-8s | %-10s | %-30s | %-13s|\n", "ID", "TIPO", "BATERIA", "AUTONOMIA", "LOCALIZACAO", "DISPONIBILIDADE");
+	printf("|-------|------------|----------|------------|--------------------------------|----------------|\n");
+
+	while (aux != NULL){
+		printf("| %-5d | %-10s | %-8.2f | %-10.2f | %-30s | %-14d |\n", aux->codigo, aux->tipo, aux->bateria, aux->autonomia, aux->geocodigo, aux->disponivel);
+		aux = aux->seguinte;
+	}
 
 	int codigo;
 	printf("INSIRA O ID DO MEIO DE MOBILIDDE: ");
@@ -293,7 +303,7 @@ void OrdenarTransportesPorAutonomiaDecrescente(Transporte* inicio) {
 	} while (troca); //Condição de paragem do ciclo 
 
 	//Mensagem de informação ao utilizador
-	printf("TRANSPORTE ORDENADO POR AUTONOMIA\n");
+	printf("\t++++++++++ ORDENAR AUTONOMIA ++++++++++\n");
 
 	printf("\n"); 
 
@@ -326,7 +336,7 @@ Transporte* AlterarDadosTransporte(Transporte* inicio) {
 
 
 	//Mostrar os dados atuais de todos os transportes da lista
-	printf("INFORMACOES DOS TRANSPORTES:\n");
+	printf("\t++++++++++ INFORMACAO DOS TRANSPORTES ++++++++++\n");
 	printf("\n"); 
 	//Cabeçalho da tabela
 	printf("| %-5s | %-10s | %-8s | %-10s | %-30s | %-13s|\n", "ID", "TIPO", "BATERIA", "AUTONOMIA", "LOCALIZACAO", "DISPONIBILIDADE");
@@ -417,7 +427,7 @@ Transporte* AlterarDadosTransporte(Transporte* inicio) {
 	}
 	system("cls"); 
 
-	printf("ALTERAÇÕES EFETUADASD\n");
+	printf("ALTERACOES EFETUADASD\n");
 	printf("\n"); 
 	printf("| %-5s | %-10s | %-8s | %-10s | %-30s | %-13s|\n", "ID", "TIPO", "BATERIA", "AUTONOMIA", "LOCALIZACAO", "DISPONIBILIDADE");
 	printf("|-------|------------|----------|------------|--------------------------------|----------------|\n");
@@ -426,6 +436,7 @@ Transporte* AlterarDadosTransporte(Transporte* inicio) {
 	saveAlterarDadosTransportes(inicio); 
 
 	system ("pause");
+	system("cls"); 
 }
 
 //Guardar dados em ficheiro temporario (Tranportes)
@@ -466,7 +477,7 @@ Transporte* transportesDisponiveis(Transporte* meioTransporte_1) {
 
 	Transporte* atual = meioTransporte_1; 
 
-	printf("TRANSPORTES DISPONIVEIS\n"); 
+	printf("******************************************TRANSPORTES DISPONIVEIS*********************************\n"); 
 	printf("\n"); 
 	printf("| %-5s | %-10s | %-8s | %-10s | %-30s | %-13s|\n", "ID", "TIPO", "BATERIA", "AUTONOMIA", "LOCALIZACAO", "DISPONIBILIDADE");
 	printf("|-------|------------|----------|------------|--------------------------------|----------------|\n"); 

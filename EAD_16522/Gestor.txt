@@ -1,3 +1,4 @@
+FERNANDO;fernando@gmail.com;fer_#
 admin;admin;admin
 KIKA;kika@gmail.pt;kika_34
 JOAO;joao@gmail.pt;joao_!2

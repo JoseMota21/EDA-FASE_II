@@ -14,27 +14,27 @@ Cliente* inputCliente(Cliente* cliente_1) {
 
 	getchar();
 	//Pedir informação ao Gestor para adicionar um novo cliente
-	printf("Insira o nome do cliente:\n");
+	printf("INSIRA O NOME DO CLIENTE: ");
 	fgets(novoCliente->nome_cliente, MAX_NOME_CLIENTE, stdin);
 	novoCliente->nome_cliente[strcspn(novoCliente->nome_cliente, "\n")] = '\0';
 
-	printf("Inserir o Numero de Contribuiunte:");
+	printf("INSIRA O NUMERO DE CONTRIBUINTE: ");
 	scanf("%d", &novoCliente->NIF);
 
 	//Verificar se existe o ID selecionado pelo o Gestor
 	while (ExisteCliente(cliente_1, novoCliente->NIF)) {
-		printf("Inserir o Numero de Contribuiunte: ");
+		printf("INSIRA O NUMERO DE CONTRIBUINTE: ");
 		scanf("%d", &novoCliente->NIF);
 	}
 
 	novoCliente->saldo = 0.0; 
 
 	getchar();
-	printf("Inserir a morada do cliente: ");
+	printf("INSIRA A MORADA DO CLIENTE: ");
 	fgets(novoCliente->morada, MAX_MORADA_CLIENTE, stdin);
 	novoCliente->morada[strcspn(novoCliente->morada, "\n")] = '\0';
 
-	printf("Inserir a password: ");
+	printf("INSIRA A PASSWORD: ");
 	fgets(novoCliente->password, MAX_PASSWORD, stdin);
 	novoCliente->password[strcspn(novoCliente->password, "\n")] = '\0'; 
 
@@ -46,6 +46,8 @@ Cliente* inputCliente(Cliente* cliente_1) {
 
 	//Guardar os dados da lista ligada no ficheiro txt 
 	saveficheiroCliente(novoCliente);
+
+	system("cls"); 
 
 	return cliente_1;
 }
@@ -70,7 +72,7 @@ Cliente* saveficheiroCliente(Cliente* inicio){
 	FILE* ficheiroCliente = fopen("Cliente.txt", "w"); 
 
 	if (ficheiroCliente == NULL) {
-		printf("Erro ao abrir o ficheiro Cliente \n"); 
+		printf("ERRO AO ABRIR O FICHEIRO \n"); 
 
 		return inicio; 
 	}
@@ -101,7 +103,7 @@ Cliente* lerFicheiroCliente(Cliente* inicio) {
 
 	//Se erro ao abrir mensagem para o utilizador
 	if (ficheiroCliente == NULL) {
-		printf("Erro ao abrir o ficheiro Cliente \n");
+		printf("ERRO AO ABRIR O FICHEIRO \n");
 
 		return inicio;
 	}
@@ -139,11 +141,15 @@ Cliente* lerFicheiroCliente(Cliente* inicio) {
 // Listar cliente na consola 
 Cliente* listarCliente(Cliente* inicio) {
 
+	printf("\t++++++++++++++++++++++++++++++++++++++++++ LISTA DE CLIENTES +++++++++++++++++++++++++++++++++++++++\n");
+	printf("\n");
+	printf("| %-20s | %-11s | %-5s | %-30s | %-10s | %-20s |\n", "NOME", "NIF", "SALDO", "MORADA", "VEICULO", "PASSWORD");
+	printf("|----------------------|-------------|-------|--------------------------------|------------|----------------------|\n");
+
 	//Enquanto que não terminar de listar 
 	while (inicio != NULL) { 
 
-		//A escrever na consola
-		printf("%s; %d; %.2f; %s; %d; %s \n",inicio->nome_cliente, inicio->NIF, inicio->saldo, inicio->morada, inicio->IDveiculoAlugado, inicio->password); 
+		printf("| %-20s | %-11d | %-5.2f | %-30s | %-10d | %-20s |\n", inicio->nome_cliente, inicio->NIF, inicio->saldo, inicio->morada, inicio->IDveiculoAlugado, inicio->password);
 		inicio = inicio->seguinte;
 	}
 } 
@@ -154,9 +160,25 @@ Cliente* RemoverCliente(Cliente* inicio) {
 	Cliente novoCliente = { 0, ' ', 0, 0.0, 0, ' ' }; 
 
 	int nif; 
+	Cliente* aux = inicio;
 
-	printf("Inserir o nif do cliente a eliminar:\n"); 
+	printf("\t++++++++++++++++++++++++++++++++++++++++++ REMOVER CLIENTE +++++++++++++++++++++++++++++++++++++++\n");
+	printf("\n");
+	printf("| %-20s | %-11s | %-5s | %-30s | %-10s | %-20s |\n", "NOME", "NIF", "SALDO", "MORADA", "VEICULO", "PASSWORD");
+	printf("|----------------------|-------------|-------|--------------------------------|------------|----------------------|\n");
+
+	while (aux != NULL) {
+
+		printf("| %-20s | %-11d | %-5.2f | %-30s | %-10d | %-20s |\n", aux->nome_cliente, aux->NIF, aux->saldo, aux->morada, aux->IDveiculoAlugado, aux->password);
+		aux = aux->seguinte;
+	}
+
+	printf("\n");
+
+	printf("INSERIR O NIF DO CLIENTE A ELIMINAR: "); 
 	scanf("%d", &nif); 
+
+	system("cls"); 
 
 	//Se lista estiver vazia informa o utilizador da aplciação 
 	if (inicio == NULL) {
@@ -192,8 +214,10 @@ Cliente* RemoverCliente(Cliente* inicio) {
 		saveficheiroCliente(inicio); 
 	}
 	free(atual); //Libertar a memoria que estava alocada 
-
+	printf("\n");
 	printf("CLIENTE COM O NIF %d REMOVIDO COM SUCESSO\n", nif);
+	system("pause"); 
+	system("cls");
 
 	return inicio; 
 }
@@ -207,11 +231,14 @@ LoginResult loginCliente(Cliente* login){
 	int nif; 
 	char password[MAX_PASSWORD]; 
 
-	printf("Insira o NIF:"); 
+	printf("****************************************** L O G I N **************************************\n");
+	printf("\n"); 
+
+	printf("INSIRA O NIF: "); 
 	scanf("%d", &nif); 
 
 	getchar(); 
-	printf("Insira a password: ");
+	printf("INSIRA PASSWORD: ");
 	fgets(password, MAX_PASSWORD, stdin);
 	password[strcspn(password,"\n")] = '\0';
 
@@ -224,14 +251,13 @@ LoginResult loginCliente(Cliente* login){
 			if (atual->NIF == nif && strcmp(atual->password, password) == 0) {
 				resultado.autenticado = true; 
 				resultado.cliente = atual;
-				//system("cls"); 
-				printf("Bem-vindo, %s!\n", atual->nome_cliente); 
-				break;
+				system("cls"); 
+				printf("BEM-VINDO, %s!\n", atual->nome_cliente); 
 			}
 			atual = atual->seguinte;
 		}
 		if (!resultado.autenticado) {
-			printf("NIF ou password incorretos!\n");
+			printf("NIF OU PASSWORD INCORRETOS\n");
 
 			system("pause");
 		}
@@ -240,8 +266,21 @@ LoginResult loginCliente(Cliente* login){
 
 //Dados de cliente (cliente consulta os seus dados) 
 Cliente* clientedados(Cliente* cliente) {
+
+	system("cls"); 
+
+	//Mostrar os dados atuais de todos os transportes da lista
+	printf("+++++++++++++++++++++++++++++++++++++++ MEUS DADOS +++++++++++++++++++++++++++++++++++++++\n");
+	printf("\n");
+
+	//Cabeçalho da tabela
+	printf("| %-20s | %-11s | %-5s | %-30s | %-10s | %-20s |\n", "NOME", "NIF", "SALDO", "MORADA", "VEICULO", "PASSWORD");
+	printf("|----------------------|-------------|-------|--------------------------------|------------|----------------------|\n");
+	printf("| %-20s | %-11d | %-5.2f | %-30s | %-10d | %-20s |\n", cliente->nome_cliente, cliente->NIF, cliente->saldo, cliente->morada, cliente->IDveiculoAlugado, cliente->password);
 	
-	printf("%s; %d; %.2f; %s; %d, %s\n" , cliente->nome_cliente, cliente->NIF, cliente->saldo, cliente->morada, cliente->IDveiculoAlugado, cliente->password);
+	printf("\n");
+	system("pause"); 
+	system("cls"); 
 } 
 
 //Alterar dados de uma estrutura 
@@ -262,16 +301,24 @@ Cliente* AlterarDadosCliente(Cliente* inicio, int nif) {
 
 	system("cls");
 	// Mostrar os dados atuais do cliente
-	printf("DADOS:\n");
-	printf("%s; %d; %.2f; %s; %s\n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->password); 
+	printf("\t++++++++++++++++++++++++++++++++++++++++ MEUS DADOS +++++++++++++++++++++++++++++++++++++++\n");
+	printf("\n");
+	printf("| %-20s | %-11s | %-5s | %-30s | %-10s | %-20s |\n", "NOME", "NIF", "SALDO", "MORADA", "VEICULO", "PASSWORD");
+	printf("|----------------------|-------------|-------|--------------------------------|------------|----------------------|\n");
+	printf("| %-20s | %-11d | %-5.2f | %-30s | %-10d | %-20s |\n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->IDveiculoAlugado, atual->password);
+
+	printf("\n"); 
 
 	//Opção de escolha para o cliente
 	printf("INSERIR O CAMPO QUE PRETENDE ALTERAR\n");
+	printf("\n");
 	printf("1 - NOME\n");
 	printf("2 - NIF\n");
 	printf("3 - MORADA\n");
 	printf("4 - PASSWORD\n");
 	scanf("%d", &campo);
+
+	
 
 	//Escolha do utilizador o campo que pretende alterar
 	switch (campo) {
@@ -314,10 +361,17 @@ Cliente* AlterarDadosCliente(Cliente* inicio, int nif) {
 		printf("OPCAO INVALIDA\n");
 		break;
 	}
+	system("cls");
 	//Mostrar ao utilizador os novos dados
-	printf("%s; %d; %.2f; %s; %d, %s\n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->IDveiculoAlugado, atual->password);
+	printf("\n");
+	printf("| %-20s | %-11s | %-5s | %-30s | %-10s | %-20s |\n", "NOME", "NIF", "SALDO", "MORADA", "VEICULO", "PASSWORD");
+	printf("|----------------------|-------------|-------|--------------------------------|------------|----------------------|\n");
+	printf("| %-20s | %-11d | %-5.2f | %-30s | %-10d | %-20s |\n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->IDveiculoAlugado, atual->password);
 
 	saveAlterarDados(inicio);
+
+	system("pause"); 
+	system("cls");
 } 
 
 //Guardar as alterações efetuadas
@@ -356,7 +410,6 @@ void saveAlterarDados(Cliente* inicio) {
 //Carregar Saldo cliente 
 Cliente* carregarSaldo(Cliente* cliente, int nif) {
 
-
 	// Encontrar o cliente com o NIF indicado
 	Cliente* atual = cliente;
 	while (atual != NULL && atual->NIF != nif) {
@@ -364,8 +417,12 @@ Cliente* carregarSaldo(Cliente* cliente, int nif) {
 	}
 
 	float saldoinserido; 
+	system("cls"); 
 
-	printf("INSIRA O SALDO\n"); 
+	printf("+++++++++++++++++++++++++++++++++++++++ CARREGAR SALDO +++++++++++++++++++++++++++++++++++++++\n");
+	printf("\n");
+
+	printf("\tINSIRA O SALDO\n"); 
 	scanf("%f", &saldoinserido); 
 
 	//Atulizar o salfo do cliente
@@ -374,6 +431,9 @@ Cliente* carregarSaldo(Cliente* cliente, int nif) {
 	printf("O SEU SALDO E DE %.2f\n", atual->saldo); 
 
 	saveAlterarDados(cliente);
+
+	system("pause"); 
+	system("cls"); 
 
 	return cliente; 
 }
