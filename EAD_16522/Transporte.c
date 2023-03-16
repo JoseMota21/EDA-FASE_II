@@ -160,13 +160,13 @@ Transporte* listarTransporte(Transporte* inicio) {
 	return 0; 
 }
 
-//Guardar em ficheiro TXT a informação das trotinetes 
+//Guardar em ficheiro binário a informação das trotinetes 
 Transporte* saveficheiroTransporte(Transporte* inicio) {
 
 	//Abrir o ficheiro
-	FILE* ficheiroTransporte = fopen("Transporte.bin","wb");
+	FILE* ficheiroTransporte = fopen("Transporte.bin", "wb");
 
-	//Se ficheiro Null informação ao utilziador 
+	//Se ficheiro Null informação ao utilizador 
 	if (ficheiroTransporte == NULL) {
 		printf("ERRO AO ABRIR O FICHEIRO TRANSPORTE\n");
 		return inicio;
@@ -174,46 +174,54 @@ Transporte* saveficheiroTransporte(Transporte* inicio) {
 
 	Transporte* atual = inicio;
 
-	//Equanto que não chega ao fim da estrutura 
+	//Enquanto não chega ao fim da estrutura 
 	while (atual != NULL) {
-	
 
-		fwrite(&atual, sizeof(struct registo), 1, ficheiroTransporte);
-
-		//Escrever no ficheiro txt
-		//fprintf(ficheiroTransporte, "%d;%s;%.2f;%.2f;%s;%d\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo,atual->disponivel);
+		fwrite(atual, sizeof(Transporte), 1, ficheiroTransporte);
 
 		atual = atual->seguinte;
 	}
-	//Fechar o txt
+
+	//Fechar o arquivo binário
 	fclose(ficheiroTransporte);
-	return inicio; 
+
+	return inicio;
 }
 
-//Ler ficheiro bin a informação das trotinetes e colocar na estrutura 
 Transporte* lerFicheiroTransporte(Transporte* inicio) {
-	//Abrir ficheiro txt 
-	FILE* ficheiroTransporte; 
+	FILE* ficheiroTransporte;
+	ficheiroTransporte = fopen("Transporte.bin", "rb");
 
-	Transporte* aux = NULL; 
-
-	Transporte aux2; 
-
-	ficheiroTransporte = fopen("Transporte.bin", "rb"); 
-
-	if (ficheiroTransporte != NULL) {
-		while (!feof(ficheiroTransporte)){ 
-		
-			fread(&aux2, sizeof(struct registo), 1, ficheiroTransporte);
-
-			aux = inputTransporte(aux, aux2.codigo, aux2.tipo, aux2.bateria, aux2.autonomia, aux2.geocodigo, aux2.disponivel);
-	
-		}
-		fclose(ficheiroTransporte); 
+	if (ficheiroTransporte == NULL) {
+		printf("ERRO AO ABRIR O FICHEIRO TRANSPORTE\n");
+		return inicio;
 	}
 
-	return (aux);
-} 
+	while (1) {
+		Transporte* novoTransporte = (Transporte*)malloc(sizeof(Transporte));
+
+		if (fread(novoTransporte, sizeof(Transporte), 1, ficheiroTransporte) != 1) {
+			free(novoTransporte);
+			break;
+		}
+
+		novoTransporte->seguinte = NULL;
+
+		if (inicio == NULL) {
+			inicio = novoTransporte;
+		}
+		else {
+			Transporte* atual = inicio;
+			while (atual->seguinte != NULL) {
+				atual = atual->seguinte;
+			}
+			atual->seguinte = novoTransporte;
+		}
+	}
+
+	fclose(ficheiroTransporte);
+	return inicio;
+}
 
 //Mostrar o meio de mobilidade com maior bateria 
 int EncontrarIdTransporteComMaiorBateria(Transporte* inicio) {
