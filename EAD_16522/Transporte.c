@@ -11,8 +11,10 @@ int ExisteTransporte(Transporte* inicio, int id) {
 	
 	//Enquanto que não chegar ao fim da lista analisa 
 	while (inicio != NULL) {
+
 		//Se o existir na lista o codigo com o id introduzido pelo o utilizador
 		if (inicio->codigo == id) {
+			//Se existir na lista returna 1
 			return 1;
 		}
 		inicio = inicio->seguinte;
@@ -23,6 +25,7 @@ int ExisteTransporte(Transporte* inicio, int id) {
 //Escrever novo transporte através do teclado
 Transporte* inputTransporte(Transporte* meioTransporte_1) {
 
+	//Alocar a capacidade necessária de memoria e indica o tamanho de espaço de memoria a ser alocado 
 	Transporte* novoTransporte = (Transporte*)malloc(sizeof(Transporte));
 
 	printf("\t++++++++ INSERIR MEIO DE MOBILIDADE ++++++++++\n"); 
@@ -45,13 +48,14 @@ Transporte* inputTransporte(Transporte* meioTransporte_1) {
 	printf("INSIRA A BATERIA ATUAL DO MEIO: ");
 	scanf("%f", &novoTransporte->bateria);
 
+	//Variável para calculuar a autonomia
 	float calcularAutonomia;
 
 	//Capacidade máxima da bateria 100%
 	if (novoTransporte->bateria >= 100) {
 		novoTransporte->bateria = 100; 
 	}
-	//Calcular a autonia em função
+	//Calcular a autonomia
 	calcularAutonomia = novoTransporte->bateria * 80;
 	novoTransporte->autonomia = calcularAutonomia / 100;
 
@@ -61,6 +65,7 @@ Transporte* inputTransporte(Transporte* meioTransporte_1) {
 
 	system("cls");
 
+	//Inserir de forma fixa que o transporte está disponivel sempre que inser um novo transporte, 1 disponivel, 0 não disponivel
 	novoTransporte->disponivel = 1; 
 
 	//Adicionar o novo meio de transporte ao início da lista
@@ -70,14 +75,17 @@ Transporte* inputTransporte(Transporte* meioTransporte_1) {
 	//Guardar os dados da lista ligada no ficheiro txt 
 	saveficheiroTransporte (novoTransporte);
 
+	//Returna a lista de transporte
 	return meioTransporte_1;
 }
 
 //Remover um meio de transporte pelo o ID
 Transporte* RemoverTransporte(Transporte* inicio) { 
 
+	//Inicializa todos os campos com valores de zero
 	Transporte RemoverTransporte = { 0, ' ', 0.0, 0.0, 0.0,0};
 
+	//Variável auxiliar em forma de apontador que será o primeiro elemento da lista
 	Transporte* aux = inicio; 
 
 	printf("\t++++++++ REMOVER MEIO DE MOBILIDADE ++++++++++\n"); 
@@ -85,23 +93,27 @@ Transporte* RemoverTransporte(Transporte* inicio) {
 	printf("| %-5s | %-10s | %-8s | %-10s | %-30s | %-13s|\n", "ID", "TIPO", "BATERIA", "AUTONOMIA", "LOCALIZACAO", "DISPONIBILIDADE");
 	printf("|-------|------------|----------|------------|--------------------------------|----------------|\n");
 
+	//Percorrer todos os transportes existentes na lista
 	while (aux != NULL){
 		printf("| %-5d | %-10s | %-8.2f | %-10.2f | %-30s | %-14d |\n", aux->codigo, aux->tipo, aux->bateria, aux->autonomia, aux->geocodigo, aux->disponivel);
 		aux = aux->seguinte;
 	}
 
+	//Variavel para ler o ID do transporte a eliminar
 	int codigo;
 	printf("INSIRA O ID DO MEIO DE MOBILIDDE: ");
 	scanf("%d", &codigo); 
 
 	printf("\n"); 
 
-	//Se lista estiver vazia informa o utilizador da aplciação 
+	//Se lista estiver vazia informa o utilizador
 	if (inicio == NULL) {
 		printf("LISTA VAZIA\n");
-		return NULL; //Parar de imediato se a listar tiver vazia
+		return NULL; //Parar de imediato se a listar estiver vazia 
 	}
+	//Apontador para o inicio da lista de transportes
 	Transporte* atual = inicio;
+	//Após remover o elemento permite que a lista permaneça ligada
 	Transporte* anterior = NULL;
 
 	//Procurar na estrutura o ID pedido 
@@ -118,7 +130,7 @@ Transporte* RemoverTransporte(Transporte* inicio) {
 		return NULL;
 	}
 	//Remove o id da lista
-	if (anterior == NULL) { //Se for o primeiro
+	if (anterior == NULL) { //Se for o primeiro da lista
 		inicio = atual->seguinte; 
 
 		system("cls");
@@ -127,6 +139,7 @@ Transporte* RemoverTransporte(Transporte* inicio) {
 		saveficheiroTransporte(inicio); 
 	}
 	else {
+		//Se não for o primeiro da lista 
 		anterior->seguinte = atual->seguinte;
 		saveficheiroTransporte(inicio); 
 	}
@@ -150,7 +163,7 @@ Transporte* listarTransporte(Transporte* inicio) {
 	printf("| %-5s | %-10s | %-8s | %-10s | %-30s | %-13s|\n", "ID", "TIPO", "BATERIA", "AUTONOMIA", "LOCALIZACAO", "DISPONIBILIDADE");
 	printf("|-------|------------|----------|------------|--------------------------------|----------------|\n");
 	
-	//Percorre a estrutura até fechar ao fim da lista
+	//Percorre a até fechar ao fim da lista
 	while (inicio != NULL) {
 
 		printf("| %-5d | %-10s | %-8.2f | %-10.2f | %-30s | %-14d |\n", inicio->codigo, inicio->tipo, inicio->bateria, inicio->autonomia, inicio->geocodigo, inicio->disponivel);
@@ -166,19 +179,18 @@ Transporte* saveficheiroTransporte(Transporte* inicio) {
 	//Abrir o ficheiro
 	FILE* ficheiroTransporte = fopen("Transporte.bin", "wb");
 
-	//Se ficheiro Null informação ao utilizador 
+	//Se impossivel abrir o ficheiro avisa o utilizador
 	if (ficheiroTransporte == NULL) {
 		printf("ERRO AO ABRIR O FICHEIRO TRANSPORTE\n");
 		return inicio;
 	}
-
+	
 	Transporte* atual = inicio;
 
 	//Enquanto não chega ao fim da estrutura 
 	while (atual != NULL) {
-
+		//Imprimir a os dados estrutura 
 		fwrite(atual, sizeof(Transporte), 1, ficheiroTransporte);
-
 		atual = atual->seguinte;
 	}
 
@@ -189,29 +201,40 @@ Transporte* saveficheiroTransporte(Transporte* inicio) {
 }
 
 Transporte* lerFicheiroTransporte(Transporte* inicio) {
+
+	//Abrir o ficheiro transporte em leitura binária
 	FILE* ficheiroTransporte;
 	ficheiroTransporte = fopen("Transporte.bin", "rb");
 
+	//Se ficheiro não foi aberto corretamente
 	if (ficheiroTransporte == NULL) {
 		printf("ERRO AO ABRIR O FICHEIRO TRANSPORTE\n");
 		return inicio;
 	}
 
 	while (1) {
+
+		// Alocar a capacidade necessária de memoria e indica o tamanho de espaço de memoria a ser alocado
 		Transporte* novoTransporte = (Transporte*)malloc(sizeof(Transporte));
 
+		//Lê os dados do ficheiro binario para a estrutura e verifica se a leitura foi bem sucedida 
 		if (fread(novoTransporte, sizeof(Transporte), 1, ficheiroTransporte) != 1) {
-			free(novoTransporte);
+			
+			free(novoTransporte); // Caso a leitura não tenha sido sucedida liberta a memoria alocada 
 			break;
 		}
 
+		//Define o ultimo elemento da lista
 		novoTransporte->seguinte = NULL;
 
+		//Se a lista estiver vazia, a variável inicio é definida como a estrutura novo transporte
 		if (inicio == NULL) {
 			inicio = novoTransporte;
 		}
 		else {
+			//Se não percorre a lista ligada para encontrar o ultimo elemento 
 			Transporte* atual = inicio;
+			//Percorre a lista para encontrar o ultimo elemento 
 			while (atual->seguinte != NULL) {
 				atual = atual->seguinte;
 			}
