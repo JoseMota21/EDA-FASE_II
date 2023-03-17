@@ -173,11 +173,12 @@ void desalugarVeiculo(Cliente* cliente_1, Transporte* meioTransporte_1, int nif)
 void historico(Cliente* cliente_1, Transporte* meioTransporte_1) {
 
 	//a para não alterar o historio, irá escrever sempre no fim
-	FILE* historico = fopen("Historico.txt", "a"); 
+	FILE* historico = fopen("Historico.txt", "ab"); 
 	if (historico == NULL) {
 		printf("Erro ao abrir o arquivo de histórico\n");
 		return;
 	}
+
 	fprintf(historico,"%s,%d,%d,%s\n", cliente_1->nome_cliente, cliente_1->NIF, meioTransporte_1->codigo, meioTransporte_1->tipo);
 
 
@@ -190,19 +191,27 @@ void* consultarHistorico() {
 	//Abrir o ficheiro com os dados de historico
 	FILE* ficheiroHistorico = fopen("Historico.txt", "r");
 
-	if (historico == NULL) {
-		printf("Erro ao abrir o arquivo de histórico\n");
+	if (ficheiroHistorico == NULL) {
+		printf("ERRO AO ABRIR O HISTORICO\n");
 		return;
 	}
 
 	char linha[100]; 
+
+	printf("\t++++++++++++++++++++++++++++++++++++++++++ CONSULTAR HISTORICO +++++++++++++++++++++++++++++++++++++++\n");
+	printf("\n");
+	printf("| %-30s | %-20s | %-10s | %-20s |\n", "NOME", "NIF", "ID", "TIPO");
+	printf("|--------------------------------|----------------------|------------|----------------------|\n");
 
 	while (fgets(linha, sizeof(linha), ficheiroHistorico)) {
 		char nome_cliente[50], tipo[20];
 		int nif, codigo;
 		sscanf(linha,"%[^,],%d,%d,%[^,\n]", nome_cliente, &nif, &codigo, tipo);
 
-		printf("%s; %d; %d; %s\n", nome_cliente, nif, codigo, tipo);
+		printf ("| %-30s | %-20d | %-10d | %-20s |\n", nome_cliente, nif, codigo, tipo);
+		
+
+		//printf("%s; %d; %d; %s\n", nome_cliente, nif, codigo, tipo);
 	}
 
 	fclose(ficheiroHistorico);

@@ -5,8 +5,6 @@
 #include <stdbool.h>
 #include "Cliente.h" 
 
-#define MAX_LINHA 1000
-
 //Inserir Cliente na lista ligada
 Cliente* inputCliente(Cliente* cliente_1) {
 	
@@ -69,7 +67,7 @@ int ExisteCliente(Cliente* inicio, int nif) {
 Cliente* saveficheiroCliente(Cliente* inicio){
 
 	//Abrir ficheiro txt 
-	FILE* ficheiroCliente = fopen("Cliente.txt", "w"); 
+	FILE* ficheiroCliente = fopen("Cliente.bin", "wb"); 
 
 	if (ficheiroCliente == NULL) {
 		printf("ERRO AO ABRIR O FICHEIRO \n"); 
@@ -81,7 +79,7 @@ Cliente* saveficheiroCliente(Cliente* inicio){
 
 	while (atual != NULL) {
 		//Escrever os dados no ficheiro txt 
-		fprintf(ficheiroCliente, "%s;%d;%.2f;%s;%d;%s\n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada,atual->IDveiculoAlugado, atual->password);
+		fwrite(atual, sizeof(Cliente), 1, ficheiroCliente);
 
 		atual = atual->seguinte;
 	}
@@ -96,10 +94,8 @@ Cliente* saveficheiroCliente(Cliente* inicio){
 Cliente* lerFicheiroCliente(Cliente* inicio) {
 
 	//Abrir ficheiro txt 
-	FILE* ficheiroCliente = fopen("Cliente.txt", "r");
+	FILE* ficheiroCliente = fopen("Cliente.bin", "rb");
 
-	//Declaração de varial ha com capacidade maxima de 100 
-	char linha[MAX_LINHA];
 
 	//Se erro ao abrir mensagem para o utilizador
 	if (ficheiroCliente == NULL) {
@@ -108,29 +104,25 @@ Cliente* lerFicheiroCliente(Cliente* inicio) {
 		return inicio;
 	}
 
-	//Enquanto que não chega ao fim da ultima linha 
-	while (fgets(linha, sizeof(linha), ficheiroCliente) != NULL) {
-
+	while (1) {
 		Cliente* novoCliente = (Cliente*)malloc(sizeof(Cliente));
-
-		//A ler o ficheiro (possivel problema) 
-		sscanf(linha, "%[^;]; %d; %f; %[^;]; %d; %[^\n]", novoCliente->nome_cliente, &novoCliente->NIF, &novoCliente->saldo, novoCliente->morada, &novoCliente->IDveiculoAlugado, novoCliente->password);
-
-		novoCliente->seguinte = NULL; 
-		//Quando chegar ao fim 
-		if (inicio == NULL) {
-			inicio = novoCliente;
-
-		}
-		else {
-			Cliente* atual = inicio;
-
-			while (atual->seguinte != NULL) {
-				atual = atual->seguinte;
-
+		
+			if (fread(novoCliente, sizeof(Cliente), 1, ficheiroCliente) != 1) {
+				free(novoCliente);
+				break;
 			}
-			atual->seguinte = novoCliente;
-		}
+			novoCliente->seguinte = NULL;  
+
+			if (inicio == NULL) {
+				inicio = novoCliente; 
+			}
+			else {
+				Cliente* atual = inicio; 
+				while (atual->seguinte != NULL) {
+					atual = atual->seguinte; 
+				}
+				atual->seguinte = novoCliente; 
+			}
 	}
 	//Fechar o ficheiro 
 	fclose(ficheiroCliente);
@@ -377,32 +369,34 @@ Cliente* AlterarDadosCliente(Cliente* inicio, int nif) {
 //Guardar as alterações efetuadas
 void saveAlterarDados(Cliente* inicio) {
 
-	//Abrir ficheiro temporario
-	FILE* ficheirotemporario = fopen("temp.txt", "w");
+	// Abrir ficheiro txt
+		FILE * ficheiroCliente = fopen("Cliente.txt", "wb");
 
-	//
-	if (ficheirotemporario == NULL) {
+	if (ficheiroCliente == NULL) {
+		printf("ERRO AO ABRIR O FICHEIRO \n");
 
-		printf("ERRO AO ABRIR FICHEIRO");
-		return;
+		return inicio;
 	}
+
 	Cliente* atual = inicio;
 
-	//Enquanto não chega ao fim da lista
 	while (atual != NULL) {
-		//Escrever no ficheiro temporario
-		fprintf(ficheirotemporario, "%s; %d; %.2f; %s; %d; %s\n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->IDveiculoAlugado, atual->password);
+		//Escrever os dados no ficheiro txt 
+		fwrite(atual, sizeof(Cliente), 1, ficheiroCliente);
+
 		atual = atual->seguinte;
 	}
-	
-	fclose(ficheirotemporario);
+
+	//fechar o ficheiro txt 
+	fclose(ficheiroCliente);
 	
 	//Remover ficheiro original
 	if (remove("Cliente.txt") != 0) {
 		return;
 	}
+
 	//Renomear fiheiro temporario
-	if (rename("temp.txt", "Cliente.txt" )!= 0) {
+	if (rename("temp.txt", "Cliente.txt")!= 0) {
 		return;
 	}
 }

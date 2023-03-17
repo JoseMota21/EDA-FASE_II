@@ -439,24 +439,27 @@ Transporte* AlterarDadosTransporte(Transporte* inicio) {
 //Guardar dados em ficheiro temporario (Tranportes)
 void saveAlterarDadosTransportes(Transporte* inicio) {
 	
-	//Abrir ficheiro temporario 
-	FILE* ficheirotemporario = fopen("tempt.txt", "w"); 
+	//Abrir o ficheiro
+		FILE * ficheiroTransporte = fopen("Transporte.txt", "wb");
 
-	if (ficheirotemporario == NULL) {
-
-		printf("ERRO AO ABRIR FICHEIRO");
-		return;
+	//Se ficheiro Null informação ao utilizador 
+	if (ficheiroTransporte == NULL) {
+		printf("ERRO AO ABRIR O FICHEIRO TRANSPORTE\n");
+		return inicio;
 	}
 
-	Transporte* atual = inicio; 
+	Transporte* atual = inicio;
 
-	//Enquanto não chega ao fim da lista
+	//Enquanto não chega ao fim da estrutura 
 	while (atual != NULL) {
-		//Escrever no ficheiro temporario
-		fprintf(ficheirotemporario, "%d;%s;%.2f;%.2f;%s;%d\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo, atual->disponivel);
+
+		fwrite(atual, sizeof(Transporte), 1, ficheiroTransporte);
+
 		atual = atual->seguinte;
 	}
-	fclose(ficheirotemporario); 
+
+	//Fechar o arquivo binário
+	fclose(ficheiroTransporte);
 
 	//Remover ficheiro original
 	if (remove("Transporte.txt") != 0) {
@@ -466,7 +469,6 @@ void saveAlterarDadosTransportes(Transporte* inicio) {
 	if (rename("tempt.txt", "Transporte.txt") != 0) {
 		return;
 	}
-
 }
 
 //Mostrar meios de transportes disponiveis 
