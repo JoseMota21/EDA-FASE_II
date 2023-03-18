@@ -22,13 +22,13 @@ int ExisteTransporte(Transporte* Inicio, int ID);
 //Remover um meio de transporte atraves do ID
 Transporte* RemoverTransporte(Transporte* inicio); 
 
-//Listar Transporte na Consola 
+//Lista Transporte na Consola 
 Transporte* listarTransporte(Transporte* Inicio);
 
-//Guardar em ficheiro txt Transposrte
+//Guardar em ficheiro bin Transposrte
 Transporte* saveficheiroTransporte(Transporte* inicio);
 
-//Ler ficheiro txt Tranporte 
+//Ler ficheiro bin Tranporte 
 Transporte* lerFicheiroTransporte(Transporte* inicio);
 
 //Ordenar o meio de transporte de forma decrescente a autonomia 

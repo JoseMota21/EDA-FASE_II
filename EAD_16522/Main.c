@@ -8,21 +8,22 @@
 #include<stdbool.h>
 
 int main() {
+
 	//Inicializar as listas 
 	Transporte* meioTransporte_1 = NULL; // Lista ligada transportes vazia  
 	Cliente* cliente_1 = NULL; // Lista ligada clientes vazia 
 	Gestor* gestor_1 = NULL; // Lista ligada clientes vazia 
 
-	//Qual o cliente que está logado no sistema 
+	//Informa qual o cliente que está logado no sistema 
 	Cliente* logado = NULL;
 
-	//Ler ficheiro txt meio de transporte
+	//Ler ficheiro bin meio de transporte
 	meioTransporte_1 = lerFicheiroTransporte(meioTransporte_1);
 
-	//Ler ficheiro txt cliente
+	//Ler ficheiro bin cliente
 	cliente_1 = lerFicheiroCliente(cliente_1);
 
-	//Ler ficheiro txt gestor 
+	//Ler ficheiro bin gestor 
 	gestor_1 = lerficheiroGestor(gestor_1); 
 
 
@@ -35,6 +36,7 @@ int main() {
 	do {
 		system("cls");
 
+		//Mostra na consola as opçoes possiveis 
 		printf("+********************************************************* M E N U ********************************************+\n");
 		printf("\n");
 		printf("1 - GESTOR\n");
@@ -49,6 +51,7 @@ int main() {
 
 		case 1:
 		{	
+			//Mostra na consola as opçoes possiveis 
 			printf("++++++++++++++++++++++++++++++++++++++++++++++++++++++++ G E S T O R +++++++++++++++++++++++++++++++++++++++++++++++\n"); 
 			printf("\n");
 			printf("1 - CRIAR GESTOR\n");
@@ -60,7 +63,7 @@ int main() {
 			case 1:
 				system("cls");
 				printf("CRIAR NOVO RESGISTO\n");
-				gestor_1 = inserirGestor(gestor_1);
+				gestor_1 = inserirGestor(gestor_1); //Inserir um novo registo de gestor
 				break;
 
 			case 2:
@@ -75,6 +78,7 @@ int main() {
 
 					do {
 
+						//Opções possiveis de escolha
 						printf("SELECIONE AS OPERACOES PRETENDIDAS\n");
 						printf("\n");
 						printf("--------------------------------------------------\n");
@@ -98,67 +102,68 @@ int main() {
 
 						switch (gestor) {
 						case 1:
-
+							//Inserir meio de transporte no inicio da lista
 							meioTransporte_1 = inputTransporte(meioTransporte_1);
 							break;
 						case 2:
-
+							//Inserir cliente no inicio da lista
 							cliente_1 = inputCliente(cliente_1);
 							break;
 						case 3:
-
+							//Remover transporte da lista
 							RemoverTransporte(meioTransporte_1);
 							break;
 						case 4:
-
+							//Remover cliente da lista
 							RemoverCliente(cliente_1);
 							break;
 						case 5:
-
+							//Ordenar transporte por ordem decrescente
 							OrdenarTransportesPorAutonomiaDecrescente(meioTransporte_1);
 							system("pause"); // Pausa no sistema, pressionar alguma tecla para proseguir
 							system("cls");
 							break;
 						case 6:
-
+							//Listar transportes na consola
 							listarTransporte(meioTransporte_1);
 							system("pause"); // Pausa no sistema, pressionar alguma tecla para proseguir
 							system("cls");
 							break;
 						case 7:
-
+							//Listar cliente na consola
 							listarCliente(cliente_1);
 							system("pause"); // Pausa no sistema, pressionar alguma tecla para proseguir
 							system("cls");
 							break;
 						case 8:
-
+							//Alterar dados de transportes
 							AlterarDadosTransporte(meioTransporte_1);
 							break;
 						case 9:
-
+							//Mostrar na consola os transportes disponiveis 
 							transportesDisponiveis(meioTransporte_1);
 							system("pause"); // Pausa no sistema, pressionar alguma tecla para proseguir
 							system("cls");
 							break;
 						case 10:
-
+							//Consultar o historico de que cliente alugou qual veiculo (ID e NIF)
 							consultarHistorico();
 							system("pause"); // Pausa no sistema, pressionar alguma tecla para proseguir
 							system("cls");
 							break;
 						case 11:
-
+							//Inserir novo gestor na lista
 							gestor_1 = inserirGestor(gestor_1);
 							break;
 
 						default:
+							//Caso nenhuma opcao for inserida corretamente informa o utilizar 
 							printf("OPCAO INVALIDA\n");
 							break;
 						}
-					} while (gestor != 12);
+					} while (gestor != 12); // Voltar para o menu anterior
 				}	break;
-			}while (gestorech != 0);
+			}while (gestorech != 0); //voltar para o menu anterior
 			}
 		}break;
 
@@ -173,7 +178,7 @@ int main() {
 				Cliente* logado = resultadologin.cliente;
 
 				do {
-
+					//Opçoes disponvies 
 					printf("SELECIONE AS OPERACOES PRETENDIDAS\n");
 					printf("\n");
 					printf("--------------------------------------------------\n");
@@ -188,34 +193,36 @@ int main() {
 
 					switch (cliente) {
 					case 1:
+						//Cliente consulta os seus dados
 						clientedados(logado);	
 						break;
 					case 2:
-
+						//Cliente altera dos seus dados
 						AlterarDadosCliente(cliente_1, logado->NIF);
 						break;
 					case 3:
-
+						//Cliente aluga o transportes
 						alugarTranporte(cliente_1, meioTransporte_1, logado->NIF); 
 						break;
 					case 4: 
-
+						//Cliente desaluga o transporte
 						desalugarVeiculo(cliente_1, meioTransporte_1, logado->NIF);
 						break; 
 					case 5: 
-
+						//Cliente carrega saldo
 						carregarSaldo(cliente_1, logado->NIF); 
 						break; 
 					default:
+						//Caso nenhuma opcao for inserida corretamente informa o utilizar 
 						printf("OPCAO INVALIDA\n");
 						break;
 					}
-				} while (cliente != 6);
+				} while (cliente != 6); // Volta para o menu anterior
 			}
 		}
 	}
 		
-	} while (opcao != 0); 
+	} while (opcao != 0); // Sai do programa 
 		
 	return;
 }

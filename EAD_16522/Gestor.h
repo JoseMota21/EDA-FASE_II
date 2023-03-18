@@ -12,7 +12,7 @@ typedef struct registoGestor {
 
 }Gestor;
 
-//Estrutura boleana a utilizar no login
+//Estrutura boleana de login (Informa se sucesso/insucesso de login e o gestor) 
 typedef struct {
 	bool autenticado;
 	Gestor* gestor;
@@ -21,13 +21,13 @@ typedef struct {
 //Guardar gestor em ficheiro txt 
 Gestor* saveficheiroGestor(Gestor* inicio);
 
-//Inserir novo gestor
+//Inserir novo gestor no inicio da lista
 Gestor* inserirGestor(Gestor* gestor_1); 
 
 //Guardar gestor em ficheiro txt 
 Gestor* saveficheiroGestor(Gestor* inicio); 
 
-//Ler o ficheiro do gestor
+//Ler o ficheiro do gestor txt 
 Gestor* lerficheiroGestor(Gestor* inicio); 
 
 //Login de Gestor

@@ -42,22 +42,28 @@ Gestor* inserirGestor(Gestor* gestor_1) {
 	//Guardar dados em ficheiro txt
 	saveficheiroGestor(novoGestor);
 
-	return novoGestor; // retorna o novo ponteiro para o início da lista
+	return novoGestor; // retorna o novo apontador para o início da lista
 
 }
+//Verificar se já existe gestor criado 
+Gestor* existeGestor(Gestor* gestor_1, const char* email) { 
 
-Gestor* existeGestor(Gestor* gestor_1, const char* email) {
-
+	//Inicio da lista
 	Gestor* atual = gestor_1;
 
 	//Percorrer a lista de gestor a verificar se existe o gestor 
 	while (atual != NULL) {
+
+		//Se o email introduzido for igual ao email da estrutura, cliente já existe
 		if (strcmp(atual->email, email) == 0) {
 
+			//Retorna o valor do apontador 
 			return atual;
 		}
-		atual = atual->seguinte; // avança para o próximo nó da lista
+		// avança para o próximo elemento da lista
+		atual = atual->seguinte; 
 	}
+	//Informa que o gestor ainda não existe na lista
 	return NULL;
 }
 
@@ -67,24 +73,28 @@ Gestor* saveficheiroGestor(Gestor* inicio) {
 	//Abrir ficheiro txt 
 	FILE* ficheiroGestor = fopen("Gestor.txt", "w");
 
+	//Se ficheiro impossivel abrir informa o utilizador
 	if (ficheiroGestor == NULL) {
 		printf("ERRO AO ABRIR O FICHEIRO GESTOR\n");
 
 		return inicio;
 	}
-
+	//Inicia o inicio da lista
 	Gestor* atual = inicio; 
 
+	//Percorre a lista e escreve os dados no ficheiro txt separados por ; 
 	while (atual != NULL) {
 		//Escrever os dados no ficheiro txt 
 		fprintf(ficheiroGestor, "%s;%s;%s\n", atual->nome, atual->email, atual->password);
 
+		//Passa para o seguinte elemento
 		atual = atual->seguinte;
 	}
 
 	//fechar o ficheiro txt 
 	fclose(ficheiroGestor);
 
+	//Retorna o valor do apontador
 	return inicio;
 } 
 
@@ -94,7 +104,7 @@ Gestor* lerficheiroGestor(Gestor* inicio) {
 	//Abrir ficheiro txt 
 	FILE* ficheiroGestor = fopen("Gestor.txt", "r");
 
-	//Declaração de varial ha com capacidade maxima de 100 
+	//Declaração de variavel com capacidade maxima de 1000 caracteres por linha 
 	char linha[1000]; 
 
 	//Se erro ao abrir mensagem para o utilizador
@@ -104,30 +114,37 @@ Gestor* lerficheiroGestor(Gestor* inicio) {
 		return inicio;
 	}
 
-	// Enquanto que não chega ao fim da ultima linha
-		while (fgets(linha, sizeof(linha), ficheiroGestor) != NULL) {
+	// Percorre cada linha e armazena a linha lida na variavel linha 
+	while (fgets(linha, sizeof(linha), ficheiroGestor) != NULL) {
 
+			
 			Gestor* novogestor = (Gestor*)malloc(sizeof(Gestor));
 
-			//A ler o ficheiro (possivel problema) 
+			//Lê os valores da linha (nome, email e password) e armazena da estrutura dos gestor
 			sscanf(linha, "%[^;]; %[^;]; %[^\n]", novogestor->nome, novogestor->email, novogestor->password);
-
+			
+			//Indica que é o ultimo da lista
 			novogestor->seguinte = NULL;
-			//Quando chegar ao fim 
+
+			//Se a lista vazia, o novo gestor é o inici da lista
 			if (inicio == NULL) {
 				inicio = novogestor;
 
 			}
+			//Se lista não estiver vazia 
 			else {
+
 				Gestor* atual = inicio;
 
+				//Percorre a lista até chegar ao ultimo elemento e adiciona o novo elemento como proximo
 				while (atual->seguinte != NULL) {
 					atual = atual->seguinte;
 
 				}
 				atual->seguinte = novogestor;
 			}
-		}
+	}
+
 	//Fechar o ficheiro 
 	fclose(ficheiroGestor);
 
@@ -136,11 +153,11 @@ Gestor* lerficheiroGestor(Gestor* inicio) {
 
 //Login para Gestor 
 loginGestor gestorlogin(Gestor* Login) {
-
-	loginGestor resultado = { false, NULL }; 
 	
+	//Variáveis 
 	char email[100];
-	char password[100]; 
+	char password[100];  
+	loginGestor resultado = { false, NULL }; //Armazene se autenticado e informação do gestor 
 	
 	getchar();
 	//Pedir ao gestor para inserir o email
@@ -154,17 +171,18 @@ loginGestor gestorlogin(Gestor* Login) {
 	fgets(password, 100, stdin);
 	password[strcspn(password, "\n")] = '\0'; 
 
+	
 	Gestor* atual = Login; 
 
 
-	// Percorre a estrutura até chegar ao final
+	// Procura por um gestor que tenha o email e password na estrutura
 	while (atual != NULL) {
-			//se password inseria for igual à password da estrutura
-			//e se a password inserida for igual à password da estrutura 
-
+			
+			//Se email e password inseridos for igual à password e email da estrutura 
 			if (strcmp(atual->email, email) == 0 && strcmp(atual->password, password) == 0) {
-				resultado.autenticado = true;
-				resultado.gestor = atual;
+				
+				resultado.autenticado = true; //Login bem sucedida
+				resultado.gestor = atual; //Informa a que gestor corresponde
 
 				system("cls");
 				printf("***************************************************** BEM-VINDO, %s!**********************************************\n", atual->nome);
@@ -174,10 +192,11 @@ loginGestor gestorlogin(Gestor* Login) {
 			atual = atual->seguinte;
 	}
 
+	//Se login não for bem sucedido informa o utilizador 
 	if (!resultado.autenticado) {
 		printf("EMAIL OU PASSWORD ERRADO!\n");
 
 		system("pause");
 	}
-	return resultado;
+	return resultado; //Devolve as informações sobre a autenticação do gestor 
 }
