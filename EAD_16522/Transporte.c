@@ -122,7 +122,7 @@ Transporte* RemoverTransporte(Transporte* inicio) {
 		atual = atual->seguinte;
 	}
 
-	//Quando a pesquisa chegar ao fim da lista e não for encontrado o id avisa o utilizador
+	//Quando a pesquisa chegar ao fim da lista e não for encontrado o ID avisa o utilizador
 	if (atual == NULL) {
 		printf("O MEIO DE TRANSPORTE COM O ID %d NAO FOI ENCONTRADA NA LISTA\n", codigo);
 		system("pause");
@@ -133,7 +133,7 @@ Transporte* RemoverTransporte(Transporte* inicio) {
 	if (anterior == NULL) { //Se for o primeiro da lista
 		inicio = atual->seguinte; 
 
-		system("cls");
+		system("cls"); //Limpar consola
 		
 		//Guardar os novos dados no ficheiro txt 
 		saveficheiroTransporte(inicio); 
@@ -163,9 +163,9 @@ Transporte* listarTransporte(Transporte* inicio) {
 	printf("| %-5s | %-10s | %-8s | %-10s | %-30s | %-13s|\n", "ID", "TIPO", "BATERIA", "AUTONOMIA", "LOCALIZACAO", "DISPONIBILIDADE");
 	printf("|-------|------------|----------|------------|--------------------------------|----------------|\n");
 	
-	//Percorre a até fechar ao fim da lista
+	//Percorre a até fechar ao fim da lista 
 	while (inicio != NULL) {
-
+		//Escreve na consola os dados da estrutura em questão
 		printf("| %-5d | %-10s | %-8.2f | %-10.2f | %-30s | %-14d |\n", inicio->codigo, inicio->tipo, inicio->bateria, inicio->autonomia, inicio->geocodigo, inicio->disponivel);
 
 		inicio = inicio->seguinte;
@@ -179,7 +179,7 @@ Transporte* saveficheiroTransporte(Transporte* inicio) {
 	//Abrir o ficheiro
 	FILE* ficheiroTransporte = fopen("Transporte.bin", "wb");
 
-	//Se impossivel abrir o ficheiro avisa o utilizador
+	//Se impossivel a abrir o ficheiro avisa o utilizador
 	if (ficheiroTransporte == NULL) {
 		printf("ERRO AO ABRIR O FICHEIRO TRANSPORTE\n");
 		return inicio;
@@ -203,15 +203,15 @@ Transporte* saveficheiroTransporte(Transporte* inicio) {
 Transporte* lerFicheiroTransporte(Transporte* inicio) {
 
 	//Abrir o ficheiro transporte em leitura binária
-	FILE* ficheiroTransporte;
-	ficheiroTransporte = fopen("Transporte.bin", "rb");
-
+	FILE* ficheiroTransporte = fopen("Transporte.bin", "rb"); 
+	
 	//Se ficheiro não foi aberto corretamente
 	if (ficheiroTransporte == NULL) {
 		printf("ERRO AO ABRIR O FICHEIRO TRANSPORTE\n");
 		return inicio;
 	}
 
+	//Lê todos os dados até que não haja mais nenhum para ler no ficheiro 
 	while (1) {
 
 		// Alocar a capacidade necessária de memoria e indica o tamanho de espaço de memoria a ser alocado
@@ -241,55 +241,42 @@ Transporte* lerFicheiroTransporte(Transporte* inicio) {
 			atual->seguinte = novoTransporte;
 		}
 	}
-
+	//Fechar o ficheiro
 	fclose(ficheiroTransporte);
 	return inicio;
 }
 
-//Mostrar o meio de mobilidade com maior bateria 
-int EncontrarIdTransporteComMaiorBateria(Transporte* inicio) {
-	if (inicio == NULL) {
-		return -1; // Lista vazia
-	}
-
-	Transporte* atual = inicio;
-	Transporte* maior = inicio;
-
-	while (atual != NULL) {
-		if (atual->bateria > maior->bateria) {
-			maior = atual; // Atualiza o ponteiro para o elemento com maior carga de bateria
-		}
-		atual = atual->seguinte;
-	}
-	printf("MEIO DE TRANSPORTE COM MAIOR BATERIA\n");
-	printf("%d; %.2f\n", maior->codigo, maior->bateria);
-	return maior->codigo; // Retorna o ID do meio de transporte com maior bateria
-}
-
 //Trocar a ordem dos transportes 
 void TrocarTransportes(Transporte* t1, Transporte* t2) {
-	int codigo_temp = t1->codigo;
-	char tipo_temp[20];
 
-	strcpy(tipo_temp, t1->tipo);
-	float bateria_temp = t1->bateria;
-	float autonomia_temp = t1->autonomia;
-	char geocodigo_temp[20];
+	//Declarar variaveis
+	int codigo_temp;
+	char tipo_temp[20];
+	char geocodigo_temp[20]; 
+	float bateria_temp; 
+	float autonomia_temp; 
+	int disponivel_temp; 
+
+	//Armazena temporariamente os valores dos apontadores 
+	codigo_temp = t1->codigo;
+	strcpy(tipo_temp, t1->tipo); //copia da string do campo tipo de t1 para a variavel tipo_temp
+	bateria_temp = t1->bateria; 
+	autonomia_temp = t1->autonomia;
 	strcpy(geocodigo_temp, t1->geocodigo);
-	int disponivel_temp = t1->disponivel;
+	disponivel_temp = t1->disponivel;
 	
-	
-	t1->codigo = t2->codigo;
+	//Troca os valroes da estrutura de t2 para t1
+	t1->codigo = t2->codigo; //copia o valor do campo codigo da estrutura t2 para a campo codigo da estrutura t1 
 	strcpy(t1->tipo, t2->tipo);
 	t1->bateria = t2->bateria;
 	t1->autonomia = t2->autonomia;
 	strcpy(t1->geocodigo, t2->geocodigo);
 	t1->disponivel = t2->disponivel; 
 	
-
-	t2->codigo = codigo_temp;
+	//Atribui os valores temporarios armazenados em t2 e assim trocar os valores entre t1 e t2
+	t2->codigo = codigo_temp; 
 	strcpy(t2->tipo, tipo_temp);
-	t2->bateria = bateria_temp;
+	t2->bateria = bateria_temp; //atribui o valor do campo bateria de t2 para a variavel temporaria 
 	t2->autonomia = autonomia_temp;
 	strcpy(t2->geocodigo, geocodigo_temp);
 	t2->disponivel = disponivel_temp; 
@@ -298,7 +285,10 @@ void TrocarTransportes(Transporte* t1, Transporte* t2) {
 
 //Ordenar Autonomia ordem decrescente
 void OrdenarTransportesPorAutonomiaDecrescente(Transporte* inicio) {
+	
+	//Variavel 
 	int troca;
+	//Atual aponta para o elemento atual da lista e anterior para o elemento anterior
 	Transporte* atual, * anterior = NULL;
 
 	//Lista estiver vazia informa o utilizador
@@ -306,21 +296,29 @@ void OrdenarTransportesPorAutonomiaDecrescente(Transporte* inicio) {
 		printf("LISTA VAZIA!\n");
 		return;
 	}
+	//Percorre a lista e compara e troca os elementos até que a lista esteja completamente ordenada
 	do {
 		troca = 0;
 		atual = inicio;
-		//Enquanto que o atual for diferente que o anterior 
-		while (atual->seguinte != anterior) {
+
+		//Quando atual for igual a anterior lista está ordenada
+ 		while (atual->seguinte != anterior) {
+
 			//Se autonimoa atual for menor que a autonomia seguinte da lista 
 			if (atual->autonomia < atual->seguinte->autonomia) {
-				//A autonomia atual é seguinte 
+
+				//Chamar função para trocar as posições dos elementos da lista
 				TrocarTransportes(atual, atual->seguinte);
+				
+				//Informa que houve troca
 				troca = 1;
 			}
+			//Aponta para o proximo elemento da lista
 			atual = atual->seguinte;
 		}
 		anterior = atual;
-	} while (troca); //Condição de paragem do ciclo 
+		//Condição de paragem do ciclo, se troca = 0 o loop é interrompido e a lista está ordenada
+	} while (troca); 
 
 	//Mensagem de informação ao utilizador
 	printf("\t++++++++++ ORDENAR AUTONOMIA ++++++++++\n");
@@ -343,6 +341,7 @@ void OrdenarTransportesPorAutonomiaDecrescente(Transporte* inicio) {
 //Alterar dados 
 Transporte* AlterarDadosTransporte(Transporte* inicio) {
 
+	//Limpar consola 
 	system("cls");
 
 	//Variaveis
@@ -354,6 +353,7 @@ Transporte* AlterarDadosTransporte(Transporte* inicio) {
 	char geocodigo [20]; 
 	float calculoAutonomia; 
 
+	Transporte* atual = inicio;
 
 	//Mostrar os dados atuais de todos os transportes da lista
 	printf("\t++++++++++ INFORMACAO DOS TRANSPORTES ++++++++++\n");
@@ -362,8 +362,7 @@ Transporte* AlterarDadosTransporte(Transporte* inicio) {
 	printf("| %-5s | %-10s | %-8s | %-10s | %-30s | %-13s|\n", "ID", "TIPO", "BATERIA", "AUTONOMIA", "LOCALIZACAO", "DISPONIBILIDADE");
 	printf("|-------|------------|----------|------------|--------------------------------|----------------|\n");
 
-	Transporte* atual = inicio;
-
+	//Escreve todos os dados da lista na consola
 	while (atual != NULL) {
 		printf("| %-5d | %-10s | %-8.2f | %-10.2f | %-30s | %-14d |\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo, atual->disponivel);
 		atual = atual->seguinte;
@@ -375,8 +374,10 @@ Transporte* AlterarDadosTransporte(Transporte* inicio) {
 	printf("INSIRA O ID DO TRANSPORTE QUE PRETENDE ALTERAR\n");
 	scanf("%d", &ID);
 
-	//Procurar o transporte com o ID indicado pelo utilizador
+
 	atual = inicio;
+
+	//Percorre a lista até o atual == Null e codigo da lista = ID introduzido
 	while (atual != NULL && atual->codigo != ID) {
 		atual = atual->seguinte;
 	}
@@ -389,7 +390,7 @@ Transporte* AlterarDadosTransporte(Transporte* inicio) {
 
 	system("cls");
 
-	// Mostrar os dados atuais do transporte
+	// Mostrar os dados atuais do transporte com o ID escolhido 
 	printf("INFORMACOES DO TRANSPORTE SELECIONADO:\n");
 	printf("\n");
 	//Cabeçalho da tabela
@@ -447,12 +448,14 @@ Transporte* AlterarDadosTransporte(Transporte* inicio) {
 	}
 	system("cls"); 
 
+	//Mostra na consola os dados alterados do transporte escolhido
 	printf("ALTERACOES EFETUADASD\n");
 	printf("\n"); 
 	printf("| %-5s | %-10s | %-8s | %-10s | %-30s | %-13s|\n", "ID", "TIPO", "BATERIA", "AUTONOMIA", "LOCALIZACAO", "DISPONIBILIDADE");
 	printf("|-------|------------|----------|------------|--------------------------------|----------------|\n");
 	printf("| %-5d | %-10s | %-8.2f | %-10.2f | %-30s | %-14d |\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo, atual->disponivel);
 
+	//Guarda as alterações no ficheiro bin
 	saveAlterarDadosTransportes(inicio); 
 
 	system ("pause");
@@ -462,7 +465,7 @@ Transporte* AlterarDadosTransporte(Transporte* inicio) {
 //Guardar dados em ficheiro temporario (Tranportes)
 void saveAlterarDadosTransportes(Transporte* inicio) {
 	
-	//Abrir o ficheiro
+		//Abrir o ficheiro
 		FILE * ficheiroTransporte = fopen("Transporte.txt", "wb");
 
 	//Se ficheiro Null informação ao utilizador 
@@ -497,17 +500,25 @@ void saveAlterarDadosTransportes(Transporte* inicio) {
 //Mostrar meios de transportes disponiveis 
 Transporte* transportesDisponiveis(Transporte* meioTransporte_1) { 
 
-	Transporte* atual = meioTransporte_1; 
+		//Primeiro elemento da lista 
+		Transporte* atual = meioTransporte_1; 
 
-	printf("******************************************TRANSPORTES DISPONIVEIS*********************************\n"); 
-	printf("\n"); 
-	printf("| %-5s | %-10s | %-8s | %-10s | %-30s | %-13s|\n", "ID", "TIPO", "BATERIA", "AUTONOMIA", "LOCALIZACAO", "DISPONIBILIDADE");
-	printf("|-------|------------|----------|------------|--------------------------------|----------------|\n"); 
+		//Mostra os transportes disponiveis
+		printf("******************************************TRANSPORTES DISPONIVEIS*********************************\n"); 
+		printf("\n"); 
+		printf("| %-5s | %-10s | %-8s | %-10s | %-30s | %-13s|\n", "ID", "TIPO", "BATERIA", "AUTONOMIA", "LOCALIZACAO", "DISPONIBILIDADE");
+		printf("|-------|------------|----------|------------|--------------------------------|----------------|\n"); 
+		
+		//Percorre a lista dos transportes até ao fim
 		while (atual!= NULL){
-		//Se tiver a 1 veiculo disponivel 
+
+		//Se tiver a 1 o campo disponivel significa que o veiculo está disponivel
 		if (atual->disponivel == 1) {
+			//Imprime os transportes disponiveis na consola
 			printf("| %-5d | %-10s | %-8.2f | %-10.2f | %-30s | %-14d |\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo, atual->disponivel);
 		}
+
+		//Aponta para o proximo elemento da lista
 		atual = atual->seguinte; 
 
 	}

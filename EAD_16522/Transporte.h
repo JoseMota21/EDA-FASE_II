@@ -31,9 +31,6 @@ Transporte* saveficheiroTransporte(Transporte* inicio);
 //Ler ficheiro txt Tranporte 
 Transporte* lerFicheiroTransporte(Transporte* inicio);
 
-//Encontrar na estrutura o meio de transporte com maior bateria
-int EncontrarIdTransporteComMaiorBateria(Transporte* inicio); 
-
 //Ordenar o meio de transporte de forma decrescente a autonomia 
 void OrdenarTransportesPorAutonomiaDecrescente(Transporte* inicio);  
 
