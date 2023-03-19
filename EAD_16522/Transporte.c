@@ -252,7 +252,7 @@ void TrocarTransportes(Transporte* t1, Transporte* t2) {
 	//Declarar variaveis
 	int codigo_temp;
 	char tipo_temp[20];
-	char geocodigo_temp[20]; 
+	char geocodigo_temp[100]; 
 	float bateria_temp; 
 	float autonomia_temp; 
 	int disponivel_temp; 
@@ -350,7 +350,7 @@ Transporte* AlterarDadosTransporte(Transporte* inicio) {
 	char tipo [10]; 
 	float bateria; 
 	float autonomia; 
-	char geocodigo [20]; 
+	char geocodigo [100]; 
 	float calculoAutonomia; 
 
 	Transporte* atual = inicio;
@@ -436,7 +436,7 @@ Transporte* AlterarDadosTransporte(Transporte* inicio) {
 	case 4:
 		getchar();
 		printf("INSIRA A LOCALIZACAO\n");
-		fgets(geocodigo, 20, stdin);
+		fgets(geocodigo, 100, stdin);
 		geocodigo[strcspn(geocodigo, "\n")] = '\0';
 		//Atribuir o novo nome à estrutura
 		strcpy(atual->geocodigo, geocodigo);
@@ -558,4 +558,5 @@ Transporte* TransportePorLocalidade(Transporte* inicio, char* localidade) {
 
 	return 0;
 }
+
 

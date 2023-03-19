@@ -10,7 +10,7 @@ typedef struct registo {
 	char tipo [10]; // (Trotinete ou Bicicleta) 
 	float bateria;
 	float autonomia; //Autonomia em KM  
-	char geocodigo[20];	//localização 
+	char geocodigo[100];	//localização 
 	int disponivel; 
 	struct registo* seguinte; // endereço de memória para uma struct registo
 
@@ -46,7 +46,7 @@ void saveAlterarDadosTransportes(Transporte* inicio);
 //Mostrar meios de transportes disponiveis 
 Transporte* transportesDisponiveis(Transporte* meioTransporte_1); 
 
+//Vizualizar transportes por localidade
 Transporte* TransportePorLocalidade(Transporte* inicio, char* localidade); 
-
 
 #endif /* TRANSPORTE_H */ 

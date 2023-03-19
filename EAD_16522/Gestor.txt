@@ -1,2 +1,2 @@
 admin;admin;admin
-JOSE;josesousamota@gmail.com;JOSE_21
+JOSE FILIPE;jm@gmail.com;JOSE_12

@@ -167,7 +167,6 @@ int main() {
 							//Mostra quais os veiculos na localidade inserirda 
 							TransportePorLocalidade(meioTransporte_1, localizacao);
 							break; 
-
 						default:
 							//Caso nenhuma opcao for inserida corretamente informa o utilizar 
 							printf("OPCAO INVALIDA\n");

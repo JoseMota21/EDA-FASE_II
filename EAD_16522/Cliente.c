@@ -162,9 +162,11 @@ Cliente* listarCliente(Cliente* inicio) {
 
 	//Percorre a lista até chegar ao fim 
 	while (inicio != NULL) { 
-		//Escreve na consola os elementos da estrutura 
-		printf("| %-20s | %-11d | %-10.2f | %-30s | %-10d | %-20s |\n", inicio->nome_cliente, inicio->NIF, inicio->saldo, inicio->morada, inicio->IDveiculoAlugado, inicio->password);
-		inicio = inicio->seguinte;
+
+			//Escreve na consola os elementos da estrutura 
+			printf("| %-20s | %-11d | %-10.2f | %-30s | %-10d | %-20s |\n", inicio->nome_cliente, inicio->NIF, inicio->saldo, inicio->morada, inicio->IDveiculoAlugado, inicio->password);
+			inicio = inicio->seguinte;
+
 	}
 } 
 
@@ -475,4 +477,5 @@ Cliente* carregarSaldo(Cliente* cliente, int nif) {
 	system("cls"); 
 
 	return cliente; 
-}
+} 
+
