@@ -157,13 +157,13 @@ Cliente* listarCliente(Cliente* inicio) {
 	printf("\t++++++++++++++++++++++++++++++++++++++++++ LISTA DE CLIENTES +++++++++++++++++++++++++++++++++++++++\n");
 	printf("\n");
 	//Cabeçalho da tabela 
-	printf("| %-20s | %-11s | %-5s | %-30s | %-10s | %-20s |\n", "NOME", "NIF", "SALDO", "MORADA", "VEICULO", "PASSWORD");
-	printf("|----------------------|-------------|-------|--------------------------------|------------|----------------------|\n");
+	printf("| %-20s | %-11s | %-10s | %-30s | %-10s | %-20s |\n", "NOME", "NIF", "SALDO", "MORADA", "VEICULO", "PASSWORD");
+	printf("|----------------------|-------------|------------|--------------------------------|------------|----------------------|\n");
 
 	//Percorre a lista até chegar ao fim 
 	while (inicio != NULL) { 
 		//Escreve na consola os elementos da estrutura 
-		printf("| %-20s | %-11d | %-5.2f | %-30s | %-10d | %-20s |\n", inicio->nome_cliente, inicio->NIF, inicio->saldo, inicio->morada, inicio->IDveiculoAlugado, inicio->password);
+		printf("| %-20s | %-11d | %-10.2f | %-30s | %-10d | %-20s |\n", inicio->nome_cliente, inicio->NIF, inicio->saldo, inicio->morada, inicio->IDveiculoAlugado, inicio->password);
 		inicio = inicio->seguinte;
 	}
 } 
@@ -301,11 +301,11 @@ Cliente* clientedados(Cliente* cliente) {
 	printf("\n");
 
 	//Cabeçalho da tabela
-	printf("| %-20s | %-11s | %-5s | %-30s | %-10s | %-20s |\n", "NOME", "NIF", "SALDO", "MORADA", "VEICULO", "PASSWORD");
-	printf("|----------------------|-------------|-------|--------------------------------|------------|----------------------|\n");
+	printf("| %-20s | %-11s | %-10s | %-30s | %-10s | %-20s |\n", "NOME", "NIF", "SALDO", "MORADA", "VEICULO", "PASSWORD");
+	printf("|----------------------|-------------|------------|--------------------------------|------------|----------------------|\n");
 	
 	//Imprime os seus dados na consola
-	printf("| %-20s | %-11d | %-5.2f | %-30s | %-10d | %-20s |\n", cliente->nome_cliente, cliente->NIF, cliente->saldo, cliente->morada, cliente->IDveiculoAlugado, cliente->password);
+	printf("| %-20s | %-11d | %-10.2f | %-30s | %-10d | %-20s |\n", cliente->nome_cliente, cliente->NIF, cliente->saldo, cliente->morada, cliente->IDveiculoAlugado, cliente->password);
 	
 	printf("\n");
 	system("pause"); 
@@ -331,10 +331,10 @@ Cliente* AlterarDadosCliente(Cliente* inicio, int nif) {
 	// Mostrar os dados atuais do cliente
 	printf("\t++++++++++++++++++++++++++++++++++++++++ MEUS DADOS +++++++++++++++++++++++++++++++++++++++\n");
 	printf("\n");
-	printf("| %-20s | %-11s | %-5s | %-30s | %-10s | %-20s |\n", "NOME", "NIF", "SALDO", "MORADA", "VEICULO", "PASSWORD");
-	printf("|----------------------|-------------|-------|--------------------------------|------------|----------------------|\n");
+	printf("| %-20s | %-11s | %-10s | %-30s | %-10s | %-20s |\n", "NOME", "NIF", "SALDO", "MORADA", "VEICULO", "PASSWORD");
+	printf("|----------------------|-------------|------------|--------------------------------|------------|----------------------|\n");
 	//Imprime na consola os dados 
-	printf("| %-20s | %-11d | %-5.2f | %-30s | %-10d | %-20s |\n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->IDveiculoAlugado, atual->password);
+	printf("| %-20s | %-11d | %-10.2f | %-30s | %-10d | %-20s |\n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->IDveiculoAlugado, atual->password);
 
 	printf("\n"); 
 
@@ -408,7 +408,7 @@ Cliente* AlterarDadosCliente(Cliente* inicio, int nif) {
 void saveAlterarDados(Cliente* inicio) {
 
 	 //Abrir ficheiro txt
-	FILE * ficheiroCliente = fopen("Cliente.txt", "wb");
+	FILE * ficheiroCliente = fopen("Cliente.bin", "wb");
 
 	//Se impossivel abrir informa o utilizador 
 	if (ficheiroCliente == NULL) {

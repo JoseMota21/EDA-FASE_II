@@ -32,8 +32,7 @@ int main() {
 	int gestor;
 	int cliente;
 	int gestorech; 
-
-	char localização[100];
+	char localizacao[100];
 
 	do {
 		system("cls");
@@ -95,7 +94,7 @@ int main() {
 						printf("9 - CONSULTAR TRANSPORTES DISPONIVEIS\n");
 						printf("10 - CONSULTAR HISTORICO DE ALUGUER\n");
 						printf("11 - INSERIR GESTOR\n"); 
-						printf("12 - LOCALIZAR TRANSPORTE POR LOCALIDADE");
+						printf("12 - LOCALIZAR TRANSPORTE POR LOCALIDADE\n");
 						printf("--------------------------------------------------\n");
 						printf("\n");
 						printf("13 - SAIR\n");
@@ -162,12 +161,11 @@ int main() {
 							getchar(); 
 							//Pede ao utilizador para inserir a localidade 
 							printf("LOCALIDADE DE PESQUEISA:\n"); 							
-							fgets(localização, 100, stdin);
-							localização[strcspn(localização, "\n")] = '\0';
-
-
+							fgets(localizacao, 100, stdin);
+							localizacao[strcspn(localizacao, "\n")] = '\0';
+							
 							//Mostra quais os veiculos na localidade inserirda 
-							TransportePorLocalidade(meioTransporte_1, localização);
+							TransportePorLocalidade(meioTransporte_1, localizacao);
 							break; 
 
 						default:

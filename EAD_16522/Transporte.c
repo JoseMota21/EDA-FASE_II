@@ -466,7 +466,7 @@ Transporte* AlterarDadosTransporte(Transporte* inicio) {
 void saveAlterarDadosTransportes(Transporte* inicio) {
 	
 	//Abrir o ficheiro
-	FILE * ficheiroTransporte = fopen("Transporte.txt", "wb");
+	FILE * ficheiroTransporte = fopen("Transporte.bin", "wb");
 
 	//Se ficheiro Null informação ao utilizador 
 	if (ficheiroTransporte == NULL) {
