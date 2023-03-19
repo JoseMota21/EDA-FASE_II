@@ -33,6 +33,8 @@ int main() {
 	int cliente;
 	int gestorech; 
 
+	char localização[100];
+
 	do {
 		system("cls");
 
@@ -92,10 +94,11 @@ int main() {
 						printf("8 - ALTERAR DADOS DE MEIOS DE TRANSPORTES\n");
 						printf("9 - CONSULTAR TRANSPORTES DISPONIVEIS\n");
 						printf("10 - CONSULTAR HISTORICO DE ALUGUER\n");
-						printf("11 - INSERIR GESTOR\n");
+						printf("11 - INSERIR GESTOR\n"); 
+						printf("12 - LOCALIZAR TRANSPORTE POR LOCALIDADE");
 						printf("--------------------------------------------------\n");
 						printf("\n");
-						printf("12 - SAIR\n");
+						printf("13 - SAIR\n");
 						scanf("%d", &gestor);
 
 						system("cls");
@@ -155,13 +158,24 @@ int main() {
 							//Inserir novo gestor na lista
 							gestor_1 = inserirGestor(gestor_1);
 							break;
+						case 12: 
+							getchar(); 
+							//Pede ao utilizador para inserir a localidade 
+							printf("LOCALIDADE DE PESQUEISA:\n"); 							
+							fgets(localização, 100, stdin);
+							localização[strcspn(localização, "\n")] = '\0';
+
+
+							//Mostra quais os veiculos na localidade inserirda 
+							TransportePorLocalidade(meioTransporte_1, localização);
+							break; 
 
 						default:
 							//Caso nenhuma opcao for inserida corretamente informa o utilizar 
 							printf("OPCAO INVALIDA\n");
 							break;
 						}
-					} while (gestor != 12); // Voltar para o menu anterior
+					} while (gestor != 13); // Voltar para o menu anterior
 				}	break;
 			}while (gestorech != 0); //voltar para o menu anterior
 			}

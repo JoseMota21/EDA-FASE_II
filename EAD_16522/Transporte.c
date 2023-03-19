@@ -526,3 +526,36 @@ Transporte* transportesDisponiveis(Transporte* meioTransporte_1) {
 	return 0; 
 } 
 
+//Mostrar os transportes na localidade mencionada
+Transporte* TransportePorLocalidade(Transporte* inicio, char* localidade) {
+
+	printf("\t++++++++ LISTAR MEIO DE MOBILIDADE ++++++++++\n");
+	printf("\n");
+
+	//Cabeçalho da tabela
+	printf("| %-5s | %-10s | %-8s | %-10s | %-30s | %-13s|\n", "ID", "TIPO", "BATERIA", "AUTONOMIA", "LOCALIZACAO", "DISPONIBILIDADE");
+	printf("|-------|------------|----------|------------|--------------------------------|----------------|\n");
+
+	//Percorre a lista
+	while (inicio != NULL) {
+		// Verifica se o transporte está na localidade desejada
+		if (strcmp(inicio->geocodigo, localidade) == 0) {
+			//Escreve na consola os dados da estrutura em questão
+			printf("| %-5d | %-10s | %-8.2f | %-10.2f | %-30s | %-14d |\n", inicio->codigo, inicio->tipo, inicio->bateria, inicio->autonomia, inicio->geocodigo, inicio->disponivel);
+		}
+		inicio = inicio->seguinte;
+	} 
+
+	printf("\n"); 
+	
+	//Se a localidade não corresponder informa o utilizador 
+	if (inicio == NULL) {
+		printf("NAO EXISTE A LOCALIDADE INSERIDA\n"); 
+		system("pause"); 
+
+		system("cls"); 
+	}
+
+	return 0;
+}
+
