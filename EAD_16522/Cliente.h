@@ -22,16 +22,16 @@ typedef struct registoCliente {
 
 }Cliente; 
 
-//Estrutura boleana
+//Estrutura boleana de login (Informa se sucesso/insucesso de login e o cliente) 
 typedef struct {
 	bool autenticado;
 	Cliente* cliente;
 } LoginResult;
 
-//Função existe cliente 
+//Verifica se existe cliente
 int ExisteCliente(Cliente* inicio, int nif); 
 
-// Listar cliente na consola 
+// Lista cliente na consola 
 Cliente* listarCliente(Cliente* inicio); 
 
 //Guardar ficheiro em txt 
@@ -43,13 +43,13 @@ Cliente* lerFicheiroCliente(Cliente* inicio);
 //Remover cliente da lista ligada 
 Cliente* RemoverCliente(Cliente* inicio); 
 
-//Inserir dados através do teclado do computador 
+//Inserir dados 
 Cliente* inputCliente(Cliente* cliente_1); 
 
 //Login de cliente
 LoginResult loginCliente(Cliente* login); 
 
-//dados para o cliente consultar
+//Dados de cliente
 Cliente* clientedados(Cliente* cliente); 
 
 //Alterar determinados dados da estrutura cliente

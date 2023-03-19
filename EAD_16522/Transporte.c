@@ -145,11 +145,11 @@ Transporte* RemoverTransporte(Transporte* inicio) {
 	}
 	free(atual); //Libertar a memoria que estava alocada 
 
-
+	//Informação para o utilizador 
 	printf("MEIO DE TRANSPORTE COM O ID %d REMOVIDO COM SUCESSO\n", codigo);
 
-	system("pause"); 
-	system("cls"); 
+	system("pause"); // Sistema em pause 
+	system("cls"); // Limpa consola
 
 	return inicio;
 }
@@ -465,8 +465,8 @@ Transporte* AlterarDadosTransporte(Transporte* inicio) {
 //Guardar dados em ficheiro temporario (Tranportes)
 void saveAlterarDadosTransportes(Transporte* inicio) {
 	
-		//Abrir o ficheiro
-		FILE * ficheiroTransporte = fopen("Transporte.txt", "wb");
+	//Abrir o ficheiro
+	FILE * ficheiroTransporte = fopen("Transporte.txt", "wb");
 
 	//Se ficheiro Null informação ao utilizador 
 	if (ficheiroTransporte == NULL) {
@@ -474,6 +474,7 @@ void saveAlterarDadosTransportes(Transporte* inicio) {
 		return inicio;
 	}
 
+	//Inicio 
 	Transporte* atual = inicio;
 
 	//Enquanto não chega ao fim da estrutura 
