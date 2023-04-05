@@ -31,23 +31,27 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1, int nif) 
 
 	getchar();
 
-	//Utilizador inser a sua localização 
+	//Utilizador inser a localização atual 
 	printf("INSERIR A LOCALIZACAO ATUAL\n");
 	fgets(localizacaoIni, 100, stdin);
 	localizacaoIni[strcspn(localizacaoIni, "\n")] = '\0';
 
+	//Utilizador inser a localização final
 	printf("INSERIR A LOCALIZACAO DE DESTINO\n");
 	fgets(localizacaoFim, 100, stdin);
 	localizacaoFim[strcspn(localizacaoFim, "\n")] = '\0';
 
+	//variaveis para as coordenadas convertidas 
 	float lat1, lng1, lat2, lng2;
 	
+	//Função para converters as palavras em coordenadas
 	get_coordinates(localizacaoIni, API_KEY, &lat1, &lng1);
 	get_coordinates(localizacaoFim, API_KEY, &lat2, &lng2);
 
 	printf("As palavras %s correspondem as coordenadas: %.6f, %.6f\n", localizacaoIni, lat1, lng1);
 	printf("As palavras %s correspondem as coordenadas: %.6f, %.6f\n", localizacaoFim, lat2, lng2);
 
+	//Calcular a distância percorrida entre a localizaçãoIni e localizaçãoFIM 
 	float distancia = haversine_distance (lat1, lng1, lat2, lng2);
 
 	printf("A DISTANCIA A PERCORRER E DE %.2f KM\n ", distancia); 
@@ -68,8 +72,8 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1, int nif) 
 
 	printf("\n");
 
-	//Lista de transportes disponiveis para alugar veiculo
-	transportesDisponiveis(meioTransporte_1);
+	//Mostra quais os veiculos na localidade inserirda 
+	TransportePorLocalidade(meioTransporte_1, localizacaoIni);
 
 	// Pedir ao cliente o ID do transporte a alugar
 	int ID;
