@@ -2,13 +2,15 @@
 #include "Aluguer.h"
 #include <stdio.h>
 #include <stdbool.h>
+#include "API.h"
 
 //Alugar Veiculo
 void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1, int nif) {
 
 	//Variáveis 
-	float distancia = 0.0;
 	float preco = 0.0;
+	char localizacaoIni[100];
+	char localizacaoFim[100];
 
 	system("cls"); // Limpar consola
 
@@ -27,9 +29,28 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1, int nif) 
 		return;
 	}
 
-	//Pedir ao utilizador para inserir a distancia que vai percorrer
-	printf("DISTANCIA A PERCORRER\n");
-	scanf("%f", &distancia);
+	getchar();
+
+	//Utilizador inser a sua localização 
+	printf("INSERIR A LOCALIZACAO ATUAL\n");
+	fgets(localizacaoIni, 100, stdin);
+	localizacaoIni[strcspn(localizacaoIni, "\n")] = '\0';
+
+	printf("INSERIR A LOCALIZACAO DE DESTINO\n");
+	fgets(localizacaoFim, 100, stdin);
+	localizacaoFim[strcspn(localizacaoFim, "\n")] = '\0';
+
+	float lat1, lng1, lat2, lng2;
+	
+	get_coordinates(localizacaoIni, API_KEY, &lat1, &lng1);
+	get_coordinates(localizacaoFim, API_KEY, &lat2, &lng2);
+
+	printf("As palavras %s correspondem as coordenadas: %.6f, %.6f\n", localizacaoIni, lat1, lng1);
+	printf("As palavras %s correspondem as coordenadas: %.6f, %.6f\n", localizacaoFim, lat2, lng2);
+
+	float distancia = haversine_distance (lat1, lng1, lat2, lng2);
+
+	printf("A DISTANCIA A PERCORRER E DE %.2f KM\n ", distancia); 
 
 	printf("\n");
 

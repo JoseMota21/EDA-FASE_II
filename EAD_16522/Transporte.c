@@ -5,7 +5,6 @@
 #include <stdbool.h>
 #include "Transporte.h" 
 
-
 //Verificar se existe o meio de transporte pelo o ID 
 int ExisteTransporte(Transporte* inicio, int id) { 
 	
@@ -85,7 +84,7 @@ Transporte* RemoverTransporte(Transporte* inicio) {
 	//Inicializa todos os campos com valores de zero
 	Transporte RemoverTransporte = { 0, ' ', 0.0, 0.0, 0.0,0};
 
-	//Variável auxiliar em forma de apontador que será o primeiro elemento da lista
+	//Variável auxiliar primeiro elemento da lista
 	Transporte* aux = inicio; 
 
 	printf("\t++++++++ REMOVER MEIO DE MOBILIDADE ++++++++++\n"); 

@@ -45,6 +45,7 @@ Gestor* inserirGestor(Gestor* gestor_1) {
 	return novoGestor; // retorna o novo apontador para o início da lista
 
 }
+
 //Verificar se já existe gestor criado 
 Gestor* existeGestor(Gestor* gestor_1, const char* email) { 
 

@@ -56,7 +56,7 @@ Cliente* inputCliente(Cliente* cliente_1) {
 	return cliente_1;
 }
 
-///Verificar se existe o meio de transporte pelo o ID 
+///Verificar se existe cliente pelo o nif
 int ExisteCliente(Cliente* inicio, int nif) {
 
 	//Percorre a lista toda 
@@ -478,4 +478,3 @@ Cliente* carregarSaldo(Cliente* cliente, int nif) {
 
 	return cliente; 
 } 
-
