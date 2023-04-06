@@ -25,6 +25,13 @@ extern HistoricoRegisto* historico;
 //Inserir novo registo à estrutura do historico 
 void InserirRegisto(Cliente* cliente, Transporte* meioTransporte, float preco, float distanciaPer, char* localidadeIni, char* localidadeFim); 
 
+//Guardar a estrutura historico em ficheiro txt
 void GuardarHistorico(HistoricoRegisto* historico); 
+
+//Consultar o historico 
+void consultarhistorico(); 
+
+//Ler ficheiro historico 
+HistoricoRegisto* lerficheiroHistorico(HistoricoRegisto* historico);
 
 #endif /* HISTORICO_H */ 

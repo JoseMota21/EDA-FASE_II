@@ -1,1 +1,0 @@
-Cliente: JOSE, Meio de transporte: TROTINETE, Preco: 1.57, Distancia: 3.93, Localidade de inicio: ///afirmou.bota.fera, Localidade de fim: ///tropa.fosse.afixar

@@ -30,8 +30,7 @@ int main() {
 	gestor_1 = lerficheiroGestor(gestor_1);  
 
 	//Ler ficheiro do historico
-
-
+	historico_1 = lerficheiroHistorico(historico_1); 
 
 	//Variáveis de switch case
 	int opcao;
@@ -155,7 +154,7 @@ int main() {
 							break;
 						case 10:
 							//Consultar o historico de que cliente alugou qual veiculo (ID e NIF)
-						//	consultarHistorico();
+							consultarhistorico (historico_1);
 							system("pause"); // Pausa no sistema, pressionar alguma tecla para proseguir
 							system("cls");
 							break;
