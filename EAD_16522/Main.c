@@ -4,6 +4,7 @@
 #include "Cliente.h" 
 #include "Aluguer.h"
 #include "Gestor.h"
+#include "Historico.h"
 #include <stdlib.h>
 #include<stdbool.h>
 
@@ -13,6 +14,8 @@ int main() {
 	Transporte* meioTransporte_1 = NULL; // Lista ligada transportes vazia  
 	Cliente* cliente_1 = NULL; // Lista ligada clientes vazia 
 	Gestor* gestor_1 = NULL; // Lista ligada clientes vazia 
+	HistoricoRegisto* historico_1 = NULL; //Lista ligada historico vazia
+	
 
 	//Informa qual o cliente que está logado no sistema 
 	Cliente* logado = NULL;
@@ -24,7 +27,10 @@ int main() {
 	cliente_1 = lerFicheiroCliente(cliente_1);
 
 	//Ler ficheiro bin gestor 
-	gestor_1 = lerficheiroGestor(gestor_1); 
+	gestor_1 = lerficheiroGestor(gestor_1);  
+
+	//Ler ficheiro do historico
+
 
 
 	//Variáveis de switch case
@@ -149,7 +155,7 @@ int main() {
 							break;
 						case 10:
 							//Consultar o historico de que cliente alugou qual veiculo (ID e NIF)
-							consultarHistorico();
+						//	consultarHistorico();
 							system("pause"); // Pausa no sistema, pressionar alguma tecla para proseguir
 							system("cls");
 							break;

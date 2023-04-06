@@ -535,12 +535,16 @@ Transporte* TransportePorLocalidade(Transporte* inicio, char* localidade) {
 	printf("| %-5s | %-10s | %-8s | %-10s | %-30s | %-13s|\n", "ID", "TIPO", "BATERIA", "AUTONOMIA", "LOCALIZACAO", "DISPONIBILIDADE");
 	printf("|-------|------------|----------|------------|--------------------------------|----------------|\n");
 
+	bool encontrado = false; 
 	//Percorre a lista
 	while (inicio != NULL) {
 		// Verifica se o transporte está na localidade desejada
 		if (strcmp(inicio->geocodigo, localidade) == 0) {
 			//Escreve na consola os dados da estrutura em questão
-			printf("| %-5d | %-10s | %-8.2f | %-10.2f | %-30s | %-14d |\n", inicio->codigo, inicio->tipo, inicio->bateria, inicio->autonomia, inicio->geocodigo, inicio->disponivel);
+			printf("| %-5d | %-10s | %-8.2f | %-10.2f | %-30s | %-14d |\n", inicio->codigo, inicio->tipo, inicio->bateria, inicio->autonomia, inicio->geocodigo, inicio->disponivel); 
+
+			//Caso encontre a localidade
+			encontrado = true; 
 		}
 		inicio = inicio->seguinte;
 	} 
@@ -548,9 +552,11 @@ Transporte* TransportePorLocalidade(Transporte* inicio, char* localidade) {
 	printf("\n"); 
 	
 	//Se a localidade não corresponder informa o utilizador 
-	if (inicio == NULL) {
-		printf("NAO EXISTE A LOCALIDADE INSERIDA\n"); 
+	if (!encontrado) {
+		printf("NAO EXISTE O VEICULO NA LOCALIDADE PRETENDIDA\n"); 
 		system("pause"); 
+
+		return 0; 
 
 		system("cls"); 
 	}

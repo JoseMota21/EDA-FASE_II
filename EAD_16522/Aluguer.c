@@ -2,13 +2,12 @@
 #include "Aluguer.h"
 #include <stdio.h>
 #include <stdbool.h>
-#include "API.h"
+
 
 //Alugar Veiculo
 void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1, int nif) {
 
 	//Variáveis 
-	float preco = 0.0;
 	char localizacaoIni[100];
 	char localizacaoFim[100];
 
@@ -48,6 +47,8 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1, int nif) 
 	get_coordinates(localizacaoIni, API_KEY, &lat1, &lng1);
 	get_coordinates(localizacaoFim, API_KEY, &lat2, &lng2);
 
+	//system("cls"); 
+
 	printf("As palavras %s correspondem as coordenadas: %.6f, %.6f\n", localizacaoIni, lat1, lng1);
 	printf("As palavras %s correspondem as coordenadas: %.6f, %.6f\n", localizacaoFim, lat2, lng2);
 
@@ -59,7 +60,7 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1, int nif) 
 	printf("\n");
 
 	//Calcular o preço necessario para completar a viagem
-	preco = distancia * 0.4;
+	float preco = distancia * 0.4;
 
 	//Caso o saldo do cliente sejá insuficiente avisa o utilizador
 	if (atualC->saldo < preco) {
@@ -144,7 +145,8 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1, int nif) 
 		atual->bateria -= (distancia * 100) / atual->autonomia;
 
 		//Guardar o historico
-		historico(atualC, atual);
+		InserirRegisto(atualC, atual, preco, distancia, localizacaoIni, localizacaoFim); 
+		GuardarHistorico(historico); 
 
 		system("pause");
 		system("cls");
@@ -205,58 +207,4 @@ void desalugarVeiculo(Cliente* cliente_1, Transporte* meioTransporte_1, int nif)
 
 	system("pause");
 	system("cls");
-}
-
-//Historico de aluguer 
-void historico(Cliente* cliente_1, Transporte* meioTransporte_1) {
-
-	//Abre o ficheiro 
-	FILE* historico = fopen("Historico.txt", "a"); 
-
-	//Se ficheiro não aberto corretamente informa o utilizador
-	if (historico == NULL) {
-		printf("ERRO AO ABRIR O HISTORICO\n");
-		return;
-	}
-
-	//Escreve no ficheiro txt 
-	fprintf(historico,"%s,%d,%d,%s\n", cliente_1->nome_cliente, cliente_1->NIF, meioTransporte_1->codigo, meioTransporte_1->tipo);
-
-	fclose(historico);
-}
-
-//Consultar historico 
-void* consultarHistorico() {
-
-	//Abrir o ficheiro com os dados de historico
-	FILE* ficheiroHistorico = fopen("Historico.txt", "r");
-
-	//Se ficheiro não aberto corretamente informa o utilizador
-	if (ficheiroHistorico == NULL) {
-		printf("ERRO AO ABRIR O HISTORICO\n");
-		return;
-	}
-
-	//Variavel
-	char linha[1000]; 
-	char nome_cliente[50]; 
-	char tipo[20];
-	int nif, codigo;
-
-	printf("\t++++++++++++++++++++++++++++++++++++++++++ CONSULTAR HISTORICO +++++++++++++++++++++++++++++++++++++++\n");
-	printf("\n");
-	printf("| %-30s | %-20s | %-10s | %-20s |\n", "NOME", "NIF", "ID", "TIPO");
-	printf("|--------------------------------|----------------------|------------|----------------------|\n");
-
-	//Lê as informações contidas no ficheiro
-	while (fgets(linha, sizeof(linha), ficheiroHistorico)) { //Lê cada linha do ficheiro e armazena na variável linha
-		
-		sscanf(linha,"%[^,],%d,%d,%[^,\n]", nome_cliente, &nif, &codigo, tipo);
-
-		//Imprime na consola 
-		printf ("| %-30s | %-20d | %-10d | %-20s |\n", nome_cliente, nif, codigo, tipo);
-		
-	}
-	//Fecha o ficheiro 
-	fclose(ficheiroHistorico);
 }
