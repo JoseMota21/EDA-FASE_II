@@ -9,10 +9,13 @@
 //Estrutura para historico
 typedef struct historico {
 
-	Cliente* cliente; 
-	Transporte* meioTransporte; 
-
-	int ID; 
+	//Cliente* cliente; 
+	//Transporte* meioTransporte; 
+	 
+	char nome_cliente[80]; 
+	int nif; 
+	int ID;
+	char tipo[20];
 	float preco; //Preço da viagem
 	float distancia; //distancia percorrida
 	char moradaIni[80]; //Morada inicial da viagem
@@ -33,7 +36,7 @@ void GuardarHistorico(HistoricoRegisto* historico);
 HistoricoRegisto* consultarhistorico (HistoricoRegisto* historico); 
 
 //Ler ficheiro TXT 
-HistoricoRegisto* lerficheirohistorico(HistoricoRegisto* historico, Cliente* cliente, Transporte* meioTransporte);
+HistoricoRegisto* lerficheirohistorico(HistoricoRegisto* historico);
 
 //Cliente consulta historico 
 void consultarHistoricoCliente(HistoricoRegisto* historico, int nif); 

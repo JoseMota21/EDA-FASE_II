@@ -29,7 +29,7 @@ int main() {
 	gestor_1 = lerficheiroGestor (gestor_1);  
 
 	//Ler ficheiro Historico 
-	historico_1 = lerficheirohistorico(historico_1, cliente_1, meioTransporte_1); 
+	historico_1 = lerficheirohistorico(historico_1); 
 
 	//Variáveis de switch case
 	int opcao;

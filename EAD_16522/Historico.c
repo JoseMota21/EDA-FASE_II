@@ -9,14 +9,15 @@
 HistoricoRegisto* historico = NULL; 
 
 //Inser novo registo na lista do historico
-void InserirRegisto (Cliente* cliente, Transporte* meioTransporte, float preco, float distanciaPer, char* localidadeIni, char* localidadeFim) {
+void InserirRegisto (char* nome, int NIF, char* tipo, float preco, float distanciaPer, char* localidadeIni, char* localidadeFim) {
 
     // Alocar dinamicamente uma nova estrutura de histórico
     HistoricoRegisto * novoRegisto = (HistoricoRegisto*)malloc(sizeof(HistoricoRegisto));
 
     // Atribuir os valores dos parâmetros à estrutura
-    novoRegisto->cliente = cliente;
-    novoRegisto->meioTransporte = meioTransporte;
+    strcpy(novoRegisto->nome_cliente, nome);
+    novoRegisto->nif = NIF;
+    strcpy(novoRegisto->tipo, tipo);
     novoRegisto->preco = preco;
     novoRegisto->distancia = distanciaPer;
     strcpy(novoRegisto->moradaIni, localidadeIni);
@@ -51,7 +52,7 @@ void GuardarHistorico(HistoricoRegisto* historico) {
     // Percorrer a lista de histórico e escrever cada registro no arquivo de texto
     HistoricoRegisto* atual = historico;
     while (atual != NULL) {
-        fprintf(fhistorico, "%s;%d;%s;%d;%.2f;%.2f;%s;%s \n", atual->cliente->nome_cliente, atual->cliente->NIF, atual->meioTransporte->tipo, atual->meioTransporte->codigo, atual->preco, atual->distancia, atual->moradaIni, atual->moradaFim);
+        fprintf(fhistorico, "%s;%d;%s;%d;%.2f;%.2f;%s;%s \n", atual->nome_cliente, atual->nif, atual->tipo, atual->ID, atual->preco, atual->distancia, atual->moradaIni, atual->moradaFim);
         atual = atual->seguinte;
     }
 
@@ -71,14 +72,14 @@ HistoricoRegisto* consultarhistorico (HistoricoRegisto* historico) {
 
     //Percorrer a lista
     while (historico != NULL) {
-        printf("%s;%d;%s;%d;%.2f;%.2f;%s;%s\n", historico->cliente->nome_cliente, historico->cliente->NIF, historico->meioTransporte->tipo, historico->meioTransporte->codigo, historico->preco, historico->distancia, historico->moradaIni, historico->moradaFim);
+        printf("%s;%d;%s;%d;%.2f;%.2f;%s;%s\n", historico->nome_cliente, historico->nif, historico->tipo, historico->ID, historico->preco, historico->distancia, historico->moradaIni, historico->moradaFim);
         historico = historico->seguinte;
     }
     return NULL;
 }
 
 //Ler ficheiro txt de historico 
-HistoricoRegisto* lerficheirohistorico(HistoricoRegisto* historico, Cliente* cliente, Transporte* meioTansporte) {
+HistoricoRegisto* lerficheirohistorico(HistoricoRegisto* historico) {
 
     FILE* fhistorico = fopen("historico.txt", "r");
 
@@ -94,11 +95,7 @@ HistoricoRegisto* lerficheirohistorico(HistoricoRegisto* historico, Cliente* cli
     while (fgets(linha, sizeof(linha), fhistorico) != NULL) {
         HistoricoRegisto* novoRegisto = (HistoricoRegisto*)malloc(sizeof(HistoricoRegisto));
 
-        // Inicializar o cliente e o meio de transporte
-        novoRegisto->cliente = cliente;
-        novoRegisto->meioTransporte = meioTansporte; 
-
-        sscanf(linha, "%[^;];%d;%[^;];%d;%f;%f;%[^;];%s", novoRegisto->cliente->nome_cliente, &novoRegisto->cliente->NIF, novoRegisto->meioTransporte->tipo, &novoRegisto->meioTransporte->codigo, &novoRegisto->preco, &novoRegisto->distancia, novoRegisto->moradaIni, novoRegisto->moradaFim);
+        sscanf(linha, "%[^;];%d;%[^;];%d;%f;%f;%[^;];%s", novoRegisto->nome_cliente, &novoRegisto->nif, novoRegisto->tipo, &novoRegisto->ID, &novoRegisto->preco, &novoRegisto->distancia, novoRegisto->moradaIni, novoRegisto->moradaFim);
 
         // Indica que é o último da lista
         novoRegisto->seguinte = NULL;
@@ -130,13 +127,13 @@ void consultarHistoricoCliente(HistoricoRegisto* historico, int nif) {
 
     while (atual != NULL) {
         if (atual != NULL) {
-            if (atual->cliente->NIF == nif)
+            if (atual->nif == nif)
             encontrou = 1; 
 
             system("cls"); 
                 
             //Escrever na consola
-            printf("%s;%d;%s;%d;%.2f;%.2f;%s;%s\n", atual->cliente->nome_cliente, atual->cliente->NIF, atual->meioTransporte->tipo, atual->meioTransporte->codigo, atual->preco, atual->distancia, atual->moradaIni, atual->moradaFim);
+            printf("%s;%d;%s;%d;%.2f;%.2f;%s;%s\n", atual->nome_cliente, atual->nif, atual->tipo, atual->ID, atual->preco, atual->distancia, atual->moradaIni, atual->moradaFim);
             
             system("pause"); 
             system("cls"); 
