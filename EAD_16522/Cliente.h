@@ -59,6 +59,6 @@ Cliente* AlterarDadosCliente(Cliente* inicio, int nif);
 void saveAlterarDados(Cliente* inicio); 
 
 //Carregar saldo ao cliente
-Cliente* carregarSaldo(Cliente* cliente_1, int nif); 
+Cliente* carregarSaldo(Cliente* cliente_1, int nif);  
 
 #endif /* CLIENTE_H */ 

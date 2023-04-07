@@ -32,6 +32,10 @@ void GuardarHistorico(HistoricoRegisto* historico);
 //Consultar o historico 
 HistoricoRegisto* consultarhistorico (HistoricoRegisto* historico); 
 
+//Ler ficheiro TXT 
 HistoricoRegisto* lerficheirohistorico(HistoricoRegisto* historico, Cliente* cliente, Transporte* meioTransporte);
+
+//Cliente consulta historico 
+void consultarHistoricoCliente(HistoricoRegisto* historico, int nif); 
 
 #endif /* HISTORICO_H */ 

@@ -203,14 +203,15 @@ int main() {
 					printf("3 - ALUGAR TRANSPORTE\n");
 					printf("4 - DESALUGAR TRANSPORTE\n");
 					printf("5 - CARREGAR SALDO\n");
+					printf("6 - CONSULTAR HISTORICO\n");
 					printf("--------------------------------------------------\n");
-					printf("6 - SAIR\n");
+					printf("7 - SAIR\n");
 					scanf("%d", &cliente);
 
 					switch (cliente) {
 					case 1:
 						//Cliente consulta os seus dados
-						clientedados(logado);						 
+						clientedados(logado);							
 						break;
 					case 2:
 						//Cliente altera dos seus dados
@@ -228,12 +229,16 @@ int main() {
 						//Cliente carrega saldo
 						carregarSaldo(cliente_1, logado->NIF); 
 						break; 
+					case 6: 
+						//Cliente consulta o seu historico 
+						consultarHistoricoCliente(historico_1, logado->NIF); 
+						break;
 					default:
 						//Caso nenhuma opcao for inserida corretamente informa o utilizar 
 						printf("OPCAO INVALIDA\n");
 						break;
 					}
-				} while (cliente != 6); // Volta para o menu anterior
+				} while (cliente != 7); // Volta para o menu anterior
 			}
 		}
 	}
