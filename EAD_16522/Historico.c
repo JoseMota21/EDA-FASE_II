@@ -69,11 +69,14 @@ HistoricoRegisto* consultarhistorico (HistoricoRegisto* historico) {
         return NULL;
     }
  
-    printf("HISTORICO:\n"); 
-
+       printf("\t\t++++++++++++++++++ HISTORICO  ++++++++++++++++++++++\n");
+       printf("\n"); 
+       printf("|%-5s | %-10s | %-10s | %-3s | %-5s | %-5s | %-25s | %-30s |\n", "NOME", "NIF", "TIPO", "ID", "PRECO", "DIST", "LOC. INICIAL", "LOC. FINAL");
+       printf("---------------------------------------------------------------------------------------------------------------------\n");
     //Percorrer a lista
     while (historico != NULL) {
-        printf("%s;%d;%s;%d;%.2f;%.2f;%s;%s\n", historico->nome_cliente, historico->nif, historico->tipo, historico->ID, historico->preco, historico->distancia, historico->moradaIni, historico->moradaFim);
+
+        printf("|%-5s | %-10d | %-10s | %-3d | %-5.2f | %-5.2f | %-25s | %-30s |\n", historico->nome_cliente, historico->nif, historico->tipo, historico->ID, historico->preco, historico->distancia, historico->moradaIni, historico->moradaFim);
         historico = historico->seguinte;
     }
     return NULL;
@@ -126,24 +129,33 @@ void consultarHistoricoCliente(HistoricoRegisto* historico, int nif) {
     HistoricoRegisto* atual = historico;
     int encontrou = 0; 
 
+    system("cls"); 
+    printf("\t\t++++++++++++++++++ HISTORICO PESSOAL ++++++++++++++++++++++\n");
+    printf("\n");
+
+    printf("|%-5s | %-10s | %-10s | %-3s | %-5s | %-5s | %-25s | %-30s |\n", "NOME", "NIF", "TIPO", "ID", "PRECO", "DIST", "LOC. INICIAL", "LOC. FINAL");
+    printf("---------------------------------------------------------------------------------------------------------------------\n");
     while (atual != NULL) {
        
         if (atual->nif == nif) {
             encontrou = 1;
 
             //Escrever na consola
-            printf("%s;%d;%s;%d;%.2f;%.2f;%s;%s\n", atual->nome_cliente, atual->nif, atual->tipo, atual->ID, atual->preco, atual->distancia, atual->moradaIni, atual->moradaFim);
+            printf("|%-5s | %-10d | %-10s | %-3d | %-5.2f | %-5.2f | %-25s | %-30s |\n", atual->nome_cliente, atual->nif, atual->tipo, atual->ID, atual->preco, atual->distancia, atual->moradaIni, atual->moradaFim);
 
         }              
         atual = atual->seguinte;
+
     }
 
-        system("pause");
-        system("cls");
+    printf("\n");
+    system("pause");
+    system("cls");
+
 
     //Se não encontrado avisa o utilizador
     if (!encontrou) {
-        printf("Nenhum registo encontrado para o cliente %d.\n", nif);
+        printf("NENHUM REGISTO ENCONTRADO COM O NIF %d.\n", nif);
 
         system("pause"); 
         system("cls"); 
