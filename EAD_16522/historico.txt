@@ -1,2 +1,4 @@
 JOAO;12345;TROTINETE;34;3.22;8.06;///afirmou.bota.fera;///amadorismo.viver.carreiras
 JOSE;123456789;TROTINETE;34;1.69;4.24;///afirmou.bota.fera;///capo.esses.umidos 
+JOSE;123456789;TROTINETE;34;1.69;4.24;///afirmou.bota.fera;///capo.esses.umidos 
+JOSE;123456789;TROTINETE;34;1.69;4.24;///afirmou.bota.fera;///capo.esses.umidos 

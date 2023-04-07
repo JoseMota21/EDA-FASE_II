@@ -9,15 +9,16 @@
 HistoricoRegisto* historico = NULL; 
 
 //Inser novo registo na lista do historico
-void InserirRegisto (char* nome, int NIF, char* tipo, float preco, float distanciaPer, char* localidadeIni, char* localidadeFim) {
+void InserirRegisto (char* nome, int NIF, char* tipo,int id, float preco, float distanciaPer, char* localidadeIni, char* localidadeFim) {
 
     // Alocar dinamicamente uma nova estrutura de histórico
     HistoricoRegisto * novoRegisto = (HistoricoRegisto*)malloc(sizeof(HistoricoRegisto));
 
     // Atribuir os valores dos parâmetros à estrutura
-    strcpy(novoRegisto->nome_cliente, nome);
+    strcpy(novoRegisto->nome_cliente,nome);
     novoRegisto->nif = NIF;
     strcpy(novoRegisto->tipo, tipo);
+    novoRegisto->ID = id;
     novoRegisto->preco = preco;
     novoRegisto->distancia = distanciaPer;
     strcpy(novoRegisto->moradaIni, localidadeIni);
@@ -123,7 +124,12 @@ HistoricoRegisto* lerficheirohistorico(HistoricoRegisto* historico) {
 void consultarHistoricoCliente(HistoricoRegisto* historico, int nif) {
 
     HistoricoRegisto* atual = historico;
-    int encontrou = 0;
+    int encontrou = 0; 
+
+    //Percorre a lista até encontrar o cliente com o nif do cliente logado 
+    while (atual != NULL && atual->nif != nif) {
+        atual = atual->seguinte; //Proximo
+    }
 
     while (atual != NULL) {
         if (atual != NULL) {
@@ -144,5 +150,8 @@ void consultarHistoricoCliente(HistoricoRegisto* historico, int nif) {
     //Se não encontrado avisa o utilizador
     if (!encontrou) {
         printf("Nenhum registo encontrado para o cliente %d.\n", nif);
+
+        system("pause"); 
+        system("cls"); 
     }
 }

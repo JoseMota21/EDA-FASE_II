@@ -141,10 +141,10 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1, int nif) 
 		atual->autonomia -= distancia;
 
 		//Descontar a percentagem da bateria
-		atual->bateria -= (distancia * 100) / atual->autonomia;
+		atual->bateria -= (distancia * 100) / atual->autonomia; 
 
 		//Guardar o historico
-		InserirRegisto(atualC, atual, preco, distancia, localizacaoIni, localizacaoFim); 
+		InserirRegisto(atualC->nome_cliente, atualC->NIF, atual->tipo, atual->codigo, preco, distancia, localizacaoIni, localizacaoFim); 
 
 		GuardarHistorico (historico); 
 	
