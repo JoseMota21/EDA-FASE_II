@@ -15,22 +15,21 @@ int main() {
 	Cliente* cliente_1 = NULL; // Lista ligada clientes vazia 
 	Gestor* gestor_1 = NULL; // Lista ligada clientes vazia 
 	HistoricoRegisto* historico_1 = NULL; //Lista ligada historico vazia
-	
 
 	//Informa qual o cliente que está logado no sistema 
 	Cliente* logado = NULL;
 
 	//Ler ficheiro bin meio de transporte
-	meioTransporte_1 = lerFicheiroTransporte(meioTransporte_1);
+	meioTransporte_1 = lerFicheiroTransporte (meioTransporte_1);
 
 	//Ler ficheiro bin cliente
-	cliente_1 = lerFicheiroCliente(cliente_1);
+	cliente_1 = lerFicheiroCliente (cliente_1);
 
-	//Ler ficheiro bin gestor 
-	gestor_1 = lerficheiroGestor(gestor_1);  
+	//Ler ficheiro gestor 
+	gestor_1 = lerficheiroGestor (gestor_1);  
 
-	//Ler ficheiro do historico
-	historico_1 = lerficheiroHistorico(historico_1); 
+	//Ler ficheiro Historico 
+	historico_1 = lerficheirohistorico(historico_1, cliente_1, meioTransporte_1); 
 
 	//Variáveis de switch case
 	int opcao;
@@ -135,6 +134,7 @@ int main() {
 							listarTransporte(meioTransporte_1);
 							system("pause"); // Pausa no sistema, pressionar alguma tecla para proseguir
 							system("cls");
+
 							break;
 						case 7:
 							//Listar cliente na consola
@@ -153,7 +153,7 @@ int main() {
 							system("cls");
 							break;
 						case 10:
-							//Consultar o historico de que cliente alugou qual veiculo (ID e NIF)
+							//Consultar o historico de que cliente
 							consultarhistorico (historico_1);
 							system("pause"); // Pausa no sistema, pressionar alguma tecla para proseguir
 							system("cls");

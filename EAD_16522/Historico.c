@@ -8,16 +8,18 @@
 // Variável global para o histórico
 HistoricoRegisto* historico = NULL; 
 
-//Inser novo registo na lista do historico 
-void InserirRegisto (Cliente* cliente, Transporte* meioTransporte, float preco, float distanciaPer, char* localidadeIni, char* localidadeFim) {
+//Inser novo registo na lista do historico
+void InserirRegisto (Cliente* cliente, Transporte* meioTransporte, int ID, float preco, float distanciaPer, char* localidadeIni, char* localidadeFim) {
 
-	// Alocar dinamicamente uma nova estrutura de histórico
-	HistoricoRegisto * novoRegisto = (HistoricoRegisto*)malloc(sizeof(HistoricoRegisto));
+    // Alocar dinamicamente uma nova estrutura de histórico
+    HistoricoRegisto * novoRegisto = (HistoricoRegisto*)malloc(sizeof(HistoricoRegisto));
 
     // Atribuir os valores dos parâmetros à estrutura
     novoRegisto->cliente = cliente;
     novoRegisto->meioTransporte = meioTransporte;
-    novoRegisto->preco = preco; 
+  
+    novoRegisto->ID = ID; 
+    novoRegisto->preco = preco;
     novoRegisto->distancia = distanciaPer;
     strcpy(novoRegisto->moradaIni, localidadeIni);
     strcpy(novoRegisto->moradaFim, localidadeFim);
@@ -34,15 +36,13 @@ void InserirRegisto (Cliente* cliente, Transporte* meioTransporte, float preco, 
         }
         ultimo->seguinte = novoRegisto;
     }
-
- 
-}
+ }
 
 //Guardar o historico na estrutura 
 void GuardarHistorico(HistoricoRegisto* historico) {
 
     // Abrir o arquivo de texto em modo de escrita
-    FILE* fhistorico = fopen("historico.bin", "ab"); // "a" para adicionar o novo registro no final do arquivo
+    FILE* fhistorico = fopen("historico.txt", "a"); 
 
     // Verificar se o arquivo foi aberto com sucesso
     if (fhistorico == NULL) {
@@ -53,7 +53,7 @@ void GuardarHistorico(HistoricoRegisto* historico) {
     // Percorrer a lista de histórico e escrever cada registro no arquivo de texto
     HistoricoRegisto* atual = historico;
     while (atual != NULL) {
-        fprintf(fhistorico, "Cliente: %s, Meio de transporte: %s, Preco: %.2f, Distancia: %.2f, Localidade de inicio: %s, Localidade de fim: %s\n", atual->cliente->nome_cliente, atual->meioTransporte->tipo, atual->preco, atual->distancia, atual->moradaIni, atual->moradaFim);
+        fprintf(fhistorico, "%s;%s;%d;%.2f;%.2f;%s;%s\n", atual->cliente->nome_cliente, atual->meioTransporte->tipo, atual->ID, atual->preco, atual->distancia, atual->moradaIni, atual->moradaFim);
         atual = atual->seguinte;
     }
 
@@ -62,72 +62,63 @@ void GuardarHistorico(HistoricoRegisto* historico) {
 }
 
 //Consultar o historico na consola 
-void consultarhistorico() {
+HistoricoRegisto* consultarhistorico (HistoricoRegisto* historico) {
 
-    HistoricoRegisto* atual = historico; 
+    if (historico == NULL) {
+        printf("LISTA VAZIA\n");
+        return NULL;
+    }
+ 
+    printf("Historico:\n"); 
 
-        // Abrir o ficheiro com os dados de historico
-        FILE * fhistorico = fopen("Historico.bin", "rb"); 
-
-        // Se ficheiro não aberto corretamente informa o utilizador
-            if (fhistorico == NULL) {
-                printf("ERRO AO ABRIR O HISTORICO\n");
-                return;
-            }
-
-            printf("Historico:\n");
-
-            while (atual != NULL) {
-                printf("Cliente: %s, Meio de transporte: %s, Preco: %.2f, Distancia: %.2f, Localidade de inicio: %s, Localidade de fim: %s\n",
-                    atual->cliente->nome_cliente, atual->meioTransporte->tipo, atual->preco, atual->distancia, atual->moradaIni, atual->moradaFim);
-                atual = atual->seguinte;
-            }
+    //Percorrer a lista
+    while (historico != NULL) {
+        printf("%s;%s;%d;%.2f;%.2f;%s;%s\n", historico->cliente->nome_cliente, historico->meioTransporte->tipo, historico->ID, historico->preco, historico->distancia, historico->moradaIni, historico->moradaFim);
+        historico = historico->seguinte;
+    }
+    return NULL;
 }
 
-//Ler ficheiro historico 
-HistoricoRegisto* lerficheiroHistorico (HistoricoRegisto* inicio) {
+HistoricoRegisto* lerficheirohistorico(HistoricoRegisto* historico, Cliente* cliente, Transporte* meioTansporte) {
 
-    //Abrir ficheiro 
-    FILE* fhistorico = fopen("historico.bin", "rb"); // abrir o arquivo em modo leitura
+    FILE* fhistorico = fopen("historico.txt", "r");
 
-    //Se impossivel abrir ficheiro informa o utilizador
+    char linha[1000];
+
+    //Se erro ao abrir o ficheiro informa o utilizador 
     if (fhistorico == NULL) {
-        printf("Erro ao abrir o arquivo.");
-        return;
+        printf("Erro ao abrir o ficheiro historico.txt\n");
+        return historico;
     }
 
-    while (1) {
-        // Alocar a capacidade necessária de memoria e indica o tamanho de espaço de memoria a ser alocado
-        HistoricoRegisto* novoRegisto = (HistoricoRegisto*) malloc(sizeof (HistoricoRegisto)); 
+    //Percorre cada linha e armazena a linha lida na variável linha
+    while (fgets(linha, sizeof(linha), fhistorico) != NULL) {
+        HistoricoRegisto* novoRegisto = (HistoricoRegisto*)malloc(sizeof(HistoricoRegisto));
 
-        //Lê os dados do ficheiro binario para a estrutura e verifica se a leitura foi bem sucedida 
-        if (fread(novoRegisto, sizeof(Cliente), 1, fhistorico) != 1) {
+        // Inicializar o cliente e o meio de transporte
+        novoRegisto->cliente = cliente;
+        novoRegisto->meioTransporte = meioTansporte; 
 
-            free(novoRegisto); //Caso a leitura não tenha sido sucedida liberta a memória alocada
-            break;
+        sscanf(linha, "%[^;];%[^;];%d;%f;%f;%[^;];%s", novoRegisto->cliente->nome_cliente, novoRegisto->meioTransporte->tipo, &novoRegisto->ID, &novoRegisto->preco, &novoRegisto->distancia, novoRegisto->moradaIni, novoRegisto->moradaFim);
+
+        // Indica que é o último da lista
+        novoRegisto->seguinte = NULL;
+
+        if (historico == NULL) {
+            historico = novoRegisto;
         }
-
-        //Define o ultimo elemento da lista 
-        novoRegisto->seguinte = NULL; 
-
-        //Se a lista estiver vazia, a variável inicio é definida como a estrutura novo transporte
-        if (inicio == NULL) {
-            inicio = novoRegisto;
-        }
+        // Se lista estiver vazia
         else {
-            HistoricoRegisto* atual = inicio; 
+            HistoricoRegisto* atual = historico;
 
-            //Percorre a lista até encontrar o último elemento 
             while (atual->seguinte != NULL) {
                 atual = atual->seguinte;
             }
-            //Proximo elemento
             atual->seguinte = novoRegisto;
         }
     }
-    //Fechar o ficheiro 
-    fclose(fhistorico);
 
-    return inicio;
- }
-   
+    // Fechar o ficheiro
+    fclose(fhistorico);
+    return historico;
+}
