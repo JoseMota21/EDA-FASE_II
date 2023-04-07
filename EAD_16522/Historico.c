@@ -126,27 +126,21 @@ void consultarHistoricoCliente(HistoricoRegisto* historico, int nif) {
     HistoricoRegisto* atual = historico;
     int encontrou = 0; 
 
-    //Percorre a lista até encontrar o cliente com o nif do cliente logado 
-    while (atual != NULL && atual->nif != nif) {
-        atual = atual->seguinte; //Proximo
-    }
-
     while (atual != NULL) {
-        if (atual != NULL) {
-            if (atual->nif == nif)
-            encontrou = 1; 
+       
+        if (atual->nif == nif) {
+            encontrou = 1;
 
-            system("cls"); 
-                
             //Escrever na consola
             printf("%s;%d;%s;%d;%.2f;%.2f;%s;%s\n", atual->nome_cliente, atual->nif, atual->tipo, atual->ID, atual->preco, atual->distancia, atual->moradaIni, atual->moradaFim);
-            
-            system("pause"); 
-            system("cls"); 
-        }        
-                
+
+        }              
         atual = atual->seguinte;
     }
+
+        system("pause");
+        system("cls");
+
     //Se não encontrado avisa o utilizador
     if (!encontrou) {
         printf("Nenhum registo encontrado para o cliente %d.\n", nif);
