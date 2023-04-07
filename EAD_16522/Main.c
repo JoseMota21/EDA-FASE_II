@@ -210,7 +210,7 @@ int main() {
 					switch (cliente) {
 					case 1:
 						//Cliente consulta os seus dados
-						clientedados(logado);	
+						clientedados(logado);						 
 						break;
 					case 2:
 						//Cliente altera dos seus dados

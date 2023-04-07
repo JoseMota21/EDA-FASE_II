@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-
 //Alugar Veiculo
 void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1, int nif) {
 
@@ -121,7 +120,7 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1, int nif) 
 	else {
 		system("cls"); 
 		printf("\n");
-		// Transporte encontrado e disponível
+		//Transporte encontrado e disponível
 		printf("*************************************TRANSPORTE ESCOLHIDO***********************\n");
 		printf("\n");
 		printf("| %-5s | %-10s | %-8s | %-10s | %-30s |\n", "ID", "TIPO", "BATERIA", "AUTONOMIA", "LOCALIZACAO");
@@ -145,7 +144,7 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1, int nif) 
 		atual->bateria -= (distancia * 100) / atual->autonomia;
 
 		//Guardar o historico
-		InserirRegisto(atualC, atual, ID, preco, distancia, localizacaoIni, localizacaoFim); 
+		InserirRegisto(atualC, atual, preco, distancia, localizacaoIni, localizacaoFim); 
 
 		GuardarHistorico (historico); 
 	

@@ -9,7 +9,7 @@
 HistoricoRegisto* historico = NULL; 
 
 //Inser novo registo na lista do historico
-void InserirRegisto (Cliente* cliente, Transporte* meioTransporte, int ID, float preco, float distanciaPer, char* localidadeIni, char* localidadeFim) {
+void InserirRegisto (Cliente* cliente, Transporte* meioTransporte, float preco, float distanciaPer, char* localidadeIni, char* localidadeFim) {
 
     // Alocar dinamicamente uma nova estrutura de histórico
     HistoricoRegisto * novoRegisto = (HistoricoRegisto*)malloc(sizeof(HistoricoRegisto));
@@ -17,8 +17,6 @@ void InserirRegisto (Cliente* cliente, Transporte* meioTransporte, int ID, float
     // Atribuir os valores dos parâmetros à estrutura
     novoRegisto->cliente = cliente;
     novoRegisto->meioTransporte = meioTransporte;
-  
-    novoRegisto->ID = ID; 
     novoRegisto->preco = preco;
     novoRegisto->distancia = distanciaPer;
     strcpy(novoRegisto->moradaIni, localidadeIni);
@@ -53,7 +51,7 @@ void GuardarHistorico(HistoricoRegisto* historico) {
     // Percorrer a lista de histórico e escrever cada registro no arquivo de texto
     HistoricoRegisto* atual = historico;
     while (atual != NULL) {
-        fprintf(fhistorico, "%s;%s;%d;%.2f;%.2f;%s;%s\n", atual->cliente->nome_cliente, atual->meioTransporte->tipo, atual->ID, atual->preco, atual->distancia, atual->moradaIni, atual->moradaFim);
+        fprintf(fhistorico, "%s;%d;%s;%d;%.2f;%.2f;%s;%s\n", atual->cliente->nome_cliente, atual->cliente->NIF, atual->meioTransporte->tipo, atual->meioTransporte->codigo, atual->preco, atual->distancia, atual->moradaIni, atual->moradaFim);
         atual = atual->seguinte;
     }
 
@@ -73,7 +71,7 @@ HistoricoRegisto* consultarhistorico (HistoricoRegisto* historico) {
 
     //Percorrer a lista
     while (historico != NULL) {
-        printf("%s;%s;%d;%.2f;%.2f;%s;%s\n", historico->cliente->nome_cliente, historico->meioTransporte->tipo, historico->ID, historico->preco, historico->distancia, historico->moradaIni, historico->moradaFim);
+        printf("%s;%d;%s;%d;%.2f;%.2f;%s;%s\n", historico->cliente->nome_cliente, historico->cliente->NIF, historico->meioTransporte->tipo, historico->meioTransporte->codigo, historico->preco, historico->distancia, historico->moradaIni, historico->moradaFim);
         historico = historico->seguinte;
     }
     return NULL;
@@ -99,7 +97,7 @@ HistoricoRegisto* lerficheirohistorico(HistoricoRegisto* historico, Cliente* cli
         novoRegisto->cliente = cliente;
         novoRegisto->meioTransporte = meioTansporte; 
 
-        sscanf(linha, "%[^;];%[^;];%d;%f;%f;%[^;];%s", novoRegisto->cliente->nome_cliente, novoRegisto->meioTransporte->tipo, &novoRegisto->ID, &novoRegisto->preco, &novoRegisto->distancia, novoRegisto->moradaIni, novoRegisto->moradaFim);
+        sscanf(linha, "%[^;];%d;%[^;];%d;%f;%f;%[^;];%s", novoRegisto->cliente->nome_cliente, &novoRegisto->cliente->NIF, novoRegisto->meioTransporte->tipo, &novoRegisto->meioTransporte->codigo, &novoRegisto->preco, &novoRegisto->distancia, novoRegisto->moradaIni, novoRegisto->moradaFim);
 
         // Indica que é o último da lista
         novoRegisto->seguinte = NULL;
