@@ -526,7 +526,7 @@ Transporte* transportesDisponiveis(Transporte* meioTransporte_1) {
 } 
 
 //Mostrar os transportes na localidade mencionada
-Transporte* TransportePorLocalidade(Transporte* inicio, char* localidade) {
+int	TransportePorLocalidade(Transporte* inicio, char* localidade) {
 
 	printf("\t++++++++ LISTAR MEIO DE MOBILIDADE ++++++++++\n");
 	printf("\n");
@@ -555,13 +555,12 @@ Transporte* TransportePorLocalidade(Transporte* inicio, char* localidade) {
 	if (!encontrado) {
 		printf("NAO EXISTE O VEICULO NA LOCALIDADE PRETENDIDA\n"); 
 		system("pause"); 
+		system("cls"); 
 
 		return 0; 
-
-		system("cls"); 
 	}
 
-	return 0;
+	return 1;
 }
 
 

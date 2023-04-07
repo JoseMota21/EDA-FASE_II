@@ -8,10 +8,7 @@
 
 //Estrutura para historico
 typedef struct historico {
-
-	//Cliente* cliente; 
-	//Transporte* meioTransporte; 
-	 
+ 
 	char nome_cliente[80]; 
 	int nif; 
 	int ID;

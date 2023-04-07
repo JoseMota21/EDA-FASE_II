@@ -46,14 +46,10 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1, int nif) 
 	get_coordinates(localizacaoIni, API_KEY, &lat1, &lng1);
 	get_coordinates(localizacaoFim, API_KEY, &lat2, &lng2);
 
-	//system("cls"); 
-
-	printf("As palavras %s correspondem as coordenadas: %.6f, %.6f\n", localizacaoIni, lat1, lng1);
-	printf("As palavras %s correspondem as coordenadas: %.6f, %.6f\n", localizacaoFim, lat2, lng2);
-
 	//Calcular a distância percorrida entre a localizaçãoIni e localizaçãoFIM 
 	float distancia = haversine_distance (lat1, lng1, lat2, lng2);
 
+	//Informa o utilizar da distancia a percorrer 
 	printf("A DISTANCIA A PERCORRER E DE %.2f KM\n ", distancia); 
 
 	printf("\n");
@@ -72,91 +68,92 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1, int nif) 
 
 	printf("\n");
 
-	//Mostra quais os veiculos na localidade inserirda 
-	TransportePorLocalidade(meioTransporte_1, localizacaoIni);
+	//Mostra quais os veiculos na localidade inserirda, Se houver transporte na localidade inserida executa o resto do codigo 	
+	if (TransportePorLocalidade(meioTransporte_1, localizacaoIni) == 1) {
 
-	// Pedir ao cliente o ID do transporte a alugar
-	int ID;
-	printf("INSIRA O ID DO TRANSPORTE DESEJADO:\n");
-	scanf("%d", &ID);
+		// Pedir ao cliente o ID do transporte a alugar
+		int ID;
+			printf("INSIRA O ID DO TRANSPORTE DESEJADO:\n");
+			scanf("%d", &ID);
 
-	//Inicio da lista
-	Transporte* atual = meioTransporte_1;
+			//Inicio da lista
+			Transporte* atual = meioTransporte_1;
 
-	//Calculo da bateria necessária 
-	float bateria;
-	bateria = (atual->bateria * distancia) / 80;
+			//Calculo da bateria necessária 
+		float bateria;
+		bateria = (atual->bateria * distancia) / 80;
 
-	//Procura na lista de transportes o ID indicado pelo o cliente 
-	while (atual != NULL && atual->codigo != ID) {
-		atual = atual->seguinte;
+		//Procura na lista de transportes o ID indicado pelo o cliente 
+		while (atual != NULL && atual->codigo != ID) {
+			atual = atual->seguinte;
+		}
+		if (atual == NULL) { // Transporte não encontrado 
+
+			printf("TRANSPORTE COM O ID %d NAO ENCONTRADO\n", ID);
+
+			system("pause");
+			system("cls");
+		}
+		else if (atual->disponivel == 0) { //Transporte indisponível 
+
+			printf("TRANSPORTE %d INDISPONIVEL\n", ID);
+			system("pause");
+			system("cls");
+		}
+		else if (atual->autonomia < distancia) { //Autonomia insuficiente
+
+			printf("AUTONOMIA INSUFICENTE PARA TERMINAR A VIAGEM\n");
+			system("pause");
+			system("cls");
+
+		}
+		else if (atual->bateria < bateria) { //Bateria insuficiente
+
+			printf("BATERIA INSUFICENTE PARA TERMINAR A VIAGEM\n");
+			system("pause");
+			system("cls");
+		}
+		else {
+			system("cls");
+			printf("\n");
+			//Transporte encontrado e disponível
+			printf("*************************************TRANSPORTE ESCOLHIDO***********************\n");
+			printf("\n");
+			printf("| %-5s | %-10s | %-8s | %-10s | %-30s |\n", "ID", "TIPO", "BATERIA", "AUTONOMIA", "LOCALIZACAO");
+			printf("|-------|------------|----------|------------|--------------------------------|\n");
+
+			//Mostra na consola o transporte que foi selecionado e que está disponivel 
+			printf("| %-5d | %-10s | %-8.2f | %-10.2f | %-30s |\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo);
+
+			atual->disponivel = 0; // Veiculo alugado fica indisponivel para alugar
+
+			//Escrever o ID do veiculo alugado na estrutura cliente no campo IDVEIVULOALUGADO
+			atualC->IDveiculoAlugado = atual->codigo;
+
+			//Subtrair o saldo do cliente ao preço (euro) da viagem
+			atualC->saldo -= preco;
+
+			//Desconta a autonomia à estrutura do veiculo (km)
+			atual->autonomia -= distancia;
+
+			//Descontar a percentagem da bateria
+			atual->bateria -= (distancia * 100) / atual->autonomia;
+
+			//Guardar o historico
+			InserirRegisto(atualC->nome_cliente, atualC->NIF, atual->tipo, atual->codigo, preco, distancia, localizacaoIni, localizacaoFim);
+
+			GuardarHistorico(historico);
+
+			system("pause");
+			system("cls");
+		}
+
+		//Atualizar o ficheiro cliente 
+		saveAlterarDados(cliente_1);
+		//Atualizar o ficheito transporte 
+		saveAlterarDadosTransportes(meioTransporte_1);
+
 	}
-	if (atual == NULL) { // Transporte não encontrado 
-		
-		printf("TRANSPORTE COM O ID %d NAO ENCONTRADO\n", ID);
-
-		system("pause"); 
-		system("cls");
-	}
-	else if (atual->disponivel == 0) { //Transporte indisponível 
-		
-		printf("TRANSPORTE %d INDISPONIVEL\n", ID);
-		system("pause");
-		system("cls");
-	}
-	else if (atual->autonomia < distancia) { //Autonomia insuficiente
-
-		printf("AUTONOMIA INSUFICENTE PARA TERMINAR A VIAGEM\n");
-		system("pause");
-		system("cls");
-
-	}
-	else if (atual->bateria < bateria) { //Bateria insuficiente
-
-		printf("BATERIA INSUFICENTE PARA TERMINAR A VIAGEM\n");
-		system("pause");
-		system("cls");
-	}
-	else {
-		system("cls"); 
-		printf("\n");
-		//Transporte encontrado e disponível
-		printf("*************************************TRANSPORTE ESCOLHIDO***********************\n");
-		printf("\n");
-		printf("| %-5s | %-10s | %-8s | %-10s | %-30s |\n", "ID", "TIPO", "BATERIA", "AUTONOMIA", "LOCALIZACAO");
-		printf("|-------|------------|----------|------------|--------------------------------|\n");
-
-		//Mostra na consola o transporte que foi selecionado e que está disponivel 
-		printf("| %-5d | %-10s | %-8.2f | %-10.2f | %-30s |\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo);
-
-		atual->disponivel = 0; // Veiculo alugado fica indisponivel para alugar
-
-		//Escrever o ID do veiculo alugado na estrutura cliente no campo IDVEIVULOALUGADO
-		atualC->IDveiculoAlugado = atual->codigo;
-
-		//Subtrair o saldo do cliente ao preço (euro) da viagem
-		atualC->saldo -= preco;
-
-		//Desconta a autonomia à estrutura do veiculo (km)
-		atual->autonomia -= distancia;
-
-		//Descontar a percentagem da bateria
-		atual->bateria -= (distancia * 100) / atual->autonomia; 
-
-		//Guardar o historico
-		InserirRegisto(atualC->nome_cliente, atualC->NIF, atual->tipo, atual->codigo, preco, distancia, localizacaoIni, localizacaoFim); 
-
-		GuardarHistorico (historico); 
-	
-		system("pause");
-		system("cls");
-	}
-
-	//Atualizar o ficheiro cliente 
-	saveAlterarDados(cliente_1);
-	//Atualizar o ficheito transporte 
-	saveAlterarDadosTransportes(meioTransporte_1);
-
 }
 
 //Desalugar veiculo 

@@ -47,6 +47,6 @@ void saveAlterarDadosTransportes(Transporte* inicio);
 Transporte* transportesDisponiveis(Transporte* meioTransporte_1); 
 
 //Vizualizar transportes por localidade
-Transporte* TransportePorLocalidade(Transporte* inicio, char* localidade); 
+int TransportePorLocalidade(Transporte* inicio, char* localidade); 
 
 #endif /* TRANSPORTE_H */ 
