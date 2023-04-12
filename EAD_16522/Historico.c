@@ -9,7 +9,7 @@
 HistoricoRegisto* historico = NULL; 
 
 //Inser novo registo na lista do historico
-void InserirRegisto (char* nome, int NIF, char* tipo,int id, float preco, float distanciaPer, char* localidadeIni, char* localidadeFim) {
+HistoricoRegisto* InserirRegisto (HistoricoRegisto* historico_1, char* nome, int NIF, char* tipo,int id, float preco, float distanciaPer, char* localidadeIni, char* localidadeFim) {
 
     // Alocar dinamicamente uma nova estrutura de histórico
     HistoricoRegisto * novoRegisto = (HistoricoRegisto*)malloc(sizeof(HistoricoRegisto));
@@ -28,6 +28,7 @@ void InserirRegisto (char* nome, int NIF, char* tipo,int id, float preco, float 
 
     if (historico == NULL) {
         historico = novoRegisto;
+        return historico; 
     }
     else {
         HistoricoRegisto* ultimo = historico;
@@ -35,6 +36,7 @@ void InserirRegisto (char* nome, int NIF, char* tipo,int id, float preco, float 
             ultimo = ultimo->seguinte;
         }
         ultimo->seguinte = novoRegisto;
+        return historico;
     }
  }
 

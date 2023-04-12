@@ -2,3 +2,7 @@ JOAO;12345;TROTINETE;34;3.22;8.06;///afirmou.bota.fera;///amadorismo.viver.carre
 JOSE;123456789;TROTINETE;34;1.69;4.24;///afirmou.bota.fera;///capo.esses.umidos 
 JOSE;123456789;TROTINETE;34;1.69;4.24;///afirmou.bota.fera;///capo.esses.umidos 
 JOSE;123456789;TROTINETE;34;1.69;4.24;///afirmou.bota.fera;///capo.esses.umidos 
+JOSE;123456789;TROTINETE;34;0.16;0.39;///afirmou.bota.fera;///estou.alvos.belos 
+JOSE;123456789;TROTINETE;34;0.16;0.39;///afirmou.bota.fera;///estou.alvos.belos 
+JOSE;123456789;TROTINETE;34;1.69;4.24;///afirmou.bota.fera;///capo.esses.umidos 
+JOAO;12345;TROTINETE;34;1.69;4.24;///afirmou.bota.fera;///capo.esses.umidos 
