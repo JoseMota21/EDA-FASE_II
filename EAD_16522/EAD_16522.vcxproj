@@ -131,6 +131,7 @@
     <ClCompile Include="API.c" />
     <ClCompile Include="Cliente.c" />
     <ClCompile Include="Gestor.c" />
+    <ClCompile Include="Grafo.c" />
     <ClCompile Include="Historico.c" />
     <ClCompile Include="Main.c" />
     <ClCompile Include="Transporte.c" />
@@ -140,6 +141,7 @@
     <ClInclude Include="API.h" />
     <ClInclude Include="Gestor,h.h" />
     <ClInclude Include="Global.h" />
+    <ClInclude Include="Grafo.h" />
     <ClInclude Include="Historico.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="Transporte.h" />
