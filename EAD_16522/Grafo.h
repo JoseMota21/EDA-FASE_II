@@ -1,25 +1,34 @@
 #include <stdio.h>
 #include <stdbool.h> 
-#define TAM 50 
+#include "Transporte.h"
 
-typedef struct registo3 {
-	int ID;
-	struct registo3* seguinte;
+typedef struct vertice {
 
-}*Transporte;  
+	int ID; //ID do meio de transporte
+	float latitude; 
+	float longitude; 
+	struct vertice* proximo; 
+	struct adjacente* adjacente; // lista ligada de vértices adjacentes 
+} Vertice; 
 
-//Estrutura de um grafo orientado e pesado 
-typedef struct registo2 {
-	char vertice[TAM];  //Geocódigo 
-	float peso; 
+typedef struct adjacente {
+	float peso; // Peso da aresta
 
-	struct registo2* seguinte; 
-}*Adjacente; 
+	Vertice* vertice; // vértice adjacente 
+	struct adjacente* proximo;
 
-typedef struct registo1 {
-	char vertice[TAM]; //Geocódigo 
-	Adjacente adjacente; 
-	Transporte transporte; //Lista ligada com os códigos dos meios de transportes existentes 
-	struct registo1* seguinte; 
+} Adjacente;
 
-}*Grafo;
+typedef struct grafo {
+	int num_vertices;
+	Vertice* primeiro;
+} Grafo;
+
+
+int criarAresta(Grafo* g, char origem[], char destino[], float peso); 
+
+Vertice* criarVertice(int novoID, float latitude, float longitude); 
+
+Grafo* criarGrafo(); 
+
+int adicionarVertice(Grafo* g, int novoID, float latitude, float longitude); 

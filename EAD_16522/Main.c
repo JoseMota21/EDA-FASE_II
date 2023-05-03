@@ -5,6 +5,7 @@
 #include "Aluguer.h"
 #include "Gestor.h"
 #include "Historico.h"
+#include "Grafo.h"
 #include <stdlib.h>
 #include<stdbool.h>
 
@@ -14,6 +15,8 @@ int main() {
 	Transporte* meioTransporte_1 = NULL; // Lista ligada transportes vazia  
 	Cliente* cliente_1 = NULL; // Lista ligada clientes vazia 
 	Gestor* gestor_1 = NULL; // Lista ligada clientes vazia 
+
+	//Grafo* grafo_1 = NULL; // Lista ligada grafo vazia 
 	HistoricoRegisto* historico_1 = NULL; //Lista ligada historico vazia
 
 	//Informa qual o cliente que está logado no sistema 
@@ -37,6 +40,23 @@ int main() {
 	int cliente;
 	int gestorech; 
 	char localizacao[100];
+
+	Grafo* g = criarGrafo(); 
+
+	Vertice* v1 = adicionarVertice(g, 100, -8.057838, -34.882896);
+	Vertice* v2 = adicionarVertice(g, 101, -8.058646, -34.883073);
+	Vertice* v3 = adicionarVertice(g, 102, -8.058418, -34.883818);
+
+	criarAresta(g, v1, v2, 5.0);
+	criarAresta(g, v2, v3, 2.0); 
+
+	Vertice* v = g->primeiro; 
+
+	while (v != NULL) {
+		printf("%d; %.6f; %.6f\n", v->ID, v->latitude, v->longitude);
+		v = v->proximo;
+	}
+	 
 
 	do {
 		system("cls");
@@ -178,12 +198,15 @@ int main() {
 							inferior50(meioTransporte_1); 
 							break; 
 
+						case 14: //TESTES 
+
+							break; 
 						default:
 							//Caso nenhuma opcao for inserida corretamente informa o utilizar 
 							printf("OPCAO INVALIDA\n");
 							break;
 						}
-					} while (gestor != 14); // Voltar para o menu anterior
+					} while (gestor != 15); // Voltar para o menu anterior
 				}	break;
 			}while (gestorech != 0); //voltar para o menu anterior
 			}
