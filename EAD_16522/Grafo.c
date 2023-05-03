@@ -108,3 +108,5 @@ void listarMeios(Grafo g, char geocodigo[])
 	else printf("geocodigo inexistente\n");
 }
 
+
+

@@ -563,4 +563,18 @@ int	TransportePorLocalidade(Transporte* inicio, char* localidade) {
 	return 1;
 }
 
+//Veiculos elétricos com bateria inferior a 50% 
+Transporte* inferior50(Transporte* inicio) {
 
+	//Percorrer a lista ligada 
+	while (inicio!= NULL) { 
+
+		//Verifica qual o meio de transporte com bateria inferior a 50% 
+		if (inicio->bateria < 50.0) {
+			printf("%d;%s\n", inicio->codigo, inicio->tipo); 
+		}
+
+		inicio = inicio->seguinte; 
+	}
+
+}

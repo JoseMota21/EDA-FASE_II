@@ -99,9 +99,10 @@ int main() {
 						printf("10 - CONSULTAR HISTORICO DE ALUGUER\n");
 						printf("11 - INSERIR GESTOR\n"); 
 						printf("12 - LOCALIZAR TRANSPORTE POR LOCALIDADE\n");
+						printf("13 - MEIOS DE TRANSPORTE COM BATERIA INFERIOR A 50\n");
 						printf("--------------------------------------------------\n");
 						printf("\n");
-						printf("13 - SAIR\n");
+						printf("14 - SAIR\n");
 						scanf("%d", &gestor);
 
 						system("cls");
@@ -172,12 +173,17 @@ int main() {
 							//Mostra quais os veiculos na localidade inserirda 
 							TransportePorLocalidade(meioTransporte_1, localizacao);
 							break; 
+						case 13: 
+							//Listar os meios de transporte com bateria inferior a 50% 
+							inferior50(meioTransporte_1); 
+							break; 
+
 						default:
 							//Caso nenhuma opcao for inserida corretamente informa o utilizar 
 							printf("OPCAO INVALIDA\n");
 							break;
 						}
-					} while (gestor != 13); // Voltar para o menu anterior
+					} while (gestor != 14); // Voltar para o menu anterior
 				}	break;
 			}while (gestorech != 0); //voltar para o menu anterior
 			}
