@@ -5,72 +5,32 @@
 #include <stdbool.h>
 #include "Grafo.h"  
 
-//Função para criar aresta 
-int criarAresta(Grafo* g, char origem[], char destino[], float peso) {
-
-	//Vertice* vertOrigem = procurarVertice (g, origem);
+// Criar um novo vértice 
+int criarVertice(Grafo* g, char novoId[], Transporte* meios) { 
+ 	
+	//Alocar memória 
+	Grafo novo = malloc(sizeof(struct registo1));
 	
-	Adjacente* novo = malloc(sizeof(Adjacente)); 
+	if (novo != NULL)
+	{
+		strcpy(novo->vertice, novoId);
+		novo->meios = meios;
+		novo->adjacentes = NULL;
+		novo->seguinte = *g;
+		*g = novo;
 
-	if (!novo) {
-		return 0; 
-	}
+		// Percorre a lista ligada de meios de transporte e imprimir os IDs
+		Transporte* meio = novo->meios;
+		while (meio != NULL) {
+			printf("Meio de transporte existente: %d;%s\n", meio->codigo, meio->tipo); 
+			meio = meio->seguinte;
+		}
+		return 1;
 
-	//novo->vertice = procurarVertice(g, destino);
-	if (!novo->vertice) {
-		// O vértice de destino não existe no grafo
-		free(novo);
+	} else {
 		return 0;
 	}
-
-	novo->peso = peso; 
-	//novo->proximo = vertOrigem->adjacente; 
-	//vertOrigem->adjacente = novo; 
-
-	return 1; 
-} 
-
-Vertice* criarVertice(int novoID, float latitude, float longitude) {
-
-	Vertice* novo = (Vertice*) malloc(sizeof(Vertice)); 
-
-	if (novo != NULL) {
-		novo->ID = novoID; 
-		novo->latitude = latitude; 
-		novo->longitude = longitude; 
-
-		novo->proximo = NULL; 
-		novo->adjacente = NULL; 
-	}
-
-	return novo; 
 }
 
-Grafo* criarGrafo() {
 
-
-	Grafo* novo = calloc(1, sizeof(Grafo)); 
-	//Grafo* novo = malloc(sizeof(Grafo)); 
-
-	if (novo != NULL) {
-		novo->num_vertices = 0; 
-		novo->primeiro = NULL; 
-	} 
-
-	return novo; 
-}
-
-int adicionarVertice(Grafo* g, int novoID, float latitude, float longitude) {
-
-	Vertice* novo = criarVertice(novoID, latitude, longitude); 
-
-	if (novo == NULL) {
-		return 0; 
-	}
-
-	novo->proximo = g->primeiro; 
-	g->num_vertices++; 
-
-	return 1; 
-
-}
+	

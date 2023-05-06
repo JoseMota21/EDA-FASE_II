@@ -1,34 +1,24 @@
 #include <stdio.h>
 #include <stdbool.h> 
-#include "Transporte.h"
+#include "Transporte.h" 
 
-typedef struct vertice {
+// Representação de um grafo orientado e pesado
+typedef struct registo2
+{
+    char vertice[100]; // geocódigo what3words
+    float peso;
+    struct registo2* seguinte;
+} *Adjacente;
 
-	int ID; //ID do meio de transporte
-	float latitude; 
-	float longitude; 
-	struct vertice* proximo; 
-	struct adjacente* adjacente; // lista ligada de vértices adjacentes 
-} Vertice; 
-
-typedef struct adjacente {
-	float peso; // Peso da aresta
-
-	Vertice* vertice; // vértice adjacente 
-	struct adjacente* proximo;
-
-} Adjacente;
-
-typedef struct grafo {
-	int num_vertices;
-	Vertice* primeiro;
-} Grafo;
+typedef struct registo1 {
+    char vertice[100]; // geocódigo what3words
+    Adjacente adjacentes;
+    Transporte* meios; // Lista ligada com os códigos dos meios de transporte existente
+    // neste geocódigo
+    struct registo1* seguinte;
+} *Grafo; 
 
 
-int criarAresta(Grafo* g, char origem[], char destino[], float peso); 
+//Criar vertices 
+int criarVertice(Grafo* g, char novoId[]); 
 
-Vertice* criarVertice(int novoID, float latitude, float longitude); 
-
-Grafo* criarGrafo(); 
-
-int adicionarVertice(Grafo* g, int novoID, float latitude, float longitude); 
