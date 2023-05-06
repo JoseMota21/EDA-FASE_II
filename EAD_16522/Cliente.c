@@ -487,7 +487,6 @@ int veiculosRaio (char localizacaoAtual[], char tipoMeio[], int raio, Transporte
 	//Variávies auxiliares 
 	float lat, lng; 
 	float lat2, lng2;
-	
 
 	Transporte* meios = meio;
 
@@ -495,11 +494,9 @@ int veiculosRaio (char localizacaoAtual[], char tipoMeio[], int raio, Transporte
 	get_coordinates(localizacaoAtual, API_KEY, &lat, &lng); 
 	get_coordinates(meio->geocodigo, API_KEY, &lat2, &lng2);
 
-	
 		while (meios != NULL) {
 		
 		if (meios->disponivel && strcmp(meios->tipo, tipoMeio) == 0) { 
-
 
 			// Converte as coordenadas de graus para radianos
 			const double PI = acos(-1.0);
@@ -518,7 +515,10 @@ int veiculosRaio (char localizacaoAtual[], char tipoMeio[], int raio, Transporte
 
 			// Verifica se a distância está dentro do raio
 			if (distancia <= raio) {
-				printf("Meio de transporte disponivel: %d\n", meios->codigo);
+				printf("MEIOS DE TRANSPORTES DISPONIVEIS NO RAIO DE %d %d\n", raio, meios->codigo);
+			}
+			else {
+				printf("NAO E POSSIVEL ENCONTRAR O TIPO DE VEICULO %s NO RAIO DE %d NA LOCALIZACAO %s \n", meios->tipo, raio, localizacaoAtual); 
 			}
 		}
 

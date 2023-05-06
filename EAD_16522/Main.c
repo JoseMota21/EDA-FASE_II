@@ -272,7 +272,6 @@ int main() {
 						scanf("%d", &raio); 
 
 						//Função 
-
 						veiculosRaio(localizacaoAtu, tipoMeio, raio, meioTransporte_1);  
 
 						system("pause"); 
