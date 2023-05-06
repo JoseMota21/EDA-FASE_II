@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include "API.h" 
+#include "Transporte.h"
 
 #ifndef CLIENTE_H
 #define CLIENTE_H
@@ -59,6 +61,8 @@ Cliente* AlterarDadosCliente(Cliente* inicio, int nif);
 void saveAlterarDados(Cliente* inicio); 
 
 //Carregar saldo ao cliente
-Cliente* carregarSaldo(Cliente* cliente_1, int nif);  
+Cliente* carregarSaldo(Cliente* cliente_1, int nif); 
+
+int veiculosRaio(char localizacaoAtual[], char tipoMeio[], int raio, Transporte* meio); 
 
 #endif /* CLIENTE_H */ 

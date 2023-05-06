@@ -20,5 +20,5 @@ typedef struct registo1 {
 
 
 //Criar vertices 
-int criarVertice(Grafo* g, char novoId[]); 
+int criarVertice(Grafo* g, Transporte* meios); 
 

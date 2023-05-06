@@ -4,6 +4,8 @@
 #include <string.h>
 #include <stdbool.h>
 #include "Cliente.h" 
+#include "Transporte.h"
+
 
 //Inserir Cliente na lista ligada
 Cliente* inputCliente(Cliente* cliente_1) {
@@ -477,4 +479,60 @@ Cliente* carregarSaldo(Cliente* cliente, int nif) {
 	system("cls"); 
 
 	return cliente; 
-} 
+}  
+
+//Localizar meios de Transporte por Raio 
+int veiculosRaio (char localizacaoAtual[], char tipoMeio[], int raio, Transporte* meio ) {
+
+	//Variávies auxiliares 
+	float lat, lng; 
+	float lat2, lng2;
+	
+
+	Transporte* meios = meio;
+
+	//Função para converters as palavras em coordenadas 
+	get_coordinates(localizacaoAtual, API_KEY, &lat, &lng); 
+	get_coordinates(meio->geocodigo, API_KEY, &lat2, &lng2);
+
+	
+		while (meios != NULL) {
+		
+		if (meios->disponivel && strcmp(meios->tipo, tipoMeio) == 0) { 
+
+
+			// Converte as coordenadas de graus para radianos
+			const double PI = acos(-1.0);
+			lat *= PI / 180.0;
+			lng *= PI / 180.0;
+			lat2 *= PI / 180.0;
+			lng2 *= PI / 180.0;
+
+			// Calcula a distância entre as coordenadas utilizando a fórmula de Haversine
+			const double R = 6371.0; // Raio médio da Terra em km
+			const double dLat = lat2 - lat;
+			const double dLon = lng2 - lng;
+			const double a = sin(dLat / 2.0) * sin(dLat / 2.0) + cos(lat) * cos(lat) * sin(dLon / 2.0) * sin(dLon / 2.0);
+			const double c = 2.0 * atan2(sqrt(a), sqrt(1.0 - a));
+			const double distancia = R * c;
+
+			// Verifica se a distância está dentro do raio
+			if (distancia <= raio) {
+				printf("Meio de transporte disponivel: %d\n", meios->codigo);
+			}
+		}
+
+		meios = meios->seguinte;
+	}
+
+	return 0;
+}
+
+
+
+
+
+
+
+ 
+

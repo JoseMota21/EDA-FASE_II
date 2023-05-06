@@ -5,24 +5,23 @@
 #include <stdbool.h>
 #include "Grafo.h"  
 
-// Criar um novo vértice 
-int criarVertice(Grafo* g, char novoId[], Transporte* meios) { 
- 	
+// Criar um novo vértice em que cada meio de transporte representa um vértice (cria um vertice e associa aos meios de transporte)
+int criarVertice(Grafo* g, Transporte* meios) { 
+
 	//Alocar memória 
 	Grafo novo = malloc(sizeof(struct registo1));
 	
-	if (novo != NULL)
-	{
-		strcpy(novo->vertice, novoId);
+	if (novo != NULL) {
 		novo->meios = meios;
 		novo->adjacentes = NULL;
 		novo->seguinte = *g;
 		*g = novo;
 
-		// Percorre a lista ligada de meios de transporte e imprimir os IDs
 		Transporte* meio = novo->meios;
+
+		//Percorrer a lista ligada dos meios de transporte e imprime
 		while (meio != NULL) {
-			printf("Meio de transporte existente: %d;%s\n", meio->codigo, meio->tipo); 
+			printf("Meio de transporte existente: %d;%s;%s\n", meio->codigo, meio->tipo, meio->geocodigo); 
 			meio = meio->seguinte;
 		}
 		return 1;
@@ -30,7 +29,6 @@ int criarVertice(Grafo* g, char novoId[], Transporte* meios) {
 	} else {
 		return 0;
 	}
-}
+} 
 
 
-	

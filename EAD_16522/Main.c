@@ -41,6 +41,9 @@ int main() {
 	int cliente;
 	int gestorech; 
 	char localizacao[100];
+	char localizacaoAtu[100];
+	char tipoMeio[80];
+	int raio; 
 
 	do {
 		system("cls");
@@ -104,9 +107,11 @@ int main() {
 						printf("11 - INSERIR GESTOR\n"); 
 						printf("12 - LOCALIZAR TRANSPORTE POR LOCALIDADE\n");
 						printf("13 - MEIOS DE TRANSPORTE COM BATERIA INFERIOR A 50\n");
+						printf("14 - TESTES\n");
+
 						printf("--------------------------------------------------\n");
 						printf("\n");
-						printf("14 - SAIR\n");
+						printf("15 - SAIR\n");
 						scanf("%d", &gestor);
 
 						system("cls");
@@ -183,7 +188,7 @@ int main() {
 							break; 
 
 						case 14: //TESTES 
-							criarVertice(&g, "ABC", meioTransporte_1); 
+							criarVertice(&g, meioTransporte_1); 
 							system("pause"); 
 							system("cls"); 
 
@@ -220,8 +225,9 @@ int main() {
 					printf("4 - DESALUGAR TRANSPORTE\n");
 					printf("5 - CARREGAR SALDO\n");
 					printf("6 - CONSULTAR HISTORICO\n");
+					printf("7 - TESTE\n");
 					printf("--------------------------------------------------\n");
-					printf("7 - SAIR\n");
+					printf("8 - SAIR\n");
 					scanf("%d", &cliente);
 
 					switch (cliente) {
@@ -249,12 +255,36 @@ int main() {
 						//Cliente consulta o seu historico 
 						consultarHistoricoCliente(historico_1, logado->NIF); 
 						break;
+					case 7: 
+						//TESTES 
+						getchar(); 
+						//Inserir a localização Atual 
+						printf("INSERIR A LOCALIZACAO ATUAL\n");
+						fgets(localizacaoAtu, 100, stdin);
+						localizacaoAtu[strcspn(localizacaoAtu, "\n")] = '\0';
+
+						//Inseir tipo de meio de transporte desejado 
+						printf("INSERIR O MEIO PRETENDIDO\n");
+						fgets(tipoMeio, 100, stdin);
+						tipoMeio[strcspn(tipoMeio, "\n")] = '\0'; 
+
+						printf("INSERIR O RAIO DE PESQUISA\n");
+						scanf("%d", &raio); 
+
+						//Função 
+
+						veiculosRaio(localizacaoAtu, tipoMeio, raio, meioTransporte_1);  
+
+						system("pause"); 
+						system("cls"); 
+
+						break; 
 					default:
 						//Caso nenhuma opcao for inserida corretamente informa o utilizar 
 						printf("OPCAO INVALIDA\n");
 						break;
 					}
-				} while (cliente != 7); // Volta para o menu anterior
+				} while (cliente != 8); // Volta para o menu anterior
 			}
 		}
 	}
