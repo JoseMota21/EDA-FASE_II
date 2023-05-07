@@ -189,9 +189,7 @@ int main() {
 						case 14: //TESTES 
 							criarVertices(&grafo_1, meioTransporte_1);
 
-						
-
-						//	listarVertices(&grafo_1); 
+							listarVertices(grafo_1); 
 							system("pause"); 
 							system("cls"); 
 

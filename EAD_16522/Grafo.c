@@ -6,11 +6,15 @@
 #include "Grafo.h"  
 
 
-// Criar novos vértices em que cada meio de transporte representa um vértice (cria um vertice para cada elemento do array e associa aos meios de transporte)
+// Criar novos vértices em que cada meio de transporte representa um vértice
 int criarVertices(Grafo** g, Transporte* meios) {
+
+	//Variável para ID do vertice
+	int VerticeID = 1; 
 
 	Transporte* atual = meios; 
 
+	//Percorre a lista dos meios de transporte
 	while (atual != NULL) {
 		
 		Vertice* novo = malloc(sizeof(Vertice));  
@@ -21,6 +25,7 @@ int criarVertices(Grafo** g, Transporte* meios) {
 		novo->ID = atual->codigo;
 		novo->bateria = atual->bateria;
 		novo->meios = atual;
+		novo->VerticeID = VerticeID; 
 
 		novo->clientes = NULL;
 		novo->seguinte = NULL;
@@ -38,7 +43,8 @@ int criarVertices(Grafo** g, Transporte* meios) {
 			novo->seguinte = (*g)->vertices;
 			(*g)->vertices = novo;
 		}
-		printf("Vertice criado: %s, %s, %d, %.2f\n", novo->geocodigo, novo->Tipo, novo->ID, novo->bateria);
+
+		VerticeID++; 
 
 		// Avançar para o próximo transporte
 		atual = atual->seguinte;
@@ -47,15 +53,14 @@ int criarVertices(Grafo** g, Transporte* meios) {
 	return 1;
 }
 
-	
 //Listar na consola os vertices que representam os meios de transporte 
 void listarVertices(Grafo* g) {
 	Vertice* vertice = g->vertices; 
 
 	while (vertice != NULL) {
 
-		printf("VERTICES: %s, %s %d, %.2f \n", vertice->geocodigo,vertice->Tipo, vertice->ID, vertice->bateria); 
-
+		printf("VERTICES: %d, %d, %s, %.2f, %s\n",vertice->VerticeID, vertice->ID, vertice->Tipo, vertice->bateria, vertice->geocodigo); 
+		
 		vertice = vertice->seguinte; 
 
 	}

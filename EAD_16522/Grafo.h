@@ -17,6 +17,7 @@ typedef struct vertice {
     float lng; //Para converter para coordenadas 
     char geocodigo[100];// What3Words 
     int ID; //ID do meio de transporte 
+    int VerticeID; 
     float bateria; // Bateria do meio de transporte 
     char Tipo[80]; 
     Adjacente adjacentes;
