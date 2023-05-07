@@ -55,7 +55,7 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1, int nif) 
 	printf("\n");
 
 	//Calcular o preço necessario para completar a viagem
-	float preco = distancia * 0.4; 
+	float preco = distancia * 0.2; 
 
 	//Caso o saldo do cliente sejá insuficiente avisa o utilizador
 	if (atualC->saldo < preco) {

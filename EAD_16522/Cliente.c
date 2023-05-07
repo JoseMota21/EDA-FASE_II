@@ -515,7 +515,7 @@ int veiculosRaio (char localizacaoAtual[], char tipoMeio[], int raio, Transporte
 
 			// Verifica se a distância está dentro do raio
 			if (distancia <= raio) {
-				printf("MEIOS DE TRANSPORTES DISPONIVEIS NO RAIO DE %d %d\n", raio, meios->codigo);
+				printf("NO RAIO DE %d KM O VEICULO COM O ID %d ESTA DISPONVIEL \n", raio, meios->codigo);
 			}
 			else {
 				printf("NAO E POSSIVEL ENCONTRAR O TIPO DE VEICULO %s NO RAIO DE %d NA LOCALIZACAO %s \n", meios->tipo, raio, localizacaoAtual); 

@@ -15,7 +15,7 @@ int main() {
 	Transporte* meioTransporte_1 = NULL; // Lista ligada transportes vazia  
 	Cliente* cliente_1 = NULL; // Lista ligada clientes vazia 
 	Gestor* gestor_1 = NULL; // Lista ligada clientes vazia 
-	Grafo g = NULL;  
+	Grafo grafo_1; 
 
 	//Grafo* grafo_1 = NULL; // Lista ligada grafo vazia 
 	HistoricoRegisto* historico_1 = NULL; //Lista ligada historico vazia
@@ -188,7 +188,7 @@ int main() {
 							break; 
 
 						case 14: //TESTES 
-							criarVertice(&g, meioTransporte_1); 
+							criarVertice(&grafo_1, meioTransporte_1); 
 							system("pause"); 
 							system("cls"); 
 
