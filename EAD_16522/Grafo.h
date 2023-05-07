@@ -13,9 +13,12 @@ typedef struct adjacente
 
 //Estrutura para definição de vertices 
 typedef struct vertice {
-    float lat; 
-    float lng; 
-    char vertice[100];
+    float lat; //Para converter para coordenadas 
+    float lng; //Para converter para coordenadas 
+    char geocodigo[100];// What3Words 
+    int ID; //ID do meio de transporte 
+    float bateria; // Bateria do meio de transporte 
+    char Tipo[80]; 
     Adjacente adjacentes;
     Cliente* clientes; 
     Transporte* meios; 
@@ -29,5 +32,7 @@ typedef struct grafo {
 } Grafo;
 
 //Criar vertices 
-int criarVertice(Grafo* g, Transporte* meios); 
+int criarVertices(Grafo** g, Transporte* meios); 
+
+void listarVertices(Grafo* g); 
 

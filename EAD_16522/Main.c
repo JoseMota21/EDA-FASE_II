@@ -15,9 +15,7 @@ int main() {
 	Transporte* meioTransporte_1 = NULL; // Lista ligada transportes vazia  
 	Cliente* cliente_1 = NULL; // Lista ligada clientes vazia 
 	Gestor* gestor_1 = NULL; // Lista ligada clientes vazia 
-	Grafo grafo_1; 
-
-	//Grafo* grafo_1 = NULL; // Lista ligada grafo vazia 
+	Grafo* grafo_1 = NULL; // Lista ligada clientes vazia  
 	HistoricoRegisto* historico_1 = NULL; //Lista ligada historico vazia
 
 	//Informa qual o cliente que está logado no sistema 
@@ -34,6 +32,7 @@ int main() {
 
 	//Ler ficheiro Historico 
 	historico_1 = lerficheirohistorico(historico_1); 
+
 
 	//Variáveis de switch case
 	int opcao;
@@ -188,7 +187,11 @@ int main() {
 							break; 
 
 						case 14: //TESTES 
-							criarVertice(&grafo_1, meioTransporte_1); 
+							criarVertices(&grafo_1, meioTransporte_1);
+
+						
+
+						//	listarVertices(&grafo_1); 
 							system("pause"); 
 							system("cls"); 
 
