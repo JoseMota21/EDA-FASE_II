@@ -4,12 +4,14 @@
 #include "Cliente.h"
 
 //Estrutura para a definição da matriz de adjacencia 
-typedef struct adjacente
-{
-    char vertice[100]; // geocódigo what3words
+typedef struct adjacente {
+
+    //char vertice[100]; // geocódigo what3words
     float peso;
+    int IDvertices; 
     struct adjacente* seguinte;
-} Adjacente;
+
+} MatrizAdjacente;
 
 //Estrutura para definição de vertices 
 typedef struct vertice {
@@ -20,7 +22,10 @@ typedef struct vertice {
     int VerticeID; 
     float bateria; // Bateria do meio de transporte 
     char Tipo[80]; 
-    Adjacente adjacentes;
+
+    int visitado; 
+
+   MatrizAdjacente* adjacentes;
     Cliente* clientes; 
     Transporte* meios; 
 
@@ -32,8 +37,20 @@ typedef struct grafo {
     Vertice* vertices; 
 } Grafo;
 
+typedef struct Aresta {
+    Vertice* vertice_adjacente;
+    float peso;
+    struct Aresta* proximo;
+} Aresta; 
+
 //Criar vertices 
 int criarVertices(Grafo** g, Transporte* meios); 
 
-void listarVertices(Grafo* g); 
+//Lista os vertices na consola 
+void listarVertices(Grafo* g);  
+
+//Criar aresta 
+int criarAresta(Grafo* g, char vOrigem[], char vDestino[], float peso); 
+
+void imprimirGrafo(Grafo* g); 
 
