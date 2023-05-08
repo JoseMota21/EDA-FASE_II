@@ -5,33 +5,27 @@
 #include <stdbool.h>
 #include "Grafo.h"  
 
-// Criar novos vértices em que cada meio de transporte representa um vértice
-int criarVertices(Grafo** g, Transporte* meios) {
+int criarVertices(Grafo** g, Transporte * meios) { 
 
-	//Variável para ID do vertice
-	int VerticeID = 1; 
+	int VerticeID = 1;
+	Transporte* atual = meios;
 
-	Transporte* atual = meios; 
-
-	//Percorre a lista dos meios de transporte
 	while (atual != NULL) {
-		
-		Vertice* novo = malloc(sizeof(Vertice));  
 
-		// Preencher os dados do vértice
+		Vertice* novo = malloc(sizeof(Vertice));
+
 		strcpy(novo->geocodigo, atual->geocodigo);
 		strcpy(novo->Tipo, atual->tipo);
 		novo->ID = atual->codigo;
 		novo->bateria = atual->bateria;
 		novo->meios = atual;
-		novo->VerticeID = VerticeID; 
-
+		novo->VerticeID = VerticeID;
 		novo->clientes = NULL;
 		novo->seguinte = NULL;
-
-		// Criar uma nova estrutura Grafo se ainda não existir
+		novo->adjacencias = NULL; // inicializar as adjacências como NULL
+		
 		if (*g == NULL) {
-			*g = malloc(sizeof(Grafo));
+			*g = criarGrafo();
 			if (*g == NULL) {
 				free(novo);
 				return 0;
@@ -39,30 +33,31 @@ int criarVertices(Grafo** g, Transporte* meios) {
 			(*g)->vertices = novo;
 		}
 		else {
-
-			Vertice* ultimo = (*g)->vertices; 
-
-			while (ultimo->seguinte != NULL){
-				ultimo = ultimo->seguinte; 
-
+			Vertice* ultimo = (*g)->vertices;
+			while (ultimo->seguinte != NULL) {
+				ultimo = ultimo->seguinte;
 			}
-
-			ultimo->seguinte = novo; 
-
+			ultimo->seguinte = novo;
 		}
-
-		VerticeID++; 
-
-		// Avançar para o próximo transporte
+		VerticeID++;
 		atual = atual->seguinte;
 	}
-
 	return 1;
-}
+} 
 
+//Criar Grafo 
+Grafo* criarGrafo() {
+	Grafo* g = malloc(sizeof(Grafo));
+	if (g != NULL) {
+		g->vertices = NULL;
+	}
+	return g;
+} 
+ 
 //Listar na consola os vertices que representam os meios de transporte 
 void listarVertices(Grafo* g) {
-	Vertice* vertice = g->vertices; 
+
+	Vertice* vertice = g->vertices; //primeiro vertice   
 
 	while (vertice != NULL) {
 
@@ -74,97 +69,46 @@ void listarVertices(Grafo* g) {
 
 }
 
-/// Em construção 
+void criarAresta(Grafo* g, int origem, int destino, float peso) {
+	Vertice* atualOrigem = g->vertices;
+	Vertice* atualDestino = g->vertices;
 
-//Encontrar Vertice 
-Vertice* encontrarVertice(Grafo* g, int ID) {
+	// Procurar o vértice de origem
+	while (atualOrigem != NULL && atualOrigem->ID != origem) {
+		atualOrigem = atualOrigem->seguinte;
+	}
+	if (atualOrigem == NULL) {
 
-	Vertice* atual = g->vertices; 
+		printf("Erro: vértice de origem não encontrado.\n");
+		return;
+	}
 
-	// Percorre a lista de vértices
-	while (atual != NULL) {
-		// Se encontrar o vértice com o ID correto, retorna o ponteiro para ele
-		if (atual->ID == ID) {
-			return atual;
+	// Procurar o vértice de destino
+	while (atualDestino != NULL && atualDestino->ID != destino) {
+		atualDestino = atualDestino->seguinte;
+	}
+	if (atualDestino == NULL) {
+		printf("Erro: vértice de destino não encontrado.\n");
+		return;
+	}
+
+	// Adicionar a aresta
+	Aresta* novaAresta = malloc(sizeof(Aresta));
+	novaAresta->vertice_adjacente = atualDestino->VerticeID;
+	novaAresta->peso = peso;
+	novaAresta->proximo = NULL;
+
+	if (atualOrigem->adjacencias == NULL) {
+		atualOrigem->adjacencias = novaAresta;
+	}
+	else {
+		Aresta* atual = atualOrigem->adjacencias;
+		while (atual->proximo != NULL) {
+			atual = atual->proximo;
 		}
-		atual = atual->seguinte;
-	}
-	// Se não encontrar, retorna NULL
-	return NULL;
-}
-
-// Criar uma nova aresta
-int criarAresta(Grafo* g, char vOrigem[], char vDestino[], float peso) {
-	
-
-	Vertice* origem = encontrarVertice(g, vOrigem);
-	Vertice* destino = encontrarVertice(g, vDestino);
-
-	if (origem != NULL && destino != NULL) {
-		Aresta* novaAresta = malloc(sizeof(Aresta)); 
-
-		
-		if (novaAresta != NULL) {
-			novaAresta->peso = peso;
-			novaAresta->vertice_adjacente = destino; 
-			novaAresta->proximo = origem->adjacentes;
-			origem->adjacentes = novaAresta;
-			return 1;
-		}
-	}
-
-	return 0;
-}
-
-void imprimirGrafo(Grafo* g) {
-
-	Vertice* atual = g->vertices;
-	
-	printf("Grafo:\n");
-
-	// Percorre todos os vértices do grafo
-	while (atual != NULL) {
-
-		// Imprime o vértice
-		printf("Vértice %s:\n", atual->geocodigo);
-
-		// Percorre todas as arestas do vértice
-		Aresta* a = atual->adjacentes;
-
-		while (a != NULL) {
-			printf("    Aresta para vértice %s com peso %.2f\n", a->vertice_adjacente->geocodigo, a->peso); 
-			a = a->proximo;
-		}
-
-		atual = atual->seguinte;
+		atual->proximo = novaAresta;
 	}
 }
 
 
 
-
-
-// Vai ser util para quando recolher o camiao 
-//Visita cada vertice e ajacentes 
-void dfs(Grafo* g, Vertice* v) { 
-	v->visitado = 1;
-
-	printf("Visitando vértice %s\n", v->geocodigo);
-	Aresta* adj = v->adjacentes;
-	while (adj != NULL) {
-		Vertice* adj_v = adj->vertice_adjacente;
-		if (adj_v->visitado == 0) {
-			dfs(g, adj_v);
-		}
-		adj = adj->proximo;
-	}
-}
-
-//Encontra o vertice com o geocodigo 
-void TravessiaProfundidade(Grafo* g, char geocodigo[]) {
-
-	Vertice* v = encontrarVertice(g, geocodigo); 
-	if (v != NULL) {
-		dfs(g, v);
-	}
-}
