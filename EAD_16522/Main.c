@@ -38,11 +38,19 @@ int main() {
 	Grafo* g = NULL; 
 
 	//Representar os meios de transporte em vertices 
-	criarVertices(&g, meioTransporte_1);  
+	criarVertices(&g, meioTransporte_1); 
 
-	//criarArestas(g);  
-	 
-			
+	
+	// Inserir arestas para cada par de meios de transporte
+	for (Transporte* t1 = meioTransporte_1; t1 != NULL; t1 = t1->seguinte) {
+		for (Transporte* t2 = t1->seguinte; t2 != NULL; t2 = t2->seguinte) {
+			//float distancia = calcularDistancia(t1->latitude, t1->longitude, t2->latitude, t2->longitude); 
+			criarAresta(g, t1->codigo, t2->codigo, 2);
+			//criarAresta(g, t2->codigo, t1->codigo, 2); // adicionar também a aresta inversa
+		}
+	} 
+
+
 	//Variáveis de switch case
 	int opcao;
 	int gestor;
@@ -197,7 +205,11 @@ int main() {
 
 						case 14: //TESTES 
 							//Listar os vértices na consola 
-							listarVertices(grafo_1); 
+							//listarVertices(g); 
+
+							system("pause"); 
+
+							imprimirGrafo(g); 
 
 							 
 							system("pause"); 

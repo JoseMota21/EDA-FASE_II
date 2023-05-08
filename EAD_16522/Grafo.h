@@ -41,11 +41,11 @@ typedef struct grafo {
 int criarVertices(Grafo** g, Transporte* meios); 
 
 //Lista os vertices na consola 
-void listarVertices(Grafo* g); 
+void listarVertices(Grafo* g);  
 
-void criarArestas(Grafo* g); 
+void criarAresta(Grafo* g, int origem, int destino, float peso); 
 
-void imprimirArestas(Grafo* g); 
 
 Grafo* criarGrafo(); 
 
+void imprimirGrafo(Grafo* g); 

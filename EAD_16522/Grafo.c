@@ -5,7 +5,7 @@
 #include <stdbool.h>
 #include "Grafo.h"  
 
-int criarVertices(Grafo** g, Transporte * meios) { 
+int criarVertices(Grafo** g, Transporte* meios) {
 
 	int VerticeID = 1;
 	Transporte* atual = meios;
@@ -23,7 +23,7 @@ int criarVertices(Grafo** g, Transporte * meios) {
 		novo->clientes = NULL;
 		novo->seguinte = NULL;
 		novo->adjacencias = NULL; // inicializar as adjacências como NULL
-		
+
 		if (*g == NULL) {
 			*g = criarGrafo();
 			if (*g == NULL) {
@@ -43,7 +43,7 @@ int criarVertices(Grafo** g, Transporte * meios) {
 		atual = atual->seguinte;
 	}
 	return 1;
-} 
+}
 
 //Criar Grafo 
 Grafo* criarGrafo() {
@@ -52,8 +52,8 @@ Grafo* criarGrafo() {
 		g->vertices = NULL;
 	}
 	return g;
-} 
- 
+}
+
 //Listar na consola os vertices que representam os meios de transporte 
 void listarVertices(Grafo* g) {
 
@@ -61,9 +61,9 @@ void listarVertices(Grafo* g) {
 
 	while (vertice != NULL) {
 
-		printf("VERTICES: %d, %d, %s, %.2f, %s\n",vertice->VerticeID, vertice->ID, vertice->Tipo, vertice->bateria, vertice->geocodigo); 
-		
-		vertice = vertice->seguinte; 
+		printf("VERTICES: %d, %d, %s, %.2f, %s\n", vertice->VerticeID, vertice->ID, vertice->Tipo, vertice->bateria, vertice->geocodigo);
+
+		vertice = vertice->seguinte;
 
 	}
 
@@ -107,6 +107,23 @@ void criarAresta(Grafo* g, int origem, int destino, float peso) {
 			atual = atual->proximo;
 		}
 		atual->proximo = novaAresta;
+	}
+}
+
+void imprimirGrafo(Grafo* g) {
+	Vertice* atualVertice = g->vertices;
+
+	while (atualVertice != NULL) {
+		//printf("Vertice %d:\n", atualVertice->ID);
+		 
+		Aresta* atualAresta = atualVertice->adjacencias;
+
+		while (atualAresta != NULL) {
+			printf("\t%d -> %d Peso: %.2f \n", atualVertice->ID, atualAresta->vertice_adjacente, atualAresta->peso);
+			atualAresta = atualAresta->proximo;
+		}
+
+		atualVertice = atualVertice->seguinte; 
 	}
 }
 
