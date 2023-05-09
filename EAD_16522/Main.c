@@ -6,6 +6,7 @@
 #include "Gestor.h"
 #include "Historico.h"
 #include "Grafo.h"
+#include "API.h"
 #include <stdlib.h>
 #include<stdbool.h>
 
@@ -16,9 +17,10 @@ int main() {
 	Cliente* cliente_1 = NULL; // Lista ligada clientes vazia 
 	Gestor* gestor_1 = NULL; // Lista ligada clientes vazia 
 
-	Grafo* grafo_1 = NULL; // Lista ligada clientes vazia  
-	HistoricoRegisto* historico_1 = NULL; //Lista ligada historico vazia 
+	Grafo* g = NULL; 
 
+	//Grafo* grafo_1 = NULL; // Lista ligada clientes vazia  
+	HistoricoRegisto* historico_1 = NULL; //Lista ligada historico vazia 
 
 	//Informa qual o cliente que está logado no sistema 
 	Cliente* logado = NULL;
@@ -35,22 +37,6 @@ int main() {
 	//Ler ficheiro Historico 
 	historico_1 = lerficheirohistorico(historico_1); 
 
-	Grafo* g = NULL; 
-
-	//Representar os meios de transporte em vertices 
-	criarVertices(&g, meioTransporte_1); 
-
-	
-	// Inserir arestas para cada par de meios de transporte
-	for (Transporte* t1 = meioTransporte_1; t1 != NULL; t1 = t1->seguinte) {
-		for (Transporte* t2 = t1->seguinte; t2 != NULL; t2 = t2->seguinte) {
-			//float distancia = calcularDistancia(t1->latitude, t1->longitude, t2->latitude, t2->longitude); 
-			criarAresta(g, t1->codigo, t2->codigo, 2);
-			criarAresta(g, t2->codigo, t1->codigo, 2); // adicionar também a aresta inversa
-		} 
-	} 
-
-
 	//Variáveis de switch case
 	int opcao;
 	int gestor;
@@ -60,6 +46,8 @@ int main() {
 	char localizacaoAtu[100];
 	char tipoMeio[80];
 	int raio; 
+	//variaveis para as coordenadas convertidas 
+	float lat1, lng1, lat2, lng2; 
 
 	do {
 		system("cls");
@@ -130,7 +118,7 @@ int main() {
 						printf("--------------------------------------------------\n");
 						printf("\n");
 						printf("16 - SAIR\n");
-						scanf("%d", &gestor);
+						scanf("%d", &gestor); 
 
 						system("cls");
 
@@ -145,11 +133,11 @@ int main() {
 							break;
 						case 3:
 							//Remover transporte da lista
-							RemoverTransporte(meioTransporte_1);
+							meioTransporte_1 = RemoverTransporte(meioTransporte_1);
 							break;
 						case 4:
 							//Remover cliente da lista
-							RemoverCliente(cliente_1);
+							cliente_1 = RemoverCliente(cliente_1);
 							break;
 						case 5:
 							//Ordenar transporte por ordem decrescente
@@ -182,7 +170,7 @@ int main() {
 							break;
 						case 10:
 							//Consultar o historico de que cliente
-							consultarhistorico (historico_1);
+							consultarhistorico(historico_1);
 							system("pause"); // Pausa no sistema, pressionar alguma tecla para proseguir
 							system("cls");
 							break;
@@ -205,6 +193,9 @@ int main() {
 							inferior50(meioTransporte_1); 
 							break; 
 						case 14:
+							//Representar os meios de transporte em vertices 
+							criarVertices(&g, meioTransporte_1); 
+
 							//Listar os vértices na consola 
 							listarVertices(g); 
 
@@ -212,6 +203,25 @@ int main() {
 							system("cls");
 							break;
 						case 15: 
+
+							//Representar os meios de transporte em vertices (será para remover) 
+							criarVertices(&g, meioTransporte_1);
+
+							// Inserir arestas para cada par de meios de transporte
+							for (Transporte* t1 = meioTransporte_1; t1 != NULL; t1 = t1->seguinte) {
+								for (Transporte* t2 = t1->seguinte; t2 != NULL; t2 = t2->seguinte) {
+									//float distancia = calcularDistancia(t1->latitude, t1->longitude, t2->latitude, t2->longitude); 
+
+									get_coordinates(t1->geocodigo, API_KEY, &lat1, &lng1);
+									get_coordinates(t2->geocodigo, API_KEY, &lat2, &lng2);
+
+									float distancia = haversine_distance(lat1, lng1, lat2, lng2); 
+
+									criarAresta(g, t1->codigo, t2->codigo, distancia);
+									//criarAresta(g, t2->codigo, t1->codigo, 2); // adicionar também a aresta inversa
+								}
+							}
+
 							//Imprimir Grafo completo (Arestas, Vértice, peso)
 							imprimirGrafo(g);
 

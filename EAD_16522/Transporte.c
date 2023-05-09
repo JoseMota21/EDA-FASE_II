@@ -95,7 +95,7 @@ Transporte* RemoverTransporte(Transporte* inicio) {
 	//Percorrer todos os transportes existentes na lista
 	while (aux != NULL){
 		printf("| %-5d | %-10s | %-8.2f | %-10.2f | %-30s | %-14d |\n", aux->codigo, aux->tipo, aux->bateria, aux->autonomia, aux->geocodigo, aux->disponivel);
-		aux = aux->seguinte;
+		aux = aux->seguinte; 
 	}
 
 	//Variavel para ler o ID do transporte a eliminar
