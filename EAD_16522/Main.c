@@ -46,6 +46,7 @@ int main() {
 	char localizacaoAtu[100];
 	char tipoMeio[80];
 	int raio; 
+
 	//variaveis para as coordenadas convertidas 
 	float lat1, lng1, lat2, lng2; 
 

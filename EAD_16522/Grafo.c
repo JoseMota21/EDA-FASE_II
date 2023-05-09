@@ -103,14 +103,24 @@ int criarAresta(Grafo* g, int origem, int destino, float peso) {
 
 //Imprimir na consola o grafo
 void imprimirGrafo(Grafo* g) {
+
 	Vertice* atualVertice = g->vertices;
 
+	printf("------------------------- GRAFO-------------------\n"); 
+	printf("\n"); 
+
+	//Cabeçalho da tabela
+	printf("|%-5s | %-5s | %-10s|\n", "ORIGEM", "DESTINO", "DISTANCIA"); 
+
+	//Percorrer os vertces
 	while (atualVertice != NULL) {
 				 
-		Aresta* atualAresta = atualVertice->adjacencias;
+		Aresta* atualAresta = atualVertice->adjacencias; 
 
+		//Percorrer as arestas 
 		while (atualAresta != NULL) {
-			printf("\t%d -> %d Peso: %.2f \n", atualVertice->ID, atualAresta->vertice_adjacente, atualAresta->peso);
+
+			printf("|%-5d | %-5d | %-10.2f|\n", atualVertice->ID, atualAresta->vertice_adjacente, atualAresta->peso);
 			atualAresta = atualAresta->proximo;
 		}
 
@@ -139,6 +149,3 @@ void listarVertices(Grafo* g) {
 	printf("\n");
 
 }
-
-
-

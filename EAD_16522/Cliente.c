@@ -486,37 +486,41 @@ int veiculosRaio(char localizacaoAtual[], char tipoMeio[], int raio, Transporte*
 
 	//Variáveis para converter coordenadas 
 	float lat, lng;
-	float lat2, lng2; 
 
+	//Variavel booleana
+	bool encontrado = false; 
+	
 	//Lista dos meios de transporte
 	Transporte* meios = meio;
 
 	//Converter as 3 palavras em coordenadas (lat e lng)
 	get_coordinates(localizacaoAtual, API_KEY, &lat, &lng);
-	get_coordinates(meios->geocodigo, API_KEY, &lat2, &lng2);
-
+	
 	//Percorre os meios de Transporte 
 	while (meios != NULL) {
 
 		//Se o meio de transporte estiver disponivel e o tipo for igual ao introduzido pelo o utilizador
 		if (meios->disponivel && strcmp(meios->tipo, tipoMeio) == 0) {
 			
+			float lat2, lng2;
+
+			get_coordinates(meios->geocodigo, API_KEY, &lat2, &lng2);
+					
 			//Calcula o raio 
-			float distancia = calcularRaio(lat, lng, lat2, lng2);
+			float distancia = calcularRaio(lat, lng, lat2, lng2); 
 
 			//Se a distancia for menor ou igual ao raio mostra os meios de transporte disponiveis 
 			if (distancia <= raio) {
 				printf("NO RAIO DE %d KM O VEICULO COM O ID %d ESTA DISPONVIEL \n", raio, meios->codigo);
+				encontrado = true; 
 			}
-			//Caso não seja informa o utilizador que não tem meios de transporte disponveis no raio indicado 
-			else {
-				printf("NAO E POSSIVEL ENCONTRAR O TIPO DE VEICULO %s NO RAIO DE %d NA LOCALIZACAO %s \n", meios->tipo, raio, localizacaoAtual);
-
-				return; 
-			}
+			
 		}
-		 
 		meios = meios->seguinte;
+	}
+
+	if (!encontrado) {
+		printf("NAO E POSSIVEL ENCONTRAR O TIPO DE VEICULO %s NO RAIO DE %d NA LOCALIZACAO %s \n", meios->tipo, raio, localizacaoAtual);
 	}
 
 	return 0;
