@@ -13,6 +13,7 @@ static size_t write_callback(char* ptr, size_t size, size_t nmemb, void* userdat
 
 //Calcular a distância entre dois pontos
 float haversine_distance(float lat1, float lon1, float lat2, float lon2) {
+    
     float dlat = (lat2 - lat1) * M_PI / 180.0;
     float dlon = (lon2 - lon1) * M_PI / 180.0;
     float a = sin(dlat / 2) * sin(dlat / 2) + cos(lat1 * M_PI / 180.0) * cos(lat2 * M_PI / 180.0) * sin(dlon / 2) * sin(dlon / 2);

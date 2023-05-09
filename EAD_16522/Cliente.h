@@ -63,6 +63,10 @@ void saveAlterarDados(Cliente* inicio);
 //Carregar saldo ao cliente
 Cliente* carregarSaldo(Cliente* cliente_1, int nif); 
 
+//Procurar quais os veiculos que estão naquele raio 
 int veiculosRaio(char localizacaoAtual[], char tipoMeio[], int raio, Transporte* meio); 
+
+//Calcular o raio 
+float calcularRaio(float lat1, float lng1, float lat2, float lng2);
 
 #endif /* CLIENTE_H */ 

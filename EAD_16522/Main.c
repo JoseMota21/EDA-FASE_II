@@ -114,7 +114,6 @@ int main() {
 						printf("14 - LISTAR VERTICES\n");
 						printf("15 - IMPRIMIR GRAFO\n");
 
-
 						printf("--------------------------------------------------\n");
 						printf("\n");
 						printf("16 - SAIR\n");
@@ -203,20 +202,21 @@ int main() {
 							system("cls");
 							break;
 						case 15: 
-
 							//Representar os meios de transporte em vertices (será para remover) 
 							criarVertices(&g, meioTransporte_1);
 
 							// Inserir arestas para cada par de meios de transporte
 							for (Transporte* t1 = meioTransporte_1; t1 != NULL; t1 = t1->seguinte) {
 								for (Transporte* t2 = t1->seguinte; t2 != NULL; t2 = t2->seguinte) {
-									//float distancia = calcularDistancia(t1->latitude, t1->longitude, t2->latitude, t2->longitude); 
-
+									
+									//Converter 3 palavras do what3words em coordenadas (latitude e longitude)
 									get_coordinates(t1->geocodigo, API_KEY, &lat1, &lng1);
 									get_coordinates(t2->geocodigo, API_KEY, &lat2, &lng2);
-
+									
+									//Calcular a distancia entre os vertices
 									float distancia = haversine_distance(lat1, lng1, lat2, lng2); 
-
+									
+									//Criar as arestas entre os vertices (Transporte 1 e Transporte 2)
 									criarAresta(g, t1->codigo, t2->codigo, distancia);
 									//criarAresta(g, t2->codigo, t1->codigo, 2); // adicionar também a aresta inversa
 								}
@@ -260,7 +260,7 @@ int main() {
 					printf("4 - DESALUGAR TRANSPORTE\n");
 					printf("5 - CARREGAR SALDO\n");
 					printf("6 - CONSULTAR HISTORICO\n");
-					printf("7 - TESTE\n");
+					printf("7 - PROCURAR PELO O RAIO\n");
 					printf("--------------------------------------------------\n");
 					printf("8 - SAIR\n");
 					scanf("%d", &cliente);
@@ -291,7 +291,7 @@ int main() {
 						consultarHistoricoCliente(historico_1, logado->NIF); 
 						break;
 					case 7: 
-						//TESTES 
+						//Procurar pelo o raio 
 						getchar(); 
 						//Inserir a localização Atual 
 						printf("INSERIR A LOCALIZACAO ATUAL\n");
@@ -306,12 +306,11 @@ int main() {
 						printf("INSERIR O RAIO DE PESQUISA\n");
 						scanf("%d", &raio); 
 
-						//Função 
+						//Diz quais os meios de transporte disponiveis no raio a pesquisar 
 						veiculosRaio(localizacaoAtu, tipoMeio, raio, meioTransporte_1);  
 
 						system("pause"); 
 						system("cls"); 
-
 						break; 
 					default:
 						//Caso nenhuma opcao for inserida corretamente informa o utilizar 

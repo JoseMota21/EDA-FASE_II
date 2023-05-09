@@ -481,52 +481,63 @@ Cliente* carregarSaldo(Cliente* cliente, int nif) {
 	return cliente; 
 }  
 
-//Localizar meios de Transporte por Raio 
-int veiculosRaio (char localizacaoAtual[], char tipoMeio[], int raio, Transporte* meio ) {
+//Localizar meios de Transporte por Raio
+int veiculosRaio(char localizacaoAtual[], char tipoMeio[], int raio, Transporte* meio) {
 
-	//Variávies auxiliares 
-	float lat, lng; 
-	float lat2, lng2;
+	//Variáveis para converter coordenadas 
+	float lat, lng;
+	float lat2, lng2; 
 
+	//Lista dos meios de transporte
 	Transporte* meios = meio;
 
-	//Função para converters as palavras em coordenadas 
-	get_coordinates(localizacaoAtual, API_KEY, &lat, &lng); 
-	get_coordinates(meio->geocodigo, API_KEY, &lat2, &lng2);
+	//Converter as 3 palavras em coordenadas (lat e lng)
+	get_coordinates(localizacaoAtual, API_KEY, &lat, &lng);
+	get_coordinates(meios->geocodigo, API_KEY, &lat2, &lng2);
 
-		while (meios != NULL) {
-		
-		if (meios->disponivel && strcmp(meios->tipo, tipoMeio) == 0) { 
+	//Percorre os meios de Transporte 
+	while (meios != NULL) {
 
-			// Converte as coordenadas de graus para radianos
-			const double PI = acos(-1.0);
-			lat *= PI / 180.0;
-			lng *= PI / 180.0;
-			lat2 *= PI / 180.0;
-			lng2 *= PI / 180.0;
+		//Se o meio de transporte estiver disponivel e o tipo for igual ao introduzido pelo o utilizador
+		if (meios->disponivel && strcmp(meios->tipo, tipoMeio) == 0) {
+			
+			//Calcula o raio 
+			float distancia = calcularRaio(lat, lng, lat2, lng2);
 
-			// Calcula a distância entre as coordenadas utilizando a fórmula de Haversine
-			const double R = 6371.0; // Raio médio da Terra em km
-			const double dLat = lat2 - lat;
-			const double dLon = lng2 - lng;
-			const double a = sin(dLat / 2.0) * sin(dLat / 2.0) + cos(lat) * cos(lat) * sin(dLon / 2.0) * sin(dLon / 2.0);
-			const double c = 2.0 * atan2(sqrt(a), sqrt(1.0 - a));
-			const double distancia = R * c;
-
-			// Verifica se a distância está dentro do raio
+			//Se a distancia for menor ou igual ao raio mostra os meios de transporte disponiveis 
 			if (distancia <= raio) {
 				printf("NO RAIO DE %d KM O VEICULO COM O ID %d ESTA DISPONVIEL \n", raio, meios->codigo);
 			}
+			//Caso não seja informa o utilizador que não tem meios de transporte disponveis no raio indicado 
 			else {
-				printf("NAO E POSSIVEL ENCONTRAR O TIPO DE VEICULO %s NO RAIO DE %d NA LOCALIZACAO %s \n", meios->tipo, raio, localizacaoAtual); 
+				printf("NAO E POSSIVEL ENCONTRAR O TIPO DE VEICULO %s NO RAIO DE %d NA LOCALIZACAO %s \n", meios->tipo, raio, localizacaoAtual);
+
+				return; 
 			}
 		}
-
+		 
 		meios = meios->seguinte;
 	}
 
 	return 0;
 }
+
+//Calcula o raio 
+float calcularRaio(float lat1, float lng1, float lat2, float lng2) {
+	
+	//Converte as coordenadas de graus para radianos
+	const float PI = acos(-1.0);
+	lat1 *= PI / 180.0;
+	lng1 *= PI / 180.0;
+	lat2 *= PI / 180.0;
+	lng2 *= PI / 180.0;
+
+	//Calcula a distancia entre dois pontos 
+	float distancia = haversine_distance(lat1, lng1, lat2, lng2);  
+
+	return distancia;
+}
+
 
 
 

@@ -27,7 +27,6 @@ typedef struct Aresta {
     struct Aresta* proximo;
 } Aresta;
 
-
 //Estrutura para grafo 
 typedef struct grafo {
     
