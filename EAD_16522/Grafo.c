@@ -17,12 +17,14 @@ int criarVertices(Grafo** g, Transporte* meios) {
 		strcpy(novo->geocodigo, atual->geocodigo);
 		strcpy(novo->Tipo, atual->tipo);
 		novo->ID = atual->codigo;
+
 		novo->bateria = atual->bateria;
 		novo->meios = atual;
 		novo->VerticeID = VerticeID;
 		novo->clientes = NULL;
 		novo->seguinte = NULL;
 		novo->adjacencias = NULL; // inicializar as adjacências como NULL
+
 
 		if (*g == NULL) {
 			*g = criarGrafo();
@@ -94,7 +96,7 @@ void criarAresta(Grafo* g, int origem, int destino, float peso) {
 
 	// Adicionar a aresta
 	Aresta* novaAresta = malloc(sizeof(Aresta));
-	novaAresta->vertice_adjacente = atualDestino->VerticeID;
+	novaAresta->vertice_adjacente = atualDestino->ID; 
 	novaAresta->peso = peso;
 	novaAresta->proximo = NULL;
 

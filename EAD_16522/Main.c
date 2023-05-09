@@ -46,8 +46,8 @@ int main() {
 		for (Transporte* t2 = t1->seguinte; t2 != NULL; t2 = t2->seguinte) {
 			//float distancia = calcularDistancia(t1->latitude, t1->longitude, t2->latitude, t2->longitude); 
 			criarAresta(g, t1->codigo, t2->codigo, 2);
-			//criarAresta(g, t2->codigo, t1->codigo, 2); // adicionar também a aresta inversa
-		}
+			criarAresta(g, t2->codigo, t1->codigo, 2); // adicionar também a aresta inversa
+		} 
 	} 
 
 
@@ -123,11 +123,13 @@ int main() {
 						printf("11 - INSERIR GESTOR\n"); 
 						printf("12 - LOCALIZAR TRANSPORTE POR LOCALIDADE\n");
 						printf("13 - MEIOS DE TRANSPORTE COM BATERIA INFERIOR A 50\n");
-						printf("14 - TESTES\n");
+						printf("14 - LISTAR VERTICES\n");
+						printf("15 - IMPRIMIR GRAFO\n");
+
 
 						printf("--------------------------------------------------\n");
 						printf("\n");
-						printf("15 - SAIR\n");
+						printf("16 - SAIR\n");
 						scanf("%d", &gestor);
 
 						system("cls");
@@ -202,26 +204,26 @@ int main() {
 							//Listar os meios de transporte com bateria inferior a 50% 
 							inferior50(meioTransporte_1); 
 							break; 
-
-						case 14: //TESTES 
+						case 14:
 							//Listar os vértices na consola 
-							//listarVertices(g); 
+							listarVertices(g); 
 
 							system("pause"); 
+							system("cls");
+							break;
+						case 15: 
+							//Imprimir Grafo completo (Arestas, Vértice, peso)
+							imprimirGrafo(g);
 
-							imprimirGrafo(g); 
-
-							 
 							system("pause"); 
 							system("cls"); 
-
 							break; 
 						default:
 							//Caso nenhuma opcao for inserida corretamente informa o utilizar 
 							printf("OPCAO INVALIDA\n");
 							break;
 						}
-					} while (gestor != 15); // Voltar para o menu anterior
+					} while (gestor != 16); // Voltar para o menu anterior
 				}	break;
 			}while (gestorech != 0); //voltar para o menu anterior
 			}
