@@ -22,7 +22,7 @@ int ExisteTransporte(Transporte* inicio, int id) {
 }
 
 //Escrever novo transporte através do teclado
-Transporte* inputTransporte(Transporte* meioTransporte_1) {
+Transporte* inputTransporte(Grafo* g, Transporte* meioTransporte_1) {
 
 	//Alocar a capacidade necessária de memoria e indica o tamanho de espaço de memoria a ser alocado 
 	Transporte* novoTransporte = (Transporte*)malloc(sizeof(Transporte));
@@ -69,8 +69,10 @@ Transporte* inputTransporte(Transporte* meioTransporte_1) {
 
 	//Adicionar o novo meio de transporte ao início da lista
 	novoTransporte->seguinte = meioTransporte_1; 
-	meioTransporte_1 = novoTransporte; 
+	meioTransporte_1 = novoTransporte;
 
+	adicionarVertice(&g, novoTransporte->codigo, novoTransporte->tipo, novoTransporte->bateria, novoTransporte->geocodigo); 
+	
 	//Guardar os dados da lista ligada no ficheiro txt 
 	saveficheiroTransporte (novoTransporte);
 
@@ -577,4 +579,5 @@ Transporte* inferior50(Transporte* inicio) {
 		inicio = inicio->seguinte; 
 	}
 
-}
+} 
+

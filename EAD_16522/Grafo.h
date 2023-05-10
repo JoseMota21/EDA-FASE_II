@@ -3,17 +3,19 @@
 #include "Transporte.h" 
 #include "Cliente.h"
 
+/* 
+
 //Estrutura para vertices
 typedef struct vertice {
     char geocodigo[100]; // What3Words
-    int ID;              // ID do meio de transporte 
+    int ID;              // ID do meio de transporte
     int VerticeID;
     float bateria;       // Bateria do meio de transporte
     char Tipo[20];
 
-    Cliente* clientes; 
+    Cliente* clientes;
     Transporte* meios;
-    
+
     struct aresta* adjacencias; // Lista de adjacências
     struct vertice* seguinte;
 } Vertice;
@@ -25,14 +27,16 @@ typedef struct Aresta {
     struct Aresta* proximo;
 } Aresta;
 
-//Estrutura para grafo 
+//Estrutura para grafo
 typedef struct grafo {
-    
-    int numeroVertices; 
 
-    Aresta* arestas; 
-    Vertice* vertices;  
+    int numeroVertices;
+
+    Aresta* arestas;
+    Vertice* vertices;
 } Grafo;
+
+*/
  
 //Criar vertices para os meios de transporte
 Vertice* criarVertices(Grafo** g, Transporte* meios); 
@@ -52,4 +56,5 @@ void imprimirGrafo(Grafo* g);
 //Guardar grafo em ficheiro txt 
 Grafo* guardarGrafo(Grafo* g);   
 
+//void adicionarVertice(Grafo* g, int id, char tipo[], float bateria, char geocodigo[]); 
 

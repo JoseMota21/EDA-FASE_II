@@ -16,14 +16,11 @@ int main() {
 	Transporte* meioTransporte_1 = NULL; // Lista ligada transportes vazia  
 	Cliente* cliente_1 = NULL; // Lista ligada clientes vazia 
 	Gestor* gestor_1 = NULL; // Lista ligada clientes vazia 
-	
 	Grafo* grafo_1 = NULL; // Lista ligada vazia 
-
-	//Grafo* grafo_1 = NULL; // Lista ligada clientes vazia  
+	Vertice* vertices = NULL; // Lista ligada vazia 
 	HistoricoRegisto* historico_1 = NULL; //Lista ligada historico vazia 
-
-	//Informa qual o cliente que está logado no sistema 
-	Cliente* logado = NULL;
+	Cliente* logado = NULL; //Informa qual o cliente que está logado no sistema 
+	
 
 	//Ler ficheiro bin meio de transporte
 	meioTransporte_1 = lerFicheiroTransporte (meioTransporte_1);
@@ -38,7 +35,7 @@ int main() {
 	historico_1 = lerficheirohistorico(historico_1); 
 
 	//Representar os meios de transporte em vertices 
-	criarVertices(&grafo_1, meioTransporte_1); 
+	vertices = criarVertices(&grafo_1, meioTransporte_1); 
 
 	//Variáveis de switch case
 	int opcao;
@@ -128,7 +125,7 @@ int main() {
 						switch (gestor) {
 						case 1:
 							//Inserir meio de transporte no inicio da lista
-							meioTransporte_1 = inputTransporte(meioTransporte_1); 
+							meioTransporte_1 = inputTransporte(vertices,meioTransporte_1); 
 
 							break;
 						case 2:
@@ -203,7 +200,7 @@ int main() {
 							system("pause"); 
 							system("cls");
 							break;
-						case 15: 
+						case 15:  
 							// Inserir arestas para cada par de meios de transporte
 							for (Transporte* t1 = meioTransporte_1; t1 != NULL; t1 = t1->seguinte) {
 								for (Transporte* t2 = t1->seguinte; t2 != NULL; t2 = t2->seguinte) {

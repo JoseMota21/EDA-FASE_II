@@ -11,7 +11,7 @@ Vertice* criarVertices(Grafo** g, Transporte* meios) {
 	int VerticeID = 1;
 	Transporte* atual = meios;
 
-	while (atual != NULL) {
+	while (atual != NULL) { 
 
 		Vertice* novo = malloc(sizeof(Vertice));
 
@@ -22,7 +22,7 @@ Vertice* criarVertices(Grafo** g, Transporte* meios) {
 		novo->bateria = atual->bateria;
 		novo->meios = atual;
 		novo->VerticeID = VerticeID;
-		novo->clientes = NULL;
+		//novo->clientes = NULL;
 		novo->seguinte = NULL;
 		novo->adjacencias = NULL; // inicializar as adjacências como NULL
 
@@ -190,3 +190,27 @@ Grafo* guardarGrafo(Grafo* g) {
 	fclose(ficheiroGrafo);
 	return 1; 
 } 
+
+void adicionarVertice(Grafo* g, int id, char tipo[], float bateria, char geocodigo[]) {
+
+	Vertice* novoVertice = malloc(sizeof(Vertice));
+
+	novoVertice->ID = id;
+	strcpy(novoVertice->Tipo, tipo);
+	novoVertice->bateria = bateria;
+	strcpy(novoVertice->geocodigo, geocodigo);
+	novoVertice->adjacencias = NULL;
+	novoVertice->seguinte = NULL;
+
+	// Verificar se o grafo está vazio
+	if (g->vertices == NULL) {
+		g->vertices = novoVertice;
+	}
+	else {
+		Vertice* atual = g->vertices;
+		while (atual->seguinte != NULL) {
+			atual = atual->seguinte;
+		}
+		atual->seguinte = novoVertice;
+	}
+}
