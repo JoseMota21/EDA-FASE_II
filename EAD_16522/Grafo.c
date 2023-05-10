@@ -5,8 +5,8 @@
 #include <stdbool.h>
 #include "Grafo.h"  
 
-//Criar vertices 
-int criarVertices(Grafo** g, Transporte* meios) {
+//Criar vertices lista ligada de vertices 
+Vertice* criarVertices(Grafo** g, Transporte* meios) {
 
 	int VerticeID = 1;
 	Transporte* atual = meios;
@@ -45,10 +45,10 @@ int criarVertices(Grafo** g, Transporte* meios) {
 		VerticeID++;
 		atual = atual->seguinte;
 	}
-	return 1;
-}
+	return atual;
+} 
 
-//Criar Grafo 
+//Criar Grafo  lista ligada 
 Grafo* criarGrafo() {
 	Grafo* g = malloc(sizeof(Grafo));
 	if (g != NULL) {
@@ -57,8 +57,8 @@ Grafo* criarGrafo() {
 	return g;
 }
 
-//Criar arestas
-int criarAresta(Grafo* g, int origem, int destino, float peso) {
+//Criar arestas lista ligada simples 
+Aresta* criarAresta(Grafo* g, int origem, int destino, float peso) {
 
 	Vertice* atualOrigem = g->vertices;
 	Vertice* atualDestino = g->vertices;
@@ -69,21 +69,22 @@ int criarAresta(Grafo* g, int origem, int destino, float peso) {
 	}
 	if (atualOrigem == NULL) {
 
-		printf("Erro: vértice de origem não encontrado.\n");
+		printf("VERTICE ORIGEM NAO ENCONTRADO.\n");
 		return -1; //Caso haja erro
 	}
 
-	// Procurar o vértice de destino
+	// Procurar o vértice de destino 
 	while (atualDestino != NULL && atualDestino->ID != destino) {
 		atualDestino = atualDestino->seguinte;
 	}
 	if (atualDestino == NULL) {
-		printf("Erro: vértice de destino não encontrado.\n");
+		printf("VERTICE DE DESTINO NAO ENCONTRADO\n");
 		return -1; // caso haja erro
 	}
 
 	// Adicionar a aresta
-	Aresta* novaAresta = malloc(sizeof(Aresta));
+	Aresta* novaAresta = malloc(sizeof(Aresta)); 
+
 	novaAresta->vertice_adjacente = atualDestino->ID; 
 	novaAresta->peso = peso;
 	novaAresta->proximo = NULL;
@@ -101,7 +102,7 @@ int criarAresta(Grafo* g, int origem, int destino, float peso) {
 
 	guardarGrafo(g); 
 
-	return 0; // Função executada com sucesso
+	return novaAresta; // Função executada com sucesso
 }
 
 //Imprimir na consola o grafo
@@ -110,7 +111,7 @@ void imprimirGrafo(Grafo* g) {
 	Vertice* atualVertice = g->vertices;
 
 	printf("------------------------- GRAFO-------------------\n"); 
-	printf("\n"); 
+	printf("\n");
 
 	//Cabeçalho da tabela
 	printf("|%-5s | %-5s | %-10s|\n", "ORIGEM", "DESTINO", "DISTANCIA"); 
@@ -133,7 +134,7 @@ void imprimirGrafo(Grafo* g) {
 } 
 
 //Listar na consola os vertices que representam os meios de transporte 
-void listarVertices(Grafo* g) {
+Vertice* listarVertices(Grafo* g) {
 
 	Vertice* vertice = g->vertices; //primeiro vertice  
 
@@ -152,10 +153,12 @@ void listarVertices(Grafo* g) {
 
 	printf("\n");
 
+	return vertice; 
+
 }
 
 //Guardar grafo em ficheiro txt 
-void guardarGrafo(Grafo* g) {
+Grafo* guardarGrafo(Grafo* g) {
 
 	Vertice* atualVertice = g->vertices;
 	Aresta* atualAresta;
@@ -166,7 +169,7 @@ void guardarGrafo(Grafo* g) {
 
 	if (ficheiroGrafo == NULL) {
 		printf("Erro ao criar arquivo!\n");
-		return;
+		return 0;
 	}
 
 	//Escrever os dados formatados do grafo no arquivo
@@ -185,5 +188,5 @@ void guardarGrafo(Grafo* g) {
 
 	//Fechar o arquivo
 	fclose(ficheiroGrafo);
-
+	return 1; 
 } 

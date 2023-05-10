@@ -16,7 +16,8 @@ int main() {
 	Transporte* meioTransporte_1 = NULL; // Lista ligada transportes vazia  
 	Cliente* cliente_1 = NULL; // Lista ligada clientes vazia 
 	Gestor* gestor_1 = NULL; // Lista ligada clientes vazia 
-	Grafo* g = NULL; // Lista ligada vazia 
+	
+	Grafo* grafo_1 = NULL; // Lista ligada vazia 
 
 	//Grafo* grafo_1 = NULL; // Lista ligada clientes vazia  
 	HistoricoRegisto* historico_1 = NULL; //Lista ligada historico vazia 
@@ -35,6 +36,9 @@ int main() {
 
 	//Ler ficheiro Historico 
 	historico_1 = lerficheirohistorico(historico_1); 
+
+	//Representar os meios de transporte em vertices 
+	criarVertices(&grafo_1, meioTransporte_1); 
 
 	//Variáveis de switch case
 	int opcao;
@@ -124,7 +128,8 @@ int main() {
 						switch (gestor) {
 						case 1:
 							//Inserir meio de transporte no inicio da lista
-							meioTransporte_1 = inputTransporte(meioTransporte_1);
+							meioTransporte_1 = inputTransporte(meioTransporte_1); 
+
 							break;
 						case 2:
 							//Inserir cliente no inicio da lista
@@ -191,20 +196,14 @@ int main() {
 							//Listar os meios de transporte com bateria inferior a 50% 
 							inferior50(meioTransporte_1); 
 							break; 
-						case 14:
-							//Representar os meios de transporte em vertices 
-							criarVertices(&g, meioTransporte_1); 
-
+						case 14: 
 							//Listar os vértices na consola 
-							listarVertices(g); 
+							listarVertices(grafo_1); 
 
 							system("pause"); 
 							system("cls");
 							break;
 						case 15: 
-							//Representar os meios de transporte em vertices (será para remover) 
-							criarVertices(&g, meioTransporte_1);
-
 							// Inserir arestas para cada par de meios de transporte
 							for (Transporte* t1 = meioTransporte_1; t1 != NULL; t1 = t1->seguinte) {
 								for (Transporte* t2 = t1->seguinte; t2 != NULL; t2 = t2->seguinte) {
@@ -217,13 +216,13 @@ int main() {
 									float distancia = haversine_distance(lat1, lng1, lat2, lng2); 
 									
 									//Criar as arestas entre os vertices (Transporte 1 e Transporte 2)
-									criarAresta(g, t1->codigo, t2->codigo, distancia);
+									criarAresta(grafo_1, t1->codigo, t2->codigo, distancia);
 									//criarAresta(g, t2->codigo, t1->codigo, 2); // adicionar também a aresta inversa
 								}
 							}
 
 							//Imprimir Grafo completo (Arestas, Vértice, peso)
-							imprimirGrafo(g);
+							imprimirGrafo(grafo_1);
 
 							system("pause"); 
 							system("cls"); 
@@ -233,7 +232,8 @@ int main() {
 							printf("OPCAO INVALIDA\n");
 							break;
 						}
-					} while (gestor != 16); // Voltar para o menu anterior
+					} while (gestor != 16); // Voltar para o menu anterior 
+
 				}	break;
 			}while (gestorech != 0); //voltar para o menu anterior
 			}

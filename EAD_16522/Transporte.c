@@ -68,8 +68,8 @@ Transporte* inputTransporte(Transporte* meioTransporte_1) {
 	novoTransporte->disponivel = 1; 
 
 	//Adicionar o novo meio de transporte ao início da lista
-	novoTransporte->seguinte = meioTransporte_1;
-	meioTransporte_1 = novoTransporte;
+	novoTransporte->seguinte = meioTransporte_1; 
+	meioTransporte_1 = novoTransporte; 
 
 	//Guardar os dados da lista ligada no ficheiro txt 
 	saveficheiroTransporte (novoTransporte);

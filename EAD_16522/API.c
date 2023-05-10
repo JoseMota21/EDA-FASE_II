@@ -43,7 +43,7 @@ int get_coordinates(const char* words, const char* api_key, float* latitude, flo
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_callback);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void*)response);
 
-    // Enviar a requisição HTTP
+    // Enviar a requisição HTTP 
     CURLcode res = curl_easy_perform(curl);
     if (res != CURLE_OK) {
         printf("Erro ao enviar a requisição HTTP: %s\n", curl_easy_strerror(res));

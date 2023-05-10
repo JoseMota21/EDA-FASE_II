@@ -35,13 +35,13 @@ typedef struct grafo {
 } Grafo;
  
 //Criar vertices para os meios de transporte
-int criarVertices(Grafo** g, Transporte* meios); 
+Vertice* criarVertices(Grafo** g, Transporte* meios); 
 
 //Lista os vertices na consola dos meios de transporte
-void listarVertices(Grafo* g);  
+Vertice* listarVertices(Grafo* g);  
 
 //Criar arestas nos meios de transporte
-int criarAresta(Grafo* g, int origem, int destino, float peso); 
+Aresta* criarAresta(Grafo* g, int origem, int destino, float peso); 
 
 //Criar grafo dos meios de transporte
 Grafo* criarGrafo(); 
@@ -49,4 +49,7 @@ Grafo* criarGrafo();
 //Imprimir o grafo dos meios de transporte
 void imprimirGrafo(Grafo* g); 
 
-void guardarGrafo(Grafo* g); 
+//Guardar grafo em ficheiro txt 
+Grafo* guardarGrafo(Grafo* g);   
+
+
