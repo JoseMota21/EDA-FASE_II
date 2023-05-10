@@ -6,9 +6,9 @@
 //Estrutura para vertices
 typedef struct vertice {
     char geocodigo[100]; // What3Words
-    int ID; // ID do meio de transporte 
+    int ID;              // ID do meio de transporte 
     int VerticeID;
-    float bateria; // Bateria do meio de transporte
+    float bateria;       // Bateria do meio de transporte
     char Tipo[20];
 
     Cliente* clientes; 
@@ -21,8 +21,6 @@ typedef struct vertice {
 //Estrutura para as arestas
 typedef struct Aresta {
     int vertice_adjacente;
-    //int origem; 
-   // int destino; 
     float peso;
     struct Aresta* proximo;
 } Aresta;
@@ -50,3 +48,5 @@ Grafo* criarGrafo();
 
 //Imprimir o grafo dos meios de transporte
 void imprimirGrafo(Grafo* g); 
+
+void guardarGrafo(Grafo* g); 

@@ -16,8 +16,7 @@ int main() {
 	Transporte* meioTransporte_1 = NULL; // Lista ligada transportes vazia  
 	Cliente* cliente_1 = NULL; // Lista ligada clientes vazia 
 	Gestor* gestor_1 = NULL; // Lista ligada clientes vazia 
-
-	Grafo* g = NULL; 
+	Grafo* g = NULL; // Lista ligada vazia 
 
 	//Grafo* grafo_1 = NULL; // Lista ligada clientes vazia  
 	HistoricoRegisto* historico_1 = NULL; //Lista ligada historico vazia 
@@ -306,7 +305,7 @@ int main() {
 
 						printf("INSERIR O RAIO DE PESQUISA\n");
 						scanf("%d", &raio); 
-
+						
 						//Diz quais os meios de transporte disponiveis no raio a pesquisar 
 						veiculosRaio(localizacaoAtu, tipoMeio, raio, meioTransporte_1);  
 

@@ -59,6 +59,7 @@ Grafo* criarGrafo() {
 
 //Criar arestas
 int criarAresta(Grafo* g, int origem, int destino, float peso) {
+
 	Vertice* atualOrigem = g->vertices;
 	Vertice* atualDestino = g->vertices;
 
@@ -98,6 +99,8 @@ int criarAresta(Grafo* g, int origem, int destino, float peso) {
 		atual->proximo = novaAresta;
 	}
 
+	guardarGrafo(g); 
+
 	return 0; // Função executada com sucesso
 }
 
@@ -126,6 +129,7 @@ void imprimirGrafo(Grafo* g) {
 
 		atualVertice = atualVertice->seguinte; 
 	}
+ 
 } 
 
 //Listar na consola os vertices que representam os meios de transporte 
@@ -149,3 +153,37 @@ void listarVertices(Grafo* g) {
 	printf("\n");
 
 }
+
+//Guardar grafo em ficheiro txt 
+void guardarGrafo(Grafo* g) {
+
+	Vertice* atualVertice = g->vertices;
+	Aresta* atualAresta;
+
+
+	//Abrir o arquivo para escrita 
+	FILE* ficheiroGrafo = fopen("Grafo.txt", "w");
+
+	if (ficheiroGrafo == NULL) {
+		printf("Erro ao criar arquivo!\n");
+		return;
+	}
+
+	//Escrever os dados formatados do grafo no arquivo
+	fprintf(ficheiroGrafo, "ORIGEM;DESTINO;DISTANCIA\n");
+
+	while (atualVertice != NULL) {
+		atualAresta = atualVertice->adjacencias;
+
+		while (atualAresta != NULL) {
+			fprintf(ficheiroGrafo, "%d;%d;%.2f\n", atualVertice->ID, atualAresta->vertice_adjacente, atualAresta->peso);
+			atualAresta = atualAresta->proximo;
+		}
+
+		atualVertice = atualVertice->seguinte;
+	}
+
+	//Fechar o arquivo
+	fclose(ficheiroGrafo);
+
+} 
