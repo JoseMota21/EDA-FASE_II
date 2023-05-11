@@ -276,16 +276,22 @@ void dijkstra(Grafo* g, int origem) {
 	free(predecessor);
 }
 
-
 void imprimirCaminho(int* predecessor, int origem, int destino) {
 	int atual = destino;
 
+	// cria uma pilha vazia
 	Pilha* pilha = criarPilha();
-	empilhar (pilha, atual); // empilhar push (adiciono um elemento ao topo) // desempilhar (pop) remove o elemento que esta no topo da pilha
+
+	// empilha o vértice de destino
+	empilhar(pilha, atual);
+
+
 	while (atual != origem) {
 		atual = predecessor[atual];
 		empilhar(pilha, atual);
 	}
+
+	// imprime o caminho percorrido
 	printf("Caminho percorrido: ");
 	while (!estaVazia(pilha)) {
 		int v = desempilhar(pilha);
@@ -293,15 +299,6 @@ void imprimirCaminho(int* predecessor, int origem, int destino) {
 	}
 	printf("\n");
 }
-
-
-Pilha* criarPilha() {
-	Pilha* pilha = (Pilha*)malloc(sizeof(Pilha));
-	pilha->topo = NULL;
-	pilha->tamanho = 0;
-	return pilha;
-}
-
 
 int menorDistancia(int* distancia, int* visitado, int numeroVertices) {
 	int min = INT_MAX, indiceMin;
