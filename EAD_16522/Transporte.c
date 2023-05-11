@@ -71,7 +71,7 @@ Transporte* inputTransporte(Grafo* g, Transporte* meioTransporte_1) {
 	novoTransporte->seguinte = meioTransporte_1; 
 	meioTransporte_1 = novoTransporte;
 
-	adicionarVertice(&g, novoTransporte->codigo, novoTransporte->tipo, novoTransporte->bateria, novoTransporte->geocodigo); 
+	//adicionarVertice(g, novoTransporte->codigo, novoTransporte->tipo, novoTransporte->bateria, novoTransporte->geocodigo); 
 	
 	//Guardar os dados da lista ligada no ficheiro txt 
 	saveficheiroTransporte (novoTransporte);

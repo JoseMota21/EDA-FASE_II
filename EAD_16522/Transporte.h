@@ -19,7 +19,7 @@ typedef struct registo {
 #endif 
 
 #ifndef GRAFO_H
-#define GRAFO_H 
+#define GRAFO_H  
 
 //Estrutura para vertices
 typedef struct vertice {
@@ -90,4 +90,4 @@ int TransportePorLocalidade(Transporte* inicio, char* localidade);
 //Veiculos elétricos com bateria inferior a 50% 
 Transporte* inferior50(Transporte* inicio); 
 
-void adicionarVertice(Grafo* g, int id, char tipo[], float bateria, char geocodigo[]); 
+//void adicionarVertice(Grafo* g, int id, char tipo[], float bateria, char geocodigo[]);  

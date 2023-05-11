@@ -35,7 +35,8 @@ int main() {
 	historico_1 = lerficheirohistorico(historico_1); 
 
 	//Representar os meios de transporte em vertices 
-	vertices = criarVertices(&grafo_1, meioTransporte_1); 
+	vertices = criarVertices(&grafo_1, meioTransporte_1);
+
 
 	//Variáveis de switch case
 	int opcao;

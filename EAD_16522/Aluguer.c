@@ -116,6 +116,7 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1, int nif) 
 		else {
 			system("cls");
 			printf("\n");
+
 			//Transporte encontrado e disponível
 			printf("*************************************TRANSPORTE ESCOLHIDO***********************\n");
 			printf("\n");

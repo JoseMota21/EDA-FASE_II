@@ -37,6 +37,8 @@ typedef struct grafo {
 } Grafo;
 
 */
+
+void guardarVertices(Grafo* g); 
  
 //Criar vertices para os meios de transporte
 Vertice* criarVertices(Grafo** g, Transporte* meios); 
@@ -55,6 +57,4 @@ void imprimirGrafo(Grafo* g);
 
 //Guardar grafo em ficheiro txt 
 Grafo* guardarGrafo(Grafo* g);   
-
-//void adicionarVertice(Grafo* g, int id, char tipo[], float bateria, char geocodigo[]); 
 

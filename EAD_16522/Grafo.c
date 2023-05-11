@@ -45,8 +45,13 @@ Vertice* criarVertices(Grafo** g, Transporte* meios) {
 		VerticeID++;
 		atual = atual->seguinte;
 	}
+
+	guardarVertices(g); 
+
 	return atual;
 } 
+
+
 
 //Criar Grafo  lista ligada 
 Grafo* criarGrafo() {
@@ -70,7 +75,7 @@ Aresta* criarAresta(Grafo* g, int origem, int destino, float peso) {
 	if (atualOrigem == NULL) {
 
 		printf("VERTICE ORIGEM NAO ENCONTRADO.\n");
-		return -1; //Caso haja erro
+		return NULL; //Caso haja erro
 	}
 
 	// Procurar o vértice de destino 
@@ -79,7 +84,7 @@ Aresta* criarAresta(Grafo* g, int origem, int destino, float peso) {
 	}
 	if (atualDestino == NULL) {
 		printf("VERTICE DE DESTINO NAO ENCONTRADO\n");
-		return -1; // caso haja erro
+		return NULL;	 // caso haja erro
 	}
 
 	// Adicionar a aresta
@@ -189,28 +194,24 @@ Grafo* guardarGrafo(Grafo* g) {
 	//Fechar o arquivo
 	fclose(ficheiroGrafo);
 	return 1; 
-} 
+}  
 
-void adicionarVertice(Grafo* g, int id, char tipo[], float bateria, char geocodigo[]) {
+void guardarVertices (Grafo** g) {
+	// abrir o arquivo para escrita
 
-	Vertice* novoVertice = malloc(sizeof(Vertice));
-
-	novoVertice->ID = id;
-	strcpy(novoVertice->Tipo, tipo);
-	novoVertice->bateria = bateria;
-	strcpy(novoVertice->geocodigo, geocodigo);
-	novoVertice->adjacencias = NULL;
-	novoVertice->seguinte = NULL;
-
-	// Verificar se o grafo está vazio
-	if (g->vertices == NULL) {
-		g->vertices = novoVertice;
+	FILE* arquivo = fopen("Vertices.txt", "w");
+	if (arquivo == NULL) {
+		printf("Erro ao abrir o arquivo!\n");
+		return;
 	}
-	else {
-		Vertice* atual = g->vertices;
-		while (atual->seguinte != NULL) {
-			atual = atual->seguinte;
-		}
-		atual->seguinte = novoVertice;
+
+	// percorrer a lista de vértices e escrever no arquivo
+	Vertice* atual = (*g)->vertices;
+	while (atual != NULL) {
+		fprintf(arquivo, "%d;%s;%.2f;%s\n", atual->ID, atual->Tipo, atual->bateria, atual->geocodigo);
+		atual = atual->seguinte;
 	}
+
+	// fechar o arquivo
+	fclose(arquivo);
 }
