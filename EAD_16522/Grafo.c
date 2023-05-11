@@ -6,7 +6,7 @@
 #include "Grafo.h"  
 
 //Criar vertices lista ligada de vertices 
-Vertice* criarVertices(Grafo** g, Transporte* meios) {
+Vertice* criarVertices(Grafo** g, Transporte* meios) { 
 
 	int VerticeID = 1;
 	Transporte* atual = meios;
@@ -37,21 +37,24 @@ Vertice* criarVertices(Grafo** g, Transporte* meios) {
 		}
 		else {
 			Vertice* ultimo = (*g)->vertices;
-			while (ultimo->seguinte != NULL) {
-				ultimo = ultimo->seguinte;
+
+			if (ultimo == NULL) {
+				(*g)->vertices = novo; 
 			}
-			ultimo->seguinte = novo;
+			else {
+				while (ultimo->seguinte != NULL) {
+					ultimo = ultimo->seguinte;
+				}
+				ultimo->seguinte = novo;
+			}
 		}
 		VerticeID++;
 		atual = atual->seguinte;
 	}
-
 	guardarVertices(g); 
 
 	return atual;
 } 
-
-
 
 //Criar Grafo  lista ligada 
 Grafo* criarGrafo() {
@@ -159,7 +162,6 @@ Vertice* listarVertices(Grafo* g) {
 	printf("\n");
 
 	return vertice; 
-
 }
 
 //Guardar grafo em ficheiro txt 
@@ -196,6 +198,7 @@ Grafo* guardarGrafo(Grafo* g) {
 	return 1; 
 }  
 
+//Guardar vertices em ficheiro txt 
 void guardarVertices (Grafo** g) {
 	// abrir o arquivo para escrita
 
@@ -204,14 +207,112 @@ void guardarVertices (Grafo** g) {
 		printf("Erro ao abrir o arquivo!\n");
 		return;
 	}
+	 
+	if (*g == NULL) {
+		printf("Grafo vazio!\n");
+		fclose(arquivo);
+		return;
+	} 
 
 	// percorrer a lista de vértices e escrever no arquivo
 	Vertice* atual = (*g)->vertices;
+
 	while (atual != NULL) {
-		fprintf(arquivo, "%d;%s;%.2f;%s\n", atual->ID, atual->Tipo, atual->bateria, atual->geocodigo);
+		fprintf(arquivo, "%d;%d;%s;%.2f;%s\n",atual->VerticeID, atual->ID, atual->Tipo, atual->bateria, atual->geocodigo);
 		atual = atual->seguinte;
 	}
 
 	// fechar o arquivo
 	fclose(arquivo);
+} 
+
+void dijkstra(Grafo* g, int origem) {
+	int* distancia = malloc(g->numeroVertices * sizeof(int));
+	int* visitado = malloc(g->numeroVertices * sizeof(int));
+	int* predecessor = malloc(g->numeroVertices * sizeof(int));
+
+	if (!distancia || !visitado || !predecessor) {
+		printf("Erro de alocacao de memoria\n");
+		return;
+	}
+
+	for (int i = 0; i < g->numeroVertices; i++) {
+		distancia[i] = INT_MAX;
+		visitado[i] = 0;
+		predecessor[i] = -1;
+	}
+
+	distancia[origem] = 0;
+
+	for (int count = 0; count < g->numeroVertices - 1; count++) {
+		int u = menorDistancia(distancia, visitado, g->numeroVertices);
+		visitado[u] = 1;
+		Aresta* a = g->vertices[u].adjacencias;
+		while (a != NULL) {
+			int v = a->vertice_adjacente;
+			if (!visitado[v] && distancia[u] + a->peso < distancia[v]) {
+				distancia[v] = distancia[u] + a->peso;
+				predecessor[v] = u;
+			}
+			a = a->proximo;
+		}
+	}
+
+	printf("Distancias mais curtas da fonte %d:\n", origem);
+	for (int i = 0; i < g->numeroVertices; i++) {
+		printf("%d para %d: %d\n", origem, i, distancia[i]);
+	}
+
+	// imprimir caminho percorrido
+	for (int i = 0; i < g->numeroVertices; i++) {
+		if (i != origem && distancia[i] != INT_MAX) {
+			printf("Caminho de %d para %d: ", origem, i);
+			imprimirCaminho(predecessor, origem, i);
+		}
+	}
+
+	free(distancia);
+	free(visitado);
+	free(predecessor);
 }
+
+
+void imprimirCaminho(int* predecessor, int origem, int destino) {
+	int atual = destino;
+
+	Pilha* pilha = criarPilha();
+	empilhar (pilha, atual); // empilhar push (adiciono um elemento ao topo) // desempilhar (pop) remove o elemento que esta no topo da pilha
+	while (atual != origem) {
+		atual = predecessor[atual];
+		empilhar(pilha, atual);
+	}
+	printf("Caminho percorrido: ");
+	while (!estaVazia(pilha)) {
+		int v = desempilhar(pilha);
+		printf("%d ", v);
+	}
+	printf("\n");
+}
+
+
+Pilha* criarPilha() {
+	Pilha* pilha = (Pilha*)malloc(sizeof(Pilha));
+	pilha->topo = NULL;
+	pilha->tamanho = 0;
+	return pilha;
+}
+
+
+int menorDistancia(int* distancia, int* visitado, int numeroVertices) {
+	int min = INT_MAX, indiceMin;
+
+	for (int i = 0; i < numeroVertices; i++) {
+		if (visitado[i] == 0 && distancia[i] <= min) {
+			min = distancia[i];
+			indiceMin = i;
+		}
+	} 
+
+	return indiceMin;
+}
+

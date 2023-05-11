@@ -1,4 +1,3 @@
-13;MOTA;45.00;///timbrar.tripudiar.adro
-3;TROTINETE;100.00;///tijolos.comumente.lotear
-2;TROTINETE;100.00;///refina.genro.baixado
-1;TROTINETE;100.00;///resolvem.fumegou.antiquado
+1;3;TROTINETE;100.00;///tijolos.comumente.lotear
+2;2;TROTINETE;100.00;///refina.genro.baixado
+3;1;TROTINETE;100.00;///resolvem.fumegou.antiquado

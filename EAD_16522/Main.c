@@ -19,8 +19,7 @@ int main() {
 	Grafo* grafo_1 = NULL; // Lista ligada vazia 
 	Vertice* vertices = NULL; // Lista ligada vazia 
 	HistoricoRegisto* historico_1 = NULL; //Lista ligada historico vazia 
-	Cliente* logado = NULL; //Informa qual o cliente que está logado no sistema 
-	
+	Cliente* logado = NULL; //Informa qual o cliente que está logado no sistema 	
 
 	//Ler ficheiro bin meio de transporte
 	meioTransporte_1 = lerFicheiroTransporte (meioTransporte_1);
@@ -36,7 +35,6 @@ int main() {
 
 	//Representar os meios de transporte em vertices 
 	vertices = criarVertices(&grafo_1, meioTransporte_1);
-
 
 	//Variáveis de switch case
 	int opcao;
@@ -126,7 +124,7 @@ int main() {
 						switch (gestor) {
 						case 1:
 							//Inserir meio de transporte no inicio da lista
-							meioTransporte_1 = inputTransporte(vertices,meioTransporte_1); 
+							meioTransporte_1 = inputTransporte(meioTransporte_1);
 
 							break;
 						case 2:
@@ -218,7 +216,6 @@ int main() {
 									//criarAresta(g, t2->codigo, t1->codigo, 2); // adicionar também a aresta inversa
 								}
 							}
-
 							//Imprimir Grafo completo (Arestas, Vértice, peso)
 							imprimirGrafo(grafo_1);
 

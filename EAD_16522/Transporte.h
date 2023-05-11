@@ -16,44 +16,6 @@ typedef struct registo {
 
 }Transporte;
 
-#endif 
-
-#ifndef GRAFO_H
-#define GRAFO_H  
-
-//Estrutura para vertices
-typedef struct vertice {
-    char geocodigo[100]; // What3Words
-    int ID;              // ID do meio de transporte 
-    int VerticeID;
-    float bateria;       // Bateria do meio de transporte
-    char Tipo[20];
-
-    //Cliente* clientes; 
-    Transporte* meios;
-
-    struct aresta* adjacencias; // Lista de adjacências
-    struct vertice* seguinte;
-} Vertice;
-
-//Estrutura para as arestas
-typedef struct Aresta {
-    int vertice_adjacente;
-    float peso;
-    struct Aresta* proximo;
-} Aresta;
-
-//Estrutura para grafo 
-typedef struct grafo {
-
-    int numeroVertices;
-
-    Aresta* arestas;
-    Vertice* vertices;
-} Grafo;
-
-#endif  
-
 //Verificar a existencia do ID na lista ligada Inicio 
 int ExisteTransporte(Transporte* Inicio, int ID); 
 
@@ -73,7 +35,7 @@ Transporte* lerFicheiroTransporte(Transporte* inicio);
 void OrdenarTransportesPorAutonomiaDecrescente(Transporte* inicio);  
 
 //Adicionar transporte pelo o teclado 
-Transporte* inputTransporte(Vertice* v, Transporte* meioTransporte_1); 
+Transporte* inputTransporte(Transporte* meioTransporte_1); 
 
 //Alterar dados da lista ligada transporte
 Transporte* AlterarDadosTransporte(Transporte* inicio); 
@@ -90,4 +52,4 @@ int TransportePorLocalidade(Transporte* inicio, char* localidade);
 //Veiculos elétricos com bateria inferior a 50% 
 Transporte* inferior50(Transporte* inicio); 
 
-//void adicionarVertice(Grafo* g, int id, char tipo[], float bateria, char geocodigo[]);  
+#endif "TRANSPORTE_H" 
