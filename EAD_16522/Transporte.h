@@ -16,6 +16,69 @@ typedef struct registo {
 
 }Transporte;
 
+#endif "TRANSPORTE_H"  
+
+#ifndef GRAFO_H 
+#define GRAFO_H  
+
+//Estrutura para vertices
+typedef struct vertice {
+    char geocodigo[100]; // What3Words
+    int ID;              // ID do meio de transporte
+    int VerticeID;
+    float bateria;       // Bateria do meio de transporte
+    char Tipo[20];
+
+    //Cliente* clientes;
+    Transporte* meios;
+
+    struct aresta* adjacencias; // Lista de adjacências
+    struct vertice* seguinte;
+} Vertice;
+
+//Estrutura para as arestas
+typedef struct Aresta {
+    int vertice_adjacente;
+    float peso;
+    struct Aresta* proximo;
+} Aresta;
+
+//Estrutura para grafo
+typedef struct grafo {
+
+    int numeroVertices;
+
+    Aresta* arestas;
+    Vertice* vertices;
+} Grafo;
+
+//Guardar vertices em ficheiro txt
+void guardarVertices(Grafo** g);
+
+//Criar vertices para os meios de transporte
+Vertice* criarVertices(Grafo** g, Transporte* meios);
+
+//Lista os vertices na consola dos meios de transporte
+Vertice* listarVertices(Grafo* g);
+
+//Criar arestas nos meios de transporte
+Aresta* criarAresta(Grafo* g, int origem, int destino, float peso);
+
+//Criar grafo dos meios de transporte
+Grafo* criarGrafo();
+
+//Imprimir o grafo dos meios de transporte
+void imprimirGrafo(Grafo* g);
+
+//Guardar grafo em ficheiro txt 
+Grafo* guardarGrafo(Grafo* g);
+
+Vertice* encontrarVertice(Grafo* grafo, int codigo); 
+
+void adicionarVertice(Grafo* g, Transporte* novoTransporte); 
+
+#endif "GRAFO_H" 
+
 //Verificar a existencia do ID na lista ligada Inicio 
 int ExisteTransporte(Transporte* Inicio, int ID); 
 
@@ -51,5 +114,3 @@ int TransportePorLocalidade(Transporte* inicio, char* localidade);
 
 //Veiculos elétricos com bateria inferior a 50% 
 Transporte* inferior50(Transporte* inicio); 
-
-#endif "TRANSPORTE_H" 

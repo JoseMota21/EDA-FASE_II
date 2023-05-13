@@ -26,13 +26,13 @@ int main() {
 
 	//Ler ficheiro bin cliente
 	cliente_1 = lerFicheiroCliente (cliente_1);
-
+		
 	//Ler ficheiro gestor 
 	gestor_1 = lerficheiroGestor (gestor_1);  
 
 	//Ler ficheiro Historico 
 	historico_1 = lerficheirohistorico(historico_1); 
-
+	
 	//Representar os meios de transporte em vertices 
 	vertices = criarVertices(&grafo_1, meioTransporte_1);
 
@@ -124,7 +124,7 @@ int main() {
 						switch (gestor) {
 						case 1:
 							//Inserir meio de transporte no inicio da lista
-							meioTransporte_1 = inputTransporte(meioTransporte_1);
+							meioTransporte_1 = inputTransporte(meioTransporte_1); 
 
 							break;
 						case 2:
@@ -195,7 +195,7 @@ int main() {
 						case 14: 
 							//Listar os vértices na consola 
 							listarVertices(grafo_1); 
-
+							 
 							system("pause"); 
 							system("cls");
 							break;
