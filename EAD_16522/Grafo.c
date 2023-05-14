@@ -5,29 +5,39 @@
 #include <stdbool.h>
 #include "Grafo.h"  
 
-//Criar vertices lista ligada de vertices apartir da lista ligada dos meios de transporte 
+//Criar vértices atraves da lista ligado dos meios de transporte 
+//cada meio de transporte represente um vértice (1 ponto de recolha) 
 Vertice* criarVertices(Grafo** g, Transporte* meios) {
 
+	//Identificação do vértice 
 	int VerticeID = 1;
+	
+	//Lista ligado dos meios de transportes 
 	Transporte* atual = meios;
 
+	//Percorre todos os meios de transporte até ao fim 
 	while (atual != NULL) {
 
+		//Aloca a memória 
 		Vertice* novo = malloc(sizeof(Vertice));
 
-		strcpy(novo->geocodigo, atual->geocodigo);
+		//O vértice é criado para cada meio de transporte 
+		// Copia o campo do meio de transporte para os vértices 
+		strcpy(novo->geocodigo, atual->geocodigo); 
 		strcpy(novo->Tipo, atual->tipo);
 		novo->ID = atual->codigo;
-
 		novo->bateria = atual->bateria;
 		novo->meios = atual;
 		novo->VerticeID = VerticeID;
-		//novo->clientes = NULL;
 		novo->seguinte = NULL;
-		novo->adjacencias = NULL; // inicializar as adjacências como NULL
+		novo->adjacencias = NULL; 
 
+		//Se o grafo for NULL (VAZIO) 
 		if (*g == NULL) {
+			//Se o grafo não exister cria um grafo
 			*g = criarGrafo();
+			//Se a criação do grafo falhar por algum motivo
+			//o apontador do vértice é libertado
 			if (*g == NULL) {
 				free(novo);
 				return 0;
@@ -35,30 +45,44 @@ Vertice* criarVertices(Grafo** g, Transporte* meios) {
 			(*g)->vertices = novo;
 		}
 		else {
+			//Criado um apontado para o último vértice da lista ligada dos vértices 
 			Vertice* ultimo = (*g)->vertices;
 
+			//Se o ultimo vertice for NULL 
 			if (ultimo == NULL) {
+				//O primeiro vertice é inserido como o primeiro da lista 
 				(*g)->vertices = novo;
 			}
 			else {
+				//Se já exista vértices na lista, o ultimo aponta para o seguinte até ser NULL
 				while (ultimo->seguinte != NULL) {
+					//O novo vértice é adicionado no fim da lista 
 					ultimo = ultimo->seguinte;
 				}
 				ultimo->seguinte = novo;
 			}
 		}
+		//Incrementa a identação dos vértices  
 		VerticeID++;
+		//Aponta para o próximo meio de transporte da lista dos meios de transporte 
 		atual = atual->seguinte;
 	}
+	//Guardar os vértices em um ficheiro 
 	guardarVertices(g);
 
 	return (*g)->vertices;
 }
 
-//Criar Grafo  lista ligada  
+//Criar grafo 
 Grafo* criarGrafo() {
-	Grafo* g = malloc(sizeof(Grafo));
-	if (g != NULL) {
+
+	//Aloca memória para a estrutura 
+	Grafo* g = malloc(sizeof(Grafo));   
+
+	//Se for null return null (g será NULL), o que significa que houve problema na alocação da memória 
+	if (g != NULL) { 
+
+		//Se for diferente de null inicia os vértices como NULL 
 		g->vertices = NULL;
 	}
 	return g;
@@ -123,18 +147,22 @@ void imprimirGrafo(Grafo* g) {
 	//Cabeçalho da tabela
 	printf("|%-5s | %-5s | %-10s|\n", "ORIGEM", "DESTINO", "DISTANCIA"); 
 
-	//Percorrer os vertces
+	//Percorrer os vertices até ao fim 
 	while (atualVertice != NULL) {
-				 
+		
 		Aresta* atualAresta = atualVertice->adjacencias; 
 
-		//Percorrer as arestas 
+		//Percorrer as arestas até ao fim 
 		while (atualAresta != NULL) {
 
-			printf("|%-5d | %-5d | %-10.2f|\n", atualVertice->ID, atualAresta->vertice_adjacente, atualAresta->peso);
+			//Imprime o vertice de origem, o vertice de destino e o peso entre ambos 
+			printf("|%-5d | %-5d | %-10.2f|\n", atualVertice->ID, atualAresta->vertice_adjacente, atualAresta->peso); 
+
+			//Passa para a próxima aresta 
 			atualAresta = atualAresta->proximo;
 		}
 
+		//Passa para o próximo vértice 
 		atualVertice = atualVertice->seguinte; 
 	}
  
@@ -143,13 +171,15 @@ void imprimirGrafo(Grafo* g) {
 //Listar na consola os vertices que representam os meios de transporte 
 Vertice* listarVertices(Grafo* g) {
 
+	//Se o grafo for NULL informa o utilizador 
 	if (g == NULL) {
 		printf("GRAFO VAZIO\n"); 
 		
 		return NULL; 
 	}
 
-	Vertice* vertice = g->vertices; //primeiro vertice  
+	// primeiro vertice
+	Vertice* vertice = g->vertices; 
 
 	printf("------------------------------------- VERTICES--------------------------------\n");
 	printf("\n");
@@ -157,10 +187,13 @@ Vertice* listarVertices(Grafo* g) {
 	//Cabeçalho da tabela
 	printf("|%-12s | %-5s | %-10s | %-10s | %-30s|\n", "ID VERTICE", "ID", "TIPO", "BATERIA", "LOCALIZACAO");
 
+	//Percorre a lista dos vértices 
 	while (vertice != NULL) {
 
+		//Imprime na consola a informação do ID do vértice, ID do meio de transporte, o tipo de transporte, bateria e a sua localização 
 		printf("|%-12d | %-5d | %-10s | %-10.2f | %-30s|\n", vertice->VerticeID, vertice->ID, vertice->Tipo, vertice->bateria, vertice->geocodigo);
 
+		//Passa para o próximo vértice
 		vertice = vertice->seguinte;
 	}
 
@@ -172,29 +205,36 @@ Vertice* listarVertices(Grafo* g) {
 //Guardar grafo em ficheiro txt 
 Grafo* guardarGrafo(Grafo* g) {
 
-	Vertice* atualVertice = g->vertices;
-	Aresta* atualAresta;
-
+	//Declarar variáveis 
+	Vertice* atualVertice = g->vertices; //Inicio dos vértices 
+	Aresta* atualAresta; 
 
 	//Abrir o arquivo para escrita 
 	FILE* ficheiroGrafo = fopen("Grafo.txt", "w");
 
+	//Se o ficheiro for NULL informa o utilizador 
 	if (ficheiroGrafo == NULL) {
-		printf("Erro ao criar arquivo!\n");
+		printf("ERRO AO CRIAR O ARQUIVO!\n");
 		return 0;
 	}
 
 	//Escrever os dados formatados do grafo no arquivo
 	fprintf(ficheiroGrafo, "ORIGEM;DESTINO;DISTANCIA\n");
 
-	while (atualVertice != NULL) {
+	//Percorre os vértices todos até ao fim 
+	while (atualVertice != NULL) { 
+
 		atualAresta = atualVertice->adjacencias;
 
+		//Percorre as arestas todas até ao fim 
 		while (atualAresta != NULL) {
+			//Escreve no ficheiro dos grafos as informações do grafo, origem, destino e a distancia entre os vertices 
 			fprintf(ficheiroGrafo, "%d;%d;%.2f\n", atualVertice->ID, atualAresta->vertice_adjacente, atualAresta->peso);
+			
+			//Passa para a proxima aresta 
 			atualAresta = atualAresta->proximo;
 		}
-
+		//Passa para o próximo verice 
 		atualVertice = atualVertice->seguinte;
 	}
 
@@ -206,27 +246,34 @@ Grafo* guardarGrafo(Grafo* g) {
 //Guardar vertices em ficheiro txt 
 void guardarVertices (Grafo** g) {
 
-	// abrir o arquivo para escrita
-	FILE* arquivo = fopen("Vertices.txt", "w");
-	if (arquivo == NULL) {
-		printf("Erro ao abrir o arquivo!\n");
+	// Abrir o ficheiro dos vértices 
+	FILE* ficheiroVertice = fopen("Vertices.txt", "w");
+	
+	//Se o ficheiro for NULL informa o utilizador 
+	if (ficheiroVertice == NULL) {
+		printf("ERRO AO ABRIR O FICHEIRO!\n");
 		return;
 	}
 	 
+	//Se o grafo estiver vazio informa o utilizador 
 	if (*g == NULL) {
-		printf("Grafo vazio!\n");
-		fclose(arquivo);
+		printf("GRAFO VAZIO\n"); 
+		
+		//Fechar o ficheiro 
+		fclose(ficheiroVertice);
 		return;
 	} 
-
-	// percorrer a lista de vértices e escrever no arquivo
 	Vertice* atual = (*g)->vertices;
 
+	//Percorre a lista dos vertices até ao fim 
 	while (atual != NULL) {
-		fprintf(arquivo, "%d;%d;%s;%.2f;%s\n",atual->VerticeID, atual->ID, atual->Tipo, atual->bateria, atual->geocodigo);
+		//Escreve no ficheiro o ID do vértice, o ID do meio de transporte, o tipo de meio de transporte, a bateria e a sua localização 
+		fprintf(ficheiroVertice, "%d;%d;%s;%.2f;%s\n",atual->VerticeID, atual->ID, atual->Tipo, atual->bateria, atual->geocodigo);
+		
+		//Passa para o seguinte
 		atual = atual->seguinte;
 	}
 
-	// fechar o arquivo
-	fclose(arquivo);
-} 
+	// fechar o ficheiro
+	fclose(ficheiroVertice);
+}  

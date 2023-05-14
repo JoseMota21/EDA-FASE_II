@@ -69,4 +69,4 @@ int veiculosRaio(char localizacaoAtual[], char tipoMeio[], int raio, Transporte*
 //Calcular o raio 
 float calcularRaio(float lat1, float lng1, float lat2, float lng2);
 
-#endif /* CLIENTE_H */ 
+#endif "CLIENTE_H" 

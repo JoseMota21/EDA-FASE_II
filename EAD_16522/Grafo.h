@@ -3,7 +3,6 @@
 #include "Transporte.h" 
 #include "Cliente.h"
 
-
 //Estrutura para vertices
 typedef struct vertice {
     char geocodigo[100]; // What3Words

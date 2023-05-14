@@ -578,7 +578,6 @@ Transporte* inferior50(Transporte* inicio) {
 		}
 		inicio = inicio->seguinte;  
 	}
-
 	if (!encontrado) {
 		printf("DE MOMENTO NAO EXISTE TRANSPORTE COM BATERIA INFERIOR A 50\n"); 
 	}

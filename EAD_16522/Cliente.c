@@ -6,7 +6,6 @@
 #include "Cliente.h" 
 #include "Transporte.h"
 
-
 //Inserir Cliente na lista ligada
 Cliente* inputCliente(Cliente* cliente_1) {
 	

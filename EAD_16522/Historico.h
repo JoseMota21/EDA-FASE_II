@@ -38,4 +38,4 @@ HistoricoRegisto* lerficheirohistorico(HistoricoRegisto* historico);
 //Cliente consulta historico 
 void consultarHistoricoCliente(HistoricoRegisto* historico, int nif); 
 
-#endif /* HISTORICO_H */ 
+#endif "HISTORICO_H" 
