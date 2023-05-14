@@ -52,7 +52,7 @@ Vertice* criarVertices(Grafo** g, Transporte* meios) {
 	}
 	guardarVertices(g);
 
-	return atual;
+	return (*g)->vertices; 
 }
 
 //Criar Grafo  lista ligada  
@@ -143,6 +143,12 @@ void imprimirGrafo(Grafo* g) {
 //Listar na consola os vertices que representam os meios de transporte 
 Vertice* listarVertices(Grafo* g) {
 
+	if (g == NULL) {
+		printf("GRAFO VAZIO\n"); 
+		
+		return NULL; 
+	}
+
 	Vertice* vertice = g->vertices; //primeiro vertice  
 
 	printf("------------------------------------- VERTICES--------------------------------\n");
@@ -160,8 +166,8 @@ Vertice* listarVertices(Grafo* g) {
 
 	printf("\n");
 
-	return vertice; 
-}
+	return g->vertices;  
+} 
 
 //Guardar grafo em ficheiro txt 
 Grafo* guardarGrafo(Grafo* g) {
@@ -223,5 +229,4 @@ void guardarVertices (Grafo** g) {
 
 	// fechar o arquivo
 	fclose(arquivo);
-}   
- 
+} 

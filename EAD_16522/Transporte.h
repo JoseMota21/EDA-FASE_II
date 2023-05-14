@@ -14,7 +14,42 @@ typedef struct registo {
 	int disponivel;
 	struct registo* seguinte; // endereço de memória para uma struct registo
 
-}Transporte;
+}Transporte; 
+
+//Verificar a existencia do ID na lista ligada Inicio 
+int ExisteTransporte(Transporte* Inicio, int ID);
+
+//Remover um meio de transporte atraves do ID
+Transporte* RemoverTransporte(Transporte* inicio);
+
+//Lista Transporte na Consola 
+Transporte* listarTransporte(Transporte* Inicio);
+
+//Guardar em ficheiro bin Transposrte
+Transporte* saveficheiroTransporte(Transporte* inicio);
+
+//Ler ficheiro bin Tranporte 
+Transporte* lerFicheiroTransporte(Transporte* inicio);
+
+//Ordenar o meio de transporte de forma decrescente a autonomia 
+void OrdenarTransportesPorAutonomiaDecrescente(Transporte* inicio);
+
+
+
+//Alterar dados da lista ligada transporte
+Transporte* AlterarDadosTransporte(Transporte* inicio);
+
+//Guardar as alterações realizadas em ficheiro temporario que posteriormente irá substituir o original
+void saveAlterarDadosTransportes(Transporte* inicio);
+
+//Mostrar meios de transportes disponiveis 
+Transporte* transportesDisponiveis(Transporte* meioTransporte_1);
+
+//Vizualizar transportes por localidade
+int TransportePorLocalidade(Transporte* inicio, char* localidade);
+
+//Veiculos elétricos com bateria inferior a 50% 
+Transporte* inferior50(Transporte* inicio);
 
 #endif "TRANSPORTE_H"  
 
@@ -72,45 +107,7 @@ void imprimirGrafo(Grafo* g);
 
 //Guardar grafo em ficheiro txt 
 Grafo* guardarGrafo(Grafo* g);
-
-Vertice* encontrarVertice(Grafo* grafo, int codigo); 
-
-void adicionarVertice(Grafo* g, Transporte* novoTransporte); 
-
 #endif "GRAFO_H" 
 
-//Verificar a existencia do ID na lista ligada Inicio 
-int ExisteTransporte(Transporte* Inicio, int ID); 
-
-//Remover um meio de transporte atraves do ID
-Transporte* RemoverTransporte(Transporte* inicio); 
-
-//Lista Transporte na Consola 
-Transporte* listarTransporte(Transporte* Inicio);
-
-//Guardar em ficheiro bin Transposrte
-Transporte* saveficheiroTransporte(Transporte* inicio);
-
-//Ler ficheiro bin Tranporte 
-Transporte* lerFicheiroTransporte(Transporte* inicio);
-
-//Ordenar o meio de transporte de forma decrescente a autonomia 
-void OrdenarTransportesPorAutonomiaDecrescente(Transporte* inicio);  
-
 //Adicionar transporte pelo o teclado 
-Transporte* inputTransporte(Transporte* meioTransporte_1); 
-
-//Alterar dados da lista ligada transporte
-Transporte* AlterarDadosTransporte(Transporte* inicio); 
-
-//Guardar as alterações realizadas em ficheiro temporario que posteriormente irá substituir o original
-void saveAlterarDadosTransportes(Transporte* inicio);  
- 
-//Mostrar meios de transportes disponiveis 
-Transporte* transportesDisponiveis(Transporte* meioTransporte_1);  
-
-//Vizualizar transportes por localidade
-int TransportePorLocalidade(Transporte* inicio, char* localidade); 
-
-//Veiculos elétricos com bateria inferior a 50% 
-Transporte* inferior50(Transporte* inicio); 
+Transporte* inputTransporte(Transporte* meioTransporte_1, Grafo* g); 

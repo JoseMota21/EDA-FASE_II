@@ -22,7 +22,7 @@ int ExisteTransporte(Transporte* inicio, int id) {
 }
 
 //Escrever novo transporte através do teclado
-Transporte* inputTransporte(Transporte* meioTransporte_1) {
+Transporte* inputTransporte(Transporte* meioTransporte_1, Grafo* g) {
 
 	//Alocar a capacidade necessária de memoria e indica o tamanho de espaço de memoria a ser alocado 
 	Transporte* novoTransporte = (Transporte*)malloc(sizeof(Transporte));
@@ -71,9 +71,7 @@ Transporte* inputTransporte(Transporte* meioTransporte_1) {
 	novoTransporte->seguinte = meioTransporte_1; 
 	meioTransporte_1 = novoTransporte;
 
-	Grafo* g = criarGrafo(); 
-
-	criarVertices(&g, meioTransporte_1);  
+	criarVertices(&g, meioTransporte_1);    
 
 	//Guardar os dados da lista ligada no ficheiro txt 
 	saveficheiroTransporte (novoTransporte);

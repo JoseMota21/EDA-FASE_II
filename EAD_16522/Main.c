@@ -30,11 +30,13 @@ int main() {
 	//Ler ficheiro gestor 
 	gestor_1 = lerficheiroGestor (gestor_1);  
 
-	//Ler ficheiro Historico 
+	//Ler ficheiro Historico  
 	historico_1 = lerficheirohistorico(historico_1); 
+
+	//grafo_1 = criarGrafo();   
 	
 	//Representar os meios de transporte em vertices 
-	vertices = criarVertices(&grafo_1, meioTransporte_1);
+	criarVertices(&grafo_1, meioTransporte_1); 
 
 	//Variáveis de switch case
 	int opcao;
@@ -124,8 +126,8 @@ int main() {
 						switch (gestor) {
 						case 1:
 							//Inserir meio de transporte no inicio da lista
-							meioTransporte_1 = inputTransporte(meioTransporte_1); 
-
+							meioTransporte_1 = inputTransporte(meioTransporte_1, grafo_1);  
+							
 							break;
 						case 2:
 							//Inserir cliente no inicio da lista
@@ -194,8 +196,8 @@ int main() {
 							break; 
 						case 14: 
 							//Listar os vértices na consola 
-							listarVertices(grafo_1); 
-							 
+							listarVertices(grafo_1);    
+
 							system("pause"); 
 							system("cls");
 							break;
@@ -213,7 +215,6 @@ int main() {
 									
 									//Criar as arestas entre os vertices (Transporte 1 e Transporte 2)
 									criarAresta(grafo_1, t1->codigo, t2->codigo, distancia);
-									//criarAresta(g, t2->codigo, t1->codigo, 2); // adicionar também a aresta inversa
 								}
 							}
 							//Imprimir Grafo completo (Arestas, Vértice, peso)
