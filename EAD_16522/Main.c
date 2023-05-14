@@ -31,9 +31,9 @@ int main() {
 	gestor_1 = lerficheiroGestor (gestor_1);  
 
 	//Ler ficheiro Historico  
-	historico_1 = lerficheirohistorico(historico_1); 
+	historico_1 = lerficheirohistorico(historico_1);  
 
-	//grafo_1 = criarGrafo();   
+	grafo_1 = criarGrafo(); 
 	
 	//Representar os meios de transporte em vertices 
 	criarVertices(&grafo_1, meioTransporte_1); 

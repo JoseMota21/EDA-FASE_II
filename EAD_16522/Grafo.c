@@ -52,7 +52,7 @@ Vertice* criarVertices(Grafo** g, Transporte* meios) {
 	}
 	guardarVertices(g);
 
-	return (*g)->vertices; 
+	return (*g)->vertices;
 }
 
 //Criar Grafo  lista ligada  

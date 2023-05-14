@@ -34,8 +34,6 @@ Transporte* lerFicheiroTransporte(Transporte* inicio);
 //Ordenar o meio de transporte de forma decrescente a autonomia 
 void OrdenarTransportesPorAutonomiaDecrescente(Transporte* inicio);
 
-
-
 //Alterar dados da lista ligada transporte
 Transporte* AlterarDadosTransporte(Transporte* inicio);
 
@@ -107,6 +105,7 @@ void imprimirGrafo(Grafo* g);
 
 //Guardar grafo em ficheiro txt 
 Grafo* guardarGrafo(Grafo* g);
+
 #endif "GRAFO_H" 
 
 //Adicionar transporte pelo o teclado 

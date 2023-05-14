@@ -71,6 +71,8 @@ Transporte* inputTransporte(Transporte* meioTransporte_1, Grafo* g) {
 	novoTransporte->seguinte = meioTransporte_1; 
 	meioTransporte_1 = novoTransporte;
 
+	g = NULL; 
+
 	criarVertices(&g, meioTransporte_1);    
 
 	//Guardar os dados da lista ligada no ficheiro txt 
