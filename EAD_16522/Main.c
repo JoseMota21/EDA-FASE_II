@@ -128,7 +128,9 @@ int main() {
 							//Inserir meio de transporte no inicio da lista  
 							meioTransporte_1 = inputTransporte(meioTransporte_1);   
 
-							grafo_1 = NULL;  
+							//Colocar o grafo vazio
+							grafo_1 = NULL;
+							//Criar os vertices com a lista dos transportes já atualizada 
 							criarVertices(&grafo_1, meioTransporte_1); 
 
 							break;
@@ -140,9 +142,11 @@ int main() {
 							//Remover transporte da lista
 							meioTransporte_1 = RemoverTransporte(meioTransporte_1); 
 
-							grafo_1 = NULL; 
-							criarVertices(&grafo_1, meioTransporte_1); 
-
+							//Colocar o grafo vazio
+							grafo_1 = NULL;
+							//Criar os vertices com a lista dos transportes já atualizada 
+							criarVertices(&grafo_1, meioTransporte_1);
+							 
 							break;
 						case 4:
 							//Remover cliente da lista
@@ -170,7 +174,10 @@ int main() {
 						case 8:
 							//Alterar dados de transportes
 							AlterarDadosTransporte(meioTransporte_1); 
+
+							//Colocar o grafo vazio
 							grafo_1 = NULL;
+							//Criar os vertices com a lista dos transportes já atualizada 
 							criarVertices(&grafo_1, meioTransporte_1);
 
 							break;
@@ -202,7 +209,9 @@ int main() {
 							break; 
 						case 13: 
 							//Listar os meios de transporte com bateria inferior a 50% 
-							inferior50(meioTransporte_1); 
+							inferior50(meioTransporte_1);
+							system("pause"); 
+							system("cls"); 
 							break; 
 						case 14: 
 							//Listar os vértices na consola 
