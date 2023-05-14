@@ -125,9 +125,12 @@ int main() {
 
 						switch (gestor) {
 						case 1:
-							//Inserir meio de transporte no inicio da lista
-							meioTransporte_1 = inputTransporte(meioTransporte_1, grafo_1);  
-							
+							//Inserir meio de transporte no inicio da lista  
+							meioTransporte_1 = inputTransporte(meioTransporte_1);   
+
+							grafo_1 = NULL;  
+							criarVertices(&grafo_1, meioTransporte_1); 
+
 							break;
 						case 2:
 							//Inserir cliente no inicio da lista
@@ -135,7 +138,11 @@ int main() {
 							break;
 						case 3:
 							//Remover transporte da lista
-							meioTransporte_1 = RemoverTransporte(meioTransporte_1);
+							meioTransporte_1 = RemoverTransporte(meioTransporte_1); 
+
+							grafo_1 = NULL; 
+							criarVertices(&grafo_1, meioTransporte_1); 
+
 							break;
 						case 4:
 							//Remover cliente da lista
@@ -162,7 +169,10 @@ int main() {
 							break;
 						case 8:
 							//Alterar dados de transportes
-							AlterarDadosTransporte(meioTransporte_1);
+							AlterarDadosTransporte(meioTransporte_1); 
+							grafo_1 = NULL;
+							criarVertices(&grafo_1, meioTransporte_1);
+
 							break;
 						case 9:
 							//Mostrar na consola os transportes disponiveis 
