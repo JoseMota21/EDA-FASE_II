@@ -290,4 +290,92 @@ void guardarVertices (Grafo** g) {
 
 	// fechar o ficheiro
 	fclose(ficheiroVertice);
-}  
+} 
+
+//Adicionar no valor no topo da pilha 'pilha 
+Pilha push(Pilha pilha, int vertice) {
+
+	Pilha novo = (Pilha)malloc(sizeof(struct reg));
+
+	if (novo != NULL) {
+		novo->vertice = vertice;
+		novo->proximo = pilha;
+		return novo;
+	}
+	else {
+		return pilha;
+	}
+}
+
+Pilha pop(Pilha pilha)
+{
+	Pilha aux;
+	if (pilha != NULL) {
+		aux = pilha->proximo;
+		free(pilha);
+		return(aux);
+	}
+	else return(pilha);
+}
+
+void dijkstra(Grafo* g, int origem, int* predecessores, float* peso) {
+	int numeroVertices = g->numeroVertices;
+	int visitados[NUMEROVERTICE];
+
+	//Inicializar a estrutura de dados
+	for (int i = 0; i < numeroVertices; i++) {
+		peso[i] = INFINITY;
+		visitados[i] = 0;
+		predecessores[i] = -1;
+	}
+
+	//Distancia de origem para a origem é 0
+	peso[origem] = 0;
+
+	Pilha pilha = NULL;
+	pilha = push (pilha, origem);
+
+	while (pilha != NULL) {
+		//Retirar o último vértice adicionado à pilha
+		int verticeAtual = pop(&pilha);
+
+		//Verifica se o vertice já foi visitado
+		if (visitados[verticeAtual]) continue;
+
+		//Marco o vertice como visitado
+		visitados[verticeAtual] = 1;
+
+		//Percorre as adjacencias do vértice atual
+		Aresta* atualAresta = g->vertices[verticeAtual].adjacencias;
+
+		while (atualAresta != NULL) {
+			int verticeAdjacente = atualAresta->vertice_adjacente;
+			float pesoAresta = atualAresta->peso;
+
+			if (peso[verticeAtual] + pesoAresta < peso[verticeAdjacente]) {
+				peso[verticeAdjacente] = peso[verticeAtual] + pesoAresta;
+				predecessores[verticeAdjacente] = verticeAtual;
+
+				//Adiciona o vertice adjacente na pilha
+				pilha = push (pilha, verticeAdjacente);
+			}
+			atualAresta = atualAresta->proximo;
+		}
+	}
+
+	//Imprime o caminho percorrido a partir da origem
+	int destino = 0; //Definir destino 
+	pilha = NULL; 
+	while (destino != -1) {
+		pilha = push(pilha, destino);
+		destino = predecessores[destino];
+	}
+
+	printf("Caminho percorrido: ");
+	while (pilha != NULL) {
+		printf("%d ", pilha->vertice);
+		pilha = pop(pilha);
+	}
+	printf("\n");
+}
+

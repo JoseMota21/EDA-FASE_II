@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdbool.h> 
 #include "Transporte.h" 
-#include "Cliente.h"
+#include "Cliente.h" 
+
+#define NUMEROVERTICE 100 
 
 //Estrutura para vertices
 typedef struct vertice {
@@ -32,7 +34,12 @@ typedef struct grafo {
 
     Aresta* arestas;
     Vertice* vertices;
-} Grafo;
+} Grafo; 
+
+typedef struct reg {
+    int vertice;
+    struct reg* proximo;
+} *Pilha;
 
 //Guardar vertices em ficheiro txt
 void guardarVertices(Grafo** g);
@@ -54,4 +61,11 @@ void imprimirGrafo(Grafo* g);
 
 //Guardar grafo em ficheiro txt
 Grafo* guardarGrafo(Grafo* g);
+
+//Percorrer o grafo todo 
+void dijkstra(Grafo* g, int origem, int* predecessores, float* peso);
+
+Pilha push(Pilha pilha, int vertice); 
+
+Pilha pop(Pilha pilha); 
 

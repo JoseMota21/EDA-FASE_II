@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include<stdbool.h>
 
+
 int main() {
 
 	//Inicializar as listas 
@@ -115,10 +116,11 @@ int main() {
 						printf("13 - MEIOS DE TRANSPORTE COM BATERIA INFERIOR A 50\n");
 						printf("14 - LISTAR VERTICES\n");
 						printf("15 - IMPRIMIR GRAFO\n");
+						printf("16 - PERCURSO DE RECOLHA\n");
 
 						printf("--------------------------------------------------\n");
 						printf("\n");
-						printf("16 - SAIR\n");
+						printf("17 - SAIR\n");
 						scanf("%d", &gestor); 
 
 						system("cls");
@@ -242,12 +244,16 @@ int main() {
 							system("pause"); 
 							system("cls"); 
 							break; 
+						case 16: 
+							//dijkstra(grafo_1, 0, predecessores, peso);
+							 
+							break; 
 						default:
 							//Caso nenhuma opcao for inserida corretamente informa o utilizar 
 							printf("OPCAO INVALIDA\n");
 							break;
 						}
-					} while (gestor != 16); // Voltar para o menu anterior 
+					} while (gestor != 17); // Voltar para o menu anterior 
 
 				}	break;
 			}while (gestorech != 0); //voltar para o menu anterior

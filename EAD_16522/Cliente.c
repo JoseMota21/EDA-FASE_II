@@ -543,13 +543,3 @@ float calcularRaio(float lat1, float lng1, float lat2, float lng2) {
 
 	return distancia;
 }
-
-
-
-
-
-
-
-
- 
-
