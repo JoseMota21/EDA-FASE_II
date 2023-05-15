@@ -91,46 +91,60 @@ Grafo* criarGrafo() {
 //Criar arestas lista ligada simples 
 Aresta* criarAresta(Grafo* g, int origem, int destino, float peso) {
 
+	//Declarar variáveis apontam para o inicio da lista ligada dos vértices 
 	Vertice* atualOrigem = g->vertices;
 	Vertice* atualDestino = g->vertices;
 
-	// Procurar o vértice de origem
+	// Percorre a lista de vértices do grafo e 
+	//verifica se o ID do vértice atual é diferente do ID do vértice de Origem, a lista de vértices não pode ser vazia
 	while (atualOrigem != NULL && atualOrigem->ID != origem) {
 		atualOrigem = atualOrigem->seguinte;
 	}
+	//Se vertice origem não for encontrado, informa o utilizador com uma mensagem 
 	if (atualOrigem == NULL) {
 
 		printf("VERTICE ORIGEM NAO ENCONTRADO.\n");
 		return NULL; //Caso haja erro
 	}
 
-	// Procurar o vértice de destino 
+	// Percorre a lista de vértices do grafo e 
+	//verifica se o ID do vértice atual é diferente do ID do vértice de Destino, a lista de vértices não pode ser vazia
 	while (atualDestino != NULL && atualDestino->ID != destino) {
+		//Passa para o seguinte vértice
 		atualDestino = atualDestino->seguinte;
 	}
+	//Se não encontrar o vertice de destino informa o utilizador 
 	if (atualDestino == NULL) {
 		printf("VERTICE DE DESTINO NAO ENCONTRADO\n");
 		return NULL;	 // caso haja erro
 	}
 
-	// Adicionar a aresta
+	// Aloca memória
 	Aresta* novaAresta = malloc(sizeof(Aresta)); 
 
+	//Atribui ao vértice adjacente o ID do vértice de destino 
 	novaAresta->vertice_adjacente = atualDestino->ID; 
 	novaAresta->peso = peso;
-	novaAresta->proximo = NULL;
+	novaAresta->proximo = NULL; //Indica que não possui outra aresta de adjacencia 
 
+	//Verifica se a lista de adjacencias do vertice de origem está vazia
 	if (atualOrigem->adjacencias == NULL) {
+		//Se estiver vazia a nova aresta é adiciona como primeira 
 		atualOrigem->adjacencias = novaAresta;
 	}
 	else {
-		Aresta* atual = atualOrigem->adjacencias;
+
+		Aresta* atual = atualOrigem->adjacencias; 
+		//Senão percorre a lista de adjacencias do vértice de origem até encontrar a última aresta adjacente 
 		while (atual->proximo != NULL) {
+
 			atual = atual->proximo;
 		}
+		//A nova aresta é adicionada como a próxima aresta adjacente
 		atual->proximo = novaAresta;
 	}
 
+	//Guarda o grafo em ficheiro 
 	guardarGrafo(g); 
 
 	return novaAresta; // Função executada com sucesso

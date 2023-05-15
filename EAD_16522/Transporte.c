@@ -245,7 +245,7 @@ Transporte* lerFicheiroTransporte(Transporte* inicio) {
 	return inicio;
 }
 
-//Trocar a ordem dos transportes 
+//Trocar a ordem dos meios de transportes 
 void TrocarTransportes(Transporte* t1, Transporte* t2) {
 
 	//Declarar variaveis
@@ -337,7 +337,7 @@ void OrdenarTransportesPorAutonomiaDecrescente(Transporte* inicio) {
 	}
 }
 
-//Alterar dados 
+//Alterar dados dos meios de transporte 
 Transporte* AlterarDadosTransporte(Transporte* inicio) {
 
 	//Limpar consola 
@@ -586,4 +586,3 @@ Transporte* inferior50(Transporte* inicio) {
 	
 	return inicio;
 } 
-
