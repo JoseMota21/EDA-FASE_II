@@ -39,6 +39,9 @@ int main() {
 	//Representar os meios de transporte em vertices 
 	criarVertices(&grafo_1, meioTransporte_1); 
 
+//	dijkstra (grafo_1); 
+
+
 	//Variáveis de switch case
 	int opcao;
 	int gestor;
@@ -237,7 +240,10 @@ int main() {
 									//Criar as arestas entre os vertices (Transporte 1 e Transporte 2)
 									criarAresta(grafo_1, t1->codigo, t2->codigo, distancia);
 								}
-							}
+							} 
+
+							//dijkstra(grafo_1); 
+
 							//Imprimir Grafo completo (Arestas, Vértice, peso)
 							imprimirGrafo(grafo_1);
 

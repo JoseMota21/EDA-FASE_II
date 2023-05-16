@@ -67,6 +67,9 @@ Vertice* criarVertices(Grafo** g, Transporte* meios) {
 		//Aponta para o próximo meio de transporte da lista dos meios de transporte 
 		atual = atual->seguinte;
 	}
+
+	(*g)->numeroVertices = VerticeID;  
+
 	//Guardar os vértices em um ficheiro 
 	guardarVertices(g);
 
@@ -142,7 +145,7 @@ Aresta* criarAresta(Grafo* g, int origem, int destino, float peso) {
 		}
 		//A nova aresta é adicionada como a próxima aresta adjacente
 		atual->proximo = novaAresta;
-	}
+	} 
 
 	//Guarda o grafo em ficheiro 
 	guardarGrafo(g); 
@@ -290,92 +293,110 @@ void guardarVertices (Grafo** g) {
 
 	// fechar o ficheiro
 	fclose(ficheiroVertice);
-} 
+}  
 
-//Adicionar no valor no topo da pilha 'pilha 
 Pilha push(Pilha pilha, int vertice) {
-
 	Pilha novo = (Pilha)malloc(sizeof(struct reg));
 
 	if (novo != NULL) {
 		novo->vertice = vertice;
 		novo->proximo = pilha;
-		return novo;
+		pilha = novo;
+
+		printf("Empilhado o vertice: %d\n", vertice); // Imprime o vértice empilhado 
 	}
-	else {
-		return pilha;
-	}
+	return pilha;
 }
 
-Pilha pop(Pilha pilha)
-{
-	Pilha aux;
-	if (pilha != NULL) {
-		aux = pilha->proximo;
-		free(pilha);
-		return(aux);
+Pilha pop(Pilha pilha) { 
+
+	if (pilha != NULL) { 
+		Pilha aux = pilha->proximo; 
+		printf("Desempilhado o vertice: %d\n", pilha->vertice); 
+		free(pilha); 
+		pilha = aux; 
 	}
-	else return(pilha);
+	return pilha; 
 }
 
-void dijkstra(Grafo* g, int origem, int* predecessores, float* peso) {
-	int numeroVertices = g->numeroVertices;
-	int visitados[NUMEROVERTICE];
+void dijkstra(Grafo* g) { 
 
-	//Inicializar a estrutura de dados
-	for (int i = 0; i < numeroVertices; i++) {
-		peso[i] = INFINITY;
-		visitados[i] = 0;
-		predecessores[i] = -1;
-	}
+	int numeroVertices = g->numeroVertices; 
 
-	//Distancia de origem para a origem é 0
-	peso[origem] = 0;
 
-	Pilha pilha = NULL;
-	pilha = push (pilha, origem);
+	printf("TOTAL DE VERICES %d\n", numeroVertices);
 
-	while (pilha != NULL) {
-		//Retirar o último vértice adicionado à pilha
-		int verticeAtual = pop(&pilha);
+	for (int origem = 0; origem < numeroVertices; origem++) {
+		int* predecessores = (int*)malloc(numeroVertices * sizeof(int));
+		float* peso = (float*)malloc(numeroVertices * sizeof(float));
+		
+		int visitados[3];  // problema 
 
-		//Verifica se o vertice já foi visitado
-		if (visitados[verticeAtual]) continue;
-
-		//Marco o vertice como visitado
-		visitados[verticeAtual] = 1;
-
-		//Percorre as adjacencias do vértice atual
-		Aresta* atualAresta = g->vertices[verticeAtual].adjacencias;
-
-		while (atualAresta != NULL) {
-			int verticeAdjacente = atualAresta->vertice_adjacente;
-			float pesoAresta = atualAresta->peso;
-
-			if (peso[verticeAtual] + pesoAresta < peso[verticeAdjacente]) {
-				peso[verticeAdjacente] = peso[verticeAtual] + pesoAresta;
-				predecessores[verticeAdjacente] = verticeAtual;
-
-				//Adiciona o vertice adjacente na pilha
-				pilha = push (pilha, verticeAdjacente);
-			}
-			atualAresta = atualAresta->proximo;
+		// Inicializar a estrutura de dados
+		for (int i = 0; i < numeroVertices; i++) {
+			peso[i] = INFINITY;
+			visitados[i] = 0;
+			predecessores[i] = -1;
 		}
-	}
 
-	//Imprime o caminho percorrido a partir da origem
-	int destino = 0; //Definir destino 
-	pilha = NULL; 
-	while (destino != -1) {
-		pilha = push(pilha, destino);
-		destino = predecessores[destino];
-	}
+		// Distância da origem para a origem é 0
+		peso[origem] = 0;
 
-	printf("Caminho percorrido: ");
-	while (pilha != NULL) {
-		printf("%d ", pilha->vertice);
-		pilha = pop(pilha);
+		while (1) {
+			int verticeAtual = -1;
+			float menorPeso = INFINITY;
+
+			// Encontra o vértice não visitado com menor peso
+			for (int i = 0; i < numeroVertices; i++) {
+				if (!visitados[i] && peso[i] < menorPeso) {
+					verticeAtual = i;
+					menorPeso = peso[i];
+				}
+			}
+
+			if (verticeAtual == -1)
+				break;
+
+			visitados[verticeAtual] = 1;
+
+			// Percorre as adjacências do vértice atual
+			Aresta* atualAresta = g->vertices[verticeAtual].adjacencias;
+
+			while (atualAresta != NULL) {
+				int verticeAdjacente = atualAresta->vertice_adjacente;
+				float pesoAresta = atualAresta->peso;
+
+				if (peso[verticeAtual] + pesoAresta < peso[verticeAdjacente]) {
+					peso[verticeAdjacente] = peso[verticeAtual] + pesoAresta;
+					predecessores[verticeAdjacente] = verticeAtual;
+				}
+
+				atualAresta = atualAresta->proximo;
+			}
+		}
+
+		// Imprime o caminho percorrido a partir da origem
+		for (int destino = 0; destino < numeroVertices; destino++) {
+			if (destino == origem)
+				continue;
+
+			Pilha caminho = NULL;
+			int v = destino;
+
+			while (v != -1) {
+				caminho = push(caminho, v);
+				v = predecessores[v];
+			}
+
+			printf("Caminho de %d ate %d:\n", origem, destino);
+			while (caminho != NULL) {
+				printf("%d\n", caminho->vertice);
+				caminho = pop(caminho);
+			}
+			printf("\n");
+		}
+
+		free(predecessores);
+		free(peso);
 	}
-	printf("\n");
 }
-

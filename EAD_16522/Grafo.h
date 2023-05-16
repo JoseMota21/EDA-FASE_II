@@ -3,7 +3,7 @@
 #include "Transporte.h" 
 #include "Cliente.h" 
 
-#define NUMEROVERTICE 100 
+#define NUMEROVERTICE 3
 
 //Estrutura para vertices
 typedef struct vertice {
@@ -63,7 +63,7 @@ void imprimirGrafo(Grafo* g);
 Grafo* guardarGrafo(Grafo* g);
 
 //Percorrer o grafo todo 
-void dijkstra(Grafo* g, int origem, int* predecessores, float* peso);
+void dijkstra(Grafo* g); 
 
 Pilha push(Pilha pilha, int vertice); 
 
