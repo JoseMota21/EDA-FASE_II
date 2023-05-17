@@ -19,6 +19,7 @@ int main() {
 	Gestor* gestor_1 = NULL; // Lista ligada clientes vazia 
 	Grafo* grafo_1 = NULL; // Lista ligada vazia 
 	Vertice* vertices = NULL; // Lista ligada vazia 
+	Aresta* aresta = NULL;
 	HistoricoRegisto* historico_1 = NULL; //Lista ligada historico vazia 
 	Cliente* logado = NULL; //Informa qual o cliente que está logado no sistema 	
 
@@ -39,10 +40,11 @@ int main() {
 	//Representar os meios de transporte em vertices 
 	criarVertices(&grafo_1, meioTransporte_1); 
 
-//	dijkstra (grafo_1); 
+	//dijkstra(1); 
 
+	system("pause"); 
 
-	//Variáveis de switch case
+	//Variáveis de switch cwase
 	int opcao;
 	int gestor;
 	int cliente;
@@ -243,6 +245,10 @@ int main() {
 							} 
 
 							//dijkstra(grafo_1); 
+
+							imprimirListaAdjacencias(grafo_1); 
+
+							system("pause"); 
 
 							//Imprimir Grafo completo (Arestas, Vértice, peso)
 							imprimirGrafo(grafo_1);

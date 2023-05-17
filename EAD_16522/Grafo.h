@@ -3,7 +3,7 @@
 #include "Transporte.h" 
 #include "Cliente.h" 
 
-#define NUMEROVERTICE 3
+#define MAX_VERTICES 3
 
 //Estrutura para vertices
 typedef struct vertice {
@@ -62,10 +62,12 @@ void imprimirGrafo(Grafo* g);
 //Guardar grafo em ficheiro txt
 Grafo* guardarGrafo(Grafo* g);
 
-//Percorrer o grafo todo 
-void dijkstra(Grafo* g); 
-
 Pilha push(Pilha pilha, int vertice); 
 
 Pilha pop(Pilha pilha); 
+
+void imprimirListaAdjacencias(Grafo* g); 
+
+void dijkstra(Grafo* g); 
+
 

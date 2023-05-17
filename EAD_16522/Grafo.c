@@ -11,7 +11,7 @@ Vertice* criarVertices(Grafo** g, Transporte* meios) {
 
 	//Identificação do vértice 
 	int VerticeID = 1;
-	
+
 	//Lista ligado dos meios de transportes 
 	Transporte* atual = meios;
 
@@ -23,14 +23,14 @@ Vertice* criarVertices(Grafo** g, Transporte* meios) {
 
 		//O vértice é criado para cada meio de transporte 
 		// Copia o campo do meio de transporte para os vértices 
-		strcpy(novo->geocodigo, atual->geocodigo); 
+		strcpy(novo->geocodigo, atual->geocodigo);
 		strcpy(novo->Tipo, atual->tipo);
 		novo->ID = atual->codigo;
 		novo->bateria = atual->bateria;
 		novo->meios = atual;
 		novo->VerticeID = VerticeID;
 		novo->seguinte = NULL;
-		novo->adjacencias = NULL; 
+		novo->adjacencias = NULL;
 
 		//Se o grafo for NULL (VAZIO) 
 		if (*g == NULL) {
@@ -40,7 +40,7 @@ Vertice* criarVertices(Grafo** g, Transporte* meios) {
 			//o apontador do vértice é libertado
 			if (*g == NULL) {
 				free(novo);
-				return 0;
+				return NULL;
 			}
 			(*g)->vertices = novo;
 		}
@@ -68,7 +68,7 @@ Vertice* criarVertices(Grafo** g, Transporte* meios) {
 		atual = atual->seguinte;
 	}
 
-	(*g)->numeroVertices = VerticeID;  
+	(*g)->numeroVertices = VerticeID-1; 
 
 	//Guardar os vértices em um ficheiro 
 	guardarVertices(g);
@@ -122,7 +122,21 @@ Aresta* criarAresta(Grafo* g, int origem, int destino, float peso) {
 		return NULL;	 // caso haja erro
 	}
 
-	// Aloca memória
+	Aresta* existe = atualOrigem->adjacencias; 
+
+	while (existe != NULL){ 
+		
+		if (existe->vertice_adjacente == destino) {
+			printf("ARESTA JÁ EXISTE ENTRE OS VERTICES %d e %d\n", origem, destino); 
+
+			return NULL; 
+		}
+
+		existe = existe->proximo; 
+
+	}
+
+	// Aloca memória 
 	Aresta* novaAresta = malloc(sizeof(Aresta)); 
 
 	//Atribui ao vértice adjacente o ID do vértice de destino 
@@ -134,6 +148,7 @@ Aresta* criarAresta(Grafo* g, int origem, int destino, float peso) {
 	if (atualOrigem->adjacencias == NULL) {
 		//Se estiver vazia a nova aresta é adiciona como primeira 
 		atualOrigem->adjacencias = novaAresta;
+		novaAresta->proximo = NULL; 
 	}
 	else {
 
@@ -145,6 +160,7 @@ Aresta* criarAresta(Grafo* g, int origem, int destino, float peso) {
 		}
 		//A nova aresta é adicionada como a próxima aresta adjacente
 		atual->proximo = novaAresta;
+		novaAresta->proximo = NULL; 
 	} 
 
 	//Guarda o grafo em ficheiro 
@@ -183,7 +199,28 @@ void imprimirGrafo(Grafo* g) {
 		atualVertice = atualVertice->seguinte; 
 	}
  
-} 
+}  
+
+//Imprimir a lista de adjacencias 
+void imprimirListaAdjacencias(Grafo* g) {
+	
+	Vertice* verticeAtual = g->vertices;
+
+	while (verticeAtual != NULL) {
+		printf("Vertice %d:\n", verticeAtual->ID); 
+
+		Aresta* adjacenciaAtual = verticeAtual->adjacencias;
+
+		while (adjacenciaAtual != NULL) {
+			printf("Vertice Adjacente: %d\n", adjacenciaAtual->vertice_adjacente);
+			printf("Peso da Aresta: %.2f\n", adjacenciaAtual->peso);
+
+			adjacenciaAtual = adjacenciaAtual->proximo;
+		}
+
+		verticeAtual = verticeAtual->seguinte;
+	}
+}
 
 //Listar na consola os vertices que representam os meios de transporte 
 Vertice* listarVertices(Grafo* g) {
@@ -303,7 +340,7 @@ Pilha push(Pilha pilha, int vertice) {
 		novo->proximo = pilha;
 		pilha = novo;
 
-		printf("Empilhado o vertice: %d\n", vertice); // Imprime o vértice empilhado 
+		//printf("Empilhado o vertice: %d\n", vertice); // Imprime o vértice empilhado 
 	}
 	return pilha;
 }
@@ -312,91 +349,10 @@ Pilha pop(Pilha pilha) {
 
 	if (pilha != NULL) { 
 		Pilha aux = pilha->proximo; 
-		printf("Desempilhado o vertice: %d\n", pilha->vertice); 
+		//printf("Desempilhado o vertice: %d\n", pilha->vertice); 
 		free(pilha); 
 		pilha = aux; 
 	}
 	return pilha; 
 }
 
-void dijkstra(Grafo* g) { 
-
-	int numeroVertices = g->numeroVertices; 
-
-
-	printf("TOTAL DE VERICES %d\n", numeroVertices);
-
-	for (int origem = 0; origem < numeroVertices; origem++) {
-		int* predecessores = (int*)malloc(numeroVertices * sizeof(int));
-		float* peso = (float*)malloc(numeroVertices * sizeof(float));
-		
-		int visitados[3];  // problema 
-
-		// Inicializar a estrutura de dados
-		for (int i = 0; i < numeroVertices; i++) {
-			peso[i] = INFINITY;
-			visitados[i] = 0;
-			predecessores[i] = -1;
-		}
-
-		// Distância da origem para a origem é 0
-		peso[origem] = 0;
-
-		while (1) {
-			int verticeAtual = -1;
-			float menorPeso = INFINITY;
-
-			// Encontra o vértice não visitado com menor peso
-			for (int i = 0; i < numeroVertices; i++) {
-				if (!visitados[i] && peso[i] < menorPeso) {
-					verticeAtual = i;
-					menorPeso = peso[i];
-				}
-			}
-
-			if (verticeAtual == -1)
-				break;
-
-			visitados[verticeAtual] = 1;
-
-			// Percorre as adjacências do vértice atual
-			Aresta* atualAresta = g->vertices[verticeAtual].adjacencias;
-
-			while (atualAresta != NULL) {
-				int verticeAdjacente = atualAresta->vertice_adjacente;
-				float pesoAresta = atualAresta->peso;
-
-				if (peso[verticeAtual] + pesoAresta < peso[verticeAdjacente]) {
-					peso[verticeAdjacente] = peso[verticeAtual] + pesoAresta;
-					predecessores[verticeAdjacente] = verticeAtual;
-				}
-
-				atualAresta = atualAresta->proximo;
-			}
-		}
-
-		// Imprime o caminho percorrido a partir da origem
-		for (int destino = 0; destino < numeroVertices; destino++) {
-			if (destino == origem)
-				continue;
-
-			Pilha caminho = NULL;
-			int v = destino;
-
-			while (v != -1) {
-				caminho = push(caminho, v);
-				v = predecessores[v];
-			}
-
-			printf("Caminho de %d ate %d:\n", origem, destino);
-			while (caminho != NULL) {
-				printf("%d\n", caminho->vertice);
-				caminho = pop(caminho);
-			}
-			printf("\n");
-		}
-
-		free(predecessores);
-		free(peso);
-	}
-}
