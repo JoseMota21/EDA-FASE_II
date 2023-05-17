@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <math.h>
 #include "Grafo.h"  
 
 //Criar vértices atraves da lista ligado dos meios de transporte 
@@ -173,6 +174,7 @@ Aresta* criarAresta(Grafo* g, int origem, int destino, float peso) {
 void imprimirGrafo(Grafo* g) {
 
 	Vertice* atualVertice = g->vertices;
+	Aresta* atualAresta; 
 
 	printf("------------------------- GRAFO-------------------\n"); 
 	printf("\n");
@@ -354,5 +356,95 @@ Pilha pop(Pilha pilha) {
 		pilha = aux; 
 	}
 	return pilha; 
+} 
+
+Vertice* encontrarVertice(Grafo* g, int id) {
+	
+	Vertice* atual = g->vertices;
+	
+	while (atual != NULL) {
+		if (atual->ID == id)
+			return atual;
+
+		atual = atual->seguinte; 
+	}
+	return NULL;
 }
 
+void dijkstra(Grafo* g, int origem) {
+	
+	int i;
+
+	/* // Inicializar todas as distâncias como infinito e visitado como falso 
+	for (i = 0; i < g->numeroVertices; i++) {
+		g->vertices[i].distancia = INFINITY;
+		g->vertices[i].visitado = 0; 
+		
+	}
+	*/ 
+	Vertice* atual = g->vertices;
+	while (atual != NULL) {
+		atual->distancia = INFINITY;
+		atual->visitado = 0; 
+		atual = atual->seguinte;
+	}
+
+
+	// Definir a distância da origem como 0
+	Vertice* verticeOrigem = encontrarVertice(g, origem);
+	verticeOrigem->distancia = 0;
+	
+	// Loop principal do algoritmo de Dijkstra
+	for (i = 0; i < g->numeroVertices; i++) {
+		// Encontrar o vértice não visitado com a menor distância
+		Vertice* verticeAtual = NULL;
+		float menorDistancia = INFINITY;
+
+		Vertice* atual = g->vertices; 
+
+		printf("%d", atual->distancia); 
+
+		while (atual != NULL) {
+			printf("VERIFICAR SE VERTICE %d com distancia %d e visitado %d\n", atual->ID, atual->distancia, atual->visitado); 
+
+			if (!atual->visitado && atual->distancia < menorDistancia) {
+				verticeAtual = atual;
+				menorDistancia = atual->distancia;
+			}
+			atual = atual->seguinte;
+		
+		} 
+		if (verticeAtual == NULL) {
+			printf("Todos os vertices visitado\n");
+			return;
+		}
+		// Marcar o vértice atual como visitado
+		verticeAtual->visitado = 1; 
+		printf("Vertice %d  visitado %d\n", verticeAtual->ID, verticeAtual->distancia);
+
+		// Atualizar as distâncias dos vértices adjacentes ao vértice atual
+		Aresta* arestaAtual = verticeAtual->adjacencias; 
+		
+		//Verificar conexos 
+		Vertice* vertice14 = encontrarVertice(g, 14);
+		//Aresta* arestaAtual = vertice14->adjacencias;
+		while (arestaAtual != NULL) {
+			printf("Vertice 14 esta conectado ao vertice %d com peso %f\n", arestaAtual->vertice_adjacente, arestaAtual->peso);
+			arestaAtual = arestaAtual->proximo;
+
+			system("pause");
+		}
+
+		while (arestaAtual != NULL) {
+			Vertice* verticeAdjacente = encontrarVertice (g, arestaAtual->vertice_adjacente);
+			float pesoAresta = arestaAtual->peso;
+			if (verticeAdjacente != NULL && !verticeAdjacente->visitado) {
+				float distancia = verticeAtual->distancia + pesoAresta;
+				if (distancia < verticeAdjacente->distancia) {
+					verticeAdjacente->distancia = distancia;
+				}
+			}
+			arestaAtual = arestaAtual->proximo;
+		}
+	}
+}

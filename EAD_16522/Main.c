@@ -40,10 +40,6 @@ int main() {
 	//Representar os meios de transporte em vertices 
 	criarVertices(&grafo_1, meioTransporte_1); 
 
-	//dijkstra(1); 
-
-	system("pause"); 
-
 	//Variáveis de switch cwase
 	int opcao;
 	int gestor;
@@ -53,6 +49,7 @@ int main() {
 	char localizacaoAtu[100];
 	char tipoMeio[80];
 	int raio; 
+	int origem = 14; 
 
 	//variaveis para as coordenadas convertidas 
 	float lat1, lng1, lat2, lng2; 
@@ -241,23 +238,18 @@ int main() {
 									
 									//Criar as arestas entre os vertices (Transporte 1 e Transporte 2)
 									criarAresta(grafo_1, t1->codigo, t2->codigo, distancia);
-								}
+								
+								} 
+
 							} 
 
-							//dijkstra(grafo_1); 
-
-							imprimirListaAdjacencias(grafo_1); 
-
-							system("pause"); 
-
-							//Imprimir Grafo completo (Arestas, Vértice, peso)
-							imprimirGrafo(grafo_1);
-
-							system("pause"); 
 							system("cls"); 
 							break; 
 						case 16: 
-							//dijkstra(grafo_1, 0, predecessores, peso);
+							imprimirGrafo(grafo_1); 
+							system("pause"); 
+
+							dijkstra (grafo_1, origem);
 							 
 							break; 
 						default:
