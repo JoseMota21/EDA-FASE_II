@@ -4,7 +4,7 @@
 #include "Cliente.h" 
 
 #define MAX_VERTICES 3
-#define INFINITY 9999999 
+#define INFINITY_INT INT_MAX 
 
 //Estrutura para vertices
 typedef struct vertice {
@@ -17,7 +17,7 @@ typedef struct vertice {
    // Cliente* clientes;
     Transporte* meios;
     int distancia; //utilziado para o Dijkstra 
-    int visitado; 
+    int visitado;
 
     struct aresta* adjacencias; // Lista de adjacências
     struct vertice* seguinte;
@@ -71,4 +71,6 @@ void imprimirListaAdjacencias(Grafo* g);
 
 Vertice* encontrarVertice(Grafo* g, int id); 
 
-void dijkstra(Grafo* g, int origem); 
+void dijkstra(Grafo* g, int origem);  
+
+void imprimirCaminhoMaisCurto(Pilha pilha); 

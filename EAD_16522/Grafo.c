@@ -372,79 +372,111 @@ Vertice* encontrarVertice(Grafo* g, int id) {
 }
 
 void dijkstra(Grafo* g, int origem) {
-	
 	int i;
 
-	/* // Inicializar todas as distâncias como infinito e visitado como falso 
+	
+
+	// Inicializar todas as distâncias como infinito e visitado como falso
 	for (i = 0; i < g->numeroVertices; i++) {
-		g->vertices[i].distancia = INFINITY;
-		g->vertices[i].visitado = 0; 
-		
-	}
-	*/ 
-	Vertice* atual = g->vertices;
-	while (atual != NULL) {
-		atual->distancia = INFINITY;
-		atual->visitado = 0; 
-		atual = atual->seguinte;
+		g->vertices[i].distancia = INFINITY_INT;
+		g->vertices[i].visitado = 0;
 	}
 
+	Vertice* atual = g->vertices;
+
+	while (atual != NULL) {
+		atual->distancia = INFINITY_INT;
+		atual->visitado = 0;
+		atual = atual->seguinte;
+	}
 
 	// Definir a distância da origem como 0
 	Vertice* verticeOrigem = encontrarVertice(g, origem);
 	verticeOrigem->distancia = 0;
-	
+
+	// Vetor para armazenar o vértice anterior no caminho
+	int* anterior = (int*)malloc(g->numeroVertices * sizeof(int));
+
 	// Loop principal do algoritmo de Dijkstra
 	for (i = 0; i < g->numeroVertices; i++) {
 		// Encontrar o vértice não visitado com a menor distância
 		Vertice* verticeAtual = NULL;
-		float menorDistancia = INFINITY;
+		int menorDistancia = INFINITY_INT;
 
-		Vertice* atual = g->vertices; 
-
-		printf("%d", atual->distancia); 
+		Vertice* atual = g->vertices;
 
 		while (atual != NULL) {
-			printf("VERIFICAR SE VERTICE %d com distancia %d e visitado %d\n", atual->ID, atual->distancia, atual->visitado); 
-
 			if (!atual->visitado && atual->distancia < menorDistancia) {
 				verticeAtual = atual;
 				menorDistancia = atual->distancia;
 			}
 			atual = atual->seguinte;
-		
-		} 
-		if (verticeAtual == NULL) {
-			printf("Todos os vertices visitado\n");
-			return;
 		}
+
+		if (verticeAtual == NULL) {
+			printf("Todos os vertices visitados\n");
+			break;
+		}
+
 		// Marcar o vértice atual como visitado
-		verticeAtual->visitado = 1; 
-		printf("Vertice %d  visitado %d\n", verticeAtual->ID, verticeAtual->distancia);
+		verticeAtual->visitado = 1;
+
+		//printf("%d", verticeAtual->visitado); 
+
+		printf("Vertice %d distancia %d, visitado %d\n", verticeAtual->ID, verticeAtual->distancia, verticeAtual->visitado);
 
 		// Atualizar as distâncias dos vértices adjacentes ao vértice atual
 		Aresta* arestaAtual = verticeAtual->adjacencias; 
-		
-		//Verificar conexos 
-		Vertice* vertice14 = encontrarVertice(g, 14);
-		//Aresta* arestaAtual = vertice14->adjacencias;
-		while (arestaAtual != NULL) {
-			printf("Vertice 14 esta conectado ao vertice %d com peso %f\n", arestaAtual->vertice_adjacente, arestaAtual->peso);
-			arestaAtual = arestaAtual->proximo;
-
-			system("pause");
-		}
 
 		while (arestaAtual != NULL) {
-			Vertice* verticeAdjacente = encontrarVertice (g, arestaAtual->vertice_adjacente);
-			float pesoAresta = arestaAtual->peso;
+			Vertice* verticeAdjacente = encontrarVertice(g, arestaAtual->vertice_adjacente);
+			int pesoAresta = arestaAtual->peso;
+
 			if (verticeAdjacente != NULL && !verticeAdjacente->visitado) {
-				float distancia = verticeAtual->distancia + pesoAresta;
+				int distancia = verticeAtual->distancia + pesoAresta;
 				if (distancia < verticeAdjacente->distancia) {
 					verticeAdjacente->distancia = distancia;
+					anterior[verticeAdjacente->ID] = verticeAtual->ID;
 				}
 			}
+
 			arestaAtual = arestaAtual->proximo;
+		}
+
+		Pilha* pilha = NULL; 
+
+		int verticeRastreio = origem; 
+		// Rastrear o caminho mais curto
+		while (verticeRastreio != verticeAtual->ID) {
+			pilha = push(pilha, verticeRastreio); 
+
+			verticeRastreio = verticeAtual->ID;
+
+			Vertice* verticeAnterior = encontrarVertice(g, anterior[verticeRastreio]);
+			
+		}
+
+		pilha = push(pilha, verticeAtual->ID); 
+			
+
+		imprimirCaminhoMaisCurto(pilha);
+
+		// Liberar a memória da pilha
+		while (pilha != NULL) {
+			pilha = pop(pilha);
+
 		}
 	}
 }
+
+void imprimirCaminhoMaisCurto(Pilha pilha) {
+	
+	while (pilha != NULL) {
+		printf("%d ", pilha->vertice);
+		pilha = pilha->proximo;
+	}
+	printf("\n");
+} 
+
+
+
