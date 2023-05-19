@@ -92,82 +92,57 @@ Grafo* criarGrafo() {
 	return g;
 }
 
-//Criar arestas lista ligada simples 
 Aresta* criarAresta(Grafo* g, int origem, int destino, float peso) {
+	
+	Vertice* verticeOrigem = encontrarVertice(g, origem);
+	Vertice* verticeDestino = encontrarVertice(g, destino);
 
-	//Declarar variáveis apontam para o inicio da lista ligada dos vértices 
-	Vertice* atualOrigem = g->vertices;
-	Vertice* atualDestino = g->vertices;
-
-	// Percorre a lista de vértices do grafo e 
-	//verifica se o ID do vértice atual é diferente do ID do vértice de Origem, a lista de vértices não pode ser vazia
-	while (atualOrigem != NULL && atualOrigem->ID != origem) {
-		atualOrigem = atualOrigem->seguinte;
-	}
-	//Se vertice origem não for encontrado, informa o utilizador com uma mensagem 
-	if (atualOrigem == NULL) {
-
+	if (verticeOrigem == NULL) {
 		printf("VERTICE ORIGEM NAO ENCONTRADO.\n");
-		return NULL; //Caso haja erro
+		return NULL;
 	}
 
-	// Percorre a lista de vértices do grafo e 
-	//verifica se o ID do vértice atual é diferente do ID do vértice de Destino, a lista de vértices não pode ser vazia
-	while (atualDestino != NULL && atualDestino->ID != destino) {
-		//Passa para o seguinte vértice
-		atualDestino = atualDestino->seguinte;
-	}
-	//Se não encontrar o vertice de destino informa o utilizador 
-	if (atualDestino == NULL) {
+	if (verticeDestino == NULL) {
 		printf("VERTICE DE DESTINO NAO ENCONTRADO\n");
-		return NULL;	 // caso haja erro
+		return NULL;
 	}
 
-	Aresta* existe = atualOrigem->adjacencias; 
-
-	while (existe != NULL){ 
-		
-		if (existe->vertice_adjacente == destino) {
-			printf("ARESTA JÁ EXISTE ENTRE OS VERTICES %d e %d\n", origem, destino); 
-
-			return NULL; 
+	// Verificar se a aresta já existe entre os vértices
+	Aresta* arestaExistente = verticeOrigem->adjacencias;
+	while (arestaExistente != NULL) {
+		if (arestaExistente->vertice_adjacente == destino) {
+			printf("ARESTA JA EXISTE ENTRE OS VERTICES %d e %d\n", origem, destino);
+			return NULL;
 		}
-
-		existe = existe->proximo; 
-
+		arestaExistente = arestaExistente->proximo;
 	}
 
-	// Aloca memória 
-	Aresta* novaAresta = malloc(sizeof(Aresta)); 
+	// Criar a nova aresta
+	Aresta* novaAresta = malloc(sizeof(Aresta));
+	if (novaAresta == NULL) {
+		printf("ERRO: Falha ao alocar memoria para a nova aresta.\n");
+		return NULL;
+	}
 
-	//Atribui ao vértice adjacente o ID do vértice de destino 
-	novaAresta->vertice_adjacente = atualDestino->ID; 
+	novaAresta->vertice_adjacente = destino;
 	novaAresta->peso = peso;
-	novaAresta->proximo = NULL; //Indica que não possui outra aresta de adjacencia 
+	novaAresta->proximo = NULL;
 
-	//Verifica se a lista de adjacencias do vertice de origem está vazia
-	if (atualOrigem->adjacencias == NULL) {
-		//Se estiver vazia a nova aresta é adiciona como primeira 
-		atualOrigem->adjacencias = novaAresta;
-		novaAresta->proximo = NULL; 
+	// Adicionar a nova aresta na lista de adjacências do vértice de origem
+	if (verticeOrigem->adjacencias == NULL) {
+		verticeOrigem->adjacencias = novaAresta;
 	}
 	else {
-
-		Aresta* atual = atualOrigem->adjacencias; 
-		//Senão percorre a lista de adjacencias do vértice de origem até encontrar a última aresta adjacente 
-		while (atual->proximo != NULL) {
-
-			atual = atual->proximo;
+		Aresta* arestaAtual = verticeOrigem->adjacencias;
+		while (arestaAtual->proximo != NULL) {
+			arestaAtual = arestaAtual->proximo;
 		}
-		//A nova aresta é adicionada como a próxima aresta adjacente
-		atual->proximo = novaAresta;
-		novaAresta->proximo = NULL; 
-	} 
+		arestaAtual->proximo = novaAresta;
+	}
 
-	//Guarda o grafo em ficheiro 
 	guardarGrafo(g); 
 
-	return novaAresta; // Função executada com sucesso
+	return novaAresta;
 }
 
 //Imprimir na consola o grafo
@@ -200,7 +175,6 @@ void imprimirGrafo(Grafo* g) {
 		//Passa para o próximo vértice 
 		atualVertice = atualVertice->seguinte; 
 	}
- 
 }  
 
 //Imprimir a lista de adjacencias 
@@ -358,6 +332,7 @@ Pilha pop(Pilha pilha) {
 	return pilha; 
 } 
 
+//Função para encontrar vértices 
 Vertice* encontrarVertice(Grafo* g, int id) {
 	
 	Vertice* atual = g->vertices;
@@ -371,10 +346,9 @@ Vertice* encontrarVertice(Grafo* g, int id) {
 	return NULL;
 }
 
+//Percurso minimo 
 void dijkstra(Grafo* g, int origem) {
 	int i;
-
-	
 
 	// Inicializar todas as distâncias como infinito e visitado como falso
 	for (i = 0; i < g->numeroVertices; i++) {
@@ -390,7 +364,7 @@ void dijkstra(Grafo* g, int origem) {
 		atual = atual->seguinte;
 	}
 
-	// Definir a distância da origem como 0
+	// Definir a distância da origem como origem
 	Vertice* verticeOrigem = encontrarVertice(g, origem);
 	verticeOrigem->distancia = 0;
 
@@ -419,14 +393,12 @@ void dijkstra(Grafo* g, int origem) {
 		}
 
 		// Marcar o vértice atual como visitado
-		verticeAtual->visitado = 1;
+		verticeAtual->visitado = 1; 
 
-		//printf("%d", verticeAtual->visitado); 
-
-		//printf("Vertice %d distancia %d, visitado %d\n", verticeAtual->ID, verticeAtual->distancia, verticeAtual->visitado);
+		imprimirVerticesVisitados(g); 
 
 		// Atualizar as distâncias dos vértices adjacentes ao vértice atual
-		Aresta* arestaAtual = verticeAtual->adjacencias; 
+		Aresta* arestaAtual = verticeAtual->adjacencias;
 
 		while (arestaAtual != NULL) {
 			Vertice* verticeAdjacente = encontrarVertice(g, arestaAtual->vertice_adjacente);
@@ -443,22 +415,25 @@ void dijkstra(Grafo* g, int origem) {
 			arestaAtual = arestaAtual->proximo;
 		}
 
-		Pilha* pilha = NULL; 
+		Pilha* pilha = NULL;
 
-		int verticeRastreio = origem; 
+		int verticeRastreio = origem;
+
 		// Rastrear o caminho mais curto
-		while (verticeRastreio != verticeAtual->ID) {
-			pilha = push(pilha, verticeRastreio); 
+		while (verticeRastreio != origem) {
+			pilha = push(pilha, verticeRastreio);
+			Vertice* verticeAnterior = encontrarVertice(g, anterior[verticeRastreio]); 
 
-			verticeRastreio = verticeAtual->ID;
 
-			Vertice* verticeAnterior = encontrarVertice(g, anterior[verticeRastreio]);
-			
+			if (verticeAnterior != NULL) {
+				verticeRastreio = verticeAnterior->ID;
+			}
+			else {
+				break; 
+			}
 		}
 
-		pilha = push(pilha, verticeAtual->ID); 
-			
-
+		pilha = push(pilha, verticeAtual->ID);
 		imprimirCaminhoMaisCurto(pilha);
 
 		// Liberar a memória da pilha
@@ -469,6 +444,7 @@ void dijkstra(Grafo* g, int origem) {
 	}
 }
 
+//Imprimir o caminho mais curto 
 void imprimirCaminhoMaisCurto(Pilha pilha) {
 	
 	while (pilha != NULL) {
@@ -476,7 +452,27 @@ void imprimirCaminhoMaisCurto(Pilha pilha) {
 		pilha = pilha->proximo;
 	}
 	printf("\n");
-} 
+}  
+
+
+void imprimirVerticesVisitados(Grafo* g) {
+	Vertice* atualVertice = g->vertices;
+	Aresta* atualAresta;
+
+	printf("------------------------- VERTICES VISITADOS -------------------\n");
+	printf("\n");
+
+	//Cabeçalho da tabela
+	printf("|%-5s | %-10s |\n", "VERTICE", "DISTANCIA");
+
+	//Percorrer os vértices até o fim
+	while (atualVertice != NULL) {
+		if (atualVertice->visitado) {
+			printf("|%-8d | %-10d|\n", atualVertice->ID, atualVertice->visitado);
+		}
+		atualVertice = atualVertice->seguinte;
+	}
+}
 
 
 

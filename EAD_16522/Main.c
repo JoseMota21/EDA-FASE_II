@@ -49,7 +49,7 @@ int main() {
 	char localizacaoAtu[100];
 	char tipoMeio[80];
 	int raio; 
-	int origem = 14; 
+	int origem = 23; 
 
 	//variaveis para as coordenadas convertidas 
 	float lat1, lng1, lat2, lng2; 
@@ -242,6 +242,10 @@ int main() {
 								} 
 
 							} 
+
+							imprimirListaAdjacencias(grafo_1); 
+
+							system("pause"); 
 
 							system("cls"); 
 							break; 

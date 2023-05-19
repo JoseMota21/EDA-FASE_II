@@ -13,6 +13,7 @@ typedef struct vertice {
     int VerticeID;
     float bateria;       // Bateria do meio de transporte
     char Tipo[20];
+    int anterior;
 
    // Cliente* clientes;
     Transporte* meios;
@@ -74,3 +75,5 @@ Vertice* encontrarVertice(Grafo* g, int id);
 void dijkstra(Grafo* g, int origem);  
 
 void imprimirCaminhoMaisCurto(Pilha pilha); 
+
+void imprimirVerticesVisitados(Grafo* g); 
