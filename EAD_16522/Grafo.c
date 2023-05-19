@@ -423,7 +423,7 @@ void dijkstra(Grafo* g, int origem) {
 
 		//printf("%d", verticeAtual->visitado); 
 
-		printf("Vertice %d distancia %d, visitado %d\n", verticeAtual->ID, verticeAtual->distancia, verticeAtual->visitado);
+		//printf("Vertice %d distancia %d, visitado %d\n", verticeAtual->ID, verticeAtual->distancia, verticeAtual->visitado);
 
 		// Atualizar as distâncias dos vértices adjacentes ao vértice atual
 		Aresta* arestaAtual = verticeAtual->adjacencias; 
@@ -472,7 +472,7 @@ void dijkstra(Grafo* g, int origem) {
 void imprimirCaminhoMaisCurto(Pilha pilha) {
 	
 	while (pilha != NULL) {
-		printf("%d ", pilha->vertice);
+		printf("%d\n", pilha->vertice);
 		pilha = pilha->proximo;
 	}
 	printf("\n");
