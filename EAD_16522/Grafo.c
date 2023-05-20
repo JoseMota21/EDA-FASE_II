@@ -93,7 +93,7 @@ Grafo* criarGrafo() {
 }
 
 Aresta* criarAresta(Grafo* g, int origem, int destino, float peso) {
-	
+
 	Vertice* verticeOrigem = encontrarVertice(g, origem);
 	Vertice* verticeDestino = encontrarVertice(g, destino);
 
@@ -138,11 +138,11 @@ Aresta* criarAresta(Grafo* g, int origem, int destino, float peso) {
 			arestaAtual = arestaAtual->proximo;
 		}
 		arestaAtual->proximo = novaAresta;
-	}
+	} 
 
 	guardarGrafo(g); 
 
-	return novaAresta;
+return novaAresta;
 }
 
 //Imprimir na consola o grafo
@@ -314,8 +314,8 @@ Pilha push(Pilha pilha, int vertice) {
 	if (novo != NULL) {
 		novo->vertice = vertice;
 		novo->proximo = pilha;
-		pilha = novo;
-	}
+		pilha = novo; 
+	} 
 	return pilha;
 }
 
@@ -335,148 +335,147 @@ Vertice* encontrarVertice(Grafo* g, int id) {
 	Vertice* atual = g->vertices;
 	
 	while (atual != NULL) {
-		if (atual->ID == id)
+		if (atual->ID == id) {
 			return atual;
+		}
 
 		atual = atual->seguinte; 
 	}
 	return NULL;
 }
 
-//Percurso minimo 
-void dijkstra(Grafo* g, int origem) {
-	int i;
-
-	// Inicializar todas as distâncias como infinito e visitado como falso
-	for (i = 0; i < g->numeroVertices; i++) {
-		g->vertices[i].distancia = INFINITY_INT;
-		g->vertices[i].visitado = 0;
-	}
-
-	Vertice* atual = g->vertices;
-
-	while (atual != NULL) {
-		atual->distancia = INFINITY_INT;
-		atual->visitado = 0;
-		atual = atual->seguinte;
-	}
-
-	// Definir a distância da origem como origem
+Aresta* encontrarAresta(Grafo* g, int origem, int destino) {
 	Vertice* verticeOrigem = encontrarVertice(g, origem);
-	verticeOrigem->distancia = 0;
-
-	// Vetor para armazenar o vértice anterior no caminho
-	int* anterior = (int*)malloc(g->numeroVertices * sizeof(int));
-
-	// Loop principal do algoritmo de Dijkstra
-	for (i = 0; i < g->numeroVertices; i++) {
-		// Encontrar o vértice não visitado com a menor distância
-		Vertice* verticeAtual = NULL;
-		int menorDistancia = INFINITY_INT;
-
-		Vertice* atual = g->vertices;
-
-		while (atual != NULL) {
-			if (!atual->visitado && atual->distancia < menorDistancia) {
-				verticeAtual = atual;
-				menorDistancia = atual->distancia;
-			}
-			atual = atual->seguinte;
-		}
-
-		if (verticeAtual == NULL) {
-			printf("Todos os vertices visitados\n");
-			break;
-		}
-
-		// Marcar o vértice atual como visitado
-		verticeAtual->visitado = 1; 
-
-		// Atualizar as distâncias dos vértices adjacentes ao vértice atual
-		Aresta* arestaAtual = verticeAtual->adjacencias;
-
-		while (arestaAtual != NULL) {
-			Vertice* verticeAdjacente = encontrarVertice(g, arestaAtual->vertice_adjacente);
-			int pesoAresta = arestaAtual->peso;
-
-			if (verticeAdjacente != NULL && !verticeAdjacente->visitado) {
-				int distancia = verticeAtual->distancia + pesoAresta;
-				if (distancia < verticeAdjacente->distancia) {
-					verticeAdjacente->distancia = distancia;
-					anterior[verticeAdjacente->ID] = verticeAtual->ID;
-				}
-			}
-
-			arestaAtual = arestaAtual->proximo;
-		}
-
-		Pilha pilha = NULL;
-
-		int verticeRastreio = origem;
-
-		// Rastrear o caminho mais curto
-		while (verticeRastreio != origem) {
-			pilha = push(pilha, verticeRastreio);
-			Vertice* verticeAnterior = encontrarVertice(g, anterior[verticeRastreio]); 
-
-
-			if (verticeAnterior != NULL) {
-				verticeRastreio = verticeAnterior->ID;
-			}
-			else {
-				break; 
-			}
-		}
-
-		pilha = push(pilha, verticeAtual->ID);
-
-		if (verticeAtual->ID != origem) {
-			printf("CAMINHO NAO RETORNA A ORIGEM \n"); 
-		}
-		else {
-			imprimirCaminhoMaisCurto(pilha);
-		}
-
-		// Liberar a memória da pilha
-		while (pilha != NULL) {
-			pilha = pop(pilha);
-
-		}
+	if (verticeOrigem == NULL) {
+		return NULL;
 	}
 
-	imprimirVerticesVisitados(g); 
+	Aresta* arestaAtual = verticeOrigem->adjacencias;
+	while (arestaAtual != NULL) {
+		if (arestaAtual->vertice_adjacente == destino) {
+			return arestaAtual;
+		}
+		arestaAtual = arestaAtual->proximo;
+	}
 
+	return NULL;
 }
 
-//Imprimir o caminho mais curto 
-void imprimirCaminhoMaisCurto(Pilha pilha) {
+void dijkstra(Grafo* g, int origem) {
+	int cost[MAX][MAX];
+	int distance[MAX];
+	int pred[MAX];
+	int visited[MAX];
+	int count, mindistance, nextnode;
+	int i, j;
+
+	// Cria a matriz de custos (cost) com base no grafo
+	for (i = 0; i < g->numeroVertices; i++) {
+		for (j = 0; j < g->numeroVertices; j++) {
+			if (i == j) {
+				cost[i][j] = 0;
+			}
+			else {
+				Aresta* aresta = encontrarAresta(g, i, j);
+				if (aresta != NULL) {
+					cost[i][j] = aresta->peso;
+				}
+				else {
+					cost[i][j] = INFINITY_FLOAT;
+				}
+			}
+		}
+	}
+
+	// Inicializa os arrays distance, pred e visited
+	for (i = 0; i < g->numeroVertices; i++) {
+		distance[i] = cost[origem][i];
+		pred[i] = origem;
+		visited[i] = 0;
+	}
+
+	distance[origem] = 0;
+	visited[origem] = 1;
+	count = 1;
+
+	while (count < g->numeroVertices - 1) {
+		mindistance = INFINITY_FLOAT;
+		nextnode = -1;
+
+		// Encontra o próximo nó com a menor distância
+		for (i = 0; i < g->numeroVertices; i++) {
+			if (distance[i] < mindistance && !visited[i]) {
+				mindistance = distance[i];
+				nextnode = i;
+			}
+		}
+
+		// Marca o próximo nó como visitado
+		visited[nextnode] = 1;
+
+		// Atualiza as distâncias dos nós não visitados
+		for (i = 0; i < g->numeroVertices; i++) {
+			if (!visited[i]) {
+				if (mindistance + cost[nextnode][i] < distance[i]) {
+					distance[i] = mindistance + cost[nextnode][i];
+					pred[i] = nextnode;
+				}
+			}
+		}
+		 
+		count++;
+	}
+
+	// Imprime o caminho e a distância de cada nó
+	for (i = 0; i < g->numeroVertices; i++) {
+		if (i != origem) {
+			printf("\nDistance of node %d = %d", i, distance[i]);
+			printf("\nPath = %d", i);
+			j = i;
+			do {
+				j = pred[j];
+				printf("<-%d", j);
+			} while (j != origem);
+		}
+	}
+}
+
+
+
+
+// Imprimir o caminho mais curto
+void imprimirCaminhoMaisCurto (Pilha pilha) {
 	
+	printf("Caminho mais curto: ");
 	while (pilha != NULL) {
 		printf("%d", pilha->vertice);
+		if (pilha->proximo != NULL) {
+			printf("->");
+		}
 		pilha = pilha->proximo;
-		printf("->");
 	}
 	printf("\n");
 } 
-
+ 
 void imprimirVerticesVisitados(Grafo* g) {
-	Vertice* atualVertice = g->vertices;
+	Vertice* atualVertice = g->vertices; 
 	Aresta* atualAresta;
 
 	printf("------------------------- VERTICES VISITADOS -------------------\n");
 	printf("\n");
 
 	//Cabeçalho da tabela
-	printf("|%-5s | %-10s |\n", "VERTICE", "DISTANCIA");
+	printf("|%-5s | %-10s |\n", "VERTICE", "VISITADO");
 
 	//Percorrer os vértices até o fim
 	while (atualVertice != NULL) {
 		if (atualVertice->visitado) {
-			printf("|%-8d | %-10d|\n", atualVertice->ID, atualVertice->visitado);
+			printf("|%-8d | %-10s|\n", atualVertice->ID, atualVertice->visitado ? "SIM" : "NAO");
 		}
 		atualVertice = atualVertice->seguinte;
 	}
 }
+
 
 
 

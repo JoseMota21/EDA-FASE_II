@@ -49,7 +49,7 @@ int main() {
 	char localizacaoAtu[100];
 	char tipoMeio[80];
 	int raio; 
-	int origem = 23; 
+	int origem = 0; 
 
 	//variaveis para as coordenadas convertidas 
 	float lat1, lng1, lat2, lng2; 
@@ -238,6 +238,7 @@ int main() {
 									
 									//Criar as arestas entre os vertices (Transporte 1 e Transporte 2)
 									criarAresta(grafo_1, t1->codigo, t2->codigo, distancia);
+									criarAresta(grafo_1, t2->codigo, t1->codigo, distancia);
 								
 								} 
 

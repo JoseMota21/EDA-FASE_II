@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdbool.h> 
 #include "Transporte.h" 
+#include <float.h>
 #include "Cliente.h" 
 
-#define MAX_VERTICES 3
-#define INFINITY_INT INT_MAX 
+#define MAX 100
+#define INFINITY_FLOAT FLT_MAX 
 
 //Estrutura para vertices
 typedef struct vertice {
@@ -13,12 +14,13 @@ typedef struct vertice {
     int VerticeID;
     float bateria;       // Bateria do meio de transporte
     char Tipo[20];
-    int anterior;
-
+      
    // Cliente* clientes;
     Transporte* meios;
-    int distancia; //utilziado para o Dijkstra 
-    int visitado;
+
+    float distancia; //utilziado para o Dijkstra 
+    bool visitado;  
+    int anterior; 
 
     struct aresta* adjacencias; // Lista de adjacências
     struct vertice* seguinte;
@@ -42,6 +44,9 @@ typedef struct reg {
     int vertice;
     struct reg* proximo;
 } *Pilha;
+
+
+Aresta* encontrarAresta(Grafo* g, int origem, int destino); 
 
 //Guardar vertices em ficheiro txt
 void guardarVertices(Grafo** g);
