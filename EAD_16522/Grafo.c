@@ -315,8 +315,6 @@ Pilha push(Pilha pilha, int vertice) {
 		novo->vertice = vertice;
 		novo->proximo = pilha;
 		pilha = novo;
-
-		//printf("Empilhado o vertice: %d\n", vertice); // Imprime o vértice empilhado 
 	}
 	return pilha;
 }
@@ -325,7 +323,6 @@ Pilha pop(Pilha pilha) {
 
 	if (pilha != NULL) { 
 		Pilha aux = pilha->proximo; 
-		//printf("Desempilhado o vertice: %d\n", pilha->vertice); 
 		free(pilha); 
 		pilha = aux; 
 	}
@@ -395,8 +392,6 @@ void dijkstra(Grafo* g, int origem) {
 		// Marcar o vértice atual como visitado
 		verticeAtual->visitado = 1; 
 
-		imprimirVerticesVisitados(g); 
-
 		// Atualizar as distâncias dos vértices adjacentes ao vértice atual
 		Aresta* arestaAtual = verticeAtual->adjacencias;
 
@@ -415,7 +410,7 @@ void dijkstra(Grafo* g, int origem) {
 			arestaAtual = arestaAtual->proximo;
 		}
 
-		Pilha* pilha = NULL;
+		Pilha pilha = NULL;
 
 		int verticeRastreio = origem;
 
@@ -434,7 +429,13 @@ void dijkstra(Grafo* g, int origem) {
 		}
 
 		pilha = push(pilha, verticeAtual->ID);
-		imprimirCaminhoMaisCurto(pilha);
+
+		if (verticeAtual->ID != origem) {
+			printf("CAMINHO NAO RETORNA A ORIGEM \n"); 
+		}
+		else {
+			imprimirCaminhoMaisCurto(pilha);
+		}
 
 		// Liberar a memória da pilha
 		while (pilha != NULL) {
@@ -442,18 +443,21 @@ void dijkstra(Grafo* g, int origem) {
 
 		}
 	}
+
+	imprimirVerticesVisitados(g); 
+
 }
 
 //Imprimir o caminho mais curto 
 void imprimirCaminhoMaisCurto(Pilha pilha) {
 	
 	while (pilha != NULL) {
-		printf("%d\n", pilha->vertice);
+		printf("%d", pilha->vertice);
 		pilha = pilha->proximo;
+		printf("->");
 	}
 	printf("\n");
-}  
-
+} 
 
 void imprimirVerticesVisitados(Grafo* g) {
 	Vertice* atualVertice = g->vertices;
