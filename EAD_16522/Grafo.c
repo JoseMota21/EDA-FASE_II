@@ -179,7 +179,7 @@ Aresta* criarAresta(Grafo* g, int origem, int destino, float peso) {
 		for (int j = 0; j < g->numeroVertices; j++) { 
 			Aresta* aresta = g->matrizadj[i][j]; 
 			while (aresta!= NULL){
-				printf("Aresta entre os vertices %d e %d: %.2f\n", i, j,aresta->peso); 
+				printf("ARESTA ENTRE O VERTICE %d E %d TEM UM PESO DE %.2f\n", i, j,aresta->peso); 
 
 				aresta = aresta->proximo; 
 			}
@@ -280,8 +280,13 @@ Grafo* guardarGrafo(Grafo* g) {
 			// Verificar se há uma aresta entre os vértices de origem e destino
 			if (g->matrizadj[origem][destino] != NULL) { 
 
-				// Escrever no arquivo as informações do grafo: origem, destino e peso da aresta
-				fprintf(ficheiroGrafo, "%d;%d;\n", origem, destino);
+				Aresta* aresta = g->matrizadj[origem][destino]; 
+
+				while (aresta != NULL) {
+					// Escrever no arquivo as informações do grafo: origem, destino e peso da aresta
+					fprintf(ficheiroGrafo, "%d;%d;%.2f\n", origem, destino, aresta->peso); 
+					aresta = aresta->proximo; 
+				}
 			} 
 		}
 	}
