@@ -35,7 +35,7 @@ int main() {
 	//Ler ficheiro Historico  
 	historico_1 = lerficheirohistorico(historico_1);  
 
-	grafo_1 = criarGrafo(10); 
+	grafo_1 = criarGrafo(100); 
 	
 	//Representar os meios de transporte em vertices 
 	criarVertices(&grafo_1, meioTransporte_1); 
@@ -240,20 +240,18 @@ int main() {
 									criarAresta(grafo_1, t1->codigo, t2->codigo, distancia);
 									criarAresta(grafo_1, t2->codigo, t1->codigo, distancia);
 								} 
-
 							} 
 							system("pause"); 
-
 							system("cls"); 
 							break; 
 						case 16: 
-
+							//Imprimir Grafo 
 							imprimirGrafo(grafo_1); 
 							system("pause"); 
 
+							//Imprimir o caminho mais curto para percorrer todos os vértices 
 							tspVizinhoMaisProximo(grafo_1, origem); 
- 
-							 
+												 
 							break; 
 						default:
 							//Caso nenhuma opcao for inserida corretamente informa o utilizar 

@@ -1,4 +1,4 @@
 1;0;ARMAZEM;0.00;///prosador.recriando.paciente
-2;1;BIKE;34.00;///solucionar.geleias.colas
-3;2;BIKE;100.00;///leem.imediata.enfermeiro
-4;3;BIKW;24.00;///esgueirou.afobado.planilha
+2;1;BIKE;34.00;///leem.imediata.enfermeiro
+3;2;BIKE;100.00;///solucionar.geleias.colas
+4;3;BIKE;24.00;///esgueirou.afobado.planilha

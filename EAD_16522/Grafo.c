@@ -29,7 +29,7 @@ Vertice* criarVertices(Grafo** g, Transporte* meios) {
 		//Se o grafo for NULL (VAZIO) 
 		if (*g == NULL) {
 			//Se o grafo não exister cria um grafo
-			*g = criarGrafo(3);
+			*g = criarGrafo(100);
 			//Se a criação do grafo falhar por algum motivo
 			//o apontador do vértice é libertado
 			if (*g == NULL) {
@@ -189,8 +189,6 @@ Aresta* criarAresta(Grafo* g, int origem, int destino, float peso) {
 		}
 	*/
 
-	system("pause"); 
-	system("cls"); 
 
 	guardarGrafo(g); 
 
@@ -487,7 +485,7 @@ void tspVizinhoMaisProximo(Grafo* g, int origem) {
 	int numeroVertices = g->numeroVertices;
 
 	// Inicializa o vetor de visitados
-	bool visitados[5];
+	bool visitados[100];
 	for (int i = 0; i < numeroVertices; i++) {
 		visitados[i] = false;
 	}
@@ -518,4 +516,6 @@ void tspVizinhoMaisProximo(Grafo* g, int origem) {
 		printf("%d ", caminho[i]);
 	}
 	printf("\n");
+
+	free(visitados); 
 }
