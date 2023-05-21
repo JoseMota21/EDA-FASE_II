@@ -70,6 +70,7 @@ int dequeue(Queue* fila);
 
 void enqueue(Queue* fila, int valor); 
 
-void menorPercurso(Grafo* g, int origem);   
+void menorPercurso(Grafo* g, int origem); 
 
+//Percurso minimo 
 void tspVizinhoMaisProximo(Grafo* g, int origem); 

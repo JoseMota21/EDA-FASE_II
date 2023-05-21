@@ -414,7 +414,7 @@ int dequeue(Queue* fila) {
 
 	return valorRemovido; 
 } 
-
+//Pilha vazia
 int Vazia(Queue* fila) {
 	return (fila->inicio == NULL); 
 }
@@ -484,8 +484,10 @@ void tspVizinhoMaisProximo(Grafo* g, int origem) {
 	
 	int numeroVertices = g->numeroVertices;
 
+
+	bool* visitados = malloc(numeroVertices * sizeof(bool)); 
+
 	// Inicializa o vetor de visitados
-	bool visitados[100];
 	for (int i = 0; i < numeroVertices; i++) {
 		visitados[i] = false;
 	}
@@ -500,14 +502,14 @@ void tspVizinhoMaisProximo(Grafo* g, int origem) {
 	for (int i = 0; i < numeroVertices - 1; i++) {
 		int verticeAtual = caminho[posicao];
 		int vizinhoMaisProximo = EncontrarMaisProximo(g, verticeAtual, visitados);
-		posicao++;
-		caminho[posicao] = vizinhoMaisProximo;
+		//posicao++;
+		caminho[++posicao] = vizinhoMaisProximo;
 		visitados[vizinhoMaisProximo] = true;
 	}
 
 	// Volta para o vértice de origem
-	posicao++;
-	caminho[posicao] = origem;
+	//posicao++;
+	caminho[++posicao] = origem;
 
 	// Imprime o resultado
 	printf("------------------------- CAMINHO MAIS CURTO -------------------\n");
