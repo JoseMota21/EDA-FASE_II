@@ -261,7 +261,7 @@ Vertice* listarVertices(Grafo* g) {
 	return g->vertices;  
 } 
 
-//Guardar os vertices em ficheiro 
+//Guardar o grafo em ficheiro 
 Grafo* guardarGrafo(Grafo* g) {
 	// Abrir o arquivo para escrita
 	FILE* ficheiroGrafo = fopen("Grafo.txt", "w");
@@ -367,5 +367,99 @@ void travessia(Grafo* g, int origem) {
 
 	free(visitados); 
 
+}
+
+Queue* criarQueue() {
+	Queue* fila = malloc(sizeof(Queue)); 
+
+	fila->inicio = NULL; 
+	fila->fim = NULL; 
+
+	return fila; 
+}
+
+void enqueue(Queue* fila, int valor) {
+
+	Node* novoNo = malloc(sizeof(Node)); 
+
+	novoNo->valor = valor; 
+	novoNo->proximo = NULL; 
+
+	if (fila->inicio == NULL) {
+		fila->inicio = novoNo; 
+		fila->fim = novoNo; 
+	}
+	else {
+		fila->fim->proximo = novoNo; 
+		fila->fim = novoNo; 
+	}
+}
+
+int dequeue(Queue* fila) {
+	if (fila->inicio == NULL) {
+		printf("FILA VAZIA\n");
+
+		return -1; 
+	}
+
+	Node* noRemovido = fila->inicio; 
+	int valorRemovido = noRemovido->valor; 
+
+	fila->inicio = fila->inicio->proximo;
+	free(noRemovido); 
+
+	if (fila->inicio == NULL) {
+		fila->fim = NULL;
+	} 
+
+	return valorRemovido; 
+} 
+
+int Vazia(Queue* fila) {
+	return (fila->inicio == NULL); 
+}
+
+void menorPercurso(Grafo* g, int origem) {
+	int numeroVertices = g->numeroVertices; 
+
+	float distancias[5];
+
+	for (int i = 0; i < numeroVertices; i++) {
+
+		distancias[i] = FLT_MAX;  
+	} 
+
+	distancias[origem] = 0; 
+
+	Queue* fila = criarQueue(); 
+	enqueue(fila, origem);
+
+	while (!Vazia(fila)) { 
+
+		int vertice = dequeue(fila); 
+
+		for (int adjacente = 0; adjacente < numeroVertices; adjacente++) { 
+			Aresta* aresta = g->matrizadj[vertice][adjacente]; 
+
+			if (aresta != NULL) {
+				float peso = aresta->peso;
+				float distanciaNova = distancias[vertice] + peso; 
+				
+					if (distanciaNova < distancias[adjacente]) {
+						distancias[adjacente] = distanciaNova;
+						enqueue(fila, adjacente);
+					}
+				
+			}
+		}
+	}
+
+	// Imprime o resultado
+	printf("------------------------- MENOR PERCURSO -------------------\n");
+	printf("Origem: %d\n", origem);
+	printf("Destino | Distancia\n");
+	for (int i = 0; i < numeroVertices; i++) {
+		printf("%d       | %.2f\n", i, distancias[i]);
+	}
 }
 

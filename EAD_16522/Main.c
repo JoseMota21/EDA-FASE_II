@@ -251,7 +251,9 @@ int main() {
 							imprimirGrafo(grafo_1); 
 							system("pause"); 
 
-							travessia(grafo_1, origem); 
+							//travessia(grafo_1, origem); 
+
+							menorPercurso(grafo_1, origem); 
 							 
 							break; 
 						default:

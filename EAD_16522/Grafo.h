@@ -27,9 +27,21 @@ typedef struct Grafo {
     int numeroVertices;
     bool** visitados;
 
+    float* distancias; 
+
     struct Aresta*** matrizadj;     
     struct Vertice* vertices;
-} Grafo;
+} Grafo; 
+
+typedef struct Node {
+    int valor;
+    struct Node* proximo;
+} Node; 
+
+typedef struct Queue {
+    Node* inicio;
+    Node* fim; 
+} Queue;
 
 //Guardar vertices em ficheiro txt
 void guardarVertices(Grafo** g);
@@ -52,7 +64,13 @@ void imprimirGrafo(Grafo* g);
 //Guardar grafo em ficheiro txt
 Grafo* guardarGrafo(Grafo* g); 
 
-void travessia(Grafo* g, int origem); 
+void travessia(Grafo* g, int origem);   
+
+int dequeue(Queue* fila); 
+
+void enqueue(Queue* fila, int valor); 
+
+void menorPercurso(Grafo* g, int origem); 
 
 
 
