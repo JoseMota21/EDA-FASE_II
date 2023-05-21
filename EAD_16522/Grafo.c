@@ -100,18 +100,30 @@ Grafo* criarGrafo(int numeroVertices) {
 	}
 
 	// Aloca memória para a matriz de adjacência
-	g->matrizadj = malloc(numeroVertices * sizeof(Aresta*));
-	if (g->matrizadj == NULL) {
+	g->matrizad = malloc(numeroVertices * sizeof(bool*));
+	if (g->matrizad == NULL) {
 		// Tratamento de erro na alocação de memória
 		free(g->visitados);
 		free(g);
 		return NULL;
-	}
+	} 
 
 	// Inicializa a matriz de visitados e a matriz de adjacência
 	for (int i = 0; i < numeroVertices; i++) {
 		g->visitados[i] = calloc(numeroVertices, sizeof(bool));
-		g->matrizadj[i] = NULL;
+		g->matrizad[i] = calloc(numeroVertices, sizeof(bool));
+		if (g->visitados[i] == NULL || g->matrizad[i] == NULL) {
+			// Tratamento de erro na alocação de memória
+			// Libere a memória alocada anteriormente
+			for (int j = 0; j < i; j++) {
+				free(g->visitados[j]);
+				free(g->matrizad[j]);
+			}
+			free(g->visitados);
+			free(g->matrizad);
+			free(g);
+			return NULL;
+		}
 	}
 
 	// Inicializa os vértices como NULL
@@ -123,7 +135,13 @@ Grafo* criarGrafo(int numeroVertices) {
 Aresta* criarAresta(Grafo* g, int origem, int destino, float peso) {
 
 	Vertice* verticeOrigem = encontrarVertice(g, origem);
-	Vertice* verticeDestino = encontrarVertice(g, destino);
+	Vertice* verticeDestino = encontrarVertice(g, destino); 
+
+	// Verificar se a origem e o destino são válidos
+	if (origem < 0 || origem >= g->numeroVertices || destino < 0 || destino >= g->numeroVertices) {
+		printf("VÉRTICES INVÁLIDOS.\n");
+		return NULL;
+	}
 
 	if (verticeOrigem == NULL) {
 		printf("VERTICE ORIGEM NAO ENCONTRADO.\n");
@@ -136,13 +154,10 @@ Aresta* criarAresta(Grafo* g, int origem, int destino, float peso) {
 	}
 
 	// Verificar se a aresta já existe entre os vértices
-	if (g->matrizad[origem][destino]) {
+	if (g->matrizad[origem][destino] != NULL) {
 		printf("ARESTA JA EXISTE ENTRE OS VERTICES %d e %d\n", origem, destino);
 		return NULL;
 	} 
-
-	// Atualizar a matriz de adjacência para refletir a presença da aresta
-	g->matrizad[origem][destino] = true; 
 
 	// Criar a nova aresta
 	Aresta* novaAresta = malloc(sizeof(Aresta));
@@ -154,6 +169,31 @@ Aresta* criarAresta(Grafo* g, int origem, int destino, float peso) {
 	novaAresta->vertice_adjacente = destino;
 	novaAresta->peso = peso;
 	novaAresta->proximo = NULL;
+	 
+	// Atualizar a matriz de adjacência para refletir a presença da aresta
+	g->matrizad[origem][destino] = true; 
+
+	// Armazenar a nova aresta na matriz de adjacência
+	g->matrizadj[origem][destino] = novaAresta; 
+
+	// Acessar o peso da aresta
+	float pesoAresta = g->matrizadj[origem][destino]->peso;
+	printf("Peso da aresta entre os vertices %d e %d: %f\n", origem, destino, pesoAresta); 
+
+
+	/*
+	
+		// Percorrer a matriz de adjacência
+	for (int i = 0; i < g->numeroVertices; i++) {
+		for (int j = 0; j < g->numeroVertices; j++) {
+			printf("Aresta entre os vertices %d e %d: %d\n", i, j, g->matrizad[i][j]);
+		}
+	}
+
+	*/ 
+	
+	 
+	system("pause"); 
 
 	guardarGrafo(g); 
 
@@ -247,46 +287,36 @@ Vertice* listarVertices(Grafo* g) {
 	return g->vertices;  
 } 
 
-//Guardar grafo em ficheiro txt 
 Grafo* guardarGrafo(Grafo* g) {
-
-	//Declarar variáveis 
-	Vertice* atualVertice = g->vertices; //Inicio dos vértices 
-	Aresta* atualAresta; 
-
-	//Abrir o arquivo para escrita 
+	// Abrir o arquivo para escrita
 	FILE* ficheiroGrafo = fopen("Grafo.txt", "w");
 
-	//Se o ficheiro for NULL informa o utilizador 
+	// Verificar se o arquivo foi aberto corretamente
 	if (ficheiroGrafo == NULL) {
 		printf("ERRO AO CRIAR O ARQUIVO!\n");
-		return 0;
+		return NULL;
 	}
 
-	//Escrever os dados formatados do grafo no arquivo
+	// Escrever os dados formatados do grafo no arquivo
 	fprintf(ficheiroGrafo, "ORIGEM;DESTINO;DISTANCIA\n");
 
-	//Percorre os vértices todos até ao fim 
-	while (atualVertice != NULL) { 
+	// Percorrer a matriz de adjacência
+	for (int origem = 0; origem < g->numeroVertices; origem++) {
+		for (int destino = 0; destino < g->numeroVertices; destino++) {
+			// Verificar se há uma aresta entre os vértices de origem e destino
+			if (g->matrizad[origem][destino] != NULL) { 
 
-		atualAresta = atualVertice->adjacencias;
-
-		//Percorre as arestas todas até ao fim 
-		while (atualAresta != NULL) {
-			//Escreve no ficheiro dos grafos as informações do grafo, origem, destino e a distancia entre os vertices 
-			fprintf(ficheiroGrafo, "%d;%d;%.2f\n", atualVertice->ID, atualAresta->vertice_adjacente, atualAresta->peso);
-			
-			//Passa para a proxima aresta 
-			atualAresta = atualAresta->proximo;
+				// Escrever no arquivo as informações do grafo: origem, destino e peso da aresta
+				fprintf(ficheiroGrafo, "%d;%d;\n", origem, destino);
+			} 
 		}
-		//Passa para o próximo verice 
-		atualVertice = atualVertice->seguinte;
 	}
 
-	//Fechar o arquivo
+	// Fechar o arquivo
 	fclose(ficheiroGrafo);
-	return 1; 
-}  
+
+	return g;
+}
 
 //Guardar vertices em ficheiro txt 
 void guardarVertices (Grafo** g) {

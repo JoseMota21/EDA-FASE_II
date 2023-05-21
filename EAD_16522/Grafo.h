@@ -14,18 +14,14 @@ typedef struct Vertice {
     float bateria;       // Bateria do meio de transporte
     char Tipo[20];
 
-    Transporte* meios;
+    Transporte* meios; 
 
-    float distancia; // utilizado para o Dijkstra
-    bool visitado;
-    int anterior;
-
-    struct Aresta* adjacencias; // Lista de adjacências
+    int adjacencias; 
     struct Vertice* seguinte;
 } Vertice;
 
 typedef struct Aresta {
-    int vertice_adjacente;
+    int vertice_adjacente; 
     float peso;
     struct Aresta* proximo;
 } Aresta;
@@ -33,8 +29,9 @@ typedef struct Aresta {
 typedef struct Grafo {
     int numeroVertices;
     bool** visitados;
-    bool** matrizad;
-    struct Aresta** matrizadj; // Matriz de adjacência
+    bool** matrizad; 
+
+    struct Aresta** matrizadj;     
     struct Vertice* vertices;
 } Grafo;
 

@@ -238,14 +238,11 @@ int main() {
 									
 									//Criar as arestas entre os vertices (Transporte 1 e Transporte 2)
 									criarAresta(grafo_1, t1->codigo, t2->codigo, distancia);
-									criarAresta(grafo_1, t2->codigo, t1->codigo, distancia);
+									//criarAresta(grafo_1, t2->codigo, t1->codigo, distancia);
 								
 								} 
 
 							} 
-
-							imprimirListaAdjacencias(grafo_1); 
-
 							system("pause"); 
 
 							system("cls"); 
@@ -254,7 +251,7 @@ int main() {
 							imprimirGrafo(grafo_1); 
 							system("pause"); 
 
-							travessiaProfundidade(grafo_1, origem); 
+							//travessiaProfundidade(grafo_1, origem); 
 							 
 							break; 
 						default:
