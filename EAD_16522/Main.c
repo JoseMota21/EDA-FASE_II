@@ -238,8 +238,7 @@ int main() {
 									
 									//Criar as arestas entre os vertices (Transporte 1 e Transporte 2)
 									criarAresta(grafo_1, t1->codigo, t2->codigo, distancia);
-									//criarAresta(grafo_1, t2->codigo, t1->codigo, distancia);
-								
+									criarAresta(grafo_1, t2->codigo, t1->codigo, distancia);
 								} 
 
 							} 
@@ -248,12 +247,12 @@ int main() {
 							system("cls"); 
 							break; 
 						case 16: 
+
 							imprimirGrafo(grafo_1); 
 							system("pause"); 
 
-							//travessia(grafo_1, origem); 
-
-							menorPercurso(grafo_1, origem); 
+							tspVizinhoMaisProximo(grafo_1, origem); 
+ 
 							 
 							break; 
 						default:

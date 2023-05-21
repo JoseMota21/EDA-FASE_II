@@ -177,19 +177,18 @@ Aresta* criarAresta(Grafo* g, int origem, int destino, float peso) {
 	// Atualizar a matriz de adjacência para refletir a presença da aresta
 	g->matrizadj[origem][destino] = novaAresta; 
 	
-	// Percorrer a matriz de adjacência
-	for (int i = 0; i < g->numeroVertices; i++) {
-		for (int j = 0; j < g->numeroVertices; j++) { 
-			Aresta* aresta = g->matrizadj[i][j]; 
-			while (aresta!= NULL){
-				printf("ARESTA ENTRE O VERTICE %d E %d TEM UM PESO DE %.2f\n", i, j,aresta->peso); 
-
-				aresta = aresta->proximo; 
+	/*
+		// Percorrer a matriz de adjacência
+		for (int i = 0; i < g->numeroVertices; i++) {
+			for (int j = i + 1; j < g->numeroVertices; j++) {
+				Aresta* aresta = g->matrizadj[i][j];
+				if (aresta != NULL) {
+					printf("ARESTA ENTRE O VERTICE %d E %d TEM UM PESO DE %.2f\n", i, j, aresta->peso);
+				}
 			}
-			
 		}
-	}
-	 
+	*/
+
 	system("pause"); 
 	system("cls"); 
 
@@ -333,6 +332,7 @@ void guardarVertices (Grafo** g) {
 	fclose(ficheiroVertice);
 }  
 
+//Visitar o grafo em profundidade 
 void visitaProfun(Grafo* g, int origem, bool* visitados) {
 
 	//Marca o vertice atual como visitado
@@ -351,6 +351,7 @@ void visitaProfun(Grafo* g, int origem, bool* visitados) {
 	}
 }
 
+//Atravessar o grafo 
 void travessia(Grafo* g, int origem) {
 
 	//Verificar se o vertice de origem é valido 
@@ -369,6 +370,7 @@ void travessia(Grafo* g, int origem) {
 
 }
 
+//Criar uma pilha 
 Queue* criarQueue() {
 	Queue* fila = malloc(sizeof(Queue)); 
 
@@ -419,6 +421,7 @@ int Vazia(Queue* fila) {
 	return (fila->inicio == NULL); 
 }
 
+//Diz qual é o menor percurso entre dois vértices (da origem até ao vertice)  
 void menorPercurso(Grafo* g, int origem) {
 	int numeroVertices = g->numeroVertices; 
 
@@ -449,7 +452,6 @@ void menorPercurso(Grafo* g, int origem) {
 						distancias[adjacente] = distanciaNova;
 						enqueue(fila, adjacente);
 					}
-				
 			}
 		}
 	}
@@ -461,5 +463,59 @@ void menorPercurso(Grafo* g, int origem) {
 	for (int i = 0; i < numeroVertices; i++) {
 		printf("%d       | %.2f\n", i, distancias[i]);
 	}
+}  
+
+int EncontrarMaisProximo(Grafo* g, int verticeAtual, bool* visitados) {
+	int numeroVertices = g->numeroVertices;
+	float menorPeso = FLT_MAX;
+	int vizinhoProximo = -1;
+
+	for (int i = 0; i < numeroVertices; i++) {
+		Aresta* aresta = g->matrizadj[verticeAtual][i];
+
+		if (aresta != NULL && !visitados[i] && aresta->peso < menorPeso) {
+			menorPeso = aresta->peso;
+			vizinhoProximo = i;
+		}
+	}
+
+	return vizinhoProximo;
 }
 
+void tspVizinhoMaisProximo(Grafo* g, int origem) {
+	
+	int numeroVertices = g->numeroVertices;
+
+	// Inicializa o vetor de visitados
+	bool visitados[5];
+	for (int i = 0; i < numeroVertices; i++) {
+		visitados[i] = false;
+	}
+
+	// Inicializa o vetor de caminho
+	int caminho[5 + 1];
+	int posicao = 0;
+	caminho[posicao] = origem;
+	visitados[origem] = true;
+
+	// Constrói o caminho usando a heurística do vizinho mais próximo
+	for (int i = 0; i < numeroVertices - 1; i++) {
+		int verticeAtual = caminho[posicao];
+		int vizinhoMaisProximo = EncontrarMaisProximo(g, verticeAtual, visitados);
+		posicao++;
+		caminho[posicao] = vizinhoMaisProximo;
+		visitados[vizinhoMaisProximo] = true;
+	}
+
+	// Volta para o vértice de origem
+	posicao++;
+	caminho[posicao] = origem;
+
+	// Imprime o resultado
+	printf("------------------------- CAMINHO MAIS CURTO -------------------\n");
+	printf("Caminho: ");
+	for (int i = 0; i <= numeroVertices; i++) {
+		printf("%d ", caminho[i]);
+	}
+	printf("\n");
+}

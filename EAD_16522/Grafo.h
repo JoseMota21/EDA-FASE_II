@@ -5,10 +5,10 @@
 #include "Cliente.h" 
 
 typedef struct Vertice {
-    char geocodigo[100]; // What3Words
-    int ID;              // ID do meio de transporte
+    char geocodigo[100];
+    int ID;             
     int VerticeID;
-    float bateria;       // Bateria do meio de transporte
+    float bateria;       
     char Tipo[20];
 
     Transporte* meios; 
@@ -70,7 +70,6 @@ int dequeue(Queue* fila);
 
 void enqueue(Queue* fila, int valor); 
 
-void menorPercurso(Grafo* g, int origem); 
+void menorPercurso(Grafo* g, int origem);   
 
-
-
+void tspVizinhoMaisProximo(Grafo* g, int origem); 
