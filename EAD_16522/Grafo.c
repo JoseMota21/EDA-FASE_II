@@ -6,6 +6,7 @@
 #include <math.h>
 #include "Grafo.h"  
 
+//Criar vertices 
 Vertice* criarVertices(Grafo** g, Transporte* meios) {
 	//Identificação do vértice 
 	int VerticeID = 1;
@@ -80,6 +81,7 @@ Vertice* encontrarVertice(Grafo* g, int id) {
 	return NULL;
 }
 
+//Função para criar grafo 
 Grafo* criarGrafo(int numeroVertices) {
 	// Aloca memória para a estrutura do grafo
 	Grafo* g = malloc(sizeof(Grafo));
@@ -132,6 +134,7 @@ Grafo* criarGrafo(int numeroVertices) {
 	return g;
 }
 
+//Função para criar arestas 
 Aresta* criarAresta(Grafo* g, int origem, int destino, float peso) {
 
 	Vertice* verticeOrigem = encontrarVertice(g, origem);
@@ -207,23 +210,20 @@ void imprimirGrafo(Grafo* g) {
 	//Cabeçalho da tabela
 	printf("|%-5s | %-5s | %-10s|\n", "ORIGEM", "DESTINO", "DISTANCIA"); 
 
-	//Percorrer os vertices até ao fim 
-	while (atualVertice != NULL) {
-		
-		Aresta* atualAresta = atualVertice->adjacencias; 
 
-		//Percorrer as arestas até ao fim 
-		while (atualAresta != NULL) {
+	for (int origem = 0; origem < g->numeroVertices; origem++) {
+		for (int destino =0; destino < g->numeroVertices; destino++)
 
-			//Imprime o vertice de origem, o vertice de destino e o peso entre ambos 
-			printf("|%-5d | %-5d | %-10.2f|\n", atualVertice->ID, atualAresta->vertice_adjacente, atualAresta->peso); 
+			if (g->matrizadj[origem][destino] != NULL) {
+				Aresta* aresta = g->matrizadj[origem][destino]; 
 
-			//Passa para a próxima aresta 
-			atualAresta = atualAresta->proximo;
-		}
+				while (aresta != NULL) {
 
-		//Passa para o próximo vértice 
-		atualVertice = atualVertice->seguinte; 
+					printf("|%-5d | %-5d | %-10.2f|\n", origem, aresta->vertice_adjacente, aresta->peso);
+					 
+					aresta = aresta->proximo;
+				}
+			}
 	}
 }  
 
@@ -261,6 +261,7 @@ Vertice* listarVertices(Grafo* g) {
 	return g->vertices;  
 } 
 
+//Guardar os vertices em ficheiro 
 Grafo* guardarGrafo(Grafo* g) {
 	// Abrir o arquivo para escrita
 	FILE* ficheiroGrafo = fopen("Grafo.txt", "w");
