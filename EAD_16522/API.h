@@ -14,7 +14,7 @@
 #pragma comment (lib, "advapi32.lib")
 
 //Key da API 
-#define API_KEY "QDYCAIQN" 
+#define API_KEY "TW78H65T" 
 #define EARTH_RADIUS 6371.0
 #define M_PI 3.14159265358979323846
 

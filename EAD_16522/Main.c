@@ -35,7 +35,7 @@ int main() {
 	//Ler ficheiro Historico  
 	historico_1 = lerficheirohistorico(historico_1);  
 
-	grafo_1 = criarGrafo(3); 
+	grafo_1 = criarGrafo(10); 
 	
 	//Representar os meios de transporte em vertices 
 	criarVertices(&grafo_1, meioTransporte_1); 

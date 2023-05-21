@@ -1,3 +1,4 @@
-1;0;ARMAZEM;0.00;///aderir.fenda.aprovaram
-2;2;TROTINETE;100.00;///possuam.mulheres.sobrinhas
-3;1;TROTINETE;100.00;///resolvem.fumegou.antiquado
+1;0;ARMAZEM;0.00;///prosador.recriando.paciente
+2;1;BIKE;34.00;///solucionar.geleias.colas
+3;2;BIKE;100.00;///leem.imediata.enfermeiro
+4;3;BIKW;24.00;///esgueirou.afobado.planilha
