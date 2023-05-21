@@ -333,3 +333,39 @@ void guardarVertices (Grafo** g) {
 	fclose(ficheiroVertice);
 }  
 
+void visitaProfun(Grafo* g, int origem, bool* visitados) {
+
+	//Marca o vertice atual como visitado
+	visitados[origem] = true; 
+
+	// Imprimir o vértice atual
+	printf("%d\n", origem);  
+
+	for (int destino = 0; destino < g->numeroVertices; destino++) {
+		if (g->matrizadj[origem][destino] != NULL) {
+			
+			if (!visitados[destino]) {
+				visitaProfun(g, destino, visitados); 
+			}
+		}
+	}
+}
+
+void travessia(Grafo* g, int origem) {
+
+	//Verificar se o vertice de origem é valido 
+	if (origem < 0 || origem >= g->numeroVertices) {
+		printf("VERTICE DE ORIGEM INVALIDO\n"); 
+	} 
+
+	//Armazenar o os vertices visitados 
+	bool* visitados = calloc(g->numeroVertices, sizeof(bool)); 
+
+	printf("TRAVESSIA A PARTIR DO VERTICE %d\n", origem); 
+
+	visitaProfun(g, origem, visitados); 
+
+	free(visitados); 
+
+}
+

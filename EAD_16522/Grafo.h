@@ -50,7 +50,9 @@ Grafo* criarGrafo(int numeroVertices);
 void imprimirGrafo(Grafo* g);
 
 //Guardar grafo em ficheiro txt
-Grafo* guardarGrafo(Grafo* g);  
+Grafo* guardarGrafo(Grafo* g); 
+
+void travessia(Grafo* g, int origem); 
 
 
 

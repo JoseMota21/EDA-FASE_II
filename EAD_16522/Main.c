@@ -251,7 +251,7 @@ int main() {
 							imprimirGrafo(grafo_1); 
 							system("pause"); 
 
-							//travessiaProfundidade(grafo_1, origem); 
+							travessia(grafo_1, origem); 
 							 
 							break; 
 						default:
