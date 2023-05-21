@@ -179,7 +179,7 @@ Aresta* criarAresta(Grafo* g, int origem, int destino, float peso) {
 		for (int j = 0; j < g->numeroVertices; j++) { 
 			Aresta* aresta = g->matrizadj[i][j]; 
 			while (aresta!= NULL){
-				printf("Aresta entre os vertices %d e %d: %d\n", i, j,aresta->peso); 
+				printf("Aresta entre os vertices %d e %d: %.2f\n", i, j,aresta->peso); 
 
 				aresta = aresta->proximo; 
 			}
