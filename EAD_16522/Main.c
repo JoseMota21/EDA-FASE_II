@@ -35,7 +35,7 @@ int main() {
 	//Ler ficheiro Historico  
 	historico_1 = lerficheirohistorico(historico_1);  
 
-	grafo_1 = criarGrafo(); 
+	grafo_1 = criarGrafo(3); 
 	
 	//Representar os meios de transporte em vertices 
 	criarVertices(&grafo_1, meioTransporte_1); 
@@ -254,7 +254,7 @@ int main() {
 							imprimirGrafo(grafo_1); 
 							system("pause"); 
 
-							dijkstra (grafo_1, origem);
+							travessiaProfundidade(grafo_1, origem); 
 							 
 							break; 
 						default:
