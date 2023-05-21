@@ -10,7 +10,6 @@
 #include <stdlib.h>
 #include<stdbool.h>
 
-
 int main() {
 
 	//Inicializar as listas 
@@ -33,12 +32,12 @@ int main() {
 	gestor_1 = lerficheiroGestor (gestor_1);  
 
 	//Ler ficheiro Historico  
-	historico_1 = lerficheirohistorico(historico_1);  
+	historico_1 = lerficheirohistorico(historico_1);   
 
-	grafo_1 = criarGrafo(100); 
+	grafo_1 = criarGrafo(100);  
 	
 	//Representar os meios de transporte em vertices 
-	criarVertices(&grafo_1, meioTransporte_1); 
+	criarVertices(&grafo_1, meioTransporte_1);  
 
 	//Variáveis de switch cwase
 	int opcao;
@@ -280,13 +279,13 @@ int main() {
 								//Imprime o Grafo 
 								imprimirGrafo(grafo_1);
 								system("pause"); 
-								tspVizinhoMaisProximo(grafo_1, origem);
+								tspVizinhoMaisProximo(grafo_1,origem);
 								system("pause"); 
 								system("cls");							
 							}
 							else {
 								//Imprimir o caminho mais curto para percorrer todos os vértices 
-								tspVizinhoMaisProximo(grafo_1, origem);
+								tspVizinhoMaisProximo(grafo_1,origem);
 								system("pause");
 								system("cls");
 							}

@@ -81,8 +81,9 @@ Vertice* encontrarVertice(Grafo* g, int id) {
 	return NULL;
 }
 
-//Função para criar grafo 
+//Função para criar grafo
 Grafo* criarGrafo(int numeroVertices) {
+
 	// Aloca memória para a estrutura do grafo
 	Grafo* g = malloc(sizeof(Grafo));
 	if (g == NULL) {
@@ -108,7 +109,7 @@ Grafo* criarGrafo(int numeroVertices) {
 		free(g->visitados);
 		free(g);
 		return NULL;
-	} 
+	}
 
 	// Inicializa a matriz de visitados e a matriz de adjacência
 	for (int i = 0; i < numeroVertices; i++) {
@@ -142,7 +143,7 @@ Aresta* criarAresta(Grafo* g, int origem, int destino, float peso) {
 
 	// Verificar se a origem e o destino são válidos
 	if (origem < 0 || origem >= g->numeroVertices || destino < 0 || destino >= g->numeroVertices) {
-		printf("VÉRTICES INVÁLIDOS.\n");
+		printf("VERTICES INVALIDOS.\n");
 		return NULL;
 	}
 
@@ -524,12 +525,11 @@ void tspVizinhoMaisProximo(Grafo* g, int origem) {
 	for (int i = 0; i < numeroVertices; i++) {
 		visitados[i] = false;
 	}
-
-	//5
+	
 	// Inicializa o vetor de caminho
 	int caminho[10 + 1];
 	int posicao = 0;
-	caminho[posicao] = origem;
+	caminho[posicao] = origem; //origem == armazém 
 	visitados[origem] = true;
 
 	// Constrói o caminho usando a heurística do vizinho mais próximo
@@ -552,4 +552,4 @@ void tspVizinhoMaisProximo(Grafo* g, int origem) {
 	printf("\n");
 
 	free(visitados); 
-}
+}  
