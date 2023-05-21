@@ -414,9 +414,39 @@ int dequeue(Queue* fila) {
 
 	return valorRemovido; 
 } 
+
 //Pilha vazia
 int Vazia(Queue* fila) {
 	return (fila->inicio == NULL); 
+} 
+
+//Verifica se Grafo está completo 
+bool grafoCompleto(Grafo* g) {
+	int numeroVertices = g->numeroVertices; 
+
+	//Verifica se todos os vértices estão conetados
+	for (int i = 0; i < numeroVertices; i++) {
+		for (int j = 0; j < numeroVertices; j++) {
+			Aresta* aresta = g->matrizadj[i][j]; 
+			if (i != j && aresta == NULL) { 
+				//Existe ausencia de aresta
+				return false;
+			}
+		}
+	}
+
+	//Verifica se todas as arestas tem pesos atribuidos
+	for (int i = 0; i < numeroVertices; i++) {
+		for (int j = 0; j < numeroVertices; j++) {
+			Aresta* aresta = g->matrizadj[i][j]; 
+			if (aresta != NULL && aresta->peso == FLT_MAX) {
+				return false;
+			}			 
+		}
+	}
+
+	//Grafo Completo 
+	return true; 
 }
 
 //Diz qual é o menor percurso entre dois vértices (da origem até ao vertice)  
@@ -461,8 +491,9 @@ void menorPercurso(Grafo* g, int origem) {
 	for (int i = 0; i < numeroVertices; i++) {
 		printf("%d       | %.2f\n", i, distancias[i]);
 	}
-}  
+} 
 
+//Função para encontrar qual o vértice mais próximo (Auxilio para excutar a função tspVizinhoMaisProximo )
 int EncontrarMaisProximo(Grafo* g, int verticeAtual, bool* visitados) {
 	int numeroVertices = g->numeroVertices;
 	float menorPeso = FLT_MAX;
@@ -480,11 +511,12 @@ int EncontrarMaisProximo(Grafo* g, int verticeAtual, bool* visitados) {
 	return vizinhoProximo;
 }
 
+//Percurso minimo para percorrer todos os vértices desde a orige, 
 void tspVizinhoMaisProximo(Grafo* g, int origem) {
 	
 	int numeroVertices = g->numeroVertices;
 
-
+	//Inicializar o vetor de visitados 
 	bool* visitados = malloc(numeroVertices * sizeof(bool)); 
 
 	// Inicializa o vetor de visitados
@@ -502,13 +534,11 @@ void tspVizinhoMaisProximo(Grafo* g, int origem) {
 	for (int i = 0; i < numeroVertices - 1; i++) {
 		int verticeAtual = caminho[posicao];
 		int vizinhoMaisProximo = EncontrarMaisProximo(g, verticeAtual, visitados);
-		//posicao++;
 		caminho[++posicao] = vizinhoMaisProximo;
 		visitados[vizinhoMaisProximo] = true;
 	}
 
 	// Volta para o vértice de origem
-	//posicao++;
 	caminho[++posicao] = origem;
 
 	// Imprime o resultado

@@ -225,34 +225,72 @@ int main() {
 							system("cls");
 							break;
 						case 15:  
-							// Inserir arestas para cada par de meios de transporte
-							for (Transporte* t1 = meioTransporte_1; t1 != NULL; t1 = t1->seguinte) {
-								for (Transporte* t2 = t1->seguinte; t2 != NULL; t2 = t2->seguinte) {
-									
-									//Converter 3 palavras do what3words em coordenadas (latitude e longitude)
-									get_coordinates(t1->geocodigo, API_KEY, &lat1, &lng1);
-									get_coordinates(t2->geocodigo, API_KEY, &lat2, &lng2);
-									
-									//Calcular a distancia entre os vertices
-									float distancia = haversine_distance(lat1, lng1, lat2, lng2); 
-									
-									//Criar as arestas entre os vertices (Transporte 1 e Transporte 2)
-									criarAresta(grafo_1, t1->codigo, t2->codigo, distancia);
-									criarAresta(grafo_1, t2->codigo, t1->codigo, distancia);
-								} 
-							} 
-							system("pause"); 
-							system("cls"); 
+							printf("A CONSTRUIR ARESTAS ENTRE COORDENADAS...\n");  
+
+							if (!grafoCompleto(grafo_1)) {
+
+								// Inserir arestas para cada par de meios de transporte
+								for (Transporte* t1 = meioTransporte_1; t1 != NULL; t1 = t1->seguinte) {
+									for (Transporte* t2 = t1->seguinte; t2 != NULL; t2 = t2->seguinte) {
+
+										//Converter 3 palavras do what3words em coordenadas (latitude e longitude)
+										get_coordinates(t1->geocodigo, API_KEY, &lat1, &lng1);
+										get_coordinates(t2->geocodigo, API_KEY, &lat2, &lng2);
+
+										//Calcular a distancia entre os vertices
+										float distancia = haversine_distance(lat1, lng1, lat2, lng2);
+
+										//Criar as arestas entre os vertices (Transporte 1 e Transporte 2)
+										criarAresta(grafo_1, t1->codigo, t2->codigo, distancia);
+										criarAresta(grafo_1, t2->codigo, t1->codigo, distancia);
+									}
+								}
+								//Imprime o Grafo 
+								imprimirGrafo(grafo_1); 
+								system("pause");
+								system("cls");
+							}
+							else {
+								//Imprimir Grafo 
+								imprimirGrafo(grafo_1);
+								system("pause");
+								system("cls");
+							}
 							break; 
 						case 16: 
-							//Imprimir Grafo 
-							imprimirGrafo(grafo_1); 
-							system("pause"); 
+							if (!grafoCompleto(grafo_1)) { 
+								printf("A CONSTRUIR ARESTAS ENTRE COORDENADAS...\n");
 
-							//Imprimir o caminho mais curto para percorrer todos os vértices 
-							tspVizinhoMaisProximo(grafo_1, origem); 
-												 
-							break; 
+								// Inserir arestas para cada par de meios de transporte
+								for (Transporte* t1 = meioTransporte_1; t1 != NULL; t1 = t1->seguinte) {
+									for (Transporte* t2 = t1->seguinte; t2 != NULL; t2 = t2->seguinte) {
+
+										//Converter 3 palavras do what3words em coordenadas (latitude e longitude)
+										get_coordinates(t1->geocodigo, API_KEY, &lat1, &lng1);
+										get_coordinates(t2->geocodigo, API_KEY, &lat2, &lng2);
+
+										//Calcular a distancia entre os vertices
+										float distancia = haversine_distance(lat1, lng1, lat2, lng2);
+
+										//Criar as arestas entre os vertices (Transporte 1 e Transporte 2)
+										criarAresta(grafo_1, t1->codigo, t2->codigo, distancia);
+										criarAresta(grafo_1, t2->codigo, t1->codigo, distancia);
+									}
+								}
+								//Imprime o Grafo 
+								imprimirGrafo(grafo_1);
+								system("pause"); 
+								tspVizinhoMaisProximo(grafo_1, origem);
+								system("pause"); 
+								system("cls");							
+							}
+							else {
+								//Imprimir o caminho mais curto para percorrer todos os vértices 
+								tspVizinhoMaisProximo(grafo_1, origem);
+								system("pause");
+								system("cls");
+							}
+							break;
 						default:
 							//Caso nenhuma opcao for inserida corretamente informa o utilizar 
 							printf("OPCAO INVALIDA\n");

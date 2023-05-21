@@ -4,6 +4,7 @@
 #include <float.h>
 #include "Cliente.h" 
 
+//Estrutura para os vértices
 typedef struct Vertice {
     char geocodigo[100];
     int ID;             
@@ -17,12 +18,14 @@ typedef struct Vertice {
     struct Vertice* seguinte;
 } Vertice;
 
+//Estrutura para as arestas 
 typedef struct Aresta {
     int vertice_adjacente; 
     float peso;
     struct Aresta* proximo;
 } Aresta;
 
+//Estrutura do grafo
 typedef struct Grafo {
     int numeroVertices;
     bool** visitados;
@@ -33,11 +36,13 @@ typedef struct Grafo {
     struct Vertice* vertices;
 } Grafo; 
 
+//Nó 
 typedef struct Node {
     int valor;
     struct Node* proximo;
 } Node; 
 
+//Pilha 
 typedef struct Queue {
     Node* inicio;
     Node* fim; 
@@ -62,15 +67,19 @@ Grafo* criarGrafo(int numeroVertices);
 void imprimirGrafo(Grafo* g);
 
 //Guardar grafo em ficheiro txt
-Grafo* guardarGrafo(Grafo* g); 
+Grafo* guardarGrafo(Grafo* g);  
 
+bool grafoCompleto(Grafo* g); 
+
+//Função para atravessar o grafo
 void travessia(Grafo* g, int origem);   
 
 int dequeue(Queue* fila); 
 
 void enqueue(Queue* fila, int valor); 
 
+//Percurso minimo entre dois vértices 
 void menorPercurso(Grafo* g, int origem); 
 
-//Percurso minimo 
+//Percurso minimo para percurrer todos os vértices 
 void tspVizinhoMaisProximo(Grafo* g, int origem); 
