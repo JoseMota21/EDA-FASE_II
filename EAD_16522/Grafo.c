@@ -495,17 +495,18 @@ void menorPercurso(Grafo* g, int origem) {
 
 //Função para encontrar qual o vértice mais próximo (Auxilio para excutar a função tspVizinhoMaisProximo )
 int EncontrarMaisProximo(Grafo* g, int verticeAtual, bool* visitados) {
+	
 	int numeroVertices = g->numeroVertices;
 	float menorPeso = FLT_MAX;
 	int vizinhoProximo = -1;
 
 	for (int i = 0; i < numeroVertices; i++) {
+			
 		Aresta* aresta = g->matrizadj[verticeAtual][i];
-
-		if (aresta != NULL && !visitados[i] && aresta->peso < menorPeso) {
-			menorPeso = aresta->peso;
-			vizinhoProximo = i;
-		}
+			if (aresta != NULL && !visitados[i] && aresta->peso < menorPeso) {
+				menorPeso = aresta->peso;
+				vizinhoProximo = i;
+			}
 	}
 
 	return vizinhoProximo;
@@ -524,8 +525,9 @@ void tspVizinhoMaisProximo(Grafo* g, int origem) {
 		visitados[i] = false;
 	}
 
+	//5
 	// Inicializa o vetor de caminho
-	int caminho[5 + 1];
+	int caminho[10 + 1];
 	int posicao = 0;
 	caminho[posicao] = origem;
 	visitados[origem] = true;
