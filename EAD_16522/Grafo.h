@@ -4,9 +4,6 @@
 #include <float.h>
 #include "Cliente.h" 
 
-#define MAX 100
-#define INFINITY_FLOAT FLT_MAX 
-
 typedef struct Vertice {
     char geocodigo[100]; // What3Words
     int ID;              // ID do meio de transporte
@@ -16,7 +13,7 @@ typedef struct Vertice {
 
     Transporte* meios; 
 
-    int adjacencias; 
+    struct Aresta* adjacencias; 
     struct Vertice* seguinte;
 } Vertice;
 
@@ -29,13 +26,10 @@ typedef struct Aresta {
 typedef struct Grafo {
     int numeroVertices;
     bool** visitados;
-    bool** matrizad; 
 
-    struct Aresta** matrizadj;     
+    struct Aresta*** matrizadj;     
     struct Vertice* vertices;
 } Grafo;
-
-void travessiaProfundidade(Grafo* g); 
 
 //Guardar vertices em ficheiro txt
 void guardarVertices(Grafo** g);
@@ -56,8 +50,7 @@ Grafo* criarGrafo(int numeroVertices);
 void imprimirGrafo(Grafo* g);
 
 //Guardar grafo em ficheiro txt
-Grafo* guardarGrafo(Grafo* g); 
-void imprimirListaAdjacencias(Grafo* g);  
+Grafo* guardarGrafo(Grafo* g);  
 
-Vertice* encontrarVertice(Grafo* g, int id); 
+
 

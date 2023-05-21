@@ -100,8 +100,8 @@ Grafo* criarGrafo(int numeroVertices) {
 	}
 
 	// Aloca memória para a matriz de adjacência
-	g->matrizad = malloc(numeroVertices * sizeof(bool*));
-	if (g->matrizad == NULL) {
+	g->matrizadj = malloc(numeroVertices * sizeof(Aresta*));
+	if (g->matrizadj == NULL) {
 		// Tratamento de erro na alocação de memória
 		free(g->visitados);
 		free(g);
@@ -111,16 +111,16 @@ Grafo* criarGrafo(int numeroVertices) {
 	// Inicializa a matriz de visitados e a matriz de adjacência
 	for (int i = 0; i < numeroVertices; i++) {
 		g->visitados[i] = calloc(numeroVertices, sizeof(bool));
-		g->matrizad[i] = calloc(numeroVertices, sizeof(bool));
-		if (g->visitados[i] == NULL || g->matrizad[i] == NULL) {
+		g->matrizadj[i] = calloc(numeroVertices, sizeof(Aresta*));
+		if (g->visitados[i] == NULL || g->matrizadj[i] == NULL) {
 			// Tratamento de erro na alocação de memória
-			// Libere a memória alocada anteriormente
+			// Libera a memória alocada anteriormente
 			for (int j = 0; j < i; j++) {
 				free(g->visitados[j]);
-				free(g->matrizad[j]);
+				free(g->matrizadj[j]);
 			}
 			free(g->visitados);
-			free(g->matrizad);
+			free(g->matrizadj);
 			free(g);
 			return NULL;
 		}
@@ -154,13 +154,14 @@ Aresta* criarAresta(Grafo* g, int origem, int destino, float peso) {
 	}
 
 	// Verificar se a aresta já existe entre os vértices
-	if (g->matrizad[origem][destino] != NULL) {
+	if (g->matrizadj[origem][destino] != NULL) {
 		printf("ARESTA JA EXISTE ENTRE OS VERTICES %d e %d\n", origem, destino);
 		return NULL;
 	} 
 
 	// Criar a nova aresta
-	Aresta* novaAresta = malloc(sizeof(Aresta));
+	Aresta* novaAresta = malloc(sizeof(Aresta)); 
+
 	if (novaAresta == NULL) {
 		printf("ERRO: Falha ao alocar memoria para a nova aresta.\n");
 		return NULL;
@@ -171,29 +172,23 @@ Aresta* criarAresta(Grafo* g, int origem, int destino, float peso) {
 	novaAresta->proximo = NULL;
 	 
 	// Atualizar a matriz de adjacência para refletir a presença da aresta
-	g->matrizad[origem][destino] = true; 
-
-	// Armazenar a nova aresta na matriz de adjacência
 	g->matrizadj[origem][destino] = novaAresta; 
-
-	// Acessar o peso da aresta
-	float pesoAresta = g->matrizadj[origem][destino]->peso;
-	printf("Peso da aresta entre os vertices %d e %d: %f\n", origem, destino, pesoAresta); 
-
-
-	/*
 	
-		// Percorrer a matriz de adjacência
+	// Percorrer a matriz de adjacência
 	for (int i = 0; i < g->numeroVertices; i++) {
-		for (int j = 0; j < g->numeroVertices; j++) {
-			printf("Aresta entre os vertices %d e %d: %d\n", i, j, g->matrizad[i][j]);
+		for (int j = 0; j < g->numeroVertices; j++) { 
+			Aresta* aresta = g->matrizadj[i][j]; 
+			while (aresta!= NULL){
+				printf("Aresta entre os vertices %d e %d: %d\n", i, j,aresta->peso); 
+
+				aresta = aresta->proximo; 
+			}
+			
 		}
 	}
-
-	*/ 
-	
 	 
 	system("pause"); 
+	system("cls"); 
 
 	guardarGrafo(g); 
 
@@ -231,27 +226,6 @@ void imprimirGrafo(Grafo* g) {
 		atualVertice = atualVertice->seguinte; 
 	}
 }  
-
-//Imprimir a lista de adjacencias 
-void imprimirListaAdjacencias(Grafo* g) {
-	
-	Vertice* verticeAtual = g->vertices;
-
-	while (verticeAtual != NULL) {
-		printf("Vertice %d:\n", verticeAtual->ID); 
-
-		Aresta* adjacenciaAtual = verticeAtual->adjacencias;
-
-		while (adjacenciaAtual != NULL) {
-			printf("Vertice Adjacente: %d\n", adjacenciaAtual->vertice_adjacente);
-			printf("Peso da Aresta: %.2f\n", adjacenciaAtual->peso);
-
-			adjacenciaAtual = adjacenciaAtual->proximo;
-		}
-
-		verticeAtual = verticeAtual->seguinte;
-	}
-}
 
 //Listar na consola os vertices que representam os meios de transporte 
 Vertice* listarVertices(Grafo* g) {
@@ -304,7 +278,7 @@ Grafo* guardarGrafo(Grafo* g) {
 	for (int origem = 0; origem < g->numeroVertices; origem++) {
 		for (int destino = 0; destino < g->numeroVertices; destino++) {
 			// Verificar se há uma aresta entre os vértices de origem e destino
-			if (g->matrizad[origem][destino] != NULL) { 
+			if (g->matrizadj[origem][destino] != NULL) { 
 
 				// Escrever no arquivo as informações do grafo: origem, destino e peso da aresta
 				fprintf(ficheiroGrafo, "%d;%d;\n", origem, destino);
@@ -352,31 +326,4 @@ void guardarVertices (Grafo** g) {
 	// fechar o ficheiro
 	fclose(ficheiroVertice);
 }  
-
-
-void dfs(Grafo* g, int vertice) {
-	
-	g->visitados[vertice] = true;
-	printf("%d\n ", g->vertices[vertice].ID);
-
-	Aresta* arestaAtual = g->vertices[vertice].adjacencias;
-	while (arestaAtual != NULL) {
-		int verticeAdjacente = arestaAtual->vertice_adjacente;
-		if (!g->visitados[verticeAdjacente]) {
-			dfs(g, verticeAdjacente);
-		}
-		arestaAtual = arestaAtual->proximo;
-	}
-}
-
-void travessiaProfundidade(Grafo* g, int verticeInicial) {
-	// Inicializar o array de visitados como falso
-	for (int i = 0; i < g->numeroVertices; i++) {
-		g->visitados[i] = false;
-	}
-
-	// Chamar a função dfs para o vértice inicial
-	dfs(g, verticeInicial);
-}
-
 
