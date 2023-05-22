@@ -17,6 +17,7 @@ int main() {
 	Cliente* cliente_1 = NULL; // Lista ligada clientes vazia 
 	Gestor* gestor_1 = NULL; // Lista ligada clientes vazia 
 	Grafo* grafo_1 = NULL; // Lista ligada vazia 
+	Grafo* grafo_2 = NULL; 
 	Vertice* vertices = NULL; // Lista ligada vazia 
 	Aresta* aresta = NULL;
 	HistoricoRegisto* historico_1 = NULL; //Lista ligada historico vazia 
@@ -34,10 +35,11 @@ int main() {
 	//Ler ficheiro Historico  
 	historico_1 = lerficheirohistorico(historico_1);   
 
-	grafo_1 = criarGrafo(100);  
-	
+	grafo_1 = criarGrafo(100); 
+
 	//Representar os meios de transporte em vertices 
-	criarVertices(&grafo_1, meioTransporte_1);  
+	criarVertices(&grafo_1, meioTransporte_1); 
+
 
 	//Variáveis de switch cwase
 	int opcao;

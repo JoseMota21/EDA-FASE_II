@@ -563,26 +563,31 @@ int	TransportePorLocalidade(Transporte* inicio, char* localidade) {
 	return 1;
 }
 
-//Veiculos elétricos com bateria inferior a 50% 
-Transporte* inferior50(Transporte* inicio) { 
+Transporte* inferior50(Transporte* inicio) {
 
-	bool encontrado = false; 
-	
-	//Percorrer a lista ligada 
-	while (inicio!= NULL) { 
+	bool encontrado = false;
+	Transporte* recolha = NULL; // Nova lista ligada para armazenar os meios de transporte com bateria inferior a 50%
 
-		//Verifica qual o meio de transporte com bateria inferior a 50% 
-		if (inicio->bateria < 50.0) {
-			printf("%d;%s;%.2f\n", inicio->codigo, inicio->tipo, inicio->bateria); 
-			encontrado = true;
+	// Percorrer a lista ligada
+	while (inicio != NULL) {
+
+		if (inicio->codigo != 0) {
+
+			// Verifica qual o meio de transporte com bateria inferior a 50%
+			if (inicio->bateria < 50.0) {
+				printf("%d;%s;%.2f\n", inicio->codigo, inicio->tipo, inicio->bateria);
+
+				encontrado = true;
+			}			
 		}
-		inicio = inicio->seguinte;  
-	}
-	if (!encontrado) {
-		printf("DE MOMENTO NAO EXISTE TRANSPORTE COM BATERIA INFERIOR A 50\n"); 
+		inicio = inicio->seguinte;
 	}
 
-	printf("\n"); 
-	
+	if (!encontrado) {
+		printf("DE MOMENTO NAO EXISTE TRANSPORTE COM BATERIA INFERIOR A 50\n");
+	}
+
+	printf("\n");
+
 	return inicio;
-} 
+}

@@ -25,7 +25,8 @@ Vertice* criarVertices(Grafo** g, Transporte* meios) {
 		novo->meios = atual;
 		novo->VerticeID = VerticeID;
 		novo->seguinte = NULL;
-		novo->adjacencias = NULL;
+		novo->adjacencias = NULL; 
+
 		//Se o grafo for NULL (VAZIO) 
 		if (*g == NULL) {
 			//Se o grafo não exister cria um grafo
@@ -64,7 +65,7 @@ Vertice* criarVertices(Grafo** g, Transporte* meios) {
 	//Guardar os vértices em um ficheiro 
 	guardarVertices(g);
 	return (*g)->vertices;
-}
+} 
 
 //Função para encontrar vértices 
 Vertice* encontrarVertice(Grafo* g, int id) {
@@ -178,19 +179,6 @@ Aresta* criarAresta(Grafo* g, int origem, int destino, float peso) {
 	// Atualizar a matriz de adjacência para refletir a presença da aresta
 	g->matrizadj[origem][destino] = novaAresta; 
 	
-	/*
-		// Percorrer a matriz de adjacência
-		for (int i = 0; i < g->numeroVertices; i++) {
-			for (int j = i + 1; j < g->numeroVertices; j++) {
-				Aresta* aresta = g->matrizadj[i][j];
-				if (aresta != NULL) {
-					printf("ARESTA ENTRE O VERTICE %d E %d TEM UM PESO DE %.2f\n", i, j, aresta->peso);
-				}
-			}
-		}
-	*/
-
-
 	guardarGrafo(g); 
 
 return novaAresta;
@@ -402,7 +390,6 @@ int dequeue(Queue* fila) {
 
 		return -1; 
 	}
-
 	Node* noRemovido = fila->inicio; 
 	int valorRemovido = noRemovido->valor; 
 
@@ -496,53 +483,48 @@ void menorPercurso(Grafo* g, int origem) {
 
 //Função para encontrar qual o vértice mais próximo (Auxilio para excutar a função tspVizinhoMaisProximo )
 int EncontrarMaisProximo(Grafo* g, int verticeAtual, bool* visitados) {
-	
+
 	int numeroVertices = g->numeroVertices;
 	float menorPeso = FLT_MAX;
 	int vizinhoProximo = -1;
 
 	for (int i = 0; i < numeroVertices; i++) {
-			
+
 		Aresta* aresta = g->matrizadj[verticeAtual][i];
-			if (aresta != NULL && !visitados[i] && aresta->peso < menorPeso) {
-				menorPeso = aresta->peso;
-				vizinhoProximo = i;
-			}
+		if (aresta != NULL && !visitados[i] && aresta->peso < menorPeso) {
+			menorPeso = aresta->peso;
+			vizinhoProximo = i;
+		}
 	}
-
-	return vizinhoProximo;
+	return vizinhoProximo; 
 }
-
-//Percurso minimo para percorrer todos os vértices desde a orige, 
+ 
 void tspVizinhoMaisProximo(Grafo* g, int origem) {
-	
+
 	int numeroVertices = g->numeroVertices;
-
 	//Inicializar o vetor de visitados 
-	bool* visitados = malloc(numeroVertices * sizeof(bool)); 
-
+	bool* visitados = malloc(numeroVertices * sizeof(bool));
 	// Inicializa o vetor de visitados
 	for (int i = 0; i < numeroVertices; i++) {
 		visitados[i] = false;
 	}
-	
+
 	// Inicializa o vetor de caminho
 	int caminho[10 + 1];
 	int posicao = 0;
+	caminho[posicao] = origem;
 	caminho[posicao] = origem; //origem == armazém 
 	visitados[origem] = true;
 
 	// Constrói o caminho usando a heurística do vizinho mais próximo
 	for (int i = 0; i < numeroVertices - 1; i++) {
 		int verticeAtual = caminho[posicao];
-		int vizinhoMaisProximo = EncontrarMaisProximo(g, verticeAtual, visitados);
+		int vizinhoMaisProximo = EncontrarMaisProximoComBateriaInferior50(g, verticeAtual, visitados);
 		caminho[++posicao] = vizinhoMaisProximo;
 		visitados[vizinhoMaisProximo] = true;
 	}
-
 	// Volta para o vértice de origem
 	caminho[++posicao] = origem;
-
 	// Imprime o resultado
 	printf("------------------------- CAMINHO MAIS CURTO -------------------\n");
 	printf("Caminho: ");
@@ -551,5 +533,26 @@ void tspVizinhoMaisProximo(Grafo* g, int origem) {
 	}
 	printf("\n");
 
-	free(visitados); 
-}  
+	free(visitados);
+}
+
+int EncontrarMaisProximoComBateriaInferior50(Grafo* g, int verticeAtual, bool* visitados) {
+
+	int numeroVertices = g->numeroVertices;
+	float menorPeso = FLT_MAX;
+	int vizinhoProximo = -1;
+
+	for (int i = 0; i < numeroVertices; i++) {
+		Aresta* aresta = g->matrizadj[verticeAtual][i];
+		Vertice* vertice = &g->vertices[i];
+
+		if (aresta != NULL && !visitados[i] && vertice->bateria < 50.0) {
+			if (aresta->peso < menorPeso) {
+				menorPeso = aresta->peso;
+				vizinhoProximo = i;
+			}
+		}
+	}
+
+	return vizinhoProximo;
+}

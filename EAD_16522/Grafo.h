@@ -48,10 +48,6 @@ typedef struct Queue {
     Node* fim; 
 } Queue;
 
-typedef struct {
-    int ID; 
-    char localizacao[100]; 
-}VerticeArmazem;
 
 //Guardar vertices em ficheiro txt
 void guardarVertices(Grafo** g);
@@ -88,3 +84,5 @@ void menorPercurso(Grafo* g, int origem);
 
 //Percurso minimo para percurrer todos os vértices 
 void tspVizinhoMaisProximo(Grafo* g, int origem);  
+
+bool BateriaInferiorA50(Vertice* vertice); 
