@@ -319,7 +319,7 @@ void guardarVertices (Grafo** g) {
 	fclose(ficheiroVertice);
 }  
 
-//Visitar o grafo em profundidade 
+//Visitar o grafo em profundidade (Apagar)
 void visitaProfun(Grafo* g, int origem, bool* visitados) {
 
 	//Marca o vertice atual como visitado
@@ -338,7 +338,7 @@ void visitaProfun(Grafo* g, int origem, bool* visitados) {
 	}
 }
 
-//Atravessar o grafo 
+//Atravessar o grafo (Apagar)
 void travessia(Grafo* g, int origem) {
 
 	//Verificar se o vertice de origem é valido 
@@ -491,6 +491,7 @@ int EncontrarMaisProximo(Grafo* g, int verticeAtual, bool* visitados) {
 	for (int i = 0; i < numeroVertices; i++) {
 
 		Aresta* aresta = g->matrizadj[verticeAtual][i];
+
 		if (aresta != NULL && !visitados[i] && aresta->peso < menorPeso) {
 			menorPeso = aresta->peso;
 			vizinhoProximo = i;
@@ -519,7 +520,7 @@ void tspVizinhoMaisProximo(Grafo* g, int origem) {
 	// Constrói o caminho usando a heurística do vizinho mais próximo
 	for (int i = 0; i < numeroVertices - 1; i++) {
 		int verticeAtual = caminho[posicao];
-		int vizinhoMaisProximo = EncontrarMaisProximoComBateriaInferior50(g, verticeAtual, visitados);
+		int vizinhoMaisProximo = EncontrarMaisProximo50(g, verticeAtual, visitados);
 		caminho[++posicao] = vizinhoMaisProximo;
 		visitados[vizinhoMaisProximo] = true;
 	}
@@ -536,7 +537,7 @@ void tspVizinhoMaisProximo(Grafo* g, int origem) {
 	free(visitados);
 }
 
-int EncontrarMaisProximoComBateriaInferior50(Grafo* g, int verticeAtual, bool* visitados) {
+int EncontrarMaisProximo50(Grafo* g, int verticeAtual, bool* visitados) { 
 
 	int numeroVertices = g->numeroVertices;
 	float menorPeso = FLT_MAX;
@@ -544,15 +545,17 @@ int EncontrarMaisProximoComBateriaInferior50(Grafo* g, int verticeAtual, bool* v
 
 	for (int i = 0; i < numeroVertices; i++) {
 		Aresta* aresta = g->matrizadj[verticeAtual][i];
-		Vertice* vertice = &g->vertices[i];
+		
+		Vertice* vertice = encontrarVertice(g, i);
 
 		if (aresta != NULL && !visitados[i] && vertice->bateria < 50.0) {
+			printf("Bateria do vértice %d: %.2f\n", i, vertice->bateria);
 			if (aresta->peso < menorPeso) {
 				menorPeso = aresta->peso;
 				vizinhoProximo = i;
 			}
 		}
 	}
-
 	return vizinhoProximo;
-}
+} 
+
