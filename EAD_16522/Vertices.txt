@@ -1,4 +1,7 @@
-1;0;ARMAZEM;0.00;///desatento.desmorona.maldade
-2;1;BIKE;41.00;///leem.imediata.enfermeiro
-3;2;BIKE;13.00;///solucionar.geleias.colas
-4;3;BIKE;100.00;///esgueirou.afobado.planilha
+0;0;ARMAZEM;0.00;///cantarola.sondado.nevoeiro
+1;6;MOTA;56.00;///chegaram.premiando.grama
+2;5;bike;34.00;///reescrevendo.suor.minimiza
+3;4;MOTA;100.00;///reescrevendo.suor.minimiza
+4;1;BIKE;41.00;///leem.imediata.enfermeiro
+5;2;BIKE;13.00;///solucionar.geleias.colas
+6;3;BIKE;100.00;///esgueirou.afobado.planilha

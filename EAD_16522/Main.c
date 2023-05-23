@@ -17,7 +17,6 @@ int main() {
 	Cliente* cliente_1 = NULL; // Lista ligada clientes vazia 
 	Gestor* gestor_1 = NULL; // Lista ligada clientes vazia 
 	Grafo* grafo_1 = NULL; // Lista ligada vazia 
-	Grafo* grafo_2 = NULL; 
 	Vertice* vertices = NULL; // Lista ligada vazia 
 	Aresta* aresta = NULL;
 	HistoricoRegisto* historico_1 = NULL; //Lista ligada historico vazia 
@@ -39,7 +38,6 @@ int main() {
 
 	//Representar os meios de transporte em vertices 
 	criarVertices(&grafo_1, meioTransporte_1); 
-
 
 	//Variáveis de switch cwase
 	int opcao;
@@ -241,9 +239,9 @@ int main() {
 										//Calcular a distancia entre os vertices
 										float distancia = haversine_distance(lat1, lng1, lat2, lng2);
 
-										//Criar as arestas entre os vertices (Transporte 1 e Transporte 2)
+										//Criar as arestas entre os vertices (Transporte 1 e Transporte 2) 
 										criarAresta(grafo_1, t1->codigo, t2->codigo, distancia);
-										criarAresta(grafo_1, t2->codigo, t1->codigo, distancia);
+										//criarAresta(grafo_1, t2->codigo, t1->codigo, distancia);
 									}
 								}
 								//Imprime o Grafo 
@@ -275,7 +273,7 @@ int main() {
 
 										//Criar as arestas entre os vertices (Transporte 1 e Transporte 2)
 										criarAresta(grafo_1, t1->codigo, t2->codigo, distancia);
-										criarAresta(grafo_1, t2->codigo, t1->codigo, distancia);
+										//criarAresta(grafo_1, t2->codigo, t1->codigo, distancia);
 									}
 								}
 								//Imprime o Grafo 
