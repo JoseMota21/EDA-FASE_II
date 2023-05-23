@@ -505,6 +505,7 @@ void tspVizinhoMaisProximo(Grafo* g, int origem) {
 	int numeroVertices = g->numeroVertices;
 	//Inicializar o vetor de visitados 
 	bool* visitados = malloc(numeroVertices * sizeof(bool));
+	
 	// Inicializa o vetor de visitados
 	for (int i = 0; i < numeroVertices; i++) {
 		visitados[i] = false;
@@ -513,7 +514,7 @@ void tspVizinhoMaisProximo(Grafo* g, int origem) {
 	// Inicializa o vetor de caminho
 	int caminho[10 + 1];
 	int posicao = 0;
-	caminho[posicao] = origem;
+	//caminho[posicao] = origem;
 	caminho[posicao] = origem; //origem == armazém 
 	visitados[origem] = true;
 
