@@ -482,7 +482,7 @@ void menorPercurso(Grafo* g, int origem) {
 } 
 
 //Função para encontrar qual o vértice mais próximo (Auxilio para excutar a função tspVizinhoMaisProximo )
-int EncontrarMaisProximo(Grafo* g, int verticeAtual, bool* visitados) {
+int EncontrarMaisProximo(Grafo* g, int verticeAtual, bool* visitados)  {
 
 	int numeroVertices = g->numeroVertices;
 	float menorPeso = FLT_MAX;
@@ -537,25 +537,25 @@ void tspVizinhoMaisProximo(Grafo* g, int origem) {
 	free(visitados);
 }
 
-int EncontrarMaisProximo50(Grafo* g, int verticeAtual, bool* visitados) { 
-
+int EncontrarMaisProximo50(Grafo* g, int verticeAtual, bool* visitados) {
+	
 	int numeroVertices = g->numeroVertices;
 	float menorPeso = FLT_MAX;
-	int vizinhoProximo = -1;
+	int vizinhoProximo = 0;
 
 	for (int i = 0; i < numeroVertices; i++) {
-		Aresta* aresta = g->matrizadj[verticeAtual][i];
-		
-		Vertice* vertice = encontrarVertice(g, i);
+		if (i != verticeAtual) {  // Verifica se o vértice não é o atual
+			Aresta* aresta = g->matrizadj[verticeAtual][i];
+			Vertice* vertice = encontrarVertice(g, i);
 
-		if (aresta != NULL && !visitados[i] && vertice->bateria < 50.0) {
-			printf("Bateria do vértice %d: %.2f\n", i, vertice->bateria);
-			if (aresta->peso < menorPeso) {
-				menorPeso = aresta->peso;
-				vizinhoProximo = i;
+			if (aresta != NULL && !visitados[i] && vertice->bateria < 50.0) {
+				printf("Bateria do vértice %d: %.2f\n", i, vertice->bateria);
+				if (aresta->peso < menorPeso) {
+					menorPeso = aresta->peso;
+					vizinhoProximo = i;
+				}
 			}
 		}
 	}
 	return vizinhoProximo;
-} 
-
+}
