@@ -243,7 +243,6 @@ int main() {
 
 										//Criar as arestas entre os vértices
 										criarAresta(grafo_1, verticeAtual->VerticeID, proximoVertice->VerticeID, distancia); 
-										//criarAresta(grafo_1, proximoVertice->VerticeID, verticeAtual->VerticeID, distancia);
 
 										proximoVertice = proximoVertice->seguinte; 
 									} 
@@ -279,7 +278,6 @@ int main() {
 
 										//Criar as arestas entre os vértices
 										criarAresta(grafo_1, verticeAtual->VerticeID, proximoVertice->VerticeID, distancia); 
-										//criarAresta(grafo_1, proximoVertice->VerticeID, verticeAtual->VerticeID, distancia);
 
 										proximoVertice = proximoVertice->seguinte;
 									}

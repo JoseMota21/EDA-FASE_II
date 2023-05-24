@@ -73,7 +73,7 @@ Vertice* encontrarVertice(Grafo* g, int id) {
 	Vertice* atual = g->vertices;
 
 	while (atual != NULL) {
-			if (atual->ID == id) {
+			if (atual->VerticeID == id) {
 				return atual;
 			}
 
@@ -148,7 +148,6 @@ Aresta* criarAresta(Grafo* g, int origem, int destino, float peso) {
 	if (origem < 0 || origem >= g->numeroVertices || destino < 0 || destino >= g->numeroVertices) {
 		printf("VERTICES INVALIDOS.\n"); 
 
-		//printf("%d, %d, %d\n", origem, destino, g->numeroVertices); 
 		return NULL;
 	}
 
@@ -172,24 +171,32 @@ Aresta* criarAresta(Grafo* g, int origem, int destino, float peso) {
 		return NULL;
 	}
 
-	// Criar a nova aresta
-	Aresta* novaAresta = malloc(sizeof(Aresta));
+	// Criar a nova aresta (Origem - Destino - Grafo bidirecional)
+	Aresta* novaArestaOrigem = malloc(sizeof(Aresta));
 
-	if (novaAresta == NULL) {
+	if (novaArestaOrigem == NULL) {
 		printf("ERRO: Falha ao alocar memoria para a nova aresta.\n");
 		return NULL;
 	}
 
-	novaAresta->vertice_adjacente = destino;
-	novaAresta->peso = peso;
-	novaAresta->proximo = NULL;
+	novaArestaOrigem->vertice_adjacente = destino;
+	novaArestaOrigem->peso = peso;
+	novaArestaOrigem->proximo = NULL; 
 
 	// Atualizar a matriz de adjacência para refletir a presença da aresta
-	g->matrizadj[origem][destino] = novaAresta;
+	g->matrizadj[origem][destino] = novaArestaOrigem;
+
+	Aresta* novaArestaDestino = malloc(sizeof(Aresta)); 
+
+	novaArestaDestino->vertice_adjacente = origem; 
+	novaArestaDestino->peso = peso; 
+	novaArestaDestino->proximo = NULL;
+
+	g->matrizadj[destino][origem] = novaArestaDestino; 
 
 	guardarGrafo(g);
 
-	return novaAresta;
+	return novaArestaOrigem; 
 }
  
 //Imprimir na consola o grafo
