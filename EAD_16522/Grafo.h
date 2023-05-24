@@ -63,4 +63,5 @@ Grafo* guardarGrafo(Grafo* g);
 bool grafoCompleto(Grafo* g); 
 
 //Percurso minimo para percurrer todos os vértices 
-void recolherTrotinetes(Grafo* g, int origem); 
+void recolherTrotinetes(Grafo* g, int origem);  
+

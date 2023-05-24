@@ -376,7 +376,7 @@ int EncontrarMaisProximo(Grafo* g, int verticeAtual, bool* visitados)  {
 		}
 	}
 	return vizinhoProximo; 
-} 
+}  
   
 void recolherTrotinetes(Grafo* g, int origem) {
 	int numeroVertices = g->numeroVertices;
@@ -419,9 +419,9 @@ void recolherTrotinetes(Grafo* g, int origem) {
 	printf("RECOLHER OS MEIOS DE TRANSPORTE\n"); 
 
 	for (int i = 0; i <= posicao; i++) {
-		 int vertice = caminho[i]; 
-		
-			printf("VERTICE %d RECOLHIDO\n", vertice);  	
+		 int vertice = caminho[i];
+		 
+		 printf("VERTICE %d RECOLHIDO\n", vertice);  
 	}
 	 
 	free(visitados);
@@ -439,7 +439,7 @@ int EncontrarMaisProximo50(Grafo* g, int verticeAtual, bool* visitados) {
 			Vertice* vertice = encontrarVertice(g, i);
 
 			if (aresta != NULL && vertice->bateria < 50.0) {
-				//printf("Bateria do vértice %d: %.2f\n", i, vertice->bateria);
+
 				if (aresta->peso < menorPeso) {
 					menorPeso = aresta->peso;
 					vizinhoProximo = i;
@@ -450,8 +450,9 @@ int EncontrarMaisProximo50(Grafo* g, int verticeAtual, bool* visitados) {
 
 	if (vizinhoProximo != -1) {
 		Vertice* vertice = encontrarVertice(g, vizinhoProximo);
-		printf("Bateria do vértice %d: %.2f\n", vizinhoProximo, vertice->bateria);
+		printf("Bateria do vertice %d: %.2f\n", vizinhoProximo, vertice->bateria);
 	}
 	
 	return vizinhoProximo;
 }
+

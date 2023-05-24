@@ -284,7 +284,7 @@ int main() {
 									verticeAtual = verticeAtual->seguinte; 
 								}
 								//Imprime o Grafo 
-								imprimirGrafo(grafo_1);
+								//imprimirGrafo(grafo_1);
 								system("pause"); 
 								recolherTrotinetes(grafo_1, origem); 
 								system("pause"); 
