@@ -30,23 +30,13 @@ typedef struct Grafo {
     int numeroVertices;
     bool** visitados;
 
-    float* distancias; 
+    float* distancias;  
+
+    Transporte* meios; 
 
     struct Aresta*** matrizadj;     
     struct Vertice* vertices;
 } Grafo; 
-
-//Nó 
-typedef struct Node {
-    int valor;
-    struct Node* proximo;
-} Node; 
-
-//Pilha 
-typedef struct Queue {
-    Node* inicio;
-    Node* fim; 
-} Queue;
 
 
 //Guardar vertices em ficheiro txt
@@ -72,17 +62,5 @@ Grafo* guardarGrafo(Grafo* g);
 
 bool grafoCompleto(Grafo* g); 
 
-//Função para atravessar o grafo
-void travessia(Grafo* g, int origem);   
-
-int dequeue(Queue* fila); 
-
-void enqueue(Queue* fila, int valor); 
-
-//Percurso minimo entre dois vértices 
-void menorPercurso(Grafo* g, int origem); 
-
 //Percurso minimo para percurrer todos os vértices 
-void tspVizinhoMaisProximo(Grafo* g, int origem);  
-
-bool BateriaInferiorA50(Vertice* vertice); 
+void recolherTrotinetes(Grafo* g, int origem); 

@@ -150,15 +150,11 @@ Aresta* criarAresta(Grafo* g, int origem, int destino, float peso) {
 
 		return NULL;
 	}
-
-	printf("%d\n", origem); 
 	 
 	if (verticeOrigem == NULL) {
 		printf("VERTICE ORIGEM NAO ENCONTRADO.\n");
 		return NULL;
 	}
-
-	printf("%d\n", destino);
 
 	if (verticeDestino == NULL) {
 		printf("VERTICE DE DESTINO NAO ENCONTRADO\n");
@@ -382,23 +378,22 @@ int EncontrarMaisProximo(Grafo* g, int verticeAtual, bool* visitados)  {
 	return vizinhoProximo; 
 } 
   
-void tspVizinhoMaisProximo(Grafo* g, int origem) {
-
+void recolherTrotinetes(Grafo* g, int origem) {
 	int numeroVertices = g->numeroVertices;
+
 	// Inicializar o vetor de visitados
 	bool* visitados = malloc(numeroVertices * sizeof(bool));
-	// Inicializa o vetor de visitados
 	for (int i = 0; i < numeroVertices; i++) {
 		visitados[i] = false;
 	}
 
-	// Inicializa o vetor de caminho
-	int caminho[10 + 1];
+	// Inicializar o vetor de caminho
+	int caminho[100 + 1];
 	int posicao = 0;
 	caminho[posicao] = origem;
 	visitados[origem] = true;
 
-	// Constrói o caminho usando a heurística do vizinho mais próximo
+	// Construir o caminho usando a heurística do vizinho mais próximo
 	for (int i = 0; i < numeroVertices - 1; i++) {
 		int verticeAtual = caminho[posicao];
 		int vizinhoMaisProximo = EncontrarMaisProximo50(g, verticeAtual, visitados);
@@ -409,19 +404,28 @@ void tspVizinhoMaisProximo(Grafo* g, int origem) {
 		caminho[++posicao] = vizinhoMaisProximo;
 		visitados[vizinhoMaisProximo] = true;
 	}
-	// Volta para o vértice de origem
+	// Voltar para o vértice de origem
 	caminho[++posicao] = origem;
 
-	// Imprime o resultado
-	printf("------------------------- CAMINHO MAIS CURTO -------------------\n");
-	printf("Caminho: ");
+	// Imprimir o resultado
+	printf("------------------------- ITENERAIO MAIS CURTO -------------------\n");
+	printf("ITENERARIO: ");
 	for (int i = 0; i <= posicao; i++) {
 		printf("%d ", caminho[i]);
 	}
 	printf("\n");
+	 
+	// Recolher as trotinetes no caminhão
+	printf("RECOLHER OS MEIOS DE TRANSPORTE\n"); 
 
+	for (int i = 0; i <= posicao; i++) {
+		 int vertice = caminho[i]; 
+		
+			printf("VERTICE %d RECOLHIDO\n", vertice);  	
+	}
+	 
 	free(visitados);
-}
+}  
 
 int EncontrarMaisProximo50(Grafo* g, int verticeAtual, bool* visitados) {
 
@@ -435,7 +439,7 @@ int EncontrarMaisProximo50(Grafo* g, int verticeAtual, bool* visitados) {
 			Vertice* vertice = encontrarVertice(g, i);
 
 			if (aresta != NULL && vertice->bateria < 50.0) {
-				printf("Bateria do vértice %d: %.2f\n", i, vertice->bateria);
+				//printf("Bateria do vértice %d: %.2f\n", i, vertice->bateria);
 				if (aresta->peso < menorPeso) {
 					menorPeso = aresta->peso;
 					vizinhoProximo = i;
@@ -443,5 +447,11 @@ int EncontrarMaisProximo50(Grafo* g, int verticeAtual, bool* visitados) {
 			}
 		}
 	}
+
+	if (vizinhoProximo != -1) {
+		Vertice* vertice = encontrarVertice(g, vizinhoProximo);
+		printf("Bateria do vértice %d: %.2f\n", vizinhoProximo, vertice->bateria);
+	}
+	
 	return vizinhoProximo;
 }

@@ -286,13 +286,13 @@ int main() {
 								//Imprime o Grafo 
 								imprimirGrafo(grafo_1);
 								system("pause"); 
-								tspVizinhoMaisProximo(grafo_1,origem);
+								recolherTrotinetes(grafo_1, origem); 
 								system("pause"); 
 								system("cls");							
 							}
 							else {
 								//Imprimir o caminho mais curto para percorrer todos os vértices 
-								tspVizinhoMaisProximo(grafo_1,origem);
+								recolherTrotinetes(grafo_1, origem);
 								system("pause");
 								system("cls");
 							}
