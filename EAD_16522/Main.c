@@ -228,21 +228,26 @@ int main() {
 
 							if (!grafoCompleto(grafo_1)) {
 
-								// Inserir arestas para cada par de meios de transporte
-								for (Transporte* t1 = meioTransporte_1; t1 != NULL; t1 = t1->seguinte) {
-									for (Transporte* t2 = t1->seguinte; t2 != NULL; t2 = t2->seguinte) {
+								// Inserir arestas para cada par de vértices
+								Vertice* verticeAtual = grafo_1->vertices; 
+								while (verticeAtual != NULL) { 
+									Vertice* proximoVertice = verticeAtual->seguinte; 
+									while (proximoVertice != NULL) { 
 
 										//Converter 3 palavras do what3words em coordenadas (latitude e longitude)
-										get_coordinates(t1->geocodigo, API_KEY, &lat1, &lng1);
-										get_coordinates(t2->geocodigo, API_KEY, &lat2, &lng2);
+										get_coordinates(verticeAtual->geocodigo, API_KEY, &lat1, &lng1); 
+										get_coordinates(proximoVertice->geocodigo, API_KEY, &lat2, &lng2); 
 
-										//Calcular a distancia entre os vertices
-										float distancia = haversine_distance(lat1, lng1, lat2, lng2);
+										//Calcular a distancia entre os vértices
+										float distancia = haversine_distance(lat1, lng1, lat2, lng2); 
 
-										//Criar as arestas entre os vertices (Transporte 1 e Transporte 2) 
-										criarAresta(grafo_1, t1->codigo, t2->codigo, distancia);
-										//criarAresta(grafo_1, t2->codigo, t1->codigo, distancia);
-									}
+										//Criar as arestas entre os vértices
+										criarAresta(grafo_1, verticeAtual->VerticeID, proximoVertice->VerticeID, distancia); 
+										//criarAresta(grafo_1, proximoVertice->VerticeID, verticeAtual->VerticeID, distancia);
+
+										proximoVertice = proximoVertice->seguinte; 
+									} 
+									verticeAtual = verticeAtual->seguinte; 
 								}
 								//Imprime o Grafo 
 								imprimirGrafo(grafo_1); 
@@ -260,21 +265,25 @@ int main() {
 							if (!grafoCompleto(grafo_1)) { 
 								printf("A CONSTRUIR ARESTAS ENTRE COORDENADAS...\n");
 
-								// Inserir arestas para cada par de meios de transporte
-								for (Transporte* t1 = meioTransporte_1; t1 != NULL; t1 = t1->seguinte) {
-									for (Transporte* t2 = t1->seguinte; t2 != NULL; t2 = t2->seguinte) {
-
+								// Inserir arestas para cada par de vértices
+								Vertice* verticeAtual = grafo_1->vertices;
+								while (verticeAtual != NULL) {
+									Vertice* proximoVertice = verticeAtual->seguinte;
+									while (proximoVertice != NULL) {
 										//Converter 3 palavras do what3words em coordenadas (latitude e longitude)
-										get_coordinates(t1->geocodigo, API_KEY, &lat1, &lng1);
-										get_coordinates(t2->geocodigo, API_KEY, &lat2, &lng2);
+										get_coordinates(verticeAtual->geocodigo, API_KEY, &lat1, &lng1); 
+										get_coordinates(proximoVertice->geocodigo, API_KEY, &lat2, &lng2); 
 
-										//Calcular a distancia entre os vertices
-										float distancia = haversine_distance(lat1, lng1, lat2, lng2);
+										//Calcular a distancia entre os vértices
+										float distancia = haversine_distance(lat1, lng1, lat2, lng2); 
 
-										//Criar as arestas entre os vertices (Transporte 1 e Transporte 2)
-										criarAresta(grafo_1, t1->codigo, t2->codigo, distancia);
-										//criarAresta(grafo_1, t2->codigo, t1->codigo, distancia);
+										//Criar as arestas entre os vértices
+										criarAresta(grafo_1, verticeAtual->VerticeID, proximoVertice->VerticeID, distancia); 
+										//criarAresta(grafo_1, proximoVertice->VerticeID, verticeAtual->VerticeID, distancia);
+
+										proximoVertice = proximoVertice->seguinte;
 									}
+									verticeAtual = verticeAtual->seguinte; 
 								}
 								//Imprime o Grafo 
 								imprimirGrafo(grafo_1);
