@@ -445,4 +445,3 @@ int EncontrarMaisProximo50(Grafo* g, int verticeAtual, bool* visitados) {
 	}
 	return vizinhoProximo;
 }
-
