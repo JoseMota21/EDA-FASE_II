@@ -330,7 +330,7 @@ void guardarVertices (Grafo** g) {
 
 	// fechar o ficheiro
 	fclose(ficheiroVertice);
-}  
+}   
 
 //Verifica se Grafo está completo 
 bool grafoCompleto(Grafo* g) {
@@ -360,27 +360,9 @@ bool grafoCompleto(Grafo* g) {
 	//Grafo Completo 
 	return true; 
 }
-
-//Função para encontrar qual o vértice mais próximo (Auxilio para excutar a função tspVizinhoMaisProximo )
-int EncontrarMaisProximo(Grafo* g, int verticeAtual, bool* visitados)  {
-
-	int numeroVertices = g->numeroVertices;
-	float menorPeso = FLT_MAX;
-	int vizinhoProximo = -1;
-
-	for (int i = 0; i < numeroVertices; i++) {
-
-		Aresta* aresta = g->matrizadj[verticeAtual][i];
-
-		if (aresta != NULL && !visitados[i] && aresta->peso < menorPeso) {
-			menorPeso = aresta->peso;
-			vizinhoProximo = i;
-		}
-	}
-	return vizinhoProximo; 
-}  
   
-void recolherTrotinetes(Grafo* g, int origem) {
+void recolherTrotinetes(Grafo* g, int origem) { 
+
 	int numeroVertices = g->numeroVertices;
 
 	// Inicializar o vetor de visitados
@@ -430,25 +412,30 @@ void recolherTrotinetes(Grafo* g, int origem) {
 		 if (transporte != NULL) {
 			 printf("TRANSPORTE COM O ID %d DO TIPO %s ENCONTRADO COM A BATERIA DE %.02f\n", transporte->codigo, transporte->tipo, transporte->bateria);  
 
-			 transporte->bateria = 100.0; 
+			 transporte->bateria = 100.0;  
+			  
+			 printf("%.2f\n ", transporte->bateria);
 		 }
 		 else {
 			 printf("TRANSPORTE NAO ENCONTRADO PARA O VERTICE %d\n", vertice); 
 		 }
+
+		 saveAlterarDadosTransportes(g->meios); 
+			  
 	}
 	 
 	free(visitados);
 }  
 
-Transporte* encontrarTransportePorVertice(Grafo* g, int verticeID) {
+Transporte* encontrarTransportePorVertice(Grafo* g, int verticeID) { 
 	// Percorrer a lista de vértices
-	Vertice* vertice = g->vertices;
-	while (vertice != NULL) {
+	Vertice* vertice = g->vertices; 
+	while (vertice != NULL) { 
 		// Verificar se o ID do vértice corresponde ao ID desejado
-		if (vertice->VerticeID == verticeID) {
-			return vertice->meios;  
+		if (vertice->VerticeID == verticeID) { 
+			return vertice->meios;   
 		}
-		vertice = vertice->seguinte;
+		vertice = vertice->seguinte; 
 	}
 	return NULL;
 }

@@ -169,6 +169,7 @@ Transporte* listarTransporte(Transporte* inicio) {
 
 		inicio = inicio->seguinte;
 	}
+
 	return 0; 
 }
 
