@@ -30,16 +30,17 @@ Vertice* criarVertices(Grafo** g, Transporte* meios) {
 		free(vertice0);
 		return NULL;
 	}
-	(*g)->vertices = vertice0;
+	(*g)->vertices = vertice0;  
+	(*g)->meios = meios; 
 
 	// Percorrer os meios de transporte até o fim
 	while (atual != NULL) {
 		// Alocar memória para o novo vértice
 		Vertice* novo = malloc(sizeof(Vertice));
 
-		// Copiar os campos do meio de transporte para o vértice
-		strcpy(novo->geocodigo, atual->geocodigo);
-		strcpy(novo->Tipo, atual->tipo);
+		// Copiar os campos do meio de transporte para o vértice 
+		strcpy(novo->geocodigo, atual->geocodigo); 
+		strcpy(novo->Tipo, atual->tipo); 
 		novo->ID = atual->codigo;
 		novo->bateria = atual->bateria;
 		novo->meios = atual;
@@ -62,6 +63,7 @@ Vertice* criarVertices(Grafo** g, Transporte* meios) {
 	}
 
 	(*g)->numeroVertices = VerticeID;
+	
 	guardarVertices(g);
 
 	return (*g)->vertices;
@@ -418,14 +420,39 @@ void recolherTrotinetes(Grafo* g, int origem) {
 	// Recolher as trotinetes no caminhão
 	printf("RECOLHER OS MEIOS DE TRANSPORTE\n"); 
 
-	for (int i = 0; i <= posicao; i++) {
+	for (int i = 0; i <= posicao; i++) { 
 		 int vertice = caminho[i];
 		 
 		 printf("VERTICE %d RECOLHIDO\n", vertice);  
+
+		 Transporte* transporte = encontrarTransportePorVertice(g, vertice);  
+
+		 if (transporte != NULL) {
+			 printf("TRANSPORTE COM O ID %d DO TIPO %s ENCONTRADO COM A BATERIA DE %.02f\n", transporte->codigo, transporte->tipo, transporte->bateria);  
+
+			 transporte->bateria = 100.0; 
+		 }
+		 else {
+			 printf("TRANSPORTE NAO ENCONTRADO PARA O VERTICE %d\n", vertice); 
+		 }
 	}
 	 
 	free(visitados);
 }  
+
+Transporte* encontrarTransportePorVertice(Grafo* g, int verticeID) {
+	// Percorrer a lista de vértices
+	Vertice* vertice = g->vertices;
+	while (vertice != NULL) {
+		// Verificar se o ID do vértice corresponde ao ID desejado
+		if (vertice->VerticeID == verticeID) {
+			return vertice->meios;  
+		}
+		vertice = vertice->seguinte;
+	}
+	return NULL;
+}
+ 
 
 int EncontrarMaisProximo50(Grafo* g, int verticeAtual, bool* visitados) {
 
