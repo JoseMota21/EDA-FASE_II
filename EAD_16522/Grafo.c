@@ -23,6 +23,7 @@ Vertice* criarVertices(Grafo** g, Transporte* meios) {
 	vertice0->VerticeID = 0;
 	vertice0->seguinte = NULL;
 	vertice0->adjacencias = NULL;
+	
 
 	// Criar o grafo e adicionar o vértice 0 como o primeiro da lista
 	*g = criarGrafo(100);
@@ -46,8 +47,8 @@ Vertice* criarVertices(Grafo** g, Transporte* meios) {
 		novo->meios = atual;
 		novo->VerticeID = VerticeID; 
 		novo->seguinte = NULL;
-		novo->adjacencias = NULL; 
-
+		novo->adjacencias = NULL;  
+	
 		// Adicionar o novo vértice ao final da lista
 		Vertice* ultimo = (*g)->vertices;
 		while (ultimo->seguinte != NULL) {
@@ -367,6 +368,7 @@ void recolherTrotinetes(Grafo* g, int origem) {
 
 	// Inicializar o vetor de visitados
 	bool* visitados = malloc(numeroVertices * sizeof(bool));
+
 	for (int i = 0; i < numeroVertices; i++) {
 		visitados[i] = false;
 	}
@@ -404,26 +406,31 @@ void recolherTrotinetes(Grafo* g, int origem) {
 
 	for (int i = 0; i <= posicao; i++) { 
 		 int vertice = caminho[i];
-		 
-		 printf("VERTICE %d RECOLHIDO\n", vertice);  
 
+		 if (vertice != 0) {
+			 printf("VERTICE %d RECOLHIDO\n", vertice);
+		 }
+		 
 		 Transporte* transporte = encontrarTransportePorVertice(g, vertice);  
 
 		 if (transporte != NULL) {
 			 printf("TRANSPORTE COM O ID %d DO TIPO %s ENCONTRADO COM A BATERIA DE %.02f\n", transporte->codigo, transporte->tipo, transporte->bateria);  
 
 			 transporte->bateria = 100.0;  
+			 transporte->autonomia = 80.0;  
+			 strcpy(transporte->geocodigo, "///cantarola.sondado.nevoeiro");  
 			  
-			 printf("%.2f\n ", transporte->bateria);
 		 }
 		 else {
-			 printf("TRANSPORTE NAO ENCONTRADO PARA O VERTICE %d\n", vertice); 
+			 if (vertice != 0) {
+				 printf("TRANSPORTE NAO ENCONTRADO PARA O VERTICE %d\n", vertice); 
+			 }
 		 }
 
-		 saveAlterarDadosTransportes(g->meios); 
-			  
-	}
-	 
+		 saveAlterarDadosTransportes (g->meios);  
+		 atualizarVertices (g);  
+	} 
+	  
 	free(visitados);
 }  
 
@@ -438,9 +445,30 @@ Transporte* encontrarTransportePorVertice(Grafo* g, int verticeID) {
 		vertice = vertice->seguinte; 
 	}
 	return NULL;
+} 
+
+void atualizarVertices(Grafo* g) {
+	// Percorrer a lista de vértices
+	Vertice* vertice = g->vertices;
+	while (vertice != NULL) {
+		// Percorrer a lista de meios de transporte do vértice
+		Transporte* transporte = vertice->meios;
+		while (transporte != NULL) {
+			// Verificar se o meio de transporte foi removido
+			if (transporte->bateria != 100.0) {
+				// Atualizar a bateria do vértice com base na bateria do meio de transporte
+				if (transporte->bateria > vertice->bateria) { 
+					vertice->bateria = transporte->bateria; 
+				} 
+				// Atualizar a localização do meio de transporte com base na nova localização 
+				strcpy(transporte->geocodigo, "///cantarola.sondado.nevoeiro"); 
+			}
+			transporte = transporte->seguinte; 
+		}
+		vertice = vertice->seguinte; 
+	}
 }
  
-
 int EncontrarMaisProximo50(Grafo* g, int verticeAtual, bool* visitados) {
 
 	int numeroVertices = g->numeroVertices;
@@ -468,5 +496,5 @@ int EncontrarMaisProximo50(Grafo* g, int verticeAtual, bool* visitados) {
 	}
 	
 	return vizinhoProximo;
-}
+} 
 

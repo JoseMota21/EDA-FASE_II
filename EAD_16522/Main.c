@@ -149,7 +149,6 @@ int main() {
 							grafo_1 = NULL;
 							//Criar os vertices com a lista dos transportes já atualizada 
 							criarVertices(&grafo_1, meioTransporte_1);
-							 
 							break;
 						case 4:
 							//Remover cliente da lista
@@ -288,7 +287,8 @@ int main() {
 								system("pause"); 
 								recolherTrotinetes(grafo_1, origem); 
 								system("pause"); 
-								system("cls");							
+								system("cls"); 
+
 							}
 							else {
 								//Imprimir o caminho mais curto para percorrer todos os vértices 
