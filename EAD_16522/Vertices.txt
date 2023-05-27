@@ -1,3 +1,10 @@
 0;0;ARMAZEM;0.00;///cantarola.sondado.nevoeiro
-1;8;TROTINETE;34.00;///adiar.cunhado.agachou
-2;34;BIKE;34.00;///ciano.endosso.garapas
+1;32;TROTINETE;88.00;OLHAO
+2;7;BIKE;100.00;///cantarola.sondado.nevoeiro
+3;99;TROTINETE;51.00;DIANA
+4;5;TROTINETE;100.00;///cantarola.sondado.nevoeiro
+5;3;BIKE;100.00;///cantarola.sondado.nevoeiro
+6;45;BIKE;100.00;///cantarola.sondado.nevoeiro
+7;4;BIKE;45.00;FAFE
+8;8;TROTINETE;34.00;///adiar.cunhado.agachou
+9;34;BIKE;34.00;///ciano.endosso.garapas

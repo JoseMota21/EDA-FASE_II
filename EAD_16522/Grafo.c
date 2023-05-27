@@ -379,6 +379,7 @@ void recolherTrotinetes(Grafo* g, int origem) {
 	caminho[posicao] = origem;
 	visitados[origem] = true;
 
+
 	// Construir o caminho usando a heurística do vizinho mais próximo
 	for (int i = 0; i < numeroVertices - 1; i++) {
 		int verticeAtual = caminho[posicao];
@@ -391,7 +392,7 @@ void recolherTrotinetes(Grafo* g, int origem) {
 		visitados[vizinhoMaisProximo] = true;
 	}
 	// Voltar para o vértice de origem
-	caminho[++posicao] = origem;
+	caminho[++posicao] = origem; 
 
 	// Imprimir o resultado
 	printf("------------------------- ITENERAIO MAIS CURTO -------------------\n");
@@ -399,15 +400,19 @@ void recolherTrotinetes(Grafo* g, int origem) {
 	for (int i = 0; i <= posicao; i++) {
 		printf("%d ", caminho[i]);
 	}
-	printf("\n");
-	 
+	printf("\n"); 
+
+	
 	// Recolher as trotinetes 
 	printf("RECOLHER OS MEIOS DE TRANSPORTE\n"); 
 
 	int capacidadeCamiao = 20; 
 	int capacidadeDisponivel = capacidadeCamiao; 
 
-	for (int i = 0; i <= posicao; i++) { 
+	Transporte* Recolhidos[100];  
+	int numeroRecolhidos = 0; 
+	 
+	for (int i = 0; i <= posicao && capacidadeDisponivel > 0; i++) {  
 		 int vertice = caminho[i];
 
 		 if (vertice != 0) {
@@ -417,31 +422,44 @@ void recolherTrotinetes(Grafo* g, int origem) {
 		 Transporte* transporte = encontrarTransportePorVertice(g, vertice);  
 
 		 if (transporte != NULL) {
-			// printf("TRANSPORTE COM O ID %d DO TIPO %s ENCONTRADO COM A BATERIA DE %.02f\n", transporte->codigo, transporte->tipo, transporte->bateria); 
-
+		
 			 int volumeCamiao = (strcmp(transporte->tipo, "TROTINETE") == 0) ? 2 : 5; 
 
-			 transporte->bateria = 100.0; //Quando o transporte recolhido bateria fica a 100%
-			 transporte->autonomia = 80.0;  //Em proporção a autonomia também sobe 
-			 strcpy(transporte->geocodigo, "///cantarola.sondado.nevoeiro");  //Colocar a na localização fixa do armazem 
+			 if (volumeCamiao <= capacidadeDisponivel) {
 
+				 transporte->bateria = 100.0; //Quando o transporte recolhido bateria fica a 100% 
+				 transporte->autonomia = 80.0;  //Em proporção a autonomia também sobe  
+				 strcpy(transporte->geocodigo, "///cantarola.sondado.nevoeiro");  //Colocar a na localização fixa do armazem   
 
-			 capacidadeDisponivel -= volumeCamiao; 
+				 capacidadeDisponivel -= volumeCamiao;  
 
-			 printf("%d\n", volumeCamiao);
+				 printf("TRANSPORTE COM O ID %d DO TIPO %s RECOLHIDO\n", transporte->codigo, transporte->tipo); 
 
-			 printf("%d\n", capacidadeDisponivel);
+				 Recolhidos[numeroRecolhidos] = transporte; 
+
+				 numeroRecolhidos++; 
+			 }
+			 else {
+				 printf("NAO HA ESPACO SUFICIENTE PARA RECOLHER O MEIO.\n"); 
+				 break; 
+			 }
 		 }
 		 else {
 			 if (vertice != 0) {
 				 printf("TRANSPORTE NAO ENCONTRADO PARA O VERTICE %d\n", vertice); 
 			 }
 		 }
-
 		 //Guardar os dados atualizados dos meois de transporte 
 		 saveAlterarDadosTransportes (g->meios);   
 	} 
-	 
+
+	// Imprimir os transportes recolhidos
+	printf("TRANSPORTES RECOLHIDOS:\n");
+	for (int i = 0; i < numeroRecolhidos; i++) {
+		Transporte* transporte = Recolhidos[i];
+		printf("ID: %d, Tipo: %s\n", transporte->codigo, transporte->tipo); 
+	} 
+
 	//Libertar a memoria dos visitados
 	free(visitados);
 }  
