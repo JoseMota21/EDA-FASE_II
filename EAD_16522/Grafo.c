@@ -414,7 +414,8 @@ void percursoMinimo(Grafo* g, int origem) {
 	//Função para a recolha dos meios 
 	recolherMeios(g, origem, Recolhidos, &numeroRecolhidos, capacidadeCamiao, caminho, posicao); 
 
-	system("pause"); 
+	system("pause");
+	system("cls"); 
 
 	//Imprimir na consola os meios de transporte recolhidos 
 	imprimirRecolhidos(Recolhidos, numeroRecolhidos);  
@@ -441,7 +442,7 @@ void recolherMeios(Grafo* g, int origem, Transporte* recolhidos[], int* numeroRe
 			if (volumeCamiao <= capacidadeDisponivel) {
 				transporte->bateria = 100.0;  
 				transporte->autonomia = 80.0;  
-				strcpy(transporte->geocodigo, "///cantarola.so ndado.nevoeiro");  
+				strcpy(transporte->geocodigo, "///cantarola.sondado.nevoeiro");  
 
 				capacidadeDisponivel -= volumeCamiao; 
 
@@ -458,16 +459,15 @@ void recolherMeios(Grafo* g, int origem, Transporte* recolhidos[], int* numeroRe
 				printf("TRANSPORTE NAO ENCONTRADO PARA O VERTICE %d\n", vertice);  
 			}
 		}
+		
+		//Guardar a lista de meios de transporte no ficheiro .bin
 		saveAlterarDadosTransportes(g->meios);  
 	}
 
-	if (naoRecolhidos > 0) {
-		printf("\n%d meio(s) de transporte nao foram possiveis de recolher:\n", naoRecolhidos); 
-		printf("\n| %-5s | %-10s |\n", "ID", "TIPO");  
-		printf("|--------------------|\n"); 
-		for (int i = 0; i < naoRecolhidos; i++) {
-			printf("| %-5d | %-10s |\n", naoRecolhidosArray[i]->codigo, naoRecolhidosArray[i]->tipo);   
-		}
+	if (naoRecolhidos > 0) { 
+
+		//Imprimir os transportes nao recolhidos
+		imprimirNaoRecolhidos(naoRecolhidosArray, naoRecolhidos); 
 	}
 }
 
@@ -504,6 +504,23 @@ void imprimirRecolhidos(Transporte* recolhidos[], int numeroRecolhidos) {
 
 	printf("\n"); 
 }  
+
+//Imprimir na consola os meios de transporte nao recolhidos 
+void imprimirNaoRecolhidos(Transporte* naoRecolhidos[], int numeroNaoRecolhidos) {
+
+	printf("\t++++++++ MEIOS DE TRANSPORTE NAO RECOLHIDOS ++++++++++\n");
+
+	printf("\n| %-5s | %-10s |\n", "ID", "TIPO");
+	printf("|--------------------|\n"); 
+
+	for (int i = 0; i < numeroNaoRecolhidos; i++) {
+
+		printf("| %-5d | %-10s |\n", naoRecolhidos[i]->codigo, naoRecolhidos[i]->tipo); 
+	}
+
+	printf("\n%d meio(s) de transporte nao foram possiveis de recolher\n", numeroNaoRecolhidos);   
+	printf("\n");  
+} 
 
 //Encotrar o meio de transporte no vertice 
 Transporte* encontrarTransportePorVertice(Grafo* g, int verticeID) { 

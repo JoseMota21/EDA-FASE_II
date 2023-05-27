@@ -50,7 +50,7 @@ Transporte* transportesDisponiveis(Transporte* meioTransporte_1);
 //Vizualizar transportes por localidade
 int TransportePorLocalidade(Transporte* inicio, char* localidade);
 
-//Veiculos com bateria inferior a 50% 
+//Meios de transporte com bateria inferior a 50% 
 Transporte* inferior50(Transporte* inicio);
 
 #endif "TRANSPORTE_H"  

@@ -29,6 +29,8 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1, int nif) 
 
 	getchar();
 
+	//Substituir pela a função 
+
 	//Utilizador inser a localização atual 
 	printf("INSERIR A LOCALIZACAO ATUAL\n");
 	fgets(localizacaoIni, 100, stdin);
@@ -117,16 +119,14 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1, int nif) 
 			system("cls");
 			printf("\n");
 
-			//Transporte encontrado e disponível
+			//Transporte encontrado e disponível (trocar para função)
 			printf("*************************************TRANSPORTE ESCOLHIDO***********************\n");
 			printf("\n");
-			printf("| %-5s | %-10s | %-8s | %-10s | %-30s |\n", "ID", "TIPO", "BATERIA", "AUTONOMIA", "LOCALIZACAO");
-			printf("|-------|------------|----------|------------|--------------------------------|\n");
+	
+			//Imprimir os meios de transporte na localização inserida
+			imprimirLocalizacaoTransporte(atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo); 
 
-			//Mostra na consola o transporte que foi selecionado e que está disponivel 
-			printf("| %-5d | %-10s | %-8.2f | %-10.2f | %-30s |\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo);
-
-			atual->disponivel = 0; // Veiculo alugado fica indisponivel para alugar
+			atual->disponivel = 0; // Veiculo alugado fica indisponivel para alugar 
 
 			//Escrever o ID do veiculo alugado na estrutura cliente no campo IDVEIVULOALUGADO
 			atualC->IDveiculoAlugado = atual->codigo;
@@ -156,7 +156,6 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1, int nif) 
 		saveAlterarDados(cliente_1);
 		//Atualizar o ficheito transporte 
 		saveAlterarDadosTransportes(meioTransporte_1);
-
 	}
 }
 
@@ -208,4 +207,12 @@ void desalugarVeiculo(Cliente* cliente_1, Transporte* meioTransporte_1, int nif)
 
 	system("pause");
 	system("cls");
+}
+
+//Função para imprimir a lista dos meios de transporte 
+void imprimirLocalizacaoTransporte(Transporte* transporte) {
+
+	printf("| %-5s | %-10s | %-8s | %-10s | %-30s |\n", "ID", "TIPO", "BATERIA", "AUTONOMIA", "LOCALIZACAO");
+	printf("|-------|------------|----------|------------|--------------------------------|\n");
+	printf("| %-5d | %-10s | %-8.2f | %-10.2f | %-30s |\n", transporte->codigo, transporte->tipo, transporte->bateria, transporte->autonomia, transporte->geocodigo);
 }
