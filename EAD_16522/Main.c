@@ -285,7 +285,7 @@ int main() {
 								}
 								//Imprime o Grafo 
 								system("pause"); 
-								recolherTrotinetes(grafo_1, origem); 
+								percursoMinimo(grafo_1, origem);  
 								grafo_1 = NULL, 
 								criarVertices(&grafo_1, meioTransporte_1); 
 								system("pause"); 
