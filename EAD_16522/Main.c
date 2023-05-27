@@ -294,7 +294,7 @@ int main() {
 							}
 							else {
 								//Imprimir o caminho mais curto para percorrer todos os vértices 
-								recolherTrotinetes(grafo_1, origem);
+								percursoMinimo(grafo_1, origem); 
 								system("pause");
 								system("cls");
 							}

@@ -411,7 +411,9 @@ void percursoMinimo(Grafo* g, int origem) {
 	int numeroRecolhidos = 0; 
 	 
 	//Função para a recolha dos meios 
-	recolherMeios(g, origem, Recolhidos, &numeroRecolhidos, capacidadeCamiao, caminho, posicao);  
+	recolherMeios(g, origem, Recolhidos, &numeroRecolhidos, capacidadeCamiao, caminho, posicao); 
+
+	system("pause"); 
 
 	//Função de listar na consola os meios de transporte recolhidos 
 	imprimirRecolhidos(Recolhidos, numeroRecolhidos); 
@@ -427,7 +429,7 @@ void recolherMeios(Grafo* g, int origem, Transporte* recolhidos[], int* numeroRe
 		int vertice = caminho[i]; 
 
 		if (vertice != 0) {
-			printf("VERTICE %d RECOLHIDOS\n", vertice); 
+			//Imprime todos os vertices com bateria a baixo de 50%
 		}
 
 		Transporte* transporte = encontrarTransportePorVertice(g, vertice); 
@@ -442,13 +444,13 @@ void recolherMeios(Grafo* g, int origem, Transporte* recolhidos[], int* numeroRe
 
 				capacidadeDisponivel -= volumeCamiao;
 
-				printf("TRANSPORTE COM O ID %d DO TIPO %s RECOLHIDO\n", transporte->codigo, transporte->tipo); 
+				//printf("TRANSPORTE COM O ID %d DO TIPO %s RECOLHIDO\n", transporte->codigo, transporte->tipo); 
 
 				recolhidos[*numeroRecolhidos] = transporte; 
 				(*numeroRecolhidos)++; 
 			}
 			else {
-				printf("NAO HA ESPACO SUFICIENTE PARA RECOLHER O MEIO.\n"); 
+				printf("NAO HA ESPACO SUFICIENTE PARA RECOLHER TODOS OS MEIOS MEIO.\n"); 
 				break; 
 			}
 		}
@@ -457,7 +459,7 @@ void recolherMeios(Grafo* g, int origem, Transporte* recolhidos[], int* numeroRe
 				printf("TRANSPORTE NAO ENCONTRADO PARA O VERTICE %d\n", vertice);
 			}
 		} 
-
+		//Guardar os dados atuais dos meios de transporte
 		saveAlterarDadosTransportes(g->meios); 
 	}
 }
@@ -479,10 +481,19 @@ void imprimirCaminho(int caminho[], int posicao) {
 void imprimirRecolhidos(Transporte* recolhidos[], int numeroRecolhidos) {
 
 	// Imprimir os transportes recolhidos 
-	printf("TRANSPORTES RECOLHIDOS:\n"); 
+	printf("\t++++++++ MEIOS DE TRANSPORTE RECOLHIDOS ++++++++++\n");
+	printf("\n"); 
+
+	//Cabeçalho da tabela
+	printf("| %-5s | %-10s |\n", "ID", "TIPO");
+	printf("|--------------------|\n");
+	
 	for (int i = 0; i < numeroRecolhidos; i++) { 
-		Transporte* transporte = recolhidos[i];  
-		printf("ID: %d, Tipo: %s\n", transporte->codigo, transporte->tipo);  
+		Transporte* transporte = recolhidos[i]; 
+
+		//Imprimir na consola os dados
+		printf("| %-5d | %-10s |\n", transporte->codigo, transporte->tipo);
+
 	}
 
 	printf("\n"); 

@@ -5,6 +5,6 @@
 4;5;TROTINETE;100.00;///cantarola.sondado.nevoeiro
 5;3;BIKE;100.00;///cantarola.sondado.nevoeiro
 6;45;BIKE;100.00;///cantarola.sondado.nevoeiro
-7;4;BIKE;45.00;FAFE
-8;8;TROTINETE;34.00;///adiar.cunhado.agachou
-9;34;BIKE;34.00;///ciano.endosso.garapas
+7;4;BIKE;100.00;///cantarola.sondado.nevoeiro
+8;8;TROTINETE;100.00;///cantarola.sondado.nevoeiro
+9;34;BIKE;100.00;///cantarola.sondado.nevoeiro
