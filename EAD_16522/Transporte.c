@@ -39,16 +39,34 @@ Transporte* inputTransporte(Transporte* meioTransporte_1) {
 		printf("O ID INTRODUZIDO JA EXISTE, POR FAVOR INSIRA OUTRO DIFERENTE\n");
 		scanf("%d", &novoTransporte->codigo);
 	}
-	//Inserir o meio de transporte
-	printf("INSIRA O MEIO DE MOBILIDADE (TROTINETE, BICICLETA): ");
-	scanf("%s", novoTransporte->tipo);
+
+	bool tipoValido = false; 
+
+	while (!tipoValido) { 
+		// Inserir o meio de transporte
+		printf("INSIRA O MEIO DE MOBILIDADE (TROTINETE, BICICLETA): ");
+		scanf("%s", novoTransporte->tipo); 
+
+		if (strcmp(novoTransporte->tipo, "TROTINETE") == 0) {
+			novoTransporte->volume = 2;
+			tipoValido = true;
+		}
+		else if (strcmp(novoTransporte->tipo, "BIKE") == 0) {
+			novoTransporte->volume = 5;
+			tipoValido = true;
+		}
+		else {
+			printf("MEIO DE MOBILIDADE INVALIDO. INSIRA NOVAMENTE\n"); 
+			printf("\n"); 
+			system("pause"); 
+			system("cls"); 
+		}
+	}
 
 	//Inserir a carga atual da bateria do meio de transporte
 	printf("INSIRA A BATERIA ATUAL DO MEIO: ");
 	scanf("%f", &novoTransporte->bateria);
 
-	printf("INSIRA A CAPACIDADE OCUPADA: "); 
-	scanf("%d", &novoTransporte->capacidadeOp); 
 
 	//Variável para calculuar a autonomia
 	float calcularAutonomia;
@@ -85,7 +103,7 @@ Transporte* inputTransporte(Transporte* meioTransporte_1) {
 Transporte* RemoverTransporte(Transporte* inicio) { 
 
 	//Inicializa todos os campos com valores de zero
-	Transporte RemoverTransporte = { 0, ' ', 0.0, 0.0, 0.0,0};
+	Transporte RemoverTransporte = { 0, ' ', 0.0, 0.0, 0.0,0,0,0};
 
 	//Variável auxiliar primeiro elemento da lista
 	Transporte* aux = inicio; 
@@ -162,13 +180,13 @@ Transporte* listarTransporte(Transporte* inicio) {
 	printf("\n"); 
 
 	//Cabeçalho da tabela
-	printf("| %-5s | %-10s | %-8s | %-10s | %-30s | %-13s|\n", "ID", "TIPO", "BATERIA", "AUTONOMIA", "LOCALIZACAO", "DISPONIBILIDADE");
+	printf("| %-5s | %-10s | %-8s | %-10s | %-30s | %-13s| %-13s |\n", "ID", "TIPO", "BATERIA", "AUTONOMIA", "LOCALIZACAO", "DISPONIBILIDADE", "VOLUME");
 	printf("|-------|------------|----------|------------|--------------------------------|----------------|\n");
 	
 	//Percorre a até fechar ao fim da lista 
 	while (inicio != NULL) {
 		//Escreve na consola os dados da estrutura em questão
-		printf("| %-5d | %-10s | %-8.2f | %-10.2f | %-30s | %-14d |\n", inicio->codigo, inicio->tipo, inicio->bateria, inicio->autonomia, inicio->geocodigo, inicio->disponivel);
+		printf("| %-5d | %-10s | %-8.2f | %-10.2f | %-30s | %-14d | %-14d \n", inicio->codigo, inicio->tipo, inicio->bateria, inicio->autonomia, inicio->geocodigo, inicio->disponivel, inicio->volume); 
 
 		inicio = inicio->seguinte;
 	}

@@ -374,7 +374,7 @@ void recolherTrotinetes(Grafo* g, int origem) {
 	}
 
 	// Inicializar o vetor de caminho
-	int caminho[100 + 1];
+	int caminho[100 + 1]; // colcoar contstante 
 	int posicao = 0;
 	caminho[posicao] = origem;
 	visitados[origem] = true;
@@ -404,6 +404,9 @@ void recolherTrotinetes(Grafo* g, int origem) {
 	// Recolher as trotinetes 
 	printf("RECOLHER OS MEIOS DE TRANSPORTE\n"); 
 
+	int capacidadeCamiao = 20; 
+	int capacidadeDisponivel = capacidadeCamiao; 
+
 	for (int i = 0; i <= posicao; i++) { 
 		 int vertice = caminho[i];
 
@@ -414,12 +417,20 @@ void recolherTrotinetes(Grafo* g, int origem) {
 		 Transporte* transporte = encontrarTransportePorVertice(g, vertice);  
 
 		 if (transporte != NULL) {
-			 printf("TRANSPORTE COM O ID %d DO TIPO %s ENCONTRADO COM A BATERIA DE %.02f\n", transporte->codigo, transporte->tipo, transporte->bateria);  
+			// printf("TRANSPORTE COM O ID %d DO TIPO %s ENCONTRADO COM A BATERIA DE %.02f\n", transporte->codigo, transporte->tipo, transporte->bateria); 
+
+			 int volumeCamiao = (strcmp(transporte->tipo, "TROTINETE") == 0) ? 2 : 5; 
 
 			 transporte->bateria = 100.0; //Quando o transporte recolhido bateria fica a 100%
 			 transporte->autonomia = 80.0;  //Em proporção a autonomia também sobe 
 			 strcpy(transporte->geocodigo, "///cantarola.sondado.nevoeiro");  //Colocar a na localização fixa do armazem 
-			  
+
+
+			 capacidadeDisponivel -= volumeCamiao; 
+
+			 printf("%d\n", volumeCamiao);
+
+			 printf("%d\n", capacidadeDisponivel);
 		 }
 		 else {
 			 if (vertice != 0) {
