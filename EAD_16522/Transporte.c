@@ -40,12 +40,15 @@ Transporte* inputTransporte(Transporte* meioTransporte_1) {
 		scanf("%d", &novoTransporte->codigo);
 	}
 	//Inserir o meio de transporte
-	printf("INSIRA O MEIO DE MOBILIDADE (TROTINETE, BICICLETA, MOTA): ");
+	printf("INSIRA O MEIO DE MOBILIDADE (TROTINETE, BICICLETA): ");
 	scanf("%s", novoTransporte->tipo);
 
 	//Inserir a carga atual da bateria do meio de transporte
 	printf("INSIRA A BATERIA ATUAL DO MEIO: ");
 	scanf("%f", &novoTransporte->bateria);
+
+	printf("INSIRA A CAPACIDADE OCUPADA: "); 
+	scanf("%d", &novoTransporte->capacidadeOp); 
 
 	//Variável para calculuar a autonomia
 	float calcularAutonomia;

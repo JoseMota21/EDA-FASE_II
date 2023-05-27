@@ -222,6 +222,7 @@ int main() {
 							system("pause"); 
 							system("cls");
 							break;
+
 						case 15:  
 							printf("A CONSTRUIR ARESTAS ENTRE COORDENADAS...\n");  
 
@@ -283,9 +284,10 @@ int main() {
 									verticeAtual = verticeAtual->seguinte; 
 								}
 								//Imprime o Grafo 
-								//imprimirGrafo(grafo_1);
 								system("pause"); 
 								recolherTrotinetes(grafo_1, origem); 
+								grafo_1 = NULL, 
+								criarVertices(&grafo_1, meioTransporte_1); 
 								system("pause"); 
 								system("cls"); 
 

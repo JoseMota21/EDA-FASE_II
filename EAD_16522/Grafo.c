@@ -382,7 +382,7 @@ void recolherTrotinetes(Grafo* g, int origem) {
 	// Construir o caminho usando a heurística do vizinho mais próximo
 	for (int i = 0; i < numeroVertices - 1; i++) {
 		int verticeAtual = caminho[posicao];
-		int vizinhoMaisProximo = EncontrarMaisProximo50(g, verticeAtual, visitados);
+		int vizinhoMaisProximo = EncontrarMaisProximo50 (g, verticeAtual, visitados);
 		if (vizinhoMaisProximo == -1) {
 			// Todos os vértices com bateria inferior a 50% já foram visitados
 			break;
@@ -401,7 +401,7 @@ void recolherTrotinetes(Grafo* g, int origem) {
 	}
 	printf("\n");
 	 
-	// Recolher as trotinetes no caminhão
+	// Recolher as trotinetes 
 	printf("RECOLHER OS MEIOS DE TRANSPORTE\n"); 
 
 	for (int i = 0; i <= posicao; i++) { 
@@ -410,15 +410,15 @@ void recolherTrotinetes(Grafo* g, int origem) {
 		 if (vertice != 0) {
 			 printf("VERTICE %d RECOLHIDO\n", vertice);
 		 }
-		 
+
 		 Transporte* transporte = encontrarTransportePorVertice(g, vertice);  
 
 		 if (transporte != NULL) {
 			 printf("TRANSPORTE COM O ID %d DO TIPO %s ENCONTRADO COM A BATERIA DE %.02f\n", transporte->codigo, transporte->tipo, transporte->bateria);  
 
-			 transporte->bateria = 100.0;  
-			 transporte->autonomia = 80.0;  
-			 strcpy(transporte->geocodigo, "///cantarola.sondado.nevoeiro");  
+			 transporte->bateria = 100.0; //Quando o transporte recolhido bateria fica a 100%
+			 transporte->autonomia = 80.0;  //Em proporção a autonomia também sobe 
+			 strcpy(transporte->geocodigo, "///cantarola.sondado.nevoeiro");  //Colocar a na localização fixa do armazem 
 			  
 		 }
 		 else {
@@ -427,14 +427,17 @@ void recolherTrotinetes(Grafo* g, int origem) {
 			 }
 		 }
 
-		 saveAlterarDadosTransportes (g->meios);  
-		 atualizarVertices (g);  
+		 //Guardar os dados atualizados dos meois de transporte 
+		 saveAlterarDadosTransportes (g->meios);   
 	} 
-	  
+	 
+	//Libertar a memoria dos visitados
 	free(visitados);
 }  
 
+//Encotrar o meio de transporte no vertice 
 Transporte* encontrarTransportePorVertice(Grafo* g, int verticeID) { 
+	
 	// Percorrer a lista de vértices
 	Vertice* vertice = g->vertices; 
 	while (vertice != NULL) { 
@@ -447,28 +450,7 @@ Transporte* encontrarTransportePorVertice(Grafo* g, int verticeID) {
 	return NULL;
 } 
 
-void atualizarVertices(Grafo* g) {
-	// Percorrer a lista de vértices
-	Vertice* vertice = g->vertices;
-	while (vertice != NULL) {
-		// Percorrer a lista de meios de transporte do vértice
-		Transporte* transporte = vertice->meios;
-		while (transporte != NULL) {
-			// Verificar se o meio de transporte foi removido
-			if (transporte->bateria != 100.0) {
-				// Atualizar a bateria do vértice com base na bateria do meio de transporte
-				if (transporte->bateria > vertice->bateria) { 
-					vertice->bateria = transporte->bateria; 
-				} 
-				// Atualizar a localização do meio de transporte com base na nova localização 
-				strcpy(transporte->geocodigo, "///cantarola.sondado.nevoeiro"); 
-			}
-			transporte = transporte->seguinte; 
-		}
-		vertice = vertice->seguinte; 
-	}
-}
- 
+//Função para encontrar os meios de transporte mais próximos com a bateria inferior a 50% 
 int EncontrarMaisProximo50(Grafo* g, int verticeAtual, bool* visitados) {
 
 	int numeroVertices = g->numeroVertices;
