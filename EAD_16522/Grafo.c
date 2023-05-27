@@ -361,7 +361,8 @@ bool grafoCompleto(Grafo* g) {
 	//Grafo Completo 
 	return true; 
 }
-  
+
+//Percuros minimo de recolha dos meios de transporte 
 void percursoMinimo(Grafo* g, int origem) { 
 
 	int numeroVertices = g->numeroVertices;
@@ -415,52 +416,58 @@ void percursoMinimo(Grafo* g, int origem) {
 
 	system("pause"); 
 
-	//Função de listar na consola os meios de transporte recolhidos 
-	imprimirRecolhidos(Recolhidos, numeroRecolhidos); 
+	//Imprimir na consola os meios de transporte recolhidos 
+	imprimirRecolhidos(Recolhidos, numeroRecolhidos);  
 
 	//Libertar a memoria dos visitados (apoio na construção do percurso a ser recolhido)
-	free(visitados);
+	free(visitados); 
 } 
 
+//Recolher os meios de transporte 
 void recolherMeios(Grafo* g, int origem, Transporte* recolhidos[], int* numeroRecolhidos, int capacidadeCamiao, int caminho[], int posicao) {
-	int capacidadeDisponivel = capacidadeCamiao; 
+	
+	int capacidadeDisponivel = capacidadeCamiao;
+	int naoRecolhidos = 0;
+	Transporte* naoRecolhidosArray[100]; // Tamanho máximo de 100, ajuste conforme necessário
 
 	for (int i = 0; i <= posicao && capacidadeDisponivel > 0; i++) {
-		int vertice = caminho[i]; 
+		int vertice = caminho[i];
 
-		if (vertice != 0) {
-			//Imprime todos os vertices com bateria a baixo de 50%
-		}
-
-		Transporte* transporte = encontrarTransportePorVertice(g, vertice); 
+		Transporte* transporte = encontrarTransportePorVertice(g, vertice);
 
 		if (transporte != NULL) {
-			int volumeCamiao = (strcmp(transporte->tipo, "TROTINETE") == 0) ? 2 : 5; 
+			int volumeCamiao = (strcmp(transporte->tipo, "TROTINETE") == 0) ? 2 : 5;  
 
 			if (volumeCamiao <= capacidadeDisponivel) {
-				transporte->bateria = 100.0; 
-				transporte->autonomia = 80.0; 
-				strcpy(transporte->geocodigo, "///cantarola.sondado.nevoeiro"); 
+				transporte->bateria = 100.0;  
+				transporte->autonomia = 80.0;  
+				strcpy(transporte->geocodigo, "///cantarola.so ndado.nevoeiro");  
 
-				capacidadeDisponivel -= volumeCamiao;
-
-				//printf("TRANSPORTE COM O ID %d DO TIPO %s RECOLHIDO\n", transporte->codigo, transporte->tipo); 
+				capacidadeDisponivel -= volumeCamiao; 
 
 				recolhidos[*numeroRecolhidos] = transporte; 
 				(*numeroRecolhidos)++; 
 			}
 			else {
-				printf("NAO HA ESPACO SUFICIENTE PARA RECOLHER TODOS OS MEIOS MEIO.\n"); 
-				break; 
+				naoRecolhidosArray[naoRecolhidos] = transporte; 
+				naoRecolhidos++; 
 			}
 		}
 		else {
 			if (vertice != 0) {
-				printf("TRANSPORTE NAO ENCONTRADO PARA O VERTICE %d\n", vertice);
+				printf("TRANSPORTE NAO ENCONTRADO PARA O VERTICE %d\n", vertice);  
 			}
-		} 
-		//Guardar os dados atuais dos meios de transporte
-		saveAlterarDadosTransportes(g->meios); 
+		}
+		saveAlterarDadosTransportes(g->meios);  
+	}
+
+	if (naoRecolhidos > 0) {
+		printf("\n%d meio(s) de transporte nao foram possiveis de recolher:\n", naoRecolhidos); 
+		printf("\n| %-5s | %-10s |\n", "ID", "TIPO");  
+		printf("|--------------------|\n"); 
+		for (int i = 0; i < naoRecolhidos; i++) {
+			printf("| %-5d | %-10s |\n", naoRecolhidosArray[i]->codigo, naoRecolhidosArray[i]->tipo);   
+		}
 	}
 }
 
@@ -493,11 +500,10 @@ void imprimirRecolhidos(Transporte* recolhidos[], int numeroRecolhidos) {
 
 		//Imprimir na consola os dados
 		printf("| %-5d | %-10s |\n", transporte->codigo, transporte->tipo);
-
 	}
 
 	printf("\n"); 
-}
+}  
 
 //Encotrar o meio de transporte no vertice 
 Transporte* encontrarTransportePorVertice(Grafo* g, int verticeID) { 

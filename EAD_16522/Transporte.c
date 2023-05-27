@@ -174,6 +174,7 @@ Transporte* RemoverTransporte(Transporte* inicio) {
 	return inicio;
 }
 
+//Imprimir os meios de transporte na consola 
 Transporte* listarTransporte(Transporte* inicio) {
 
 	printf("\t++++++++ LISTAR MEIO DE MOBILIDADE ++++++++++\n");
@@ -221,6 +222,7 @@ Transporte* saveficheiroTransporte(Transporte* inicio) {
 	return inicio;
 }
 
+//Ler o ficheiro txt 
 Transporte* lerFicheiroTransporte(Transporte* inicio) {
 
 	//Abrir o ficheiro transporte em leitura binária
@@ -585,19 +587,31 @@ int	TransportePorLocalidade(Transporte* inicio, char* localidade) {
 	return 1;
 }
 
+//Imprimir na consola os meios de transporte com a bateria inferior a 50 
 Transporte* inferior50(Transporte* inicio) {
 
+	//Declarar variávies 
 	bool encontrado = false;
-	Transporte* recolha = NULL; // Nova lista ligada para armazenar os meios de transporte com bateria inferior a 50%
+	Transporte* recolha = NULL; // Nova lista ligada para armazenar os meios de transporte com bateria inferior a 50% 
 
-	// Percorrer a lista ligada
+	printf("\t++++++++ TRANSPORTE COM BATERIA INFERIOR A 50 ++++++++++\n");
+	printf("\n");
+
+	//Cabeçalho da tabela
+	printf("| %-5s | %-10s | %-8s |\n", "ID", "TIPO", "BATERIA");
+	printf("|-------|------------|----------|\n"); 
+
+	// Percorrer a lista ligadav
 	while (inicio != NULL) {
 
 		if (inicio->codigo != 0) {
 
 			// Verifica qual o meio de transporte com bateria inferior a 50%
-			if (inicio->bateria < 50.0) {
-				printf("%d;%s;%.2f\n", inicio->codigo, inicio->tipo, inicio->bateria);
+			if (inicio->bateria < 50.0) { 
+
+				printf("| %-5d | %-10s | %-8.2f |\n", inicio->codigo, inicio->tipo, inicio->bateria);
+
+				//printf("%d;%s;%.2f\n", inicio->codigo, inicio->tipo, inicio->bateria);
 
 				encontrado = true;
 			}			

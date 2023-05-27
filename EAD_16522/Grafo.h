@@ -71,8 +71,8 @@ Transporte* encontrarTransportePorVertice(Grafo* g, int verticeID);
 //Função para imprimir o percuros de recolha
 void imprimirCaminho(int caminho[], int posicao); 
 
-//Função para imprimir os meios de transpore Recolhidos 
-void imprimirRecolhidos(Transporte* recolhidos[], int numeroRecolhidos);  
+//Função para imprimir os meios de transpore Recolhidos  
+void imprimirRecolhidos(Transporte* recolhidos[], int numeroRecolhidos); 
 
 //Função para recolher os meios de transporte com a bateria inferior a 50%
-void recolherMeios(Grafo* g, int origem, Transporte* recolhidos[], int* numeroRecolhidos, int capacidadeCamiao, int caminho[], int posicao); 
+void recolherMeios(Grafo* g, int origem, Transporte* recolhidos[], int* numeroRecolhidos, int capacidadeCamiao, int caminho[], int posicao);  
