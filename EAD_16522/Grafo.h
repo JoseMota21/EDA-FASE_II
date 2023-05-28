@@ -79,3 +79,12 @@ void recolherMeios(Grafo* g, int origem, Transporte* recolhidos[], int* numeroRe
 
 //Função para imprimir os nao recolhidos na consola
 void imprimirNaoRecolhidos(Transporte* naoRecolhidos[], int numeroNaoRecolhidos); 
+
+//Função para guardar em formato .bin os meios de transporte que não foram recolhidos 
+void saveNaoRecolhidos(Transporte* naoRecolhidos[], int numeroNaoRecolhidos, const char* TransportesNaoRecolhidos); 
+
+//Função para ler os dados do ficheiro dos meios de transporte que não foram recolhidos 
+void lerDadosDeArquivo(const char* TransportesNaoRecolhidos); 
+
+//Função para atualizar o ficheiro 
+void atualizarFicheiroNaoRecolhidos (const char* nomeArquivo, Transporte* naoRecolhidosArray, int numeroNaoRecolhidos);

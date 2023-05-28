@@ -181,13 +181,13 @@ Transporte* listarTransporte(Transporte* inicio) {
 	printf("\n"); 
 
 	//Cabeçalho da tabela
-	printf("| %-5s | %-10s | %-8s | %-10s | %-30s | %-13s| %-13s |\n", "ID", "TIPO", "BATERIA", "AUTONOMIA", "LOCALIZACAO", "DISPONIBILIDADE", "VOLUME");
+	printf("| %-5s | %-10s | %-8s | %-10s | %-30s | %-13s|\n", "ID", "TIPO", "BATERIA", "AUTONOMIA", "LOCALIZACAO", "DISPONIBILIDADE");
 	printf("|-------|------------|----------|------------|--------------------------------|----------------|\n");
 	
 	//Percorre a até fechar ao fim da lista 
 	while (inicio != NULL) {
 		//Escreve na consola os dados da estrutura em questão
-		printf("| %-5d | %-10s | %-8.2f | %-10.2f | %-30s | %-14d | %-14d \n", inicio->codigo, inicio->tipo, inicio->bateria, inicio->autonomia, inicio->geocodigo, inicio->disponivel, inicio->volume); 
+		printf("| %-5d | %-10s | %-8.2f | %-10.2f | %-30s | %-14d |\n", inicio->codigo, inicio->tipo, inicio->bateria, inicio->autonomia, inicio->geocodigo, inicio->disponivel); 
 
 		inicio = inicio->seguinte;
 	}

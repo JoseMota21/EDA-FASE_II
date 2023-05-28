@@ -442,8 +442,8 @@ void recolherMeios(Grafo* g, int origem, Transporte* recolhidos[], int* numeroRe
 			if (volumeCamiao <= capacidadeDisponivel) {
 				transporte->bateria = 100.0;  
 				transporte->autonomia = 80.0;  
-				strcpy(transporte->geocodigo, "///cantarola.sondado.nevoeiro");  
-
+				strcpy(transporte->geocodigo, "///cantarola.sondado.nevoeiro"); 
+	
 				capacidadeDisponivel -= volumeCamiao; 
 
 				recolhidos[*numeroRecolhidos] = transporte; 
@@ -461,13 +461,17 @@ void recolherMeios(Grafo* g, int origem, Transporte* recolhidos[], int* numeroRe
 		}
 		
 		//Guardar a lista de meios de transporte no ficheiro .bin
-		saveAlterarDadosTransportes(g->meios);  
+		saveAlterarDadosTransportes(g->meios);
+		//Atualizar o ficheiro dos não recolhidos 
+		atualizarFicheiroNaoRecolhidos ("NAO RECOLHIDOS.bin", naoRecolhidosArray, naoRecolhidos);
 	}
 
 	if (naoRecolhidos > 0) { 
 
 		//Imprimir os transportes nao recolhidos
 		imprimirNaoRecolhidos(naoRecolhidosArray, naoRecolhidos); 
+		//Guardar os dados nao recolhidos em formato .bin 
+		saveNaoRecolhidos(naoRecolhidosArray, naoRecolhidos, "NAO RECOLHIDOS.bin"); 
 	}
 }
 
@@ -561,9 +565,84 @@ int EncontrarMaisProximo50(Grafo* g, int verticeAtual, bool* visitados) {
 
 	if (vizinhoProximo != -1) {
 		Vertice* vertice = encontrarVertice(g, vizinhoProximo);
-		printf("Bateria do vertice %d: %.2f\n", vizinhoProximo, vertice->bateria);
+		printf("BATERIA DO VERTICE %d: %.2f\n", vizinhoProximo, vertice->bateria);
 	}
 	
 	return vizinhoProximo;
 } 
 
+//Guardados os meios de transporte não recolhidos 
+void saveNaoRecolhidos(Transporte* naoRecolhidos[], int numeroNaoRecolhidos, const char* TransportesNaoRecolhidos) {
+
+	FILE* ficheiro = fopen(TransportesNaoRecolhidos, "wb"); 
+
+	if (ficheiro == NULL) {
+		printf("ERRO AO ABRIR O FICHEIRO %s \n", TransportesNaoRecolhidos); 
+	}
+
+	fwrite(&numeroNaoRecolhidos, sizeof(int), 1, ficheiro);
+
+	for (int i = 0; i < numeroNaoRecolhidos; i++) {
+		fwrite(naoRecolhidos[i], sizeof(Transporte), 1, ficheiro);  
+	}
+
+	fclose(ficheiro); 
+
+	printf("GUARDADO COM SUCESSO no arquivo %s\n", TransportesNaoRecolhidos); 
+}
+
+//Função para ler os dados do ficheiro 
+void lerDadosDeArquivo(const char* TransportesNaoRecolhidos) {
+	FILE* arquivo = fopen(TransportesNaoRecolhidos, "rb");
+	if (arquivo == NULL) { 
+		printf("Erro ao abrir o arquivo %s.\n", TransportesNaoRecolhidos);
+		return; 
+	}
+
+	// Ler o número de meios não recolhidos do arquivo
+	int numeroNaoRecolhidos;
+	fread(&numeroNaoRecolhidos, sizeof(int), 1, arquivo);
+
+	// Criar um array temporário para armazenar os meios não recolhidos
+	Transporte* naoRecolhidosArray = malloc(numeroNaoRecolhidos * sizeof(Transporte));
+
+	// Ler os dados dos meios não recolhidos do arquivo
+	for (int i = 0; i < numeroNaoRecolhidos; i++) {
+		fread(&naoRecolhidosArray[i], sizeof(Transporte), 1, arquivo);
+	}
+
+	fclose(arquivo);
+
+	// Imprimir os dados lidos na console
+	printf("\t++++++++ MEIOS DE TRANSPORTE NAO RECOLHIDOS (LER DO ARQUIVO) ++++++++++\n");
+	printf("\n| %-5s | %-10s |\n", "ID", "TIPO");
+	printf("|--------------------|\n");
+
+	for (int i = 0; i < numeroNaoRecolhidos; i++) {
+		printf("| %-5d | %-10s |\n", naoRecolhidosArray[i].codigo, naoRecolhidosArray[i].tipo);
+	}
+
+	printf("\n%d meio(s) de transporte nao foram possiveis de recolher \n\n", numeroNaoRecolhidos);
+
+	// Liberar a memória alocada para o array de meios não recolhidos
+	free(naoRecolhidosArray);
+}
+
+//Atualziar o ficheiro de não recolhidos 
+void atualizarFicheiroNaoRecolhidos (const char* nomeArquivo, Transporte* naoRecolhidosArray, int numeroNaoRecolhidos) {
+	FILE* arquivo = fopen(nomeArquivo, "wb");
+	if (arquivo == NULL) {
+		printf("Erro ao abrir o arquivo %s para atualizacao.\n", nomeArquivo);
+		return;
+	}
+
+	// Escrever o número de meios não recolhidos no arquivo
+	fwrite(&numeroNaoRecolhidos, sizeof(int), 1, arquivo);
+
+	// Escrever os dados dos meios não recolhidos no arquivo
+	for (int i = 0; i < numeroNaoRecolhidos; i++) {
+		fwrite(&naoRecolhidosArray[i], sizeof(Transporte), 1, arquivo);
+	}
+
+	fclose(arquivo);
+}

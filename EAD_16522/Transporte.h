@@ -12,7 +12,8 @@ typedef struct registo {
 	float autonomia; //Autonomia em KM  
 	char geocodigo[100];	//localização 
 	int disponivel;
-	int volume; 
+	int volume; // Volume de cada meio de transporte 
+
 	struct registo* seguinte; // endereço de memória para uma struct registo
 
 }Transporte; 

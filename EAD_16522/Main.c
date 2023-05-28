@@ -118,6 +118,7 @@ int main() {
 						printf("14 - LISTAR VERTICES\n");
 						printf("15 - IMPRIMIR GRAFO\n");
 						printf("16 - PERCURSO DE RECOLHA\n");
+						printf("17 - CONSULTAR OS QUE FALTAM RECOLHER \n");
 
 						printf("--------------------------------------------------\n");
 						printf("\n");
@@ -290,7 +291,6 @@ int main() {
 								criarVertices(&grafo_1, meioTransporte_1); 
 								system("pause"); 
 								system("cls"); 
-
 							}
 							else {
 								//Imprimir o caminho mais curto para percorrer todos os vértices 
@@ -299,12 +299,19 @@ int main() {
 								system("cls");
 							}
 							break;
+						case 17: 
+							//Consultar os meios de transporte que não foram recolhidos 
+							lerDadosDeArquivo("NAO RECOLHIDOS.bin"); 
+
+							system("pause"); 
+							system("cls"); 
+							break;
 						default:
 							//Caso nenhuma opcao for inserida corretamente informa o utilizar 
 							printf("OPCAO INVALIDA\n");
 							break;
 						}
-					} while (gestor != 17); // Voltar para o menu anterior 
+					} while (gestor != 18); // Voltar para o menu anterior 
 
 				}	break;
 			}while (gestorech != 0); //voltar para o menu anterior
