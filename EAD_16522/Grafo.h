@@ -63,9 +63,6 @@ void imprimirGrafo(Grafo* g);
 //Guardar grafo em ficheiro txt
 Grafo* guardarGrafo(Grafo* g);  
 
-//Função de confirmação do grafo completo 
-bool grafoCompleto(Grafo* g); 
-
 //Percurso minimo para percurrer todos os vértices 
 void percursoMinimo(Grafo* g, int origem);   
 

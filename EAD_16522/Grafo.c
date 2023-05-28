@@ -170,7 +170,7 @@ Aresta* criarAresta(Grafo* g, int origem, int destino, float peso) {
 		return NULL;
 	}
 
-	// Criar a nova aresta (Origem - Destino - Grafo bidirecional)
+	// Criar a nova aresta (Origem - Destino)
 	Aresta* novaArestaOrigem = malloc(sizeof(Aresta));
 
 	if (novaArestaOrigem == NULL) {
@@ -185,19 +185,21 @@ Aresta* criarAresta(Grafo* g, int origem, int destino, float peso) {
 	// Atualizar a matriz de adjacência para refletir a presença da aresta
 	g->matrizadj[origem][destino] = novaArestaOrigem;
 
-
-	/*
-	* 
-	* 	Aresta* novaArestaDestino = malloc(sizeof(Aresta)); 
-
-	novaArestaDestino->vertice_adjacente = origem; 
-	novaArestaDestino->peso = peso; 
-	novaArestaDestino->proximo = NULL;
-
-	g->matrizadj[destino][origem] = novaArestaDestino; 
+	// Criar a aresta adicional do último vértice para o vértice de origem
+	if (destino == g->numeroVertices - 1 && origem == 0) { 
 	
-	*/
+		Aresta* novaArestaDestino = malloc(sizeof(Aresta)); 
+		if (novaArestaDestino == NULL) { 
+			printf("ERRO: Falha ao alocar memoria para a nova aresta.\n"); 
+			return NULL; 
+		}
 
+		novaArestaDestino->vertice_adjacente = origem; 
+		novaArestaDestino->peso = peso; 
+		novaArestaDestino->proximo = NULL; 
+
+		g->matrizadj[destino][origem] = novaArestaDestino; 
+	}
 
 	guardarGrafo(g);
 
@@ -366,35 +368,6 @@ void guardarVertices (Grafo** g) {
 	fclose(ficheiroVertice);
 }   
 
-//Verifica se Grafo está completo 
-bool grafoCompleto(Grafo* g) {
-	int numeroVertices = g->numeroVertices; 
-
-	//Verifica se todos os vértices estão conetados
-	for (int i = 0; i < numeroVertices; i++) {
-		for (int j = 0; j < numeroVertices; j++) {
-			Aresta* aresta = g->matrizadj[i][j]; 
-			if (i != j && aresta == NULL) { 
-				//Existe ausencia de aresta
-				return false;
-			}
-		}
-	}
-
-	//Verifica se todas as arestas tem pesos atribuidos
-	for (int i = 0; i < numeroVertices; i++) {
-		for (int j = 0; j < numeroVertices; j++) {
-			Aresta* aresta = g->matrizadj[i][j]; 
-			if (aresta != NULL && aresta->peso == FLT_MAX) {
-				return false;
-			}			 
-		}
-	}
-
-	//Grafo Completo 
-	return true; 
-}
-
 //Percuros minimo de recolha dos meios de transporte 
 void percursoMinimo(Grafo* g, int origem) { 
 
@@ -496,7 +469,7 @@ void recolherMeios(Grafo* g, int origem, Transporte* recolhidos[], int* numeroRe
 		//Guardar a lista de meios de transporte no ficheiro .bin
 		saveAlterarDadosTransportes(g->meios);
 		//Atualizar o ficheiro dos não recolhidos 
-		atualizarFicheiroNaoRecolhidos ("NAO RECOLHIDOS.bin", naoRecolhidosArray, naoRecolhidos);
+		atualizarFicheiroNaoRecolhidos ("NRecolhidos.bin", naoRecolhidosArray, naoRecolhidos);
 	}
 
 	if (naoRecolhidos > 0) { 
@@ -504,7 +477,7 @@ void recolherMeios(Grafo* g, int origem, Transporte* recolhidos[], int* numeroRe
 		//Imprimir os transportes nao recolhidos
 		imprimirNaoRecolhidos(naoRecolhidosArray, naoRecolhidos); 
 		//Guardar os dados nao recolhidos em formato .bin 
-		saveNaoRecolhidos(naoRecolhidosArray, naoRecolhidos, "NAO RECOLHIDOS.bin"); 
+		saveNaoRecolhidos(naoRecolhidosArray, naoRecolhidos, "NRecolhidos.bin"); 
 	}
 }
 
@@ -621,7 +594,8 @@ void saveNaoRecolhidos(Transporte* naoRecolhidos[], int numeroNaoRecolhidos, con
 
 	fclose(ficheiro); 
 
-	printf("GUARDADO COM SUCESSO no arquivo %s\n", TransportesNaoRecolhidos); 
+	printf("GUARDADO COM SUCESSO NO FICHEIRO %s\n", TransportesNaoRecolhidos);  
+	printf("\n");
 }
 
 //Função para ler os dados do ficheiro 

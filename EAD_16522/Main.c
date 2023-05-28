@@ -227,52 +227,35 @@ int main() {
 
 						case 15:  
 							printf("A CONSTRUIR ARESTAS ENTRE COORDENADAS...\n");  
-
-							if (!grafoCompleto(grafo_1)) { 
-
-								//Conectar os vértices 
-								conetarVertices(grafo_1); 
+						
+							//Conectar os vértices 
+							conetarVertices(grafo_1); 
 																
-								//Imprime o Grafo 
-								imprimirGrafo(grafo_1); 
-								system("pause");
-								system("cls");
-							}
-							else {
-								//Imprimir Grafo  
-								imprimirGrafo(grafo_1); 
-								system("pause"); 
-								system("cls"); 
-							}
-							break; 
+							//Imprime o Grafo 
+							imprimirGrafo(grafo_1); 
+							system("pause");
+							system("cls");
+										
+						break; 
 						case 16: 
-							if (!grafoCompleto(grafo_1)) { 
-								printf("A CONSTRUIR ARESTAS ENTRE COORDENADAS...\n");
+							printf("A CONSTRUIR ARESTAS ENTRE COORDENADAS...\n");
 
-								//Conectar todos os vertices 
-								conetarVertices(grafo_1); 
-								system("pause"); 
-								//Imprimir o percurso minimo 
-								percursoMinimo(grafo_1, origem); 
+							//Conectar todos os vertices 
+							conetarVertices(grafo_1); 
+							system("pause"); 
+							//Imprimir o percurso minimo 
+							percursoMinimo(grafo_1, origem); 
 
-								//Atualizar o grafo
-								grafo_1 = NULL, 
-								criarVertices(&grafo_1, meioTransporte_1); 
-								system("pause"); 
+							//Atualizar o grafo
+							grafo_1 = NULL, 
+							criarVertices(&grafo_1, meioTransporte_1); 
+							system("pause"); 
 
-								system("cls"); 
-							}
-							else {
-								//Imprimir o caminho mais curto para percorrer todos os vértices 
-								percursoMinimo(grafo_1, origem); 
-								system("pause");
-								system("cls");
-							}
-							break;
+							system("cls"); 
+						break;
 						case 17: 
 							//Consultar os meios de transporte que não foram recolhidos 
-							lerDadosDeArquivo("NAO RECOLHIDOS.bin"); 
-
+							lerDadosDeArquivo("NRecolhidos.bin"); 
 							system("pause"); 
 							system("cls"); 
 							break;
