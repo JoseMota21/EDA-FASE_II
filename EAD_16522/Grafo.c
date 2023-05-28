@@ -371,66 +371,67 @@ Grafo* guardarVertices (Grafo* g) {
 //Percuros minimo de recolha dos meios de transporte 
 void percursoMinimo(Grafo* g, int origem) { 
 
-	int numeroVertices = g->numeroVertices;
+	int numeroVertices = g->numeroVertices; 
 
 	// Inicializar o vetor de visitados
-	bool* visitados = malloc(numeroVertices * sizeof(bool));
+	bool* visitados = malloc(numeroVertices * sizeof(bool)); 
 
-	for (int i = 0; i < numeroVertices; i++) {
+	for (int i = 0; i < numeroVertices; i++) { 
 		visitados[i] = false;
-	}
+	} 
 
 	// Inicializar o vetor de caminho
-	int caminho[100 + 1]; // colcoar contstante 
-	int posicao = 0;
-	caminho[posicao] = origem;
+	int caminho[100 + 1]; // colcoar contstante   
+	int posicao = 0; 
+	caminho[posicao] = origem;  
 	visitados[origem] = true;
 
 
 	// Construir o caminho usando a heurística do vizinho mais próximo
 	for (int i = 0; i < numeroVertices - 1; i++) {
 		int verticeAtual = caminho[posicao];
-		int vizinhoMaisProximo = EncontrarMaisProximo50 (g, verticeAtual, visitados); 
-				
-		if (vizinhoMaisProximo == -1) {  
+		int vizinhoMaisProximo = EncontrarMaisProximo50(g, verticeAtual, visitados);
+
+		if (vizinhoMaisProximo == -1) {
 			// Todos os vértices com bateria inferior a 50% já foram visitados 
-			
+
 			break;
 		}
 
 		caminho[++posicao] = vizinhoMaisProximo;
 		visitados[vizinhoMaisProximo] = true;
 	}
+
 	// Voltar para o vértice de origem
-	caminho[++posicao] = origem; 
+	caminho[++posicao] = origem;
 
 	//Limpar a consola 
-	system("cls"); 
+	system("cls");
 
 	//Imprimir o caminho a ser percorrido para a recolha dos meios de transporte
-	imprimirCaminho(caminho, posicao); 
+	imprimirCaminho(caminho, posicao);
 
-	system("pause"); 
-	system("cls"); 
-	
+	system("pause");
+	system("cls");
+
 	//Declharar variáveis
-	int capacidadeCamiao = 20; 
-	int capacidadeDisponivel = capacidadeCamiao; 
+	int capacidadeCamiao = 20;
+	int capacidadeDisponivel = capacidadeCamiao;
 
-	Transporte* Recolhidos[100];  
-	int numeroRecolhidos = 0; 
-	 
+	Transporte* Recolhidos[100];
+	int numeroRecolhidos = 0;
+
 	//Função para a recolha dos meios 
-	recolherMeios(g, origem, Recolhidos, &numeroRecolhidos, capacidadeCamiao, caminho, posicao); 
+	recolherMeios(g, origem, Recolhidos, &numeroRecolhidos, capacidadeCamiao, caminho, posicao);
 
-	printf("\n \n"); 
+	printf("\n \n");
 
 	//Imprimir na consola os meios de transporte recolhidos 
-	imprimirRecolhidos(Recolhidos, numeroRecolhidos);  
+	imprimirRecolhidos(Recolhidos, numeroRecolhidos);
 
 	//Libertar a memoria dos visitados (apoio na construção do percurso a ser recolhido)
-	free(visitados); 
-} 
+	free(visitados);
+}
 
 //Recolher os meios de transporte 
 void recolherMeios(Grafo* g, int origem, Transporte* recolhidos[], int* numeroRecolhidos, int capacidadeCamiao, int caminho[], int posicao) {  

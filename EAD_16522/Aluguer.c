@@ -118,14 +118,7 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1, int nif) 
 		else {
 			system("cls");
 			printf("\n");
-
-			//Transporte encontrado e disponível (trocar para função)
-			printf("*************************************TRANSPORTE ESCOLHIDO***********************\n");
-			printf("\n");
 	
-			//Imprimir os meios de transporte na localização inserida
-			imprimirLocalizacaoTransporte(atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo); 
-
 			atual->disponivel = 0; // Veiculo alugado fica indisponivel para alugar 
 
 			//Escrever o ID do veiculo alugado na estrutura cliente no campo IDVEIVULOALUGADO
@@ -144,12 +137,10 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1, int nif) 
 			strcpy(atual->geocodigo, localizacaoFim); 
 
 			//Guardar o historico
-			InserirRegisto(historico, atualC->nome_cliente, atualC->NIF, atual->tipo, atual->codigo, preco, distancia, localizacaoIni, localizacaoFim);
+			InserirRegisto(&historico, atualC->nome_cliente, atualC->NIF, atual->tipo, atual->codigo, preco, distancia, localizacaoIni, localizacaoFim); 
 
-			GuardarHistorico(historico);
+			GuardarHistorico(historico); 
 
-			system("pause");
-			system("cls");
 		}
 
 		//Atualizar o ficheiro cliente 
@@ -207,12 +198,4 @@ void desalugarVeiculo(Cliente* cliente_1, Transporte* meioTransporte_1, int nif)
 
 	system("pause");
 	system("cls");
-}
-
-//Função para imprimir a lista dos meios de transporte 
-void imprimirLocalizacaoTransporte(Transporte* transporte) {
-
-	printf("| %-5s | %-10s | %-8s | %-10s | %-30s |\n", "ID", "TIPO", "BATERIA", "AUTONOMIA", "LOCALIZACAO");
-	printf("|-------|------------|----------|------------|--------------------------------|\n");
-	printf("| %-5d | %-10s | %-8.2f | %-10.2f | %-30s |\n", transporte->codigo, transporte->tipo, transporte->bateria, transporte->autonomia, transporte->geocodigo);
 }

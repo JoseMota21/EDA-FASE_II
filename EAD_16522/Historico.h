@@ -24,7 +24,7 @@ typedef struct historico {
 extern HistoricoRegisto* historico; 
 
 //Inserir novo registo à estrutura do historico 
-HistoricoRegisto* InserirRegisto(HistoricoRegisto* historico_1, char* nome, int NIF, char* tipo, int id, float preco, float distanciaPer, char* localidadeIni, char* localidadeFim);
+void InserirRegisto(HistoricoRegisto* historico_1, char* nome, int NIF, char* tipo, int id, float preco, float distanciaPer, char* localidadeIni, char* localidadeFim);
 
 //Guardar a estrutura historico em ficheiro txt
 void GuardarHistorico(HistoricoRegisto* historico); 

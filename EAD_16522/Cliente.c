@@ -493,7 +493,16 @@ int veiculosRaio(char localizacaoAtual[], char tipoMeio[], int raio, Transporte*
 	Transporte* meios = meio;
 
 	//Converter as 3 palavras em coordenadas (lat e lng)
-	get_coordinates(localizacaoAtual, API_KEY, &lat, &lng);
+	get_coordinates(localizacaoAtual, API_KEY, &lat, &lng); 
+
+	system("cls"); 
+
+	printf("\t++++++++ LISTAR MEIOS NO RAIO DE %d KM ++++++++++\n", raio); 
+	printf("\n");
+
+	//Cabeçalho da tabela
+	printf("| %-5s | %-10s | %-8s | %-10s | %-30s | %-13s|\n", "ID", "TIPO", "BATERIA", "AUTONOMIA", "LOCALIZACAO", "DISPONIBILIDADE");
+	printf("|-------|------------|----------|------------|--------------------------------|----------------|\n");
 	
 	//Percorre os meios de Transporte 
 	while (meios != NULL) {
@@ -512,7 +521,7 @@ int veiculosRaio(char localizacaoAtual[], char tipoMeio[], int raio, Transporte*
 
 			//Se a distancia for menor ou igual ao raio mostra os meios de transporte disponiveis 
 			if (distancia <= raio) {
-				printf("NO RAIO DE %d KM O VEICULO COM O ID %d ESTA DISPONVIEL \n", raio, meios->codigo);
+				printf("| %-5d | %-10s | %-8.2f | %-10.2f | %-30s | %-14d |\n", meios->codigo, meios->tipo, meios->bateria, meios->autonomia, meios->geocodigo, meios->disponivel); 
 				encontrado = true; 
 			}
 			

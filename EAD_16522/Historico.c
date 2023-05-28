@@ -9,13 +9,13 @@
 HistoricoRegisto* historico = NULL; 
 
 //Inser novo registo na lista do historico
-HistoricoRegisto* InserirRegisto (HistoricoRegisto* historico, char* nome, int NIF, char* tipo,int id, float preco, float distanciaPer, char* localidadeIni, char* localidadeFim) {
+void InserirRegisto(HistoricoRegisto** historico, char* nome, int NIF, char* tipo, int id, float preco, float distanciaPer, char* localidadeIni, char* localidadeFim) {
 
     // Alocar dinamicamente uma nova estrutura de histórico
-    HistoricoRegisto * novoRegisto = (HistoricoRegisto*)malloc(sizeof(HistoricoRegisto));
+    HistoricoRegisto* novoRegisto = (HistoricoRegisto*)malloc(sizeof(HistoricoRegisto));
 
     // Atribuir os valores dos parâmetros à estrutura
-    strcpy(novoRegisto->nome_cliente,nome);
+    strcpy(novoRegisto->nome_cliente, nome);
     novoRegisto->nif = NIF;
     strcpy(novoRegisto->tipo, tipo);
     novoRegisto->ID = id;
@@ -26,24 +26,22 @@ HistoricoRegisto* InserirRegisto (HistoricoRegisto* historico, char* nome, int N
 
     novoRegisto->seguinte = NULL;
 
-    //Se historico NULL, não há resgisto de historico 
-    if (historico == NULL) { 
-        //Atribui o endereço do novo registo ao historico  
-        historico = novoRegisto;
-        return historico; 
+    // Se historico é NULL, não há registro de histórico 
+    if (*historico == NULL) {
+        // Atribui o endereço do novo registo ao historico  
+        *historico = novoRegisto;
     }
     else {
-        HistoricoRegisto* ultimo = historico; 
+        HistoricoRegisto* ultimo = *historico;
 
-        //Adiciona o registo no fim da lista 
+        // Adiciona o registo no fim da lista 
         while (ultimo->seguinte != NULL) {
             ultimo = ultimo->seguinte;
         }
         ultimo->seguinte = novoRegisto;
-        return historico;
     }
- }
-
+}
+ 
 //Guardar o historico na estrutura 
 void GuardarHistorico(HistoricoRegisto* historico) {
 
