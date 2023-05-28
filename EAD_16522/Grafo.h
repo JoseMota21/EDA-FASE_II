@@ -3,6 +3,7 @@
 #include "Transporte.h" 
 #include <float.h>
 #include "Cliente.h" 
+#include "API.h"
 
 //Estrutura para os vértices
 typedef struct Vertice {
@@ -22,7 +23,7 @@ typedef struct Vertice {
 typedef struct Aresta {
     int vertice_adjacente; 
     float peso;
-    struct Aresta* proximo;
+   struct Aresta* proximo;
 } Aresta;
 
 //Estrutura do grafo
@@ -50,8 +51,11 @@ Vertice* listarVertices(Grafo* g);
 //Criar arestas nos meios de transporte
 Aresta* criarAresta(Grafo* g, int origem, int destino, float peso);
 
+//Função para conetar todos os vertices 
+void conetarVertices(Grafo* g); 
+
 //Criar grafo dos meios de transporte
-Grafo* criarGrafo(int numeroVertices);
+Grafo* criarGrafo(int numeroVertices); 
 
 //Imprimir o grafo dos meios de transporte
 void imprimirGrafo(Grafo* g);

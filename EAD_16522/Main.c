@@ -201,6 +201,7 @@ int main() {
 							gestor_1 = inserirGestor(gestor_1);
 							break;
 						case 12: 
+
 							getchar(); 
 							//Pede ao utilizador para inserir a localidade 
 							printf("LOCALIDADE DE PESQUEISA:\n"); 							
@@ -227,69 +228,38 @@ int main() {
 						case 15:  
 							printf("A CONSTRUIR ARESTAS ENTRE COORDENADAS...\n");  
 
-							if (!grafoCompleto(grafo_1)) {
+							if (!grafoCompleto(grafo_1)) { 
 
-								// Inserir arestas para cada par de vértices
-								Vertice* verticeAtual = grafo_1->vertices; 
-								while (verticeAtual != NULL) { 
-									Vertice* proximoVertice = verticeAtual->seguinte; 
-									while (proximoVertice != NULL) { 
-
-										//Converter 3 palavras do what3words em coordenadas (latitude e longitude)
-										get_coordinates(verticeAtual->geocodigo, API_KEY, &lat1, &lng1); 
-										get_coordinates(proximoVertice->geocodigo, API_KEY, &lat2, &lng2); 
-
-										//Calcular a distancia entre os vértices
-										float distancia = haversine_distance(lat1, lng1, lat2, lng2); 
-
-										//Criar as arestas entre os vértices
-										criarAresta(grafo_1, verticeAtual->VerticeID, proximoVertice->VerticeID, distancia); 
-
-										proximoVertice = proximoVertice->seguinte; 
-									} 
-									verticeAtual = verticeAtual->seguinte; 
-								}
+								//Conectar os vértices 
+								conetarVertices(grafo_1); 
+																
 								//Imprime o Grafo 
 								imprimirGrafo(grafo_1); 
 								system("pause");
 								system("cls");
 							}
 							else {
-								//Imprimir Grafo 
-								imprimirGrafo(grafo_1);
-								system("pause");
-								system("cls");
+								//Imprimir Grafo  
+								imprimirGrafo(grafo_1); 
+								system("pause"); 
+								system("cls"); 
 							}
 							break; 
 						case 16: 
 							if (!grafoCompleto(grafo_1)) { 
 								printf("A CONSTRUIR ARESTAS ENTRE COORDENADAS...\n");
 
-								// Inserir arestas para cada par de vértices
-								Vertice* verticeAtual = grafo_1->vertices;
-								while (verticeAtual != NULL) {
-									Vertice* proximoVertice = verticeAtual->seguinte;
-									while (proximoVertice != NULL) {
-										//Converter 3 palavras do what3words em coordenadas (latitude e longitude)
-										get_coordinates(verticeAtual->geocodigo, API_KEY, &lat1, &lng1); 
-										get_coordinates(proximoVertice->geocodigo, API_KEY, &lat2, &lng2); 
-
-										//Calcular a distancia entre os vértices
-										float distancia = haversine_distance(lat1, lng1, lat2, lng2); 
-
-										//Criar as arestas entre os vértices
-										criarAresta(grafo_1, verticeAtual->VerticeID, proximoVertice->VerticeID, distancia); 
-
-										proximoVertice = proximoVertice->seguinte;
-									}
-									verticeAtual = verticeAtual->seguinte; 
-								}
-								//Imprime o Grafo 
+								//Conectar todos os vertices 
+								conetarVertices(grafo_1); 
 								system("pause"); 
-								percursoMinimo(grafo_1, origem);  
+								//Imprimir o percurso minimo 
+								percursoMinimo(grafo_1, origem); 
+
+								//Atualizar o grafo
 								grafo_1 = NULL, 
 								criarVertices(&grafo_1, meioTransporte_1); 
 								system("pause"); 
+
 								system("cls"); 
 							}
 							else {

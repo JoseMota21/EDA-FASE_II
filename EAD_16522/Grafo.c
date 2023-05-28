@@ -185,13 +185,19 @@ Aresta* criarAresta(Grafo* g, int origem, int destino, float peso) {
 	// Atualizar a matriz de adjacência para refletir a presença da aresta
 	g->matrizadj[origem][destino] = novaArestaOrigem;
 
-	Aresta* novaArestaDestino = malloc(sizeof(Aresta)); 
+
+	/*
+	* 
+	* 	Aresta* novaArestaDestino = malloc(sizeof(Aresta)); 
 
 	novaArestaDestino->vertice_adjacente = origem; 
 	novaArestaDestino->peso = peso; 
 	novaArestaDestino->proximo = NULL;
 
 	g->matrizadj[destino][origem] = novaArestaDestino; 
+	
+	*/
+
 
 	guardarGrafo(g);
 
@@ -296,6 +302,33 @@ Grafo* guardarGrafo(Grafo* g) {
 	fclose(ficheiroGrafo);
 
 	return g;
+} 
+
+//Conetar todos os vertices 
+void conetarVertices(Grafo* g) {
+
+	Vertice* verticeAtual = g->vertices; 
+
+	while (verticeAtual != NULL) { 
+		Vertice* proximoVertice = verticeAtual->seguinte; 
+
+		while (proximoVertice != NULL) {
+			// Converter 3 palavras do what3words em coordenadas (latitude e longitude)
+			float lat1, lng1, lat2, lng2; 
+			get_coordinates(verticeAtual->geocodigo, API_KEY, &lat1, &lng1); 
+			get_coordinates(proximoVertice->geocodigo, API_KEY, &lat2, &lng2); 
+
+			// Calcular a distância entre os vértices 
+			float distancia = haversine_distance(lat1, lng1, lat2, lng2); 
+
+			// Criar as arestas entre os vértices
+			criarAresta(g, verticeAtual->VerticeID, proximoVertice->VerticeID, distancia); 
+
+			proximoVertice = proximoVertice->seguinte; 
+		}
+
+		verticeAtual = verticeAtual->seguinte; 
+	}
 }
 
 //Guardar vertices em ficheiro txt 
