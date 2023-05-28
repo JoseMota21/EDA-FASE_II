@@ -6,7 +6,7 @@
 #include <math.h>
 #include "Grafo.h"  
 
-//Função para criar os vertices 
+//Função para criar vértices 
 Vertice* criarVertices(Grafo** g, Transporte* meios) {
 	// Identificação do vértice
 	int VerticeID = 1;
@@ -71,7 +71,7 @@ Vertice* criarVertices(Grafo** g, Transporte* meios) {
 	return (*g)->vertices;
 }
 
-//Função para encontrar vértices 
+//Função para encontrar os vertices 
 Vertice* encontrarVertice(Grafo* g, int id) {
 
 	Vertice* atual = g->vertices;
@@ -218,7 +218,6 @@ void imprimirGrafo(Grafo* g) {
 
 	//Cabeçalho da tabela
 	printf("|%-5s | %-5s | %-10s|\n", "ORIGEM", "DESTINO", "DISTANCIA"); 
-
 
 	for (int origem = 0; origem < g->numeroVertices; origem++) {
 		for (int destino =0; destino < g->numeroVertices; destino++)
