@@ -40,7 +40,7 @@ typedef struct Grafo {
 } Grafo; 
 
 //Guardar vertices em ficheiro txt
-void guardarVertices(Grafo** g);
+Grafo* guardarVertices(Grafo* g); 
 
 //Criar vertices para os meios de transporte
 Vertice* criarVertices(Grafo** g, Transporte* meios);

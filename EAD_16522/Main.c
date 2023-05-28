@@ -227,10 +227,9 @@ int main() {
 
 						case 15:  
 							printf("A CONSTRUIR ARESTAS ENTRE COORDENADAS...\n");  
-						
 							//Conectar os vértices 
 							conetarVertices(grafo_1); 
-																
+							
 							//Imprime o Grafo 
 							imprimirGrafo(grafo_1); 
 							system("pause");

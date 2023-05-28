@@ -6,6 +6,7 @@
 #include <math.h>
 #include "Grafo.h"  
 
+//Função para criar os vertices 
 Vertice* criarVertices(Grafo** g, Transporte* meios) {
 	// Identificação do vértice
 	int VerticeID = 1;
@@ -65,7 +66,7 @@ Vertice* criarVertices(Grafo** g, Transporte* meios) {
 
 	(*g)->numeroVertices = VerticeID;
 	
-	guardarVertices(g);
+	guardarVertices(*g); 
 
 	return (*g)->vertices;
 }
@@ -227,7 +228,7 @@ void imprimirGrafo(Grafo* g) {
 
 				while (aresta != NULL) {
 
-					printf("|%-5d | %-5d | %-10.2f|\n", origem, aresta->vertice_adjacente, aresta->peso);
+					printf("|%-6d | %-7d | %-10.2f|\n", origem, aresta->vertice_adjacente, aresta->peso);
 					 
 					aresta = aresta->proximo;
 				}
@@ -334,7 +335,7 @@ void conetarVertices(Grafo* g) {
 }
 
 //Guardar vertices em ficheiro txt 
-void guardarVertices (Grafo** g) {
+Grafo* guardarVertices (Grafo* g) {
 
 	// Abrir o ficheiro dos vértices 
 	FILE* ficheiroVertice = fopen("Vertices.txt", "w");
@@ -346,18 +347,18 @@ void guardarVertices (Grafo** g) {
 	}
 	 
 	//Se o grafo estiver vazio informa o utilizador 
-	if (*g == NULL) {
+	if (g == NULL) {
 		printf("GRAFO VAZIO\n"); 
 		
 		//Fechar o ficheiro 
 		fclose(ficheiroVertice);
 		return;
 	} 
-	Vertice* atual = (*g)->vertices;
+	Vertice* atual = g->vertices;
 
 	//Percorre a lista dos vertices até ao fim 
 	while (atual != NULL) {
-		//Escreve no ficheiro o ID do vértice, o ID do meio de transporte, o tipo de meio de transporte, a bateria e a sua localização 
+		//Escreve no ficheiro o ID do vértice, o ID do meio de transporte, o tipo de meio de transporte, a bateria e a sua localização  
 		fprintf(ficheiroVertice, "%d;%d;%s;%.2f;%s\n",atual->VerticeID, atual->ID, atual->Tipo, atual->bateria, atual->geocodigo);
 		
 		//Passa para o seguinte
@@ -390,11 +391,14 @@ void percursoMinimo(Grafo* g, int origem) {
 	// Construir o caminho usando a heurística do vizinho mais próximo
 	for (int i = 0; i < numeroVertices - 1; i++) {
 		int verticeAtual = caminho[posicao];
-		int vizinhoMaisProximo = EncontrarMaisProximo50 (g, verticeAtual, visitados);
-		if (vizinhoMaisProximo == -1) {
-			// Todos os vértices com bateria inferior a 50% já foram visitados
+		int vizinhoMaisProximo = EncontrarMaisProximo50 (g, verticeAtual, visitados); 
+				
+		if (vizinhoMaisProximo == -1) {  
+			// Todos os vértices com bateria inferior a 50% já foram visitados 
+			
 			break;
 		}
+
 		caminho[++posicao] = vizinhoMaisProximo;
 		visitados[vizinhoMaisProximo] = true;
 	}
@@ -420,8 +424,7 @@ void percursoMinimo(Grafo* g, int origem) {
 	//Função para a recolha dos meios 
 	recolherMeios(g, origem, Recolhidos, &numeroRecolhidos, capacidadeCamiao, caminho, posicao); 
 
-	system("pause");
-	system("cls"); 
+	printf("\n \n"); 
 
 	//Imprimir na consola os meios de transporte recolhidos 
 	imprimirRecolhidos(Recolhidos, numeroRecolhidos);  
@@ -431,7 +434,7 @@ void percursoMinimo(Grafo* g, int origem) {
 } 
 
 //Recolher os meios de transporte 
-void recolherMeios(Grafo* g, int origem, Transporte* recolhidos[], int* numeroRecolhidos, int capacidadeCamiao, int caminho[], int posicao) {
+void recolherMeios(Grafo* g, int origem, Transporte* recolhidos[], int* numeroRecolhidos, int capacidadeCamiao, int caminho[], int posicao) {  
 	
 	int capacidadeDisponivel = capacidadeCamiao;
 	int naoRecolhidos = 0;
@@ -528,8 +531,7 @@ void imprimirNaoRecolhidos(Transporte* naoRecolhidos[], int numeroNaoRecolhidos)
 		printf("| %-5d | %-10s |\n", naoRecolhidos[i]->codigo, naoRecolhidos[i]->tipo); 
 	}
 
-	printf("\n%d meio(s) de transporte nao foram possiveis de recolher\n", numeroNaoRecolhidos);   
-	printf("\n");  
+	printf("\n\n");  
 } 
 
 //Encotrar o meio de transporte no vertice 
@@ -552,15 +554,15 @@ int EncontrarMaisProximo50(Grafo* g, int verticeAtual, bool* visitados) {
 
 	int numeroVertices = g->numeroVertices;
 	float menorPeso = FLT_MAX;
-	int vizinhoProximo = -1;
+	int vizinhoProximo = -1; 
 
 	for (int i = 0; i < numeroVertices; i++) {
 		if (i != verticeAtual && !visitados[i]) {  // Verifica se o vértice não é o atual e não foi visitado
 			Aresta* aresta = g->matrizadj[verticeAtual][i];
-			Vertice* vertice = encontrarVertice(g, i);
+			Vertice* vertice = encontrarVertice(g, i); 
 
 			if (aresta != NULL && vertice->bateria < 50.0) {
-
+				
 				if (aresta->peso < menorPeso) {
 					menorPeso = aresta->peso;
 					vizinhoProximo = i;
@@ -568,12 +570,7 @@ int EncontrarMaisProximo50(Grafo* g, int verticeAtual, bool* visitados) {
 			}
 		}
 	}
-
-	if (vizinhoProximo != -1) {
-		Vertice* vertice = encontrarVertice(g, vizinhoProximo);
-		printf("BATERIA DO VERTICE %d: %.2f\n", vizinhoProximo, vertice->bateria);
-	}
-	
+		
 	return vizinhoProximo;
 } 
 
@@ -594,7 +591,7 @@ void saveNaoRecolhidos(Transporte* naoRecolhidos[], int numeroNaoRecolhidos, con
 
 	fclose(ficheiro); 
 
-	printf("GUARDADO COM SUCESSO NO FICHEIRO %s\n", TransportesNaoRecolhidos);  
+	//printf("GUARDADO COM SUCESSO NO FICHEIRO %s\n", TransportesNaoRecolhidos);  
 	printf("\n");
 }
 
@@ -621,7 +618,7 @@ void lerDadosDeArquivo(const char* TransportesNaoRecolhidos) {
 	fclose(arquivo);
 
 	// Imprimir os dados lidos na console
-	printf("\t++++++++ MEIOS DE TRANSPORTE NAO RECOLHIDOS (LER DO ARQUIVO) ++++++++++\n");
+	printf("\t+++++++++++ MEIOS DE TRANSPORTE NAO RECOLHIDOS +++++++++++++\n");
 	printf("\n| %-5s | %-10s |\n", "ID", "TIPO");
 	printf("|--------------------|\n");
 
