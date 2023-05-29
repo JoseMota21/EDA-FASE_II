@@ -13,13 +13,13 @@ Além disso, possui referências para as arestas adjacentes e o próximo vértice na
 @note Esta estrutura é usada na representação do grafo. 
 */
 typedef struct Vertice {
-    char geocodigo[100]; 
-    int ID;             
-    int VerticeID;
-    float bateria;       
-    char Tipo[20];
+    char geocodigo[100];    // Localização 
+    int ID;                //ID do meio de transporte
+    int VerticeID;        //ID do vértice 
+    float bateria;       // Bateria do meio de transporte 
+    char Tipo[20];      //Tipo de meio de transporte (BIKE) (TROTINETE )
 
-    Transporte* meios; 
+    Transporte* meios; //Estrutura dos meios de transporte 
 
     struct Aresta* adjacencias; 
     struct Vertice* seguinte;
@@ -33,8 +33,8 @@ Ela armazena o vértice adjacente, o peso da aresta e a referência para a próxima
 @note Esta estrutura é usada na representação do grafo.
 */
 typedef struct Aresta {
-    int vertice_adjacente; 
-    float peso;
+    int vertice_adjacente;  //Vertice vizinho 
+    float peso; //Peso da aresta (Distancia)
    struct Aresta* proximo;
 } Aresta;
 
@@ -46,9 +46,9 @@ typedef struct Aresta {
  * um array de distâncias, uma lista de meios de transporte, uma matriz de arestas adjacentes e uma lista de vértices.
  */
 typedef struct Grafo {
-    int numeroVertices; 
-    bool** visitados;
-    Transporte* meios; 
+    int numeroVertices; //Número de vértices no grafo 
+    bool** visitados;   //Vistados 
+    Transporte* meios;  //Estrutura dos meios de transporte 
     struct Aresta*** matrizadj;     
     struct Vertice* vertices;
 } Grafo; 
@@ -309,4 +309,9 @@ Por fim, o arquivo é fechado.
 */
 void atualizarFicheiroNaoRecolhidos (const char* nomeArquivo, Transporte* naoRecolhidosArray, int numeroNaoRecolhidos);  
 
+/**
+ * Imprime na consola os meios de transporte que não foram recolhidos.
+ * @param naoRecolhidosArray O array de meios de transporte não recolhidos. 
+ * @param numeroNaoRecolhidos O número de meios de transporte não recolhidos. 
+ */
 void imprimirMeiosNaoRecolhidos(Transporte* naoRecolhidosArray, int numeroNaoRecolhidos); 

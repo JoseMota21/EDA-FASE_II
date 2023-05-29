@@ -557,7 +557,8 @@ void recolherMeios(Grafo* g, int origem, Transporte* recolhidos[], int* numeroRe
 
 				//O meio de transporte é adicionado no array de recolhidos 
 				recolhidos[*numeroRecolhidos] = transporte; 
-				(*numeroRecolhidos)++; //Incrementa (número de transportes recolhidos )
+				(*numeroRecolhidos)++; //Incrementa (número de transportes recolhidos ) 
+
 			}
 			else {
 				//Se o volume do camião necessário para transportar o meio de transporte for maior do que a capacidade disponivel no camião, 
@@ -579,7 +580,7 @@ void recolherMeios(Grafo* g, int origem, Transporte* recolhidos[], int* numeroRe
 
 		//Atualizar o ficheiro dos não recolhidos 
 		atualizarFicheiroNaoRecolhidos ("NRecolhidos.bin", naoRecolhidosArray, naoRecolhidos);
-	}
+	} 
 
 	//Se existir meios de transporte não recolhidos 
 	if (naoRecolhidos > 0) { 
@@ -621,9 +622,9 @@ void imprimirRecolhidos(Transporte* recolhidos[], int numeroRecolhidos) {
 
 		//Apontador para o transporte atual 
 		Transporte* transporte = recolhidos[i]; 
-
+		
 		//Imprimir na consola os dados (ID do meio de transporte e o tipo de transporte)
-		printf("| %-5d | %-10s |\n", transporte->codigo, transporte->tipo);
+		printf("| %-5d | %-10s |\n", transporte->codigo, transporte->tipo); 
 	}
 
 	printf("\n"); 
