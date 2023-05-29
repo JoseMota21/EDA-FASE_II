@@ -48,7 +48,6 @@ typedef struct Aresta {
 typedef struct Grafo {
     int numeroVertices; 
     bool** visitados;
-    float* distancias;  
     Transporte* meios; 
     struct Aresta*** matrizadj;     
     struct Vertice* vertices;
@@ -189,7 +188,7 @@ void percursoMinimo(Grafo* g, int origem);
 /**
 
 @brief Realiza a recolha dos meios de transporte ao longo do caminho.
-@param g O ponteiro para o grafo.
+@param g O apontador para o grafo.
 @param origem O vértice de origem do percurso.
 @param recolhidos Um array de ponteiros para os meios de transporte recolhidos.
 @param numeroRecolhidos O número atual de meios de transporte recolhidos.
@@ -308,4 +307,6 @@ A função abre o arquivo em modo de escrita binária, escreve o número de meios nã
 Por fim, o arquivo é fechado.
 @note Certifique-se de que os parâmetros foram corretamente preenchidos antes de chamar esta função.
 */
-void atualizarFicheiroNaoRecolhidos (const char* nomeArquivo, Transporte* naoRecolhidosArray, int numeroNaoRecolhidos); 
+void atualizarFicheiroNaoRecolhidos (const char* nomeArquivo, Transporte* naoRecolhidosArray, int numeroNaoRecolhidos);  
+
+void imprimirMeiosNaoRecolhidos(Transporte* naoRecolhidosArray, int numeroNaoRecolhidos); 

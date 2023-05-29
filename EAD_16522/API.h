@@ -18,7 +18,7 @@
  * A constante `API_KEY` representa a chave de acesso à API What3Words.
  * Essa chave é necessária para realizar requisições à API e obter as coordenadas geográficas correspondentes a três palavras.
  */
-#define API_KEY  "QK95ZNN1"  
+#define API_KEY  "0" // QK95ZNN1"  
 
  /**
   * @brief Raio médio da Terra em km.
