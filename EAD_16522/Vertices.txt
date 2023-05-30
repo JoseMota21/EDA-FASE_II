@@ -1,7 +1,7 @@
 0;0;ARMAZEM;0.00;///cantarola.sondado.nevoeiro
 1;24;TROTINETE;100.00;///cantarola.sondado.nevoeiro
 2;21;BIKE;100.00;///cantarola.sondado.nevoeiro
-3;32;TROTINETE;88.00;///capotou.franzir.induzir
+3;32;TROTINETE;86.90;///cantarola.sondado.nevoeiro
 4;7;BIKE;100.00;///cantarola.sondado.nevoeiro
 5;99;TROTINETE;51.00;///ligo.puxando.enfeites
 6;5;TROTINETE;100.00;///cantarola.sondado.nevoeiro

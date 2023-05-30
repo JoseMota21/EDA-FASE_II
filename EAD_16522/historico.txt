@@ -1,2 +1,4 @@
 JOAO;12345;TROTINETE;32;0.15;0.76;///capotou.franzir.induzir;///cantarola.sondado.nevoeiro 
-JOAO;12345;TROTINETE;24;0.57;2.84;///garoar.preceitos.varandas;///cantarola.sondado.nevoeiro 
+JOAO;12345;BIKE;7;0.15;0.76;///capotou.franzir.induzir;///cantarola.sondado.nevoeiro 
+JOAO;12345;TROTINETE;24;0.00;0.00;///cabem.florescida.antiga;///capotou.franzir.induzir 
+JOAO;12345;TROTINETE;32;0.15;0.76;///capotou.franzir.induzir;///cantarola.sondado.nevoeiro 

@@ -116,9 +116,8 @@ int main() {
 						printf("12 - LOCALIZAR TRANSPORTE POR LOCALIDADE\n");
 						printf("13 - MEIOS DE TRANSPORTE COM BATERIA INFERIOR A 50\n");
 						printf("14 - LISTAR VERTICES\n");
-						printf("15 - IMPRIMIR GRAFO\n");
-						printf("16 - PERCURSO DE RECOLHA\n");
-						printf("17 - CONSULTAR OS QUE FALTAM RECOLHER \n");
+						printf("15 - PERCURSO DE RECOLHA\n");
+						printf("16 - CONSULTAR OS QUE FALTAM RECOLHER \n");
 
 						printf("--------------------------------------------------\n");
 						printf("\n");
@@ -192,7 +191,7 @@ int main() {
 							break;
 						case 10:
 							//Consultar o historico de que cliente
-							consultarhistorico(historico_1);
+							consultarhistorico(historico_1);  
 							system("pause"); // Pausa no sistema, pressionar alguma tecla para proseguir
 							system("cls");
 							break;
@@ -226,44 +225,31 @@ int main() {
 							break;
 
 						case 15:  
-							printf("A CONSTRUIR ARESTAS ENTRE COORDENADAS...\n");  
-							//Conectar os vértices 
-							conetarVertices(grafo_1); 
-							
-							//Imprime o Grafo 
-							imprimirGrafo(grafo_1); 
-							system("pause");
-							system("cls");
-										
-						break; 
-						case 16: 
-							printf("A CONSTRUIR ARESTAS ENTRE COORDENADAS...\n");
-
-							//Conectar todos os vertices 
+							printf("A CONSTRUIR ARESTAS ENTRE COORDENADAS...\n"); 
+							 
+							//Conectar todos os vertices  
 							conetarVertices(grafo_1); 
 							system("pause"); 
-							//Imprimir o percurso minimo 
+							//Imprimir o percurso minimo  
 							percursoMinimo(grafo_1, origem); 
 
 							//Atualizar o grafo
 							grafo_1 = NULL, 
 							criarVertices(&grafo_1, meioTransporte_1); 
-							system("pause"); 
-
-							system("cls"); 
-						break;
-						case 17: 
+							system("pause"); 										
+						break; 
+						case 16: 
 							//Consultar os meios de transporte que não foram recolhidos 
 							lerDadosDeArquivo("NRecolhidos.bin"); 
 							system("pause"); 
 							system("cls"); 
-							break;
+						break;
 						default:
 							//Caso nenhuma opcao for inserida corretamente informa o utilizar 
 							printf("OPCAO INVALIDA\n");
 							break;
 						}
-					} while (gestor != 18); // Voltar para o menu anterior 
+					} while (gestor != 17); // Voltar para o menu anterior 
 
 				}	break;
 			}while (gestorech != 0); //voltar para o menu anterior
@@ -307,7 +293,7 @@ int main() {
 						break;
 					case 3:
 						//Cliente aluga o transportes
-						alugarTranporte(cliente_1, meioTransporte_1, logado->NIF); 
+						alugarTranporte(cliente_1, meioTransporte_1, logado->NIF);   
 						break;
 					case 4: 
 						//Cliente desaluga o transporte
@@ -320,7 +306,7 @@ int main() {
 					case 6: 
 						//Cliente consulta o seu historico 
 						consultarHistoricoCliente(historico_1, logado->NIF); 
-						break;
+						break;   
 					case 7: 
 						//Procurar pelo o raio 
 						getchar(); 

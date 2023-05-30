@@ -4,9 +4,9 @@
 #include "API.h"
 
 /**
- * @brief Realiza o aluger de um meio de transporte para um cliente. 
+ * @brief Realiza o aluguer de um meio de transporte para um cliente. 
  * A função `alugarTranporte` solicita ao cliente que insira a localização atual e a localização de destino. Em seguida,
- * calcula a distância entre as duas localizações utilizando as coordenadas. Com base na distância, calcula o
+ * calcula a distância entre as duas localizações recorrendo às coordenadas. Com base na distância, calcula o
  * preço da viagem e verifica se o saldo do cliente é suficiente. Se o saldo for suficiente, a função verifica se há
  * transporte disponível na localização inicial. Se houver, solicita ao cliente o ID do transporte desejado e verifica se
  * o transporte existe, está disponível, possui autonomia suficiente e bateria suficiente para a viagem. Se todas as
@@ -14,7 +14,7 @@
  * no campo `IDveiculoAlugado` da estrutura `Cliente`, o saldo do cliente é atualizado, a autonomia e a bateria do
  * transporte são ajustadas, a localização de destino é registada no campo `geocodigo` do transporte e o registo da
  * viagem é inserido no histórico. Em seguida, os dados são salvos nos ficheiros. Caso contrário, são
- * exibidas mensagens de erro adequadas. No final, os arquivos de cliente e transporte são atualizados com as
+ * exibidas mensagens de erro adequadas. No final, os ficheiros dos clientes e transportes são atualizados com as
  * alterações realizadas.
  *
  * @param cliente_1 Apontador para o início da lista de clientes.
@@ -27,10 +27,10 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1, int nif);
  * @brief Desaluga o veículo alugado pelo um cliente.
  *
  * A função `desalugarVeiculo` procura o cliente na lista com o NIF fornecido e verifica se possui um veículo alugado.
- * Se o cliente não tiver um veículo alugado, exibida uma mensagem informativa ao utilizador. Caso contrário, a função percorre a
+ * Se o cliente não tiver um veículo alugado, exibe uma mensagem informativa ao utilizador. Caso contrário, a função percorre a
  * lista de transportes à procura do veículo alugado pelo cliente, com base no ID do veículo. Se o veículo
  * for encontrado, ele fica disponível, o campo `IDveiculoAlugado` do cliente é ajustado para indicar que ele
- * não possui mais um veículo alugado e uma mensagem de confirmação é exibida. Os dados são salvos nos ficheiros
+ * não possui mais um veículo alugado e uma mensagem de confirmação é exibida. Os dados são guardados nos ficheiros
  * correspondentes. Caso o veículo não seja encontrado, é exibida uma mensagem de erro. No final, os ficheiros de cliente e
  * transporte são atualizados com as alterações realizadas.
  *

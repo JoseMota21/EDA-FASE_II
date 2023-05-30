@@ -361,6 +361,26 @@ void OrdenarTransportesPorAutonomiaDecrescente(Transporte* inicio) {
 	}
 }
 
+//Imprime os meios de transporte na consola  
+void imprimirListaTransportes(Transporte* meios) {
+
+	// Cabeçalho da tabela
+	printf("\t++++++++++ INFORMACAO DOS TRANSPORTES ++++++++++\n");
+	printf("\n");
+
+	printf("| %-5s | %-10s | %-8s | %-10s | %-30s | %-13s|\n", "ID", "TIPO", "BATERIA", "AUTONOMIA", "LOCALIZACAO", "DISPONIBILIDADE");
+	printf("|-------|------------|----------|------------|--------------------------------|----------------|\n");
+
+	// Percorre a lista de transportes
+	Transporte* atual = meios;
+	while (atual != NULL) {
+
+		//Imprime na consola os dados dos meios de transporte
+		printf("| %-5d | %-10s | %-8.2f | %-10.2f | %-30s | %-14d |\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo, atual->disponivel);
+		atual = atual->seguinte;
+	}
+} 
+
 //Alterar dados dos meios de transporte 
 Transporte* AlterarDadosTransporte(Transporte* inicio) {
 
@@ -378,18 +398,8 @@ Transporte* AlterarDadosTransporte(Transporte* inicio) {
 
 	Transporte* atual = inicio;
 
-	//Mostrar os dados atuais de todos os transportes da lista
-	printf("\t++++++++++ INFORMACAO DOS TRANSPORTES ++++++++++\n");
-	printf("\n"); 
-	//Cabeçalho da tabela
-	printf("| %-5s | %-10s | %-8s | %-10s | %-30s | %-13s|\n", "ID", "TIPO", "BATERIA", "AUTONOMIA", "LOCALIZACAO", "DISPONIBILIDADE");
-	printf("|-------|------------|----------|------------|--------------------------------|----------------|\n");
-
-	//Escreve todos os dados da lista na consola
-	while (atual != NULL) {
-		printf("| %-5d | %-10s | %-8.2f | %-10.2f | %-30s | %-14d |\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo, atual->disponivel);
-		atual = atual->seguinte;
-	}
+	//Imprime na consola os dados dos meios de trasporte 
+	imprimirListaTransportes(atual); 
 
 	printf("\n");
 
@@ -413,15 +423,8 @@ Transporte* AlterarDadosTransporte(Transporte* inicio) {
 
 	system("cls");
 
-	// Mostrar os dados atuais do transporte com o ID escolhido 
-	printf("INFORMACOES DO TRANSPORTE SELECIONADO:\n");
-	printf("\n");
-	//Cabeçalho da tabela
-	printf("| %-5s | %-10s | %-8s | %-10s | %-30s | %-13s|\n", "ID", "TIPO", "BATERIA", "AUTONOMIA", "LOCALIZACAO", "DISPONIBILIDADE");
-	printf("|-------|------------|----------|------------|--------------------------------|----------------|\n");
-	printf("| %-5d | %-10s | %-8.2f | %-10.2f | %-30s | %-14d |\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo, atual->disponivel);
-	
-	printf("\n");
+	//Imprime na consola os meios de transorte 
+	imprimirListaTransportes(atual); 
 
 	//Opção de escolha para o cliente
 	printf("INSERIR O CAMPO QUE PRETENDE ALTERAR\n");
@@ -471,12 +474,8 @@ Transporte* AlterarDadosTransporte(Transporte* inicio) {
 	}
 	system("cls"); 
 
-	//Mostra na consola os dados alterados do transporte escolhido
-	printf("ALTERACOES EFETUADASD\n");
-	printf("\n"); 
-	printf("| %-5s | %-10s | %-8s | %-10s | %-30s | %-13s|\n", "ID", "TIPO", "BATERIA", "AUTONOMIA", "LOCALIZACAO", "DISPONIBILIDADE");
-	printf("|-------|------------|----------|------------|--------------------------------|----------------|\n");
-	printf("| %-5d | %-10s | %-8.2f | %-10.2f | %-30s | %-14d |\n", atual->codigo, atual->tipo, atual->bateria, atual->autonomia, atual->geocodigo, atual->disponivel);
+	//Mostra na consola os dados dos meios de transporte alterados 
+	imprimirListaTransportes(atual); 
 
 	//Guarda as alterações no ficheiro bin
 	saveAlterarDadosTransportes(inicio); 
@@ -592,8 +591,9 @@ Transporte* inferior50(Transporte* inicio) {
 
 	//Declarar variávies 
 	bool encontrado = false;
-	Transporte* recolha = NULL; // Nova lista ligada para armazenar os meios de transporte com bateria inferior a 50% 
+	Transporte* recolha = NULL; // Armazenar os meios de transporte com bateria inferior a 50% 
 
+	//Cabeçalho da tabela
 	printf("\t++++++++ TRANSPORTE COM BATERIA INFERIOR A 50 ++++++++++\n");
 	printf("\n");
 
@@ -601,24 +601,26 @@ Transporte* inferior50(Transporte* inicio) {
 	printf("| %-5s | %-10s | %-8s |\n", "ID", "TIPO", "BATERIA");
 	printf("|-------|------------|----------|\n"); 
 
-	// Percorrer a lista ligadav
+	// Percorrer a lista ligada até ao fim
 	while (inicio != NULL) {
 
+		//Se o código for diferente de 0 
 		if (inicio->codigo != 0) {
 
 			// Verifica qual o meio de transporte com bateria inferior a 50%
 			if (inicio->bateria < 50.0) { 
 
+				//Imprime na consola os meios de tranposte com bateria inferior a 50%
 				printf("| %-5d | %-10s | %-8.2f |\n", inicio->codigo, inicio->tipo, inicio->bateria);
 
-				//printf("%d;%s;%.2f\n", inicio->codigo, inicio->tipo, inicio->bateria);
-
-				encontrado = true;
+				encontrado = true; // Marca como encontrado 
 			}			
 		}
+		//Passa para o proximo meio de transporte 
 		inicio = inicio->seguinte;
 	}
 
+	//Se não encontrado avisa o utilizador 
 	if (!encontrado) {
 		printf("DE MOMENTO NAO EXISTE TRANSPORTE COM BATERIA INFERIOR A 50\n");
 	}

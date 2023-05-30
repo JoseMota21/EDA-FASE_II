@@ -6,7 +6,7 @@
 #include "Historico.h" 
 
 // Variável global para o histórico
-HistoricoRegisto* historico = NULL; 
+HistoricoRegisto* historico = NULL;  
 
 //Inser novo registo na lista do historico
 void InserirRegisto(HistoricoRegisto** historico, char* nome, int NIF, char* tipo, int id, float preco, float distanciaPer, char* localidadeIni, char* localidadeFim) {
@@ -77,7 +77,7 @@ HistoricoRegisto* consultarhistorico (HistoricoRegisto* historico) {
        //Cabeçalho da lista 
        printf("\t\t++++++++++++++++++ HISTORICO  ++++++++++++++++++++++\n");
        printf("\n"); 
-       printf("|%-5s | %-10s | %-10s | %-3s | %-5s | %-5s | %-25s | %-30s |\n", "NOME", "NIF", "TIPO", "ID", "PRECO", "DIST", "LOC. INICIAL", "LOC. FINAL");
+       printf("|%-5s | %-10s | %-10s | %-3s | %-5s | %-5s | %-26s | %-30s |\n", "NOME", "NIF", "TIPO", "ID", "PRECO", "DIST", "LOC. INICIAL", "LOC. FINAL");
        printf("---------------------------------------------------------------------------------------------------------------------\n");
     
        //Percorrer a lista até chegar ao fim 

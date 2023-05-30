@@ -136,11 +136,11 @@ void alugarTranporte(Cliente* cliente_1, Transporte* meioTransporte_1, int nif) 
 			//Inserir a localização onde o meio de transporte irá ser deixado
 			strcpy(atual->geocodigo, localizacaoFim); 
 
-			//Guardar o historico
-			InserirRegisto(&historico, atualC->nome_cliente, atualC->NIF, atual->tipo, atual->codigo, preco, distancia, localizacaoIni, localizacaoFim); 
+			//Insere na estrutura 
+			InserirRegisto(&historico, atualC->nome_cliente, atualC->NIF, atual->tipo, atual->codigo, preco, distancia, localizacaoIni, localizacaoFim);  
 
-			GuardarHistorico(historico); 
-
+			//Guarda no historico no ficheiro txt 
+			GuardarHistorico(historico);  
 		}
 
 		//Atualizar o ficheiro cliente 

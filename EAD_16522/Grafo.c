@@ -368,7 +368,7 @@ Grafo* guardarGrafo(Grafo* g) {
 
 	//Retorna o grafo 
 	return g;
-} 
+}  
 
 //Ligar todos os vertices 
 void conetarVertices(Grafo* g) {
@@ -450,10 +450,10 @@ Grafo* guardarVertices (Grafo* g) {
 void percursoMinimo(Grafo* g, int origem) { 
 
 	//Variavel do número de vértices existentes no grafo
-	int numeroVertices = g->numeroVertices; 
+	int numeroVertices = g->numeroVertices;  
 
-	// Vetor de visitados para registar quais os vértices foram visitados 
-	bool* visitados = malloc(numeroVertices * sizeof(bool)); 
+	// Vetor de visitados para registar quais os vértices foram visitados  
+	bool* visitados = malloc(numeroVertices * sizeof(bool));  
 
 	//Percorre todos os elementos do vetor e inicializa como false (Como não visitados)
 	for (int i = 0; i < numeroVertices; i++) { 
@@ -684,7 +684,7 @@ int EncontrarMaisProximo50(Grafo* g, int verticeAtual, bool* visitados) {
 			Vertice* vertice = encontrarVertice(g, i); 
 
 			//Se aresta não for nula e a bateria do transporte for inferior a 50% 
-			if (aresta != NULL && vertice->bateria < 50.0) {
+			if (aresta != NULL && vertice->bateria < 50.0 && vertice->meios->disponivel==1)  { 
 				
 				//Comparar o peso da aresta atual com o peso encontrado até ao momento 
 				if (aresta->peso < menorPeso) {

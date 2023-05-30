@@ -3,16 +3,16 @@
 
 /**
  * @brief Estrutura de dados para representar um registo de gestor.
- * A estrutura `Gestor` armazena informações sobre um gestor, incluindo nome, email e senha.
- * Também possui um apontador para o próximo gestor na lista.
+ * A estrutura `Gestor` armazena informações sobre um gestor, incluindo nome, email e password.
+ * Também possui um apontador para o próximo gestor na lista. 
  */
 typedef struct registoGestor {
 
-	char nome[100]; ///<Nome do gestor 
-	char email[100]; ///<Email do gestor
-	char password[100]; ///<senha do gestor 
+	char nome[100]; /** <Nome do gestor */
+	char email[100]; /**<Email do gestor */ 
+	char password[100]; /**<senha do gestor */ 
 
-	struct resgistoGestor* seguinte;  ///< Apontador para o proximo gestor da lista
+	struct resgistoGestor* seguinte;  /** < Apontador para o proximo gestor da lista */ 
 
 }Gestor;
 
@@ -50,9 +50,9 @@ Gestor* inserirGestor(Gestor* gestor_1);
 Gestor* existeGestor(Gestor* gestor_1, const char* email); 
  
 /**
- * @brief Salva os dados dos gestores em um arquivo de texto.
+ * @brief guarda os dados dos gestores em um ficheiro de texto.
  * A função `saveficheiroGestor` percorre a lista de gestores a partir do gestor
- * passado como parâmetro e escreve os dados de cada gestor em um arquivo de texto.
+ * passado como parâmetro e escreve os dados de cada gestor em um ficheiro de texto.
  * Os dados são separados por ponto e vírgula (;). Retorna o apontador para o início
  * da lista de gestores.
  * @param inicio Apontador para o início da lista de gestores.
@@ -63,7 +63,7 @@ Gestor* saveficheiroGestor(Gestor* inicio);
 /**
  * @brief Lê os dados dos gestores a partir de um arquivo de texto.
  * A função `lerficheiroGestor` abre o arquivo de texto "Gestor.txt" e percorre cada linha,
- * armazenando os dados em uma estrutura de gestor. Os dados são lidos na seguinte ordem:
+ * armazena os dados na estrutura de gestor. Os dados são lidos na seguinte ordem:
  * nome, email e senha. Em seguida, o novo gestor é adicionado ao final da lista de gestores.
  * Retorna o apontador para o início da lista de gestores.
  * @param inicio Apontador para o início da lista de gestores.
@@ -74,7 +74,7 @@ Gestor* lerficheiroGestor(Gestor* inicio);
 /**
  * @brief Realiza o login de um gestor.
  * A função `gestorlogin` solicita ao gestor que insira seu email e senha. Em seguida, ela percorre a lista de gestores
- * para encontrar um gestor que corresponda ao email e senha fornecidos. Se encontrar um gestor correspondente, define o
+ * para encontrar um gestor que corresponda ao email e password fornecidos. Se encontrar um gestor correspondente, define o
  * campo `autenticado` como verdadeiro e armazena as informações do gestor no campo `gestor` da estrutura `loginGestor`.
  * Caso contrário, define o campo `autenticado` como falso. Retorna a estrutura `loginGestor` contendo as informações
  * sobre a autenticação do gestor.

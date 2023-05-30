@@ -8,21 +8,21 @@
 
 /**
  * @brief Estrutura para o registo de histórico. 
- * Esta estrutura representa um registo de histórico, contem informações sobre a viagem (deslocação) que foi realizada. 
+ * Esta estrutura representa um registo de histórico, contem informações sobre a deslocação que foi realizada. 
  */
 typedef struct historico {
  
-	char nome_cliente[80]; 
-	int nif; 
-	int ID;
-	char tipo[20];
-	float preco; //Preço da viagem
-	float distancia; //distancia percorrida
-	char moradaIni[80]; //Morada inicial da viagem
-	char moradaFim[80]; //Morada final da viagem
-	struct  historico* seguinte; // endereço de memória para uma struct registo historico 
+	char nome_cliente[80]; /**< Nome do cliete */
+	int nif; /**< NIF do cliente */
+	int ID; /**<ID do meio de transporte */
+	char tipo[20]; /**< Tipo de meio de transporte*/
+	float preco; /**< Preço da viagem*/
+	float distancia; /** <distancia percorrida */
+	char moradaIni[80]; /** <Morada inicial da viagem */
+	char moradaFim[80]; /** <Morada final da viagem */
+	struct  historico* seguinte; 
 
-}HistoricoRegisto; 
+}HistoricoRegisto;  
 
 /**
  * @brief Apontador externo para a lista de histórico.
@@ -72,8 +72,8 @@ HistoricoRegisto* consultarhistorico (HistoricoRegisto* historico);
 HistoricoRegisto* lerficheirohistorico(HistoricoRegisto* historico);
 
 /**
- * @brief Consulta o histórico de um cliente específico (logado).
- * Esta função exibe na tela o histórico de viagens de um cliente com base no seu NIF. 
+ * @brief Consulta o histórico de um cliente logado.
+ * Esta função exibe na consola o histórico de viagens de um cliente com base no seu NIF. 
  * @param historico Um apontador para a lista de histórico.
  * @param nif O NIF do cliente para o qual o histórico será consultado.
  */

@@ -57,7 +57,7 @@ Cliente* inputCliente(Cliente* cliente_1) {
 	return cliente_1;
 }
 
-///Verificar se existe cliente pelo o nif
+//Verificar se existe cliente pelo o nif
 int ExisteCliente(Cliente* inicio, int nif) {
 
 	//Percorre a lista toda 
@@ -332,15 +332,9 @@ Cliente* AlterarDadosCliente(Cliente* inicio, int nif) {
 
 	system("cls");
 	// Mostrar os dados atuais do cliente
-	printf("\t++++++++++++++++++++++++++++++++++++++++ MEUS DADOS +++++++++++++++++++++++++++++++++++++++\n");
-	printf("\n");
-	printf("| %-20s | %-11s | %-10s | %-30s | %-10s | %-20s |\n", "NOME", "NIF", "SALDO", "MORADA", "VEICULO", "PASSWORD");
-	printf("|----------------------|-------------|------------|--------------------------------|------------|----------------------|\n");
-	//Imprime na consola os dados 
-	printf("| %-20s | %-11d | %-10.2f | %-30s | %-10d | %-20s |\n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->IDveiculoAlugado, atual->password);
-
+	imprimirDadosCliente(atual); 
 	printf("\n"); 
-
+	 
 	//Opção de escolha para o cliente
 	printf("INSERIR O CAMPO QUE PRETENDE ALTERAR\n");
 	printf("\n");
@@ -351,7 +345,6 @@ Cliente* AlterarDadosCliente(Cliente* inicio, int nif) {
 	scanf("%d", &campo);
 
 	
-
 	//Escolha do utilizador o campo que pretende alterar
 	switch (campo) {
 	case 1:
@@ -394,17 +387,26 @@ Cliente* AlterarDadosCliente(Cliente* inicio, int nif) {
 		break;
 	}
 	system("cls");
+
 	//Mostrar ao utilizador os novos dados
-	printf("\n");
-	printf("| %-20s | %-11s | %-5s | %-30s | %-10s | %-20s |\n", "NOME", "NIF", "SALDO", "MORADA", "VEICULO", "PASSWORD");
-	printf("|----------------------|-------------|-------|--------------------------------|------------|----------------------|\n");
-	//Imprime os dados na consola
-	printf("| %-20s | %-11d | %-5.2f | %-30s | %-10d | %-20s |\n", atual->nome_cliente, atual->NIF, atual->saldo, atual->morada, atual->IDveiculoAlugado, atual->password);
+	imprimirDadosCliente(atual); 
 
 	saveAlterarDados(inicio); //Guardar os dados atualizados 
 
 	system("pause"); 
 	system("cls"); //Limpa a consola 
+} 
+
+//Imprimir os dados do clinete na consola 
+void imprimirDadosCliente(Cliente* cliente) { 
+	
+	printf("\t++++++++++++++++++++++++++++++++++++++++ MEUS DADOS +++++++++++++++++++++++++++++++++++++++\n");
+	printf("\n");
+	printf("| %-20s | %-11s | %-10s | %-30s | %-10s | %-20s |\n", "NOME", "NIF", "SALDO", "MORADA", "VEICULO", "PASSWORD");
+	printf("|----------------------|-------------|------------|--------------------------------|------------|----------------------|\n");
+	//Imprime na consola os dados
+	printf("| %-20s | %-11d | %-10.2f | %-30s | %-10d | %-20s |\n", cliente->nome_cliente, cliente->NIF, cliente->saldo, cliente->morada, cliente->IDveiculoAlugado, cliente->password);
+	printf("\n");
 } 
 
 //Guardar as alterações efetuadas
